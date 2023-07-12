@@ -1,0 +1,32 @@
+@use 'color-scheme' as theme;
+
+/* ------------- ALIGNEMENT -------------- */
+.force-center {
+    text-align: center;
+    text-align: -webkit-center;
+    text-align: -moz-center;
+}
+
+/* ------------- GENERAL -------------- */
+* {
+    font-family: theme.$font;
+}
+#development_box {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    font-size: 14px;
+    background-color: #ef4444;
+    border-top-right-radius: 10px;
+    color: #FFFFFF;
+    padding: 7px 10px;
+    z-index: 9999;
+}
+
+/* ------------- SIZES -------------- */
+.width-300 {
+    width: 300px;
+}
+.width-500 {
+    width: 500px;
+}
