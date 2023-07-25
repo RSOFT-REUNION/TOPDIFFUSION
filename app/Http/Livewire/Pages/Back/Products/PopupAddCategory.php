@@ -54,6 +54,9 @@ class PopupAddCategory extends ModalComponent
         if($this->image){
             $cat->cover = $image_name;
         }
+        if($this->delivery){
+            $cat->delivery = $this->delivery;
+        }
         $cat->slug = strtolower($correct_slug);
         if($this->emplacement == '0'){
             $cat->level = $this->level = 1;

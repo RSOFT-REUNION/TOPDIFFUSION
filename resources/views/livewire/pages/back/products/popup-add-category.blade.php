@@ -55,8 +55,8 @@
                 @endif
             </div>
             <div class="textfield mt-2">
-                <label for="emplacement">Remise sur la catégorie</label><span> {{ ($cat->title) ? $cat->title : '' }}</span>
-                <input type="text" id="title" wire:model="delivery" placeholder="Entrez un titre de catégorie" class="@if($errors->has('title')) input-error @endif" value="{{ old('delivery') }}">
+                <label for="emplacement">Remise sur la catégorie</label>
+                <input type="number" min="1" max="100" id="delivery" wire:model="delivery" placeholder="Entrez la remise pour la catégorie" class="@if($errors->has('title')) input-error @endif" value="{{ old('delivery') }}">
                 @if($errors->has('emplacement'))
                     <p class="text-error">{{ $errors->first('emplacement') }}</p>
                 @endif
