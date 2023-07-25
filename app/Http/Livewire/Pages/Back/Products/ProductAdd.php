@@ -47,7 +47,7 @@ class ProductAdd extends Component
 
     public function updatedTitle()
     {
-        $this->slug = str_replace($this->characters, $this->correct_characters, $this->title);
+        $this->slug = strtolower(str_replace($this->characters, $this->correct_characters, $this->title));
     }
 
     protected $rules = [
