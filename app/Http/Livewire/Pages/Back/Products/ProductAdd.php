@@ -20,12 +20,13 @@ use App\Models\ProductTempTag;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Http\Request;
 
 class ProductAdd extends Component
 {
     use WithFileUploads;
     public $product;
-    public $title, $parent_category, $cover, $type, $pourcentage_price, $professionnal_price, $customer_price, $TVA_Custom, $TVA_None, $TVA_Class, $UGS, $brand, $stock_quantity, $short_description, $long_description;
+    public $title, $parent_category, $cover, $type, $pourcentage_price, $professionnal_price, $customer_price, $TVA_Custom, $TVA_None, $TVA_Class, $UGS, $brand, $stock_quantity, $short_description, $long_description, $slug;
     public $chain, $pas, $pignon, $crown, $width, $UGS_swatch, $tire_width, $tire_height, $tire_diameter, $tire_charge, $swatch_group, $swatch_value, $picture, $info_group, $info_value;
 
     public $characters = ["é", "è", "ê", "ë", "à", "'", " ", "_", "&", "ç", "ù", "\"", "î", "ï", "/", "(", ")"];
@@ -42,7 +43,11 @@ class ProductAdd extends Component
     public function mount($product_id)
     {
         $this->product = ProductTemp::where('id', $product_id)->first();
+    }
 
+    public function updatedTitle()
+    {
+        $this->slug = str_replace($this->characters, $this->correct_characters, $this->title);
     }
 
     protected $rules = [
@@ -69,7 +74,7 @@ class ProductAdd extends Component
         }
     }
 
-    public function create()
+    public function create(Request $request)
     {
         $this->validate();
         /*
@@ -77,7 +82,7 @@ class ProductAdd extends Component
          */
         $product = new MyProduct;
         $product->title = $this->title;
-        $product->slug = strtolower(str_replace($this->characters, $this->correct_characters, $this->title));
+        $product->slug = ($this->slug == $this->title) ? strtolower(str_replace($this->characters, $this->correct_characters, $this->title)) : strtolower(str_replace($this->characters, $this->correct_characters, $this->slug));
         $product->short_description = $this->short_description;
         $product->long_description = $this->long_description;
         $product->brand_id = $this->brand;

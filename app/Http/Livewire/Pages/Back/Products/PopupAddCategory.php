@@ -11,7 +11,7 @@ class PopupAddCategory extends ModalComponent
 {
     use WithFileUploads;
 
-    public $title, $description, $image, $emplacement, $slug, $professionnal;
+    public $title, $description, $image, $emplacement, $slug, $professionnal, $delivery;
 
     protected $rules = [
         'title' => 'required|unique:product_categories,title',

@@ -154,14 +154,9 @@
         </div>
         <div class="entry-content">
             @if($tab === '1')
-                @if($product->description)
+                @if($product->long_description)
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec tellus lacus. Vestibulum ac tincidunt nisl.
-                        Donec in augue eu augue dignissim maximus vel eu tortor. Sed aliquet urna eget scelerisque elementum.
-                        Praesent feugiat mi eu consequat blandit. Interdum et malesuada fames ac ante ipsum primis in faucibus.
-                        Nam porta pellentesque nisl, eu vulputate massa ultricies at. Cras bibendum nunc nec lacus consectetur,
-                        vitae pulvinar neque dapibus. Quisque fermentum pharetra magna. Praesent pretium nec ipsum in gravida.
-                        Pellentesque et scelerisque diam. Donec sagittis a magna vel cursus.
+                        {{ $product->long_description }}
                     </p>
                 @else
                     <p>

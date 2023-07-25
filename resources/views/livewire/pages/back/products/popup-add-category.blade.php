@@ -54,6 +54,13 @@
                     <p class="text-error">{{ $errors->first('emplacement') }}</p>
                 @endif
             </div>
+            <div class="textfield mt-2">
+                <label for="emplacement">Remise sur la catégorie</label><span> {{ ($cat->title) ? $cat->title : '' }}</span>
+                <input type="text" id="title" wire:model="delivery" placeholder="Entrez un titre de catégorie" class="@if($errors->has('title')) input-error @endif" value="{{ old('delivery') }}">
+                @if($errors->has('emplacement'))
+                    <p class="text-error">{{ $errors->first('emplacement') }}</p>
+                @endif
+            </div>
             <div class="mt-3 mx-3">
                 <input type="checkbox" wire:model="professionnal" id="professionnal">
                 <label for="professionnal">Visible uniquement pour les professionnels</label>

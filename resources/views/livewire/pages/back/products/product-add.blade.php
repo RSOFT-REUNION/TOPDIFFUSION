@@ -19,7 +19,7 @@
                     <p class="text-error">{{ $errors->first('title') }}</p>
                 @endif
             </div>
-            <p class="bg-gray-100 text-sm px-2 py-1 rounded-lg mt-2 text-gray-500">Affichage dans l'url: @if($this->title) <b>{{ strtolower(str_replace($characters, $correct_characters, $this->title)) }}</b> @else Entrez le nom du produit.. @endif</p>
+            <p class="bg-gray-100 text-sm px-2 py-1 rounded-lg mt-2 text-gray-500">Affichage dans l'url: @if($this->title) <b><input class="rounded border border-gray-600 pl-2" wire:model="slug" type="text"></b> @else Entrez le nom du produit.. @endif</p>
             <hr class="my-3"/>
             <div class="flex mt-5">
                 <div class="flex-1 mr-2">
