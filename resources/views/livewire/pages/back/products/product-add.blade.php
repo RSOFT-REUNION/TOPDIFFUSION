@@ -34,7 +34,7 @@
                     {{-- Catégorie principal --}}
                     <div class="textfield mt-2">
                         <label for="parent_category">Catégorie principal<span class="text-red-500">*</span></label>
-                        <select wire:model="parent_category" id="parent_category">
+                        <select wire:model="parent_category" id="parent_category" wire:change="updateelivery">
                             <option value="">-- Sélectionner une catégorie --</option>
                             @foreach($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->title }}</option>
@@ -42,6 +42,16 @@
                         </select>
                         @if($errors->has('long_description'))
                             <p class="text-error">{{ $errors->first('long_description') }}</p>
+                        @endif
+                        @if($delivery)
+                            <span wire:change="delivery" class="bg-[#FBBC34] px-2 rounded-md text-black border font-semibold border-[#D9D9D9]">
+                                @if ($delivery)
+                                    {{ $delivery }}
+                                @else
+                                    0
+                                @endif
+                                %
+                            </span>
                         @endif
                     </div>
                 </div>

@@ -26,7 +26,7 @@ class ProductAdd extends Component
 {
     use WithFileUploads;
     public $product;
-    public $title, $parent_category, $cover, $type, $pourcentage_price, $professionnal_price, $customer_price, $TVA_Custom, $TVA_None, $TVA_Class, $UGS, $brand, $stock_quantity, $short_description, $long_description, $slug;
+    public $title, $parent_category, $cover, $type, $pourcentage_price, $professionnal_price, $customer_price, $TVA_Custom, $TVA_None, $TVA_Class, $UGS, $brand, $stock_quantity, $short_description, $long_description, $slug, $delivery;
     public $chain, $pas, $pignon, $crown, $width, $UGS_swatch, $tire_width, $tire_height, $tire_diameter, $tire_charge, $swatch_group, $swatch_value, $picture, $info_group, $info_value;
 
     public $characters = ["é", "è", "ê", "ë", "à", "'", " ", "_", "&", "ç", "ù", "\"", "î", "ï", "/", "(", ")"];
@@ -356,6 +356,12 @@ class ProductAdd extends Component
     {
         $kit = ProductTempPictures::where('id', $id)->first();
         $kit->delete();
+        $this->emit('refreshLines');
+    }
+
+    public function updateelivery()
+    {
+        $this->delivery = ProductCategory::find($this->parent_category)->delivery;
         $this->emit('refreshLines');
     }
 
