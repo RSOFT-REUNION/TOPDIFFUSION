@@ -12,23 +12,23 @@
     <div id="entry-content">
         @if($products->count() > 0)
             <div class="table-box-outline">
-            <table>
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Nom</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach($products as $product)
+                <table>
+                    <thead>
                     <tr>
-                        <td>{{ $product->id }}</td>
-                        <td>{{ $product->title }}</td>
+                        <th>#</th>
+                        <th>Nom</th>
                     </tr>
-                @endforeach
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody>
+                    @foreach($products as $product)
+                        <tr>
+                            <td>{{ $product->id }}</td>
+                            <td>{{ $product->title }}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
         @else
             <p class="empty-text mt-2">Vous n'avez pas encore ajouté d'article</p>
         @endif
