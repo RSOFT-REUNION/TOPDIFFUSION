@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{ asset('dist/fontawesome/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('dist/fontawesome/css/brands.min.css') }}">
     <!-- SCRIPTS -->
+    <script src="https://cdn.tiny.cloud/1/lkod09hkifz3s8mmskgkohg3ct7wme2fem8v6dm19kpnh89a/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://unpkg.com/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>
@@ -23,7 +24,8 @@
         'resources/css/app.css',
         'resources/scss/template.scss',
         'resources/scss/component.scss',
-        'resources/scss/responsive.scss'
+        'resources/scss/responsive.scss',
+        'resources/js/tinyMCE.js'
     ])
     @livewireStyles
 </head>

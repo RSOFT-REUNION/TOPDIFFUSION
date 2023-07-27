@@ -5,23 +5,23 @@
                 <div>
                     <h2>TOP DIFFUSION</h2>
                     <ul class="mt-7">
-                        <li>A propos de nous</li>
-                        <li>Informations légales</li>
-                        <li>Politique de confidentialité des données</li>
+                        <li><a href="{{ route('front.about') }}">A propos de nous</a></li>
+                        <li><a href="{{ route('front.legal') }}">Informations légales</a></li>
+                        <li><a href="{{ route('front.confidential') }}">Politique de confidentialité des données</a></li>
                     </ul>
                 </div>
                 <div>
                     <h2>Liens rapide</h2>
                     <ul class="mt-7">
                         <li>Liste des produits</li>
-                        @if(auth()->guest())
+                        @if (auth()->guest())
                             <li>Connexion à mon compte</li>
                             <li>Inscription</li>
                         @else
                             <li class="hover:cursor-pointer"><a href="{{ route('front.profile') }}">Mon compte</a></li>
                             <li class="hover:cursor-pointer"><a href="{{ route('logout') }}">Me déconnecter</a></li>
                         @endif
-                        <li>FAQ</li>
+                        <li><a href="{{ route('front.faq') }}">FAQ</a></li>
                     </ul>
                 </div>
                 <div>
@@ -52,8 +52,10 @@
                 <!-- PAYMENT METHOD -->
                 <i class="fa-brands fa-cc-mastercard fa-2x mr-2"></i>
                 <i class="fa-brands fa-cc-visa fa-2x"></i>
-                @if(!auth()->guest() && auth()->user()->team == 1)
-                    <a href="{{ route('back.dashboard') }}" class="ml-2 border border-black px-2 py-1 rounded-lg hover:bg-black hover:text-white duration-300">Espace d'administration</a>
+                @if (!auth()->guest() && auth()->user()->team == 1)
+                    <a href="{{ route('back.dashboard') }}"
+                        class="ml-2 border border-black px-2 py-1 rounded-lg hover:bg-black hover:text-white duration-300">Espace
+                        d'administration</a>
                 @endif
             </div>
         </div>

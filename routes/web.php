@@ -1,12 +1,15 @@
 <?php
 
+use App\Http\Controllers\PagesLegal;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Back\LegalController;
 use App\Http\Controllers\Back\BackController;
-use App\Http\Controllers\Back\BoProductController;
-use App\Http\Controllers\Back\BoSettingController;
 use App\Http\Controllers\Back\BoUserController;
 use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\Front\ProductController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Back\BoProductController;
+use App\Http\Controllers\Back\BoSettingController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 Route::get('/test', [FrontController::class, 'testFlash'])->name('test-flash');
 
 Route::get('/', [FrontController::class, 'showHome'])->name('front.home');
@@ -37,16 +41,20 @@ Route::group([
     Route::get('/profil/suppression/adresse-{id}', [FrontController::class, 'deletedAddress'])->name('front.profile.delete.address');
     Route::get('/profil/mes-motos', [FrontController::class, 'showProfileBikes'])->name('front.profile.bikes');
     Route::get('/profil/mes-motos/suppression-{id}', [FrontController::class, 'deletedBike'])->name('front.profile.delete.bikes');
+    Route::get('/a-propos', [FrontController::class, 'showAbout'])->name('front.about');
+    Route::get('/politique-de-confidentialite', [FrontController::class, 'showConfidential'])->name('front.confidential');
+    Route::get('/informations-legales', [FrontController::class, 'showlegal'])->name('front.legal');
+    Route::get('/faq', [FrontController::class, 'showFaq'])->name('front.faq');
 });
 
 // It's a team member
 Route::group([
     'middleware' => 'App\Http\Middleware\Team'
 ], function () {
-    Route::prefix('/espace-personnel')->group(function (){
+    Route::prefix('/espace-personnel')->group(function () {
         Route::get('/', [BackController::class, 'showDashboard'])->name('back.dashboard');
 
-        Route::prefix('/produits')->group(function (){
+        Route::prefix('/produits')->group(function () {
             Route::get('/liste', [BoProductController::class, 'showProductList'])->name('back.product.list');
             Route::get('/creation', [BoProductController::class, 'createProduct'])->name('back.product.create');
             Route::get('/creer-un-produit-{id}', [BoProductController::class, 'showCreateProduct'])->name('back.product.show.create');
@@ -59,7 +67,19 @@ Route::group([
             Route::get('/stocks', [BoProductController::class, 'showProductStocks'])->name('back.product.stocks');
         });
 
-        Route::prefix('/clients')->group(function (){
+        Route::prefix('/mes-pages')->group(function () {
+            Route::get('/', [LegalController::class, 'showTest'])->name('bouton.test');
+            Route::get('/a-propos', [LegalController::class, 'showAbout'])->name('about');
+            Route::post('/a-propos', [LegalController::class, 'postAbout'])->name('post.about');
+            Route::get('/informations-legales', [LegalController::class, 'showLegal'])->name('legal');
+            Route::post('/informations-legales', [LegalController::class, 'postLegal'])->name('post.legal');
+            Route::get('/politique-de-confidentialite', [LegalController::class, 'showConfidential'])->name('confidential');
+            Route::post('/politique-de-confidentialite', [LegalController::class, 'postConfidential'])->name('post.confidential');
+            Route::get('/faq', [LegalController::class, 'showFaq'])->name('faq');
+            Route::post('/faq', [LegalController::class, 'postFaq'])->name('faq');
+        });
+
+        Route::prefix('/clients')->group(function () {
             Route::get('/liste', [BoUserController::class, 'showUserList'])->name('back.user.list');
             Route::get('/{user}', [BoUserController::class, 'showUserSingle'])->name('back.user.single');
             Route::get('/{user}/verified', [BoUserController::class, 'validateProfessionnal'])->name('back.user.verified');
@@ -73,4 +93,3 @@ Route::group([
         });
     });
 });
-

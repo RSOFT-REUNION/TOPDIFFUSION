@@ -14,17 +14,21 @@
                 </div>
                 <div class="flex-none inline-flex items-center">
                     <!-- BUTTONS -->
-                    @if(auth()->guest())
-                        <a href="{{ route('front.login') }}" class="btn-outline mr-3"><i class="fa-solid fa-arrow-right-to-bracket mr-2"></i>Connexion</a>
-                        <a href="{{ route('front.register') }}" class="btn-secondary"><i class="fa-solid fa-user-plus mr-2"></i>Créer un compte</a>
+                    @if (auth()->guest())
+                        <a href="{{ route('front.login') }}" class="btn-outline mr-3"><i
+                                class="fa-solid fa-arrow-right-to-bracket mr-2"></i>Connexion</a>
+                        <a href="{{ route('front.register') }}" class="btn-secondary"><i
+                                class="fa-solid fa-user-plus mr-2"></i>Créer un compte</a>
                     @else
                         <a href="" class="btn-icon mr-2" title="Favoris"><i class="fa-solid fa-heart"></i></a>
-                        <a href="" class="btn-icon mr-2" title="Panier"><i class="fa-solid fa-cart-shopping"></i></a>
-                        @if(auth()->user()->professionnal === 1 && auth()->user()->verified === 1)
+                        <a href="" class="btn-icon mr-2" title="Panier"><i
+                                class="fa-solid fa-cart-shopping"></i></a>
+                        @if (auth()->user()->professionnal === 1 && auth()->user()->verified === 1)
                             @livewire('components.front-professionnal-switch')
                         @endif
                         <a href="{{ route('front.profile') }}" class="btn-secondary" title="Mon compte">Mon compte</a>
-                        <a href="{{ route('logout') }}" class="btn-icon ml-2" title="Panier"><i class="fa-solid fa-arrow-right-to-bracket"></i></a>
+                        <a href="{{ route('logout') }}" class="btn-icon ml-2" title="Panier"><i
+                                class="fa-solid fa-arrow-right-to-bracket"></i></a>
                     @endif
                 </div>
             </div>
@@ -37,7 +41,7 @@
     </div>
     <div class="entry-bottom">
         <div class="container mx-auto">
-            @livewire('components.template.front-filters')
+            @livewire('components.template.front-filters', ['page' => $page])
         </div>
     </div>
 

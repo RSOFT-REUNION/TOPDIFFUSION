@@ -22,10 +22,10 @@ class BoProductController extends Controller
     public function createProduct()
     {
         $proTemp = new ProductTemp;
-        if($proTemp->save()) {
+        if ($proTemp->save()) {
             $proSwatch = new ProductTempSwatches;
             $proSwatch->product_id = $proTemp->id;
-            if($proSwatch->save()){
+            if ($proSwatch->save()) {
                 return redirect()->route('back.product.show.create', ['id' => $proTemp->id]);
             }
         }
@@ -97,5 +97,4 @@ class BoProductController extends Controller
         $data['page'] = 'stocks';
         return view('pages.backend.products.product-stocks', $data);
     }
-
 }

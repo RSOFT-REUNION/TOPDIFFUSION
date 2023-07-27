@@ -9,6 +9,7 @@ use App\Models\UserBike;
 use App\Models\UserData;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use view;
 
 class BoUserController extends Controller
 {
