@@ -135,7 +135,10 @@
                 </div>
                 <div class="product-buttons inline-flex items-center mt-3">
                     @if(!auth()->guest())
-                        <a href="" class="btn-secondary"><i class="fa-solid fa-cart-arrow-down mr-2"></i>Ajouter au panier</a>
+                    <form wire:submit.prevent="shop">
+                        <input type="number" wire:model="quantity" min="1" max="100" class="py-2 w-12 text-xl mr-3 border-gray-600 border rounded-xl">
+                        <input type="submit" class="btn-secondary" value="Ajouter au panier">
+                    </form>
                         <a href="" class="btn-icon-favorite ml-2"><i class="fa-solid fa-heart"></i></a>
                     @else
                         <a href="{{ route('front.login') }}" class="btn-secondary">Se connecter</a>

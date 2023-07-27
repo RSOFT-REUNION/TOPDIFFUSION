@@ -34,7 +34,7 @@
                     {{-- Catégorie principal --}}
                     <div class="textfield mt-2">
                         <label for="parent_category">Catégorie principal<span class="text-red-500">*</span></label>
-                        <select wire:model="parent_category" id="parent_category" wire:change="updateelivery">
+                        <select wire:model="parent_category" id="parent_category" wire:click="pourcentageDelivery" wire:change="changeDelivery">
                             <option value="">-- Sélectionner une catégorie --</option>
                             @foreach($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->title }}</option>
@@ -44,7 +44,7 @@
                             <p class="text-error">{{ $errors->first('long_description') }}</p>
                         @endif
                         @if($delivery)
-                            <span wire:change="delivery" class="bg-[#FBBC34] px-2 rounded-md text-black border font-semibold border-[#D9D9D9]">
+                            <span wire:model="delivery" class="bg-[#FBBC34] px-2 rounded-md text-black border font-semibold border-[#D9D9D9]">
                                 @if ($delivery)
                                     {{ $delivery }}
                                 @else
@@ -153,15 +153,17 @@
                                 @endif
                             </div>
                         </div>
-                        <div class="flex-1 ml-2">
-                            <div class="textfield">
-                                <label for="pourcentage_price">Pourcentage de remise (%)</label>
-                                <input type="number" min="0.01" step="any" id="pourcentage_price" wire:model="pourcentage_price" placeholder="Entrez un %" class="@if($errors->has('pourcentage_price')) input-error @endif currency" value="{{ $pourcentage_price }}">
-                                @if($errors->has('pourcentage_price'))
-                                    <p class="text-error">{{ $errors->first('pourcentage_price') }}</p>
-                                @endif
+                        @if ($pourcentage_price)
+                            <div class="flex-1 ml-2">
+                                <div class="textfield">
+                                    <label for="pourcentage_price">Pourcentage de remise (%)</label>
+                                    <input disabled type="number" min="0.01" step="any" id="pourcentage_price" wire:model="pourcentage_price" class="bg-gray-300">
+                                    @if($errors->has('pourcentage_price'))
+                                        <p class="text-error">{{ $errors->first('pourcentage_price') }}</p>
+                                    @endif
+                                </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                     @if(!$TVA_None && $TVA_Custom)
                         <div class="textfield mt-2">
@@ -279,15 +281,17 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="flex-1 ml-2">
-                                    <div class="textfield-white">
-                                        <label for="pourcentage_price">Pourcentage de remise (%)</label>
-                                        <input type="number" min="0.01" step="any" id="pourcentage_price" wire:model="pourcentage_price" placeholder="Entrez un %" class="@if($errors->has('pourcentage_price')) input-error @endif currency" value="{{ $pourcentage_price }}">
-                                        @if($errors->has('pourcentage_price'))
-                                            <p class="text-error">{{ $errors->first('pourcentage_price') }}</p>
-                                        @endif
+                                @if ($pourcentage_price)
+                                    <div class="flex-1 ml-2">
+                                        <div class="textfield">
+                                            <label for="pourcentage_price">Pourcentage de remise (%)</label>
+                                            <input disabled type="number" min="0.01" step="any" id="pourcentage_price" wire:model="pourcentage_price" class="bg-gray-300">
+                                            @if($errors->has('pourcentage_price'))
+                                                <p class="text-error">{{ $errors->first('pourcentage_price') }}</p>
+                                            @endif
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                             </div>
                             @if(!$TVA_None && $TVA_Custom)
                                 <div class="textfield mt-2">
@@ -449,15 +453,17 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="flex-1 ml-2">
-                                    <div class="textfield-white">
-                                        <label for="pourcentage_price">Pourcentage de remise (%)</label>
-                                        <input type="number" min="0.01" step="any" id="pourcentage_price" wire:model="pourcentage_price" placeholder="Entrez un %" class="@if($errors->has('pourcentage_price')) input-error @endif currency" value="{{ $pourcentage_price }}">
-                                        @if($errors->has('pourcentage_price'))
-                                            <p class="text-error">{{ $errors->first('pourcentage_price') }}</p>
-                                        @endif
+                                @if ($pourcentage_price)
+                                    <div class="flex-1 ml-2">
+                                        <div class="textfield">
+                                            <label for="pourcentage_price">Pourcentage de remise (%)</label>
+                                            <input disabled type="number" min="0.01" step="any" id="pourcentage_price" wire:model="pourcentage_price" class="bg-gray-300">
+                                            @if($errors->has('pourcentage_price'))
+                                                <p class="text-error">{{ $errors->first('pourcentage_price') }}</p>
+                                            @endif
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                             </div>
                             @if(!$TVA_None && $TVA_Custom)
                                 <div class="textfield mt-2">
@@ -620,15 +626,17 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="flex-1 ml-2">
-                                <div class="textfield-white">
-                                    <label for="pourcentage_price">Pourcentage de remise (%)</label>
-                                    <input type="number" min="0.01" step="any" id="pourcentage_price" wire:model="pourcentage_price" placeholder="Entrez un %" class="@if($errors->has('pourcentage_price')) input-error @endif currency" value="{{ $pourcentage_price }}">
-                                    @if($errors->has('pourcentage_price'))
-                                        <p class="text-error">{{ $errors->first('pourcentage_price') }}</p>
-                                    @endif
+                            @if ($pourcentage_price)
+                                <div class="flex-1 ml-2">
+                                    <div class="textfield">
+                                        <label for="pourcentage_price">Pourcentage de remise (%)</label>
+                                        <input disabled type="number" min="0.01" step="any" id="pourcentage_price" wire:model="pourcentage_price" class="bg-gray-300">
+                                        @if($errors->has('pourcentage_price'))
+                                            <p class="text-error">{{ $errors->first('pourcentage_price') }}</p>
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                         </div>
                         @if(!$TVA_None && $TVA_Custom)
                             <div class="textfield mt-2">
