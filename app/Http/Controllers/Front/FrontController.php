@@ -39,7 +39,9 @@ class FrontController extends Controller
     /*----------- SIGN ------------*/
     public function showLogin()
     {
-        return view('pages.frontend.sign.sign-in');
+        $data = [];
+        $data['page'] = 'login';
+        return view('pages.frontend.sign.sign-in', $data);
     }
 
     public function testFlash()
@@ -65,7 +67,9 @@ class FrontController extends Controller
 
     public function showRegister()
     {
-        return view('pages.frontend.sign.sign-up');
+        $data = [];
+        $data['page'] = 'register';
+        return view('pages.frontend.sign.sign-up', $data);
     }
 
     public function logout()

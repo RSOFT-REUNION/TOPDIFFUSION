@@ -14,22 +14,20 @@
         <div class="container mx-auto">
             <div class="flex items-center">
                 <div class="flex-1">
-                    <h2 class="title inline-flex items-center"><object data="{{ asset('img/icons/032-engine-1.svg') }}" width="50px" class="mr-3"></object>Nos Nouveautés</h2>
+                    <h2 class="title inline-flex items-center"><object data="{{ asset('img/icons/032-engine-1.svg') }}"
+                            width="50px" class="mr-3"></object>Nos Nouveautés</h2>
                 </div>
                 <div class="flex-none">
                     <a href="{{ route('test-flash') }}" class="btn-outline">Voir tout</a>
                 </div>
             </div>
             <div class="grid grid-cols-3 gap-10 mt-10">
-                @foreach($products as $product)
+                @foreach ($products as $product)
                     @livewire('components.front.products.product-thumbnails', ['product_id' => $product->id])
                 @endforeach
             </div>
         </div>
     </div>
-
-    <a onclick="Livewire.emit('openModal', 'popup-test')" class="my-12">Mon bouton</a>
-
     <!-- OUR BRANDS -->
     <div class="container-our-brands">
         <div class="container mx-auto">
@@ -41,9 +39,9 @@
             </p>
         </div>
         <div class="grid grid-cols-4 gap-10 items-center mt-10">
-            @foreach($brands as $brand)
+            @foreach ($brands as $brand)
                 <div class="force-center">
-                    <img src="{{ asset('storage/images/brands/'. $brand->picture) }}" width="200px"/>
+                    <img src="{{ asset('storage/images/brands/' . $brand->picture) }}" width="200px" />
                 </div>
             @endforeach
         </div>
