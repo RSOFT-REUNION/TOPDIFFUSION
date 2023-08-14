@@ -13,7 +13,7 @@ class PromotionsList extends Component
     public function render()
     {
         $data = [];
-        $data['products'] = MyProduct::orderBy('created_at', 'desc')->get();
+        $data['productsPromotion'] = MyProduct::whereNotNull('promotion_group')->get();
         return view('livewire.pages.back.products.promotions-list', $data);
     }
 }

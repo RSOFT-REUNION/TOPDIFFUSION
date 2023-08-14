@@ -9,6 +9,8 @@ class MyProduct extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['promotion', 'promotion_group'];
+
     public function getBrand()
     {
         return ProductBrand::where('id', $this->brand_id)->first();
