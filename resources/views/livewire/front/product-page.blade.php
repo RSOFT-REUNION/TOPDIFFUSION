@@ -1,6 +1,7 @@
 <div>
     <div class="arianne my-4">
-        <p><a href="{{ route('front.home') }}"><i class="fa-solid fa-house mr-2"></i>Accueil</a> / Produit</p>
+        {{-- <p><a href="{{ route('front.home') }}"><i class="fa-solid fa-house mr-2"></i>Accueil</a> / Produit</p> --}}
+        @livewire('components.breadcrumb', ['crumbs' => $crumbs])
     </div>
     <div class="flex items-center my-10">
         <div class="flex-1 mr-2">
