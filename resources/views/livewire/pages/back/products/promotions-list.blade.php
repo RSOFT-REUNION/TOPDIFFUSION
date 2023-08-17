@@ -30,10 +30,10 @@
                             </div>
                         </div>
                         <div class="whitespace-nowrap text-center font-semibold w-3/4">
-                            {{ $item->promotion_group }}
+                            {{ $item->title }}
                         </div>
                         <div class="whitespace-nowrap text-xl font-semibold text-[#fbbc34] w-12">
-                            {{ $item->promotion }} %
+                            {{ $item->discount }} %
                         </div>
                     </div>
                 </div>

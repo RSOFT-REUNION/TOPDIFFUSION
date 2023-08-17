@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_promotions', function (Blueprint $table) {
+        Schema::create('my_product_promotions', function (Blueprint $table) {
             $table->id();
-            $table->string("promotion_group");
-            $table->integer("promotion");
-            $table->id();
+            $table->boolean('active')->default(1);
+            $table->integer('type')->default(1);
+            $table->string('title');
+            $table->double('discount');
+            $table->timestamp('start_date')->nullable();
+            $table->timestamp('end_date')->nullable();
+            $table->string('code')->nullable();
             $table->timestamps();
         });
     }

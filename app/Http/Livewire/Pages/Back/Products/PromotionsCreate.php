@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire\Pages\Back\Products;
 
-use App\Models\MyProduct;
 use Livewire\Component;
+use App\Models\MyProduct;
+use App\Models\MyProductPromotion;
+use App\Models\MyProductPromotionItems;
 
 class PromotionsCreate extends Component
 {
@@ -19,16 +21,16 @@ class PromotionsCreate extends Component
 
     public function updated($title, $value1)
     {
-        if($title == "title") {
+        if ($title == "title") {
             $this->title = $value1;
-        } elseif($title == "percentage") {
+        } elseif ($title == "percentage") {
             $this->percentage = $value1;
         }
     }
 
     public function getCheckedProductIds()
     {
-        return array_keys( array_filter($this->checkedProducts));
+        return array_keys(array_filter($this->checkedProducts));
     }
 
     // public function test()
@@ -49,15 +51,25 @@ class PromotionsCreate extends Component
             }
         }
 
-        foreach ($this->checkedProduct as $key => $value) {
+        $productPromotion = new MyProductPromotion();
+
+        foreach ($this->checkedProduct as $value) {
             $createPromotion = MyProduct::find($value);
             if ($createPromotion) {
-                $createPromotion->promotion = $this->percentage;
-                $createPromotion->promotion_group = $this->title;
-                $createPromotion->save();
+                $productPromotion->title = $this->title;
+                $productPromotion->discount = $this->percentage;
+                $productPromotion->code = 'CODE';
+
+
+                if ($productPromotion->save()) {
+                    $promoItem = new MyProductPromotionItems();
+                    $promoItem->group_id = $productPromotion->id;
+                    $promoItem->product_id = $createPromotion->id;
+                    $promoItem->save();
+                }
             }
         }
-
+        return redirect()->route('back.product.promotions');
     }
 
     // public function CheckedProducts()
