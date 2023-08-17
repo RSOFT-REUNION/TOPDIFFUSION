@@ -24,7 +24,6 @@ class SearchFront extends Component
         $data = [];
         if($this->updatedSearch() != null){
             $data['items_result'] = $this->updatedSearch()->get()->take(5);
-            dd($data['items_result']);
         } else {
             $data['items_result'] = '';
         }
