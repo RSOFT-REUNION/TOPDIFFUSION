@@ -5,7 +5,7 @@
                 <h1>Ajout d'une promotion</h1>
             </div>
             <div class="flex-none inline-flex items-center">
-                <button type="submit" class="btn-secondary">Publier ma promotions</button>
+                <button type="submit" class="btn-secondary">Publier ma promotion</button>
             </div>
         </div>
         <div id="entry-content">
@@ -27,7 +27,7 @@
                                             <td>{{ $product->title }}</td>
                                         </tr>
                                     @endforeach
-                                    <button wire:click='test'>dd</button>
+                                    {{-- <button wire:click='test'></button> --}}
                                 </tbody>
                             </table>
                         </div>

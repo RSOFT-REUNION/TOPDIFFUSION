@@ -31,7 +31,7 @@
                                 </div>
                             </div>
                             <div class="whitespace-nowrap text-center font-semibold w-3/4">
-                                {{ $item->promotion_group }}
+                                {{ $item->title }}
                             </div>
                             <div class="whitespace-nowrap text-center font-semibold w-3/4">
                                 <span class="text-red-700">Date limite</span>
@@ -41,9 +41,15 @@
                                 <div class="w-11 h-6 bg-red-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
                             </label>
                             <div class="whitespace-nowrap text-xl font-semibold text-[#fbbc34] w-12">
-                                {{ $item->promotion }} %
+                                {{ $item->discount }} %
                             </div>
                         </div>
+                        {{-- <div class="whitespace-nowrap text-center font-semibold w-3/4">
+                            {{ $item->title }}
+                        </div> --}}
+                        {{-- <div class="whitespace-nowrap text-xl font-semibold text-[#fbbc34] w-12">
+                            {{ $item->discount }} %
+                        </div> --}}
                     </div>
                 </button>
             @endforeach
