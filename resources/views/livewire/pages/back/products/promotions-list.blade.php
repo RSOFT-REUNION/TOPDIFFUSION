@@ -34,7 +34,7 @@
                                 {{ $item->title }}
                             </div>
                             <div class="whitespace-nowrap text-center font-semibold w-3/4">
-                                <span class="text-red-700">Date limite</span>
+                                <span class="text-red-700">{{ $item->end_date }}Date limite</span>
                             </div>
                             <label for="state" class="relative inline-flex items-center cursor-pointer">
                                 <input type="checkbox" id="state" class="sr-only peer">

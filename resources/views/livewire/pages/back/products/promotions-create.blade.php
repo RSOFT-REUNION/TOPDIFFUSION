@@ -27,7 +27,6 @@
                                             <td>{{ $product->title }}</td>
                                         </tr>
                                     @endforeach
-                                    {{-- <button wire:click='test'></button> --}}
                                 </tbody>
                             </table>
                         </div>
