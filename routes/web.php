@@ -59,6 +59,7 @@ Route::group([
             Route::get('/stocks', [BoProductController::class, 'showProductStocks'])->name('back.product.stocks');
             Route::get('/promotions', [BoProductController::class, 'showPromotions'])->name('back.product.promotions');
             Route::get('/promotions-create', [BoProductController::class, 'showCreatePromotions'])->name('back.product.promotions-create');
+            Route::get('/promotions-groupe/{id}', [BoProductController::class, 'showGroupPromotions'])->name('back.product.promotions-group');
         });
 
         Route::prefix('/clients')->group(function (){

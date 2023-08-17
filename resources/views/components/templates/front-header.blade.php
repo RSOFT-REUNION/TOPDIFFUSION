@@ -36,7 +36,7 @@
         </div>
     </div>
     <div class="entry-bottom">
-        <div class="container mx-auto">
+        <div class="container mx-auto flex flex-row justify-center">
             @livewire('components.template.front-filters')
         </div>
     </div>

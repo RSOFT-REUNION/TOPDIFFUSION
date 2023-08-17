@@ -114,4 +114,12 @@ class BoProductController extends Controller
         return view('pages.backend.products.promotions-create', $data);
     }
 
+    public function showGroupPromotions()
+    {
+        $data = [];
+        $data['group'] = 'products';
+        $data['page'] = 'promotions';
+        return view('pages.backend.products.promotion-group-single', $data);
+    }
+
 }

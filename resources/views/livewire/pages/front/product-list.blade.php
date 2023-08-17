@@ -1,6 +1,6 @@
 <div class="container mx-auto">
     <div class="arianne my-4 inline-flex items-center">
-        <p><a href="{{ route('front.home') }}"><i class="fa-solid fa-house mr-2"></i>Accueil</a> / {{ $category->title }}</p>
+        @livewire('components.breadcrumb', ['crumbs' => $crumbs])
     </div>
     <div class="entry-header mt-5">
         <div class="flex items-center">

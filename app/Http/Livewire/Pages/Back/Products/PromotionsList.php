@@ -9,7 +9,10 @@ use Livewire\Component;
 class PromotionsList extends Component
 {
 
-    //
+    public function GoToPromoSingle($id)
+    {
+        return redirect()->route('back.product.promotions-group', $id);
+    }
 
     public function render()
     {
