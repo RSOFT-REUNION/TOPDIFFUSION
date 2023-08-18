@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="entry-content">
-                <textarea name="page_content" class="tiny">@if($page) {{  $pageContent->content  }} @endif</textarea>
+                <textarea name="page_content" class="tiny">@if($pageContent) {{  $pageContent->content  }} @endif</textarea>
             </div>
         </form>
     </main>
