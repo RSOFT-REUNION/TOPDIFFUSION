@@ -14,7 +14,7 @@ class ProductPage extends Component
 {
     protected $listeners = ['refreshLines' => '$refresh'];
     public $active_tab = '1';
-    public $product_id;
+    public $product_id, $quantity;
 
     public $seenChainsValue = [];
     public $seenPasValue = [];
@@ -38,6 +38,11 @@ class ProductPage extends Component
                 $this->active_tab = '3';
                 break;
         }
+    }
+
+    public function shop()
+    {
+        
     }
 
     public function render()

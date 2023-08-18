@@ -11,7 +11,7 @@ class PopupAddCategory extends ModalComponent
 {
     use WithFileUploads;
 
-    public $title, $description, $image, $emplacement, $slug, $professionnal;
+    public $title, $description, $image, $emplacement, $slug, $professionnal, $delivery;
 
     protected $rules = [
         'title' => 'required|unique:product_categories,title',
@@ -53,6 +53,9 @@ class PopupAddCategory extends ModalComponent
         $cat->description = $this->description;
         if($this->image){
             $cat->cover = $image_name;
+        }
+        if($this->delivery){
+            $cat->delivery = $this->delivery;
         }
         $cat->slug = strtolower($correct_slug);
         if($this->emplacement == '0'){

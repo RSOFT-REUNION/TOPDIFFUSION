@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('slug')->nullable();
             $table->boolean('professionnal')->default(0);
             $table->boolean('active')->default(1);
+            $table->string('delivery')->nullable();
             $table->timestamps();
         });
     }

@@ -1,6 +1,7 @@
 <div>
     <div class="arianne my-4">
-        <p><a href="{{ route('front.home') }}"><i class="fa-solid fa-house mr-2"></i>Accueil</a> / Produit</p>
+        {{-- <p><a href="{{ route('front.home') }}"><i class="fa-solid fa-house mr-2"></i>Accueil</a> / Produit</p> --}}
+        @livewire('components.breadcrumb', ['crumbs' => $crumbs])
     </div>
     <div class="flex items-center my-10">
         <div class="flex-1 mr-2">
@@ -135,7 +136,10 @@
                 </div>
                 <div class="product-buttons inline-flex items-center mt-3">
                     @if(!auth()->guest())
-                        <a href="" class="btn-secondary"><i class="fa-solid fa-cart-arrow-down mr-2"></i>Ajouter au panier</a>
+                    <form wire:submit.prevent="shop">
+                        <input type="number" wire:model="quantity" min="1" max="100" class="py-2 w-12 text-xl mr-3 border-gray-600 border rounded-xl">
+                        <input type="submit" class="btn-secondary" value="Ajouter au panier">
+                    </form>
                         <a href="" class="btn-icon-favorite ml-2"><i class="fa-solid fa-heart"></i></a>
                     @else
                         <a href="{{ route('front.login') }}" class="btn-secondary">Se connecter</a>
@@ -154,14 +158,9 @@
         </div>
         <div class="entry-content">
             @if($tab === '1')
-                @if($product->description)
+                @if($product->long_description)
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nec tellus lacus. Vestibulum ac tincidunt nisl.
-                        Donec in augue eu augue dignissim maximus vel eu tortor. Sed aliquet urna eget scelerisque elementum.
-                        Praesent feugiat mi eu consequat blandit. Interdum et malesuada fames ac ante ipsum primis in faucibus.
-                        Nam porta pellentesque nisl, eu vulputate massa ultricies at. Cras bibendum nunc nec lacus consectetur,
-                        vitae pulvinar neque dapibus. Quisque fermentum pharetra magna. Praesent pretium nec ipsum in gravida.
-                        Pellentesque et scelerisque diam. Donec sagittis a magna vel cursus.
+                        {{ $product->long_description }}
                     </p>
                 @else
                     <p>
