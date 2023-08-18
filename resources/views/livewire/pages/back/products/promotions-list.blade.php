@@ -21,10 +21,10 @@
                                     <img class="object-cover w-full rounded-lg" src="{{ asset('img/medias/slide-1-hero.jpg') }}" alt="Description de l'image 1"/>
                                 </div>
                                 <div class="w-1/2 p-2">
-                                    <img class="object-cover w-full rounded-lg" src="{{ asset('img/medias/slide-1-hero.jpg') }}" alt="Description de l'image 2"/>
+                                    <img class="object-cover w-full rounded-lg" src="{{ asset('img/medias/slide-2-hero.jpg') }}" alt="Description de l'image 2"/>
                                 </div>
                                 <div class="w-1/2 p-2">
-                                    <img class="object-cover w-full rounded-lg" src="{{ asset('img/medias/slide-1-hero.jpg') }}" alt="Description de l'image 3"/>
+                                    <img class="object-cover w-full rounded-lg" src="{{ asset('img/medias/slide-2-hero.jpg') }}" alt="Description de l'image 3"/>
                                 </div>
                                 <div class="w-1/2 p-2">
                                     <img class="object-cover w-full rounded-lg" src="{{ asset('img/medias/slide-1-hero.jpg') }}" alt="Description de l'image 4"/>
@@ -36,20 +36,14 @@
                             <div class="whitespace-nowrap text-center font-semibold w-3/4">
                                 <span class="text-red-700">{{ $item->end_date }}Date limite</span>
                             </div>
-                            <label for="state" class="relative inline-flex items-center cursor-pointer">
-                                <input type="checkbox" id="state" class="sr-only peer">
-                                <div class="w-11 h-6 bg-red-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                            <label wire:click.stop for="state-{{ $item->id }}" class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="state-{{ $item->id }}" class="sr-only peer">
+                                <div class="w-11 h-6 bg-red-700 peer @if($item->active) peer-checked:bg-green-600 peer-checked:after:border-white peer-checked:after:translate-x-full @endif peer-focus:outline-none rounded-full  after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600"></div>
                             </label>
                             <div class="whitespace-nowrap text-xl font-semibold text-[#fbbc34] w-12">
                                 {{ $item->discount }} %
                             </div>
                         </div>
-                        {{-- <div class="whitespace-nowrap text-center font-semibold w-3/4">
-                            {{ $item->title }}
-                        </div> --}}
-                        {{-- <div class="whitespace-nowrap text-xl font-semibold text-[#fbbc34] w-12">
-                            {{ $item->discount }} %
-                        </div> --}}
                     </div>
                 </button>
             @endforeach
