@@ -1,7 +1,7 @@
 <div id="front-footer">
     <div class="entry-top">
         <div class="container mx-auto">
-            <div class="grid grid-cols-4 gap-5">
+            <div class="flex flex-row justify-between">
                 <div>
                     <h2>TOP DIFFUSION</h2>
                     <ul class="mt-7">
@@ -24,21 +24,35 @@
                         <li><a href="{{ route('front.faq') }}">FAQ</a></li>
                     </ul>
                 </div>
-                <div>
-                    <h2>Nous joindre</h2>
-                    <ul class="mt-7">
-                        <li><i class="fa-solid fa-phone mr-2"></i>0262 00 00 00</li>
-                        <li><i class="fa-solid fa-at mr-2"></i>email-contact@test.com</li>
-                    </ul>
-                </div>
-                <div>
-                    <h2>Rester connecté !</h2>
-                    <ul class="mt-7">
-                        <li><i class="fa-brands fa-facebook mr-2"></i>Facebook</li>
-                        <li><i class="fa-brands fa-instagram mr-2"></i>Instagram</li>
-                        <li><i class="fa-brands fa-twitter mr-2"></i>Twitter</li>
-                    </ul>
-                </div>
+                @if ($setting->main_phone || $setting->main_email)
+                    <div>
+                        <h2>Nous joindre</h2>
+                        <ul class="mt-7">
+                            @if ($setting->main_phone)
+                                <li><i class="fa-solid fa-phone mr-2"></i>{{ $setting->main_phone }}</li>
+                            @endif
+                            @if ($setting->main_email)
+                                <li><i class="fa-solid fa-at mr-2"></i>{{ $setting->main_email }}</li>
+                            @endif
+                        </ul>
+                    </div>
+                @endif
+                @if ($setting->social_facebook || $setting->social_insta || $setting->social_twitter)
+                    <div>
+                        <h2>Rester connecté !</h2>
+                        <ul class="mt-7">
+                            @if ($setting->social_facebook)
+                                <li><a href="{{ $setting->social_facebook }}"><i class="fa-brands fa-facebook mr-2"></i>Facebook</a></li>
+                            @endif
+                            @if ($setting->social_insta)
+                                <li><a href="{{ $setting->social_insta }}"><i class="fa-brands fa-instagram mr-2"></i>Instagram</a></li>
+                            @endif
+                            @if ($setting->social_twitter)
+                                <li><a href="{{ $setting->social_twitter }}"><i class="fa-brands fa-twitter mr-2"></i>Twitter</a></li>
+                            @endif
+                        </ul>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

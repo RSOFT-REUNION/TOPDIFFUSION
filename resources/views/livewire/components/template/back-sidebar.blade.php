@@ -94,6 +94,9 @@
                     <li><a href="{{ route('back.setting.payment') }}"
                             class="btn-sidebar mt-1 @if ($page == 'payment') btn-sidebar-active @endif"><i
                                 class="fa-solid fa-credit-card mr-3"></i>Paiement & taxes</a></li>
+                    <li><a href="{{ route('back.setting.info') }}"
+                        class="btn-sidebar mt-1 @if ($page == 'informations') btn-sidebar-active @endif"><i
+                            class="fa-solid fa-circle-info mr-3"></i>Informations</a></li>
                     <h2>Réglages avancée</h2>
                     <li><a href="{{ route('back.setting.avanced') }}"
                             class="btn-sidebar @if ($page == 'avance') btn-sidebar-active @endif"><i

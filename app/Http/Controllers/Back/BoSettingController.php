@@ -50,4 +50,15 @@ class BoSettingController extends Controller
         $data['page'] = 'perform';
         return view('pages.backend.settings.setting-perform', $data);
     }
+
+    /*
+     * Show informations settings
+     */
+    public function showSettingInfo()
+    {
+        $data = [];
+        $data['group'] = 'settings';
+        $data['page'] = 'informations';
+        return view('pages.backend.settings.informations', $data);
+    }
 }
