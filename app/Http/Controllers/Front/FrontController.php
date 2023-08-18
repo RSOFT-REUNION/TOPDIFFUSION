@@ -40,6 +40,7 @@ class FrontController extends Controller
     public function showLogin()
     {
         $data = [];
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
         $data['page'] = 'login';
         return view('pages.frontend.sign.sign-in', $data);
     }
@@ -69,6 +70,7 @@ class FrontController extends Controller
     {
         $data = [];
         $data['page'] = 'register';
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
         return view('pages.frontend.sign.sign-up', $data);
     }
 
