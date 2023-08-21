@@ -90,6 +90,7 @@ class FrontController extends Controller
         $data['addresses'] = UserAddress::where('user_id', auth()->user()->id)->get();
         $data['page'] = 'profil';
         $data['account_page'] = 'informations';
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
         return view('pages.frontend.profile.my-account', $data);
     }
 
@@ -110,6 +111,7 @@ class FrontController extends Controller
         $data['nav-sidebar'] = auth()->user();
         $data['bikes'] = UserBike::where('user_id', auth()->user()->id)->get();
         $data['account_page'] = 'bikes';
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
         return view('pages.frontend.profile.my-bikes', $data);
     }
 
@@ -132,6 +134,7 @@ class FrontController extends Controller
         $data = [];
         $data['group'] = 'legal';
         $data['page'] = 'test';
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
         return view('pages.frontend.legal.about', $data);
     }
 
@@ -140,6 +143,7 @@ class FrontController extends Controller
         $data = [];
         $data['group'] = 'legal';
         $data['page'] = 'about';
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
         $data['pageContent'] = Pages::where('key', 'about')->first();
         return view('pages.frontend.legal.about', $data);
     }
@@ -149,6 +153,7 @@ class FrontController extends Controller
         $data = [];
         $data['group'] = 'legal';
         $data['page'] = 'legal';
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
         $data['pageContent'] = Pages::where('key', 'legal')->first();
         return view('pages.frontend.legal.legal-mentions', $data);
     }
@@ -158,6 +163,7 @@ class FrontController extends Controller
         $data = [];
         $data['group'] = 'legal';
         $data['page'] = 'confidential';
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
         $data['pageContent'] = Pages::where('key', 'confidential')->first();
         return view('pages.frontend.legal.confidential', $data);
     }
@@ -167,6 +173,7 @@ class FrontController extends Controller
         $data = [];
         $data['group'] = 'legal';
         $data['page'] = 'faq';
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
         $data['pageContent'] = Pages::where('key', 'faq')->first();
         return view('pages.frontend.legal.faq', $data);
     }
