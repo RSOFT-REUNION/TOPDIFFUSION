@@ -13,6 +13,9 @@ use App\Models\ProductBrand;
 use Illuminate\Http\Request;
 use App\Models\SettingGeneral;
 use App\Http\Controllers\Controller;
+use App\Models\CarrouselHome;
+use Illuminate\Support\Carbon;
+
 
 class FrontController extends Controller
 {
@@ -31,6 +34,7 @@ class FrontController extends Controller
             $data['my_setting'] = UserSetting::where('user_id', auth()->user()->id)->first();
         }
         $data['page'] = 'home';
+        $data['carrousel'] = CarrouselHome::get()->first();
         $data['products'] = MyProduct::orderBy('created_at', 'desc')->get()->take(6);
         $data['brands'] = ProductBrand::all()->take(4);
         return view('pages.frontend.home', $data);
@@ -40,6 +44,7 @@ class FrontController extends Controller
     public function showLogin()
     {
         $data = [];
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
         $data['page'] = 'login';
         return view('pages.frontend.sign.sign-in', $data);
     }
@@ -69,6 +74,7 @@ class FrontController extends Controller
     {
         $data = [];
         $data['page'] = 'register';
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
         return view('pages.frontend.sign.sign-up', $data);
     }
 
@@ -88,6 +94,7 @@ class FrontController extends Controller
         $data['addresses'] = UserAddress::where('user_id', auth()->user()->id)->get();
         $data['page'] = 'profil';
         $data['account_page'] = 'informations';
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
         return view('pages.frontend.profile.my-account', $data);
     }
 
@@ -108,6 +115,7 @@ class FrontController extends Controller
         $data['nav-sidebar'] = auth()->user();
         $data['bikes'] = UserBike::where('user_id', auth()->user()->id)->get();
         $data['account_page'] = 'bikes';
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
         return view('pages.frontend.profile.my-bikes', $data);
     }
 
@@ -125,46 +133,80 @@ class FrontController extends Controller
      *  Legal information
      */
 
-    public function showTest()
-    {
-        $data = [];
-        $data['group'] = 'legal';
-        $data['page'] = 'test';
-        return view('pages.frontend.legal.about', $data);
-    }
+    //! a verifier
+    // public function showTest()
+    // {
+    //     $data = [];
+    //     $data['group'] = 'legal';
+    //     $data['page'] = 'test';
+    //     $data['setting'] = SettingGeneral::where('id', 1)->first();
+    //     return view('pages.frontend.legal.about', $data);
+    // }
 
     public function showAbout()
     {
+        $page_date = Pages::where('key', 'about')->first();
+        Carbon::setLocale('fr');
+        $date = Carbon::parse($page_date->created_at);
+        $month = ucfirst($date->isoFormat('MMMM'));
+        $year = $date->isoFormat('YYYY');
+        $formattedDate = "$month $year";
         $data = [];
+        $data['formattedDate'] = $formattedDate;
         $data['group'] = 'legal';
         $data['page'] = 'about';
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
         $data['pageContent'] = Pages::where('key', 'about')->first();
         return view('pages.frontend.legal.about', $data);
     }
 
     public function showLegal()
     {
+        $page_date = Pages::where('key', 'legal')->first();
+        Carbon::setLocale('fr');
+        $date = Carbon::parse($page_date->created_at);
+        $month = ucfirst($date->isoFormat('MMMM'));
+        $year = $date->isoFormat('YYYY');
+        $formattedDate = "$month $year";
         $data = [];
+        $data['formattedDate'] = $formattedDate;
         $data['group'] = 'legal';
         $data['page'] = 'legal';
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
         $data['pageContent'] = Pages::where('key', 'legal')->first();
         return view('pages.frontend.legal.legal-mentions', $data);
     }
 
     public function showConfidential()
     {
+        $page_date = Pages::where('key', 'confidential')->first();
+        Carbon::setLocale('fr');
+        $date = Carbon::parse($page_date->created_at);
+        $month = ucfirst($date->isoFormat('MMMM'));
+        $year = $date->isoFormat('YYYY');
+        $formattedDate = "$month $year";
         $data = [];
+        $data['formattedDate'] = $formattedDate;
         $data['group'] = 'legal';
         $data['page'] = 'confidential';
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
         $data['pageContent'] = Pages::where('key', 'confidential')->first();
         return view('pages.frontend.legal.confidential', $data);
     }
 
     public function showFaq()
     {
+        $page_date = Pages::where('key', 'faq')->first();
+        Carbon::setLocale('fr');
+        $date = Carbon::parse($page_date->created_at);
+        $month = ucfirst($date->isoFormat('MMMM'));
+        $year = $date->isoFormat('YYYY');
+        $formattedDate = "$month $year";
         $data = [];
+        $data['formattedDate'] = $formattedDate;
         $data['group'] = 'legal';
         $data['page'] = 'faq';
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
         $data['pageContent'] = Pages::where('key', 'faq')->first();
         return view('pages.frontend.legal.faq', $data);
     }

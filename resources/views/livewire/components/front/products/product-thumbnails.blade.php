@@ -5,11 +5,14 @@
                 <div class="content-icons">
                     <div class="flex">
                         <div class="flex-none">
-                            <div class="tags-group">
+                            <div class="tags-group flex gap-x-3 ml-1">
                                 @if($product_stock == 0)
                                     <p class="tags bg-red-500 text-white">Rupture de stock</p>
                                 @elseif($product_stock < 3 && $product_stock > 0)
                                     <p class="tags bg-orange-500 text-white">Plus que {{ $product_stock }}</p>
+                                @endif
+                                @if ($category)
+                                    <p class="tags bg-[#fbbc34] text-black">{{ $category->delivery }} %</p>
                                 @endif
                             </div>
                         </div>
