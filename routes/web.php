@@ -9,7 +9,7 @@ use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\Front\ProductController;
 use App\Http\Controllers\Back\BoProductController;
 use App\Http\Controllers\Back\BoSettingController;
-
+use App\Http\Controllers\ErrorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +35,7 @@ Route::get('/liste-produit/categorie-{slug}', [ProductController::class, 'showPr
 
 Route::middleware(['App\Http\Middleware\RedirectIfMaintenanceModeActive']);
 
+Route::get('/maintenance', [ErrorController::class, 'showErrorMaintenance'])->name('maintenance');
 
 // It's a user
 Route::group([
