@@ -17,6 +17,7 @@ class ProductController extends Controller
 
         $data = [];
         $data['product'] = $myProduct;
+        $data['page'] = 'produit';
         $data['setting'] = SettingGeneral::where('id', 1)->first();
         return view('pages.frontend.products.products-page', $data);
     }
@@ -25,6 +26,7 @@ class ProductController extends Controller
     {
         $data = [];
         $data['slug'] = $slug;
+        $data['page'] = 'produit liste';
         $data['setting'] = SettingGeneral::where('id', 1)->first();
         return view('pages.frontend.products.products-list', $data);
     }

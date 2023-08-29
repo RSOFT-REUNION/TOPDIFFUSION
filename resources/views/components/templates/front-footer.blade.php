@@ -1,7 +1,7 @@
 <div id="front-footer">
     <div class="entry-top">
         <div class="container mx-auto">
-            <div class="flex flex-row justify-between">
+            <div class="flex flex-row justify-evenly">
                 <div>
                     <h2>TOP DIFFUSION</h2>
                     <ul class="mt-7">

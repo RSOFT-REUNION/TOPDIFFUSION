@@ -85,5 +85,30 @@
                 </label>
             </div>
         </div>
+        <div class="border-b border-gray-200">
+            <div class=" flex items-center mt-2">
+                <div class="flex-1">
+                    <label for="prices_mode">Carrousel principal</label>
+                    <p class="text-sm text-gray-500">Le changement des images ici changera directment le carrousel de l'accueil de votre site</p>
+                </div>
+                <div class="flex-none">
+                    <a wire:click="$emit('openModal', 'popups.back.setting.add-picture-carrousel')" class="bg-secondary duration-500 border border-gray-300 px-3 py-2 rounded-lg cursor-pointer">Ajouter une image</a>
+                </div>
+
+            </div>
+            <div class="mt-7">
+                @if($CarrouselHome->count() > 0)
+                    @foreach($CarrouselHome as $home)
+                        <div class="container-carousel_list" style="background-image: url('{{ asset('storage/medias/'. $home->getPicture()) }}')">
+                            <div class="buttons">
+                                <button wire:click="deleteCarousel({{ $home->id }})" class="btn-icon_secondary"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </div>
+                    @endforeach
+                @else
+                    <p class="empty-text">Vous n'avez pas encore configurer votre carousel</p>
+                @endif
+            </div>
+        </div>
     </div>
 </div>
