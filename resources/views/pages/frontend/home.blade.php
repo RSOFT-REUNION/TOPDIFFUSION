@@ -2,12 +2,20 @@
 
 @section('content-template')
     <!-- HERO BANNER -->
-    <div class="hero-banner" style="background-image: url({{ asset('img/medias/slide-1-hero.jpg') }})">
+    @if ($carrousel)
+        <div class="flex flex-col h-screen">
+            <div class="flex-none">
+                @livewire('components.front.hero-banner')
+            </div>
+        </div>
+    @endif
+
+    {{-- <div class="hero-banner" style="background-image: url({{ asset('img/medias/slide-1-hero.jpg') }})">
         <div class="container m-auto">
             <img src="{{ asset('img/logos/White.svg') }}" width="200px" class="ml-5">
             <h2>Votre magasin spécialisé !</h2>
         </div>
-    </div>
+    </div> --}}
 
     <!-- OUR NEWS -->
     <div class="container-our-news">

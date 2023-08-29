@@ -33,9 +33,12 @@ Route::get('/deconnexion', [FrontController::class, 'logout'])->name('logout');
 Route::get('/produit-{slug}', [ProductController::class, 'showProduct'])->name('front.product');
 Route::get('/liste-produit/categorie-{slug}', [ProductController::class, 'showProductList'])->name('front.product.list');
 
+Route::middleware(['App\Http\Middleware\RedirectIfMaintenanceModeActive']);
+
+
 // It's a user
 Route::group([
-    'middleware' => 'App\Http\Middleware\Customer'
+    'middleware' => ['App\Http\Middleware\Customer', 'App\Middleware\CheckMaintenanceMode']
 ], function () {
     Route::get('/profil', [FrontController::class, 'showProfile'])->name('front.profile');
     Route::get('/profil/suppression/adresse-{id}', [FrontController::class, 'deletedAddress'])->name('front.profile.delete.address');
@@ -93,6 +96,7 @@ Route::group([
             Route::get('/paiement-et-taxes', [BoSettingController::class, 'showSettingPayment'])->name('back.setting.payment');
             Route::get('/avance', [BoSettingController::class, 'showSettingAvanced'])->name('back.setting.avanced');
             Route::get('/performance', [BoSettingController::class, 'showSettingPerform'])->name('back.setting.perform');
+            Route::get('/information', [BoSettingController::class, 'showSettingInfo'])->name('back.setting.info');
         });
     });
 });

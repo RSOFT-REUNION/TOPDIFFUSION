@@ -2,6 +2,6 @@
 
 @section('content-template')
     <div id="back_page_content">
-        @livewire('pages.back.settings.general', ['CarrouselHome' => $CarrouselHome])
+        @livewire('pages.back.settings.informations')
     </div>
 @endsection

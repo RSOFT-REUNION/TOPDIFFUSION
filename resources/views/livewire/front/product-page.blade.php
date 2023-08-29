@@ -16,6 +16,16 @@
                     <li class="carousel_slide">
                         <figure>
                             <div>
+                                <div class="absolute ml-2 mt-2 flex gap-x-3 h-8">
+                                    @if($product_stock == 0)
+                                        <p class="inline-block bg-red-500 stock-tag-off font-bold rounded-md text-white">Rupture de stock</p>
+                                    @elseif($product_stock < 3 && $product_stock > 0)
+                                        <p class="inline-block bg-orange-500 stock-tag-on text-white">Plus que {{ $product_stock }}</p>
+                                    @endif
+                                    @if ($category)
+                                        <p class="inline-block marque-tag bg-[#fbbc34] font-bold text-black">{{ $category->delivery }} %</p>
+                                    @endif
+                                </div>
                                 <img src="{{ asset('storage/images/products/'. $product->cover) }}">
                             </div>
                         </figure>
@@ -41,8 +51,11 @@
         <div class="flex-1 ml-2">
             <form wire:submit.prevent="createCart">
                 @csrf
-                <div class="inline-flex items-center">
+                <div class="inline-flex items-center gap-x-3">
                     <p class="marque-tag">{{ $product->getBrand()->title }}</p>
+                    {{-- @if ($category)
+                        <p class="marque-tag bg-[#fbbc34] text-black">{{ $category->delivery }} %</p>
+                    @endif --}}
                     @if($product_infos->count() > 0)
                         @foreach($product_infos as $info)
                             @if($info->title == 'POS')

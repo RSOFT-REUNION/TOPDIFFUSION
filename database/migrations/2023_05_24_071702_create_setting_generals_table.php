@@ -22,6 +22,13 @@ return new class extends Migration
             $table->boolean('catalogue_mode')->default(0);
             $table->integer('prices_type')->default(1);
             $table->boolean('bikes_compatibility')->default(1);
+            $table->string('main_email')->nullable();
+            $table->string('main_phone')->nullable();
+            $table->string('social_facebook')->nullable();
+            $table->string('social_insta')->nullable();
+            $table->string('social_twitter')->nullable();
+            $table->string('social_youtube')->nullable();
+            $table->string('social_linkedin')->nullable();
             $table->timestamps();
         });
     }

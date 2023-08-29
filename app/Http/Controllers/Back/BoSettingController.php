@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Models\CarrouselHome;
 use Illuminate\Http\Request;
 
 class BoSettingController extends Controller
@@ -15,6 +16,8 @@ class BoSettingController extends Controller
         $data = [];
         $data['group'] = 'settings';
         $data['page'] = 'general';
+        $data['CarrouselHome'] = CarrouselHome::orderBy('id', 'asc')->get();
+        // dd($data);
         return view('pages.backend.settings.setting-general', $data);
     }
 
@@ -49,5 +52,16 @@ class BoSettingController extends Controller
         $data['group'] = 'settings';
         $data['page'] = 'perform';
         return view('pages.backend.settings.setting-perform', $data);
+    }
+
+    /*
+     * Show informations settings
+     */
+    public function showSettingInfo()
+    {
+        $data = [];
+        $data['group'] = 'settings';
+        $data['page'] = 'informations';
+        return view('pages.backend.settings.informations', $data);
     }
 }
