@@ -13,7 +13,7 @@ class CheckMaintenanceMode
         $maintenanceMode = SettingGeneral::where('maintenance_mode', 1)->first();
         if ($maintenanceMode) {
             if (!auth()->guest()) {
-                if (auth()->user()->admin == 1) {
+                if (auth()->user()->team == 1) {
                     return $next($request);
                 } else {
                     return redirect()->view('errors.503');

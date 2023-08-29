@@ -3,6 +3,7 @@
 @section('content-app')
     <div id="frontend-page" class="flex flex-col h-screen">
         <div class="flex-none">
+            @livewire('popups.front.maintenance.maintenance')
             <!-- HEADER FRONT -->
             @include('components.templates.front-header')
         </div>
