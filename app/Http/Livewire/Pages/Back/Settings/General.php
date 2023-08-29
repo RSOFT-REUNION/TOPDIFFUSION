@@ -2,13 +2,14 @@
 
 namespace App\Http\Livewire\Pages\Back\Settings;
 
+use App\Models\CarrouselHome;
 use App\Models\SettingGeneral;
 use App\Models\UserSetting;
 use Livewire\Component;
 
 class General extends Component
 {
-    public $prices_mode, $professionnal;
+    public $prices_mode, $professionnal, $CarrouselHome;
 
     public function mount()
     {
@@ -76,6 +77,13 @@ class General extends Component
         if ($setting->update()) {
             return redirect()->route('back.setting');
         }
+    }
+
+    public function deleteCarousel($id)
+    {
+        $carousel = CarrouselHome::where('id', $id)->first();
+        $carousel->delete();
+        return redirect()->route('back.setting');
     }
 
     public function render()

@@ -96,6 +96,7 @@ Route::group([
             Route::get('/paiement-et-taxes', [BoSettingController::class, 'showSettingPayment'])->name('back.setting.payment');
             Route::get('/avance', [BoSettingController::class, 'showSettingAvanced'])->name('back.setting.avanced');
             Route::get('/performance', [BoSettingController::class, 'showSettingPerform'])->name('back.setting.perform');
+            Route::get('/information', [BoSettingController::class, 'showSettingInfo'])->name('back.setting.info');
         });
     });
 });
