@@ -38,7 +38,7 @@ Route::middleware(['App\Http\Middleware\RedirectIfMaintenanceModeActive']);
 
 // It's a user
 Route::group([
-    'middleware' => ['App\Http\Middleware\Customer', 'App\Middleware\CheckMaintenanceMode']
+    'middleware' => ['App\Http\Middleware\Customer', 'App\Http\Middleware\CheckMaintenanceMode']
 ], function () {
     Route::get('/profil', [FrontController::class, 'showProfile'])->name('front.profile');
     Route::get('/profil/suppression/adresse-{id}', [FrontController::class, 'deletedAddress'])->name('front.profile.delete.address');
