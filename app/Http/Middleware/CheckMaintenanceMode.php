@@ -16,7 +16,7 @@ class CheckMaintenanceMode
                 if (auth()->user()->admin == 1) {
                     return $next($request);
                 } else {
-                    return redirect()->route('maintenance');
+                    return redirect()->view('errors.503');
                 }
             } else {
                 return redirect()->route('maintenance');
