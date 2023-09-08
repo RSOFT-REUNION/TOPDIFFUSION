@@ -153,7 +153,14 @@
                         <input type="number" wire:model="quantity" min="1" max="100" class="py-2 w-12 text-xl mr-3 border-gray-600 border rounded-xl">
                         <input type="submit" class="btn-secondary" value="Ajouter au panier">
                     </form>
-                        <a href="" class="btn-icon-favorite ml-2"><i class="fa-solid fa-heart"></i></a>
+                    <a href="#" class="btn-icon-favorite ml-2" wire:click="addProductToFavorite({{ $product->id }})">
+                        <i class="fa-solid fa-heart"></i>
+                    </a>
+
+                    <a href="#" class="btn-icon-favorite ml-2" wire:click="deleteFavorite({{ $product->id }})">
+                        <i class="fa-solid fa-heart"></i>
+                    </a>
+                    {{-- <a href="" class="btn-icon-favorite ml-2"><i class="fa-solid fa-heart"></i></a> --}}
                     @else
                         <a href="{{ route('front.login') }}" class="btn-secondary">Se connecter</a>
                     @endif

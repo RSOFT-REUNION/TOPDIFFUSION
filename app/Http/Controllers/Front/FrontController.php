@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Models\SettingGeneral;
 use App\Http\Controllers\Controller;
 use App\Models\CarrouselHome;
+use App\Models\MyFavorite;
 use Illuminate\Support\Carbon;
 
 
@@ -135,13 +136,38 @@ class FrontController extends Controller
 
     //! a verifier
     // public function showTest()
-    // {
+    // {)
     //     $data = [];
     //     $data['group'] = 'legal';
     //     $data['page'] = 'test';
     //     $data['setting'] = SettingGeneral::where('id', 1)->first();
     //     return view('pages.frontend.legal.about', $data);
     // }
+
+
+    public function showFavorite()
+    {
+        $data = [];
+        $data['page'] = 'favorite';
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
+
+        $favoriteRecords = MyFavorite::where('user_id', auth()->user()->id)->get();
+
+        $favoriteProducts = [];
+
+        foreach ($favoriteRecords as $favoriteRecord) {
+
+            $product = MyProduct::find($favoriteRecord->product_id);
+
+            if ($product) {
+                $favoriteProducts[] = $product;
+            }
+        }
+
+        $data['favoriteUser'] = $favoriteProducts;
+
+        return view('pages.frontend.favorites.favorites', $data);
+    }
 
     public function showAbout()
     {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Front;
 
+use App\Models\MyFavorite;
 use App\Models\MyProduct;
 use App\Models\MyProductInfo;
 use App\Models\MyProductPicture;
@@ -24,21 +25,24 @@ class ProductPage extends Component
     public $seenPignonValue = [];
     public $seenCrownValue = [];
 
+    public $productIsInFavorites = false;
+
     public function mount($product_id)
     {
         $this->product_id = $product_id;
         $category_id_product = MyProduct::where('id', $this->product_id)->first();
         $this->category_id = ProductCategory::find($category_id_product->category_id);
     }
-    public function changeTab($tab){
+    public function changeTab($tab)
+    {
         switch ($tab) {
             case '1':
                 $this->active_tab = '1';
                 break;
-            case '2' :
+            case '2':
                 $this->active_tab = '2';
                 break;
-            case '3' :
+            case '3':
                 $this->active_tab = '3';
                 break;
         }
@@ -47,8 +51,47 @@ class ProductPage extends Component
 
     public function shop()
     {
-
     }
+
+    public function getProductIsInFavoritesProperty()
+    {
+        $user = auth()->user();
+        $this->productIsInFavorites = $user->favorites->contains('id', $this->product->id);
+
+        return $this->productIsInFavorites;
+    }
+
+    public function addProductToFavorite($id)
+    {
+        $actualUser = auth()->user()->id;
+
+
+        $fav = new MyFavorite([
+            'user_id' => $actualUser,
+            'product_id' => $id
+        ]);
+
+        if ($fav->save()) {
+            redirect()->route('front.home');
+        } else {
+            redirect()->route('about');
+        }
+    }
+
+    public function deleteFavorite($id)
+    {
+        $user = auth()->user();
+        $productId = $id;
+
+        $favorite = MyFavorite::where('user_id', $user->id)->where('product_id', $productId)->first();
+
+        if ($favorite) {
+            $favorite->delete();
+        } else {
+            redirect()->route('back.product.list');
+        }
+    }
+
 
     public function render()
     {
@@ -61,7 +104,7 @@ class ProductPage extends Component
         $data['settings'] = SettingGeneral::where('id', 1)->first();
         $data['product_stock'] = MyProductStock::where('product_id', $this->product_id)->get()->sum('quantity');
         $data['category'] = $this->category_id;
-        if(!auth()->guest()) {
+        if (!auth()->guest()) {
             $data['my_setting'] = UserSetting::where('user_id', auth()->user()->id)->first();
         }
         $data['increment'] = 1;

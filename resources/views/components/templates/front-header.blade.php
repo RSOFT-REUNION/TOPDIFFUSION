@@ -20,7 +20,7 @@
                         <a href="{{ route('front.register') }}" class="btn-secondary"><i
                                 class="fa-solid fa-user-plus mr-2"></i>Créer un compte</a>
                     @else
-                        <a href="" class="btn-icon mr-2" title="Favoris"><i class="fa-solid fa-heart"></i></a>
+                        <a href="{{ route('front.favorite') }}" class="btn-icon mr-2" title="Favoris"><i class="fa-solid fa-heart"></i></a>
                         <a href="" class="btn-icon mr-2" title="Panier"><i
                                 class="fa-solid fa-cart-shopping"></i></a>
                         @if (auth()->user()->professionnal === 1 && auth()->user()->verified === 1)
