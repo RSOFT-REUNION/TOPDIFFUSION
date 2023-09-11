@@ -18,7 +18,7 @@
                         </div>
                         <div class="flex-grow"></div>
                         <div class="flex-none">
-                            <a href="" class="btn-icon-favorite"><i class="fa-solid fa-heart"></i></a>
+                            <a href="" class="btn-icon-favorite" wire:click.stop="addProductToFavorite({{ $product->id }})"><i class="fa-solid fa-heart"></i></a>
                         </div>
                     </div>
                 </div>

@@ -65,16 +65,19 @@ class ProductPage extends Component
     {
         $actualUser = auth()->user()->id;
 
+        $verifyIfProductExists = MyFavorite::where('product_id', $id)->first();
 
-        $fav = new MyFavorite([
-            'user_id' => $actualUser,
-            'product_id' => $id
-        ]);
 
-        if ($fav->save()) {
-            redirect()->route('front.home');
-        } else {
-            redirect()->route('about');
+        if (!$verifyIfProductExists) {
+            $fav = new MyFavorite([
+                'user_id' => $actualUser,
+                'product_id' => $id
+            ]);
+            if ($fav->save()) {
+                redirect()->route('front.home');
+            } else {
+                redirect()->route('about');
+            }
         }
     }
 
