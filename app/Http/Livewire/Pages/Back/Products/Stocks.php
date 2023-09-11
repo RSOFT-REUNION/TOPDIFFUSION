@@ -44,7 +44,7 @@ class Stocks extends Component
         $data = [];
         $data['stocks'] = MyProductStock::where('quantity', '>', 3)->get();
         $data['off_stock'] = MyProductStock::where('quantity', 0)->get();
-        $data['low_stock'] = MyProductStock::where('quantity', '<', 3)->get();
+        $data['low_stock'] = MyProductStock::whereIn('quantity', [1, 2, 3])->get();
         return view('livewire.pages.back.products.stocks', $data);
     }
 }
