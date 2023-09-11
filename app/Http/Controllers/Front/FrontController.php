@@ -168,7 +168,7 @@ class FrontController extends Controller
             }
         }
 
-        $data['favoriteUser'] = $favoriteProducts;
+        $data['product'] = $favoriteProducts;
 
         if ($request->route()->getName() === 'front.myFavorite') {
             return view('pages.frontend.profile.my-favorite', $data);
