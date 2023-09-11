@@ -147,7 +147,7 @@ class FrontController extends Controller
 
 
 
-    public function showFavorite()
+    public function showFavorite(Request $request)
     {
         $data = [];
         $data['me'] = auth()->user();
@@ -170,7 +170,7 @@ class FrontController extends Controller
 
         $data['favoriteUser'] = $favoriteProducts;
 
-        if (route('front.myFavorite')) {
+        if ($request->route()->getName() === 'front.myFavorite') {
             return view('pages.frontend.profile.my-favorite', $data);
         } else {
             return view('pages.frontend.favorites.favorites', $data);
