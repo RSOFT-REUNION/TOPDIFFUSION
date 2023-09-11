@@ -116,6 +116,7 @@ class FrontController extends Controller
         $data['nav-sidebar'] = auth()->user();
         $data['bikes'] = UserBike::where('user_id', auth()->user()->id)->get();
         $data['account_page'] = 'bikes';
+        $data['page'] = 'bikes';
         $data['setting'] = SettingGeneral::where('id', 1)->first();
         return view('pages.frontend.profile.my-bikes', $data);
     }
@@ -145,10 +146,13 @@ class FrontController extends Controller
     // }
 
 
+
     public function showFavorite()
     {
         $data = [];
+        $data['me'] = auth()->user();
         $data['page'] = 'favorite';
+        $data['account_page'] = 'favoris';
         $data['setting'] = SettingGeneral::where('id', 1)->first();
 
         $favoriteRecords = MyFavorite::where('user_id', auth()->user()->id)->get();
@@ -166,7 +170,11 @@ class FrontController extends Controller
 
         $data['favoriteUser'] = $favoriteProducts;
 
-        return view('pages.frontend.favorites.favorites', $data);
+        if (route('front.myFavorite')) {
+            return view('pages.frontend.profile.my-favorite', $data);
+        } else {
+            return view('pages.frontend.favorites.favorites', $data);
+        }
     }
 
     public function showAbout()
