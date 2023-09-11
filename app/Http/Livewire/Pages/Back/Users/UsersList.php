@@ -19,6 +19,8 @@ class UsersList extends Component
 
     public $jobs = [];
 
+    public $type;
+
     public $stateFiltre;
 
     public function filtre()
@@ -57,6 +59,7 @@ class UsersList extends Component
         $this->search = '';
         $this->is_search = false;
         $this->jobs = [];
+        $this->type = '';
     }
 
 
@@ -68,6 +71,18 @@ class UsersList extends Component
             $data['users'] = $this->jobs;
         } else {
             $data['users'] = User::where('team', 0)->orderBy('id', 'desc')->get();
+        }
+
+        if ($this->type === "0") {
+            $data['users'] = User::where('professionnal', 0)
+                ->where('team', 0)
+                ->get();
+            $this->filters_count++;
+        } elseif ($this->type) {
+            $data['users'] = User::where('professionnal', $this->type)
+                ->where('team', 0)
+                ->get();
+            $this->filters_count++;
         }
 
         return view('livewire.pages.back.users.users-list', $data);
