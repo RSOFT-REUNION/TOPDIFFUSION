@@ -3,9 +3,16 @@
         <div class="flex-1">
             <h1>Clients</h1>
         </div>
-        <div class="flex-none inline-flex items-center">
+        <label for="" class="px-3"><i class="fa-solid fa-magnifying-glass"></i></label>
+        <input wire:model.debounce.100ms="search" type="text" placeholder="Rechercher un client.." class="bg-transparent px-2 py-3 focus:outline-none border-none focus:border-none duration-300 hover:tracking-wider dark:border-none">
+        @if ($search)
+            <button wire:click="clear" class="px-3">
+                <i class="fa-solid fa-times"></i>
+            </button>
+        @endif
+        {{-- <div class="flex-none inline-flex items-center">
             <a href="" class="btn-icon mr-2"><i class="fa-solid fa-magnifying-glass"></i></a>
-        </div>
+        </div> --}}
     </div>
     <div id="entry-content" class="mt-3">
         @if($users->count() > 0)
