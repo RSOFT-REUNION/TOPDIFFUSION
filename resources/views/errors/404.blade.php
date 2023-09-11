@@ -3,10 +3,12 @@
 @section('title','Top diffusion - Page Introuvable')
 @section('code', '404')
 @section('message')
-    <div class="bg-auto error bg-no-repeat w-full h-full grid grid-rows-1 grid-cols-3">
-        <div class="flex flex-col h-full justify-center ml-32">
-            <span class="text-9xl font-bold">404</span>
-            <span class="font-medium text-5xl">Page introuvable</span>
+    <div class="w-full h-full grid grid-rows-1 grid-cols-3">
+        <div class="flex flex-col h-full justify-center items-center bg-secondary">
+            <div class="flex flex-col">
+                <span class="text-9xl font-bold">404</span>
+                <span class="font-medium text-5xl">Page introuvable</span>
+            </div>
         </div>
         <div class="flex flex-col justify-center items-center h-full col-span-2">
             <img src="{{ asset('img/logos/Blue.svg') }}" width="650px">
