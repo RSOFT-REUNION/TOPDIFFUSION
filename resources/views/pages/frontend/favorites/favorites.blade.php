@@ -17,10 +17,24 @@
         <div class="px-24 my-20">
             <div class="w-full border-b border-black flex justify-between flex-row ">
                 <div class="flex flex-row gap-x-2 items-center">
-                    <p class="font-semibold">Favoris dans l'ordre de date décroissant</p><i class="fa-solid fa-arrow-trend-down"></i>
+                    <a
+                        class="font-semibold flex items-center gap-x-2 justify-center"
+                        href="{{
+                            request()->route('sort') === 'desc'
+                            ? route('front.favorite', ['sort' => 'asc'])
+                            : route('front.favorite', ['sort' => 'desc'])
+                        }}"
+                    >
+                        {{
+                            request()->route('sort') === 'desc'
+                            ? "Favoris dans l'ordre de date décroissant"
+                            : "Favoris dans l'ordre de date croissant"
+                        }}
+                        <i class="fa-solid {{ request()->route('sort') === 'desc' ? 'fa-arrow-trend-down' : 'fa-arrow-trend-up' }}"></i>
+                    </a>
                 </div>
                 <div>
-                    <p class="font-semibold"> favoris</p>
+                    <p class="font-semibold">{{ $totalFavorites }} favoris</p>
                 </div>
             </div>
         </div>

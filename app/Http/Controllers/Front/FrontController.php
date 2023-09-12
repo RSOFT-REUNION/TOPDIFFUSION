@@ -147,7 +147,7 @@ class FrontController extends Controller
 
 
 
-    public function showFavorite(Request $request)
+    public function showFavorite(Request $request, $sort = 'desc')
     {
         $data = [];
         $data['me'] = auth()->user();
@@ -155,7 +155,12 @@ class FrontController extends Controller
         $data['account_page'] = 'favoris';
         $data['setting'] = SettingGeneral::where('id', 1)->first();
 
-        $favoriteRecords = MyFavorite::where('user_id', auth()->user()->id)->get();
+        // $favoriteRecords = MyFavorite::where('user_id', auth()->user()->id)->get();
+        if ($sort === 'asc') {
+            $favoriteRecords = MyFavorite::where('user_id', auth()->user()->id)->orderBy('created_at', 'asc')->get();
+        } else {
+            $favoriteRecords = MyFavorite::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->get();
+        }
 
         $favoriteProducts = [];
 
@@ -169,6 +174,7 @@ class FrontController extends Controller
         }
 
         $data['product'] = $favoriteProducts;
+        $data['totalFavorites'] = $favoriteRecords->count();
 
         if ($request->route()->getName() === 'front.myFavorite') {
             return view('pages.frontend.profile.my-favorite', $data);
