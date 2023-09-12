@@ -153,13 +153,7 @@
                         <input type="number" wire:model="quantity" min="1" max="100" class="py-2 w-12 text-xl mr-3 border-gray-600 border rounded-xl">
                         <input type="submit" class="btn-secondary" value="Ajouter au panier">
                     </form>
-                    <a href="#" class="btn-icon-favorite ml-2" wire:click="addProductToFavorite({{ $product->id }})">
-                        <i class="fa-solid fa-heart"></i>
-                    </a>
-
-                    <a href="#" class="btn-icon-favorite ml-2" wire:click="deleteFavorite({{ $product->id }})">
-                        <i class="fa-solid fa-heart"></i>
-                    </a>
+                    <a href="" class="py-[12px] px-[16px] rounded-full duration-300 ml-2 @if($favoriteLike) bg-[#ff253a20] hover:bg-gray-200 hover:text-black text-red-500 @else bg-gray-200 hover:text-red-500 hover:bg-[#ff253a20] @endif" wire:click="@if($favoriteLike) deleteFavorite({{ $product->id }}) @else addProductToFavorite({{ $product->id }}) @endif "><i class="fa-solid fa-heart"></i></a>
                     {{-- <a href="" class="btn-icon-favorite ml-2"><i class="fa-solid fa-heart"></i></a> --}}
                     @else
                         <a href="{{ route('front.login') }}" class="btn-secondary">Se connecter</a>

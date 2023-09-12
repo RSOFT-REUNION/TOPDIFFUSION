@@ -17,7 +17,7 @@ class ProductPage extends Component
 {
     protected $listeners = ['refreshLines' => '$refresh'];
     public $active_tab = '1';
-    public $product_id, $quantity, $category_id;
+    public $product_id, $quantity, $category_id, $favoriteLike;
 
     public $seenChainsValue = [];
     public $seenPasValue = [];
@@ -32,6 +32,14 @@ class ProductPage extends Component
         $this->product_id = $product_id;
         $category_id_product = MyProduct::where('id', $this->product_id)->first();
         $this->category_id = ProductCategory::find($category_id_product->category_id);
+
+        $favorite = MyFavorite::where('product_id', $product_id)->first();
+
+        if($favorite){
+            $this->favoriteLike = true;
+        } else {
+            $this->favoriteLike = false;
+        }
     }
     public function changeTab($tab)
     {
@@ -74,7 +82,7 @@ class ProductPage extends Component
                 'product_id' => $id
             ]);
             if ($fav->save()) {
-                redirect()->route('front.home');
+                redirect()->back();
             } else {
                 redirect()->route('about');
             }

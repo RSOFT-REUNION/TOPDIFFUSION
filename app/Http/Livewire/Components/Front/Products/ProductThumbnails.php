@@ -13,7 +13,7 @@ use App\Models\ProductCategory;
 
 class ProductThumbnails extends Component
 {
-    public $product, $category_id;
+    public $product, $category_id, $favoriteLike;
 
     protected $listeners = ['refreshLines' => '$refresh'];
 
@@ -21,7 +21,26 @@ class ProductThumbnails extends Component
     {
         $this->product = MyProduct::where('id', $product_id)->first();
         $this->category_id = ProductCategory::find($this->product->category_id);
+
+        $favorite = MyFavorite::where('product_id', $product_id)->first();
+
+        if($favorite){
+            $this->favoriteLike = true;
+        } else {
+            $this->favoriteLike = false;
+        }
     }
+
+    // public function isFavorited($product_id)
+    // {
+    //     $favorite = MyFavorite::where('product_id', $product_id)->first();
+
+    //     if($favorite){
+    //         $this->favoriteLike = true;
+    //     } else {
+    //         $this->favoriteLike = false;
+    //     }
+    // }
 
     public function addProductToFavorite($id)
     {
