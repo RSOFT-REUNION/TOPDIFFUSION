@@ -80,7 +80,7 @@
                     <li><a href="{{ route('back.product.stocks') }}" class="btn-sidebar @if($page == 'stocks') btn-sidebar-active @endif"><i class="fa-solid fa-boxes-stacked mr-3"></i>Stocks</a></li>
                     <li><a href="{{ route('back.product.categories') }}" class="btn-sidebar @if($page == 'categories') btn-sidebar-active @endif"><i class="fa-solid fa-layer-group mr-3"></i>Catégories</a></li>
                     <li><a href="{{ route('back.product.bikes') }}" class="btn-sidebar @if($page == 'bikes') btn-sidebar-active @endif"><i class="fa-solid fa-motorcycle mr-3"></i>Motos</a></li>
-                    <li><a href="{{ route('back.product.promotions') }}" class="btn-sidebar @if($page == 'discounts') btn-sidebar-active @endif"><i class="fa-solid fa-tags mr-3"></i>Promotions</a></li>
+                    <li><a href="{{ route('back.product.promotions') }}" class="btn-sidebar @if($page == 'promotions') btn-sidebar-active @endif"><i class="fa-solid fa-tags mr-3"></i>Promotions</a></li>
                     <li><a href="{{ route('back.product.brands') }}" class="btn-sidebar @if($page == 'brands') btn-sidebar-active @endif"><i class="fa-solid fa-crown mr-3"></i>Marques</a></li>
                     <li><a href="{{ route('back.product.options') }}" class="btn-sidebar @if($page == 'options') btn-sidebar-active @endif"><i class="fa-solid fa-sliders mr-3"></i>Options</a></li>
                 </ul>
@@ -123,7 +123,7 @@
                         class="fa-solid fa-person-walking-arrow-loop-left"></i></a>
                 <a href="" class="btn-icon block mr-2" title="Notifications"><i
                         class="fa-solid fa-bell"></i></a>
-                <a href="" class="btn-icon block" title="Se déconnecter"><i
+                <a href="{{ route('logout') }}" class="btn-icon block" title="Se déconnecter"><i
                         class="fa-solid fa-arrow-right-to-bracket"></i></a>
             </div>
         </div>

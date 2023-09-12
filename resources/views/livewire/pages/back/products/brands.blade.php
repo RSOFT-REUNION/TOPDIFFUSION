@@ -33,7 +33,9 @@
                                 </td>
                                 <td>{{ $brand->title }}</td>
                                 <td>@if($brand->url) {{ $brand->url }} @else -- @endif</td>
-                                <td></td>
+                                <td>
+                                    <button wire:click="deleteBrand({{ $brand->id }})" class="btn-icon_secondary"><i class="fa-solid fa-trash"></i></button>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
