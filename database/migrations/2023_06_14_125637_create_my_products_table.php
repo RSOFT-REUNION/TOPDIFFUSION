@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('type')->default(1); // 1 -> Simple Product; 2 -> Swatches Product;
             $table->string('cover')->nullable();
             $table->foreignId('category_id')->constrained('product_categories', 'id');
-            $table->foreignId('brand_id')->constrained('product_brands', 'id');
+            $table->foreignId('brand_id')->nullable()->constrained('product_brands', 'id');
             $table->text('short_description')->nullable();
             $table->text('long_description')->nullable();
             $table->boolean('deleted')->default(0);
