@@ -14,7 +14,7 @@ class Brands extends Component
         $brand = ProductBrand::find($id);
 
         if ($brand) {
-            MyProduct::where('brand_id', $brand->id)->update(['brand_id' => 2]);
+            MyProduct::where('brand_id', $brand->id)->update(['brand_id' => null]);
 
             $brand->delete();
         }
