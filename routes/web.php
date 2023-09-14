@@ -50,7 +50,8 @@ Route::group([
     Route::get('/a-propos', [FrontController::class, 'showAbout'])->name('front.about');
     Route::get('/politique-de-confidentialite', [FrontController::class, 'showConfidential'])->name('front.confidential');
     Route::get('/informations-legales', [FrontController::class, 'showlegal'])->name('front.legal');
-    Route::get('/faq', [FrontController::class, 'showFaq'])->name('front.faq');
+    Route::get('/faq-1', [FrontController::class, 'showFaq'])->name('front.faq');
+    // Ne pas oulbier de changer
 });
 
 // It's a team member
@@ -85,7 +86,7 @@ Route::group([
             Route::get('/politique-de-confidentialite', [LegalController::class, 'showConfidential'])->name('confidential');
             Route::post('/politique-de-confidentialite', [LegalController::class, 'postConfidential'])->name('post.confidential');
             Route::get('/faq', [LegalController::class, 'showFaq'])->name('faq');
-            Route::post('/faq', [LegalController::class, 'postFaq'])->name('faq');
+            Route::post('/faq', [LegalController::class, 'postFaq']);
         });
 
         Route::prefix('/clients')->group(function () {
