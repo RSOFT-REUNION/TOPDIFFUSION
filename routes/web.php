@@ -2,14 +2,15 @@
 
 use App\Http\Controllers\PagesLegal;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Back\LegalController;
+use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\Back\BackController;
+use App\Http\Controllers\Back\LegalController;
+use App\Http\Controllers\Back\BoTeamController;
 use App\Http\Controllers\Back\BoUserController;
 use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\Front\ProductController;
 use App\Http\Controllers\Back\BoProductController;
 use App\Http\Controllers\Back\BoSettingController;
-use App\Http\Controllers\ErrorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -93,6 +94,11 @@ Route::group([
             Route::get('/liste', [BoUserController::class, 'showUserList'])->name('back.user.list');
             Route::get('/{user}', [BoUserController::class, 'showUserSingle'])->name('back.user.single');
             Route::get('/{user}/verified', [BoUserController::class, 'validateProfessionnal'])->name('back.user.verified');
+        });
+
+        Route::prefix('/equipes')->group(function () {
+            Route::get('/liste', [BoTeamController::class, 'showListTeam'])->name('back.team.list');
+            Route::get('/{user}', [BoTeamController::class, 'showSingleMember'])->name('back.team.single');
         });
 
         Route::prefix('/reglages')->group(function () {

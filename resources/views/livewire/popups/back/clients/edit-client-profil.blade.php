@@ -2,7 +2,7 @@
     <div class="entry-header">
         <div class="flex items-center">
             <div class="flex-1">
-                <h2>Modification de mon profil</h2>
+                <h2>Modification du profil de {{ $lastname }}</h2>
             </div>
             <div class="flex-none">
                 <a wire:click="$emit('closeModal')" class="btn-icon block cursor-pointer"><i class="fa-solid fa-xmark"></i></a>

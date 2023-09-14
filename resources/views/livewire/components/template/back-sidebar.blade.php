@@ -25,7 +25,7 @@
                     <h2>Paramètres</h2>
                     <li><a href="{{ route('back.setting') }}" class="btn-sidebar"><i
                                 class="fa-solid fa-sliders mr-3"></i>Réglages</a></li>
-                    <li><a href="{{ route('back.product.list') }}" class="btn-sidebar"><i
+                    <li><a href="{{ route('back.team.list') }}" class="btn-sidebar"><i
                                 class="fa-solid fa-people-group mr-3"></i>Équipes</a></li>
                     <li><a href="{{ route('back.product.list') }}" class="btn-sidebar"><i
                                 class="fa-solid fa-circle-info mr-3"></i>À propos</a></li>
@@ -93,6 +93,15 @@
                             class="btn-sidebar @if ($page == 'list') btn-sidebar-active @endif"><i
                                 class="fa-solid fa-users mr-3"></i>Clients</a></li>
                 </ul>
+            @elseif($group == 'teams')
+            <!-- Users menus -->
+            <ul>
+                <li><a href="{{ route('back.dashboard') }}" class="btn-sidebar border-b border-gray-300 mb-3"><i
+                            class="fa-solid fa-arrow-left mr-3"></i>Retour</a></li>
+                <li><a href="{{ route('back.team.list') }}"
+                        class="btn-sidebar @if ($page == 'list') btn-sidebar-active @endif"><i
+                            class="fa-solid fa-users mr-3"></i>Equipes</a></li>
+            </ul>
             @elseif($group == 'settings')
                 <!-- Settings menus -->
                 <ul>

@@ -59,7 +59,7 @@
                                 </div>
                             </div>
                         </div>
-                        @if($user->professionnal)
+                        {{-- @if($user->professionnal)
                             <div class="mt-4 border-t border-gray-100 pt-2">
                                 <h2 class="subtitle">Information sur l'entreprise</h2>
                                 <div class="flex mt-3">
@@ -85,9 +85,9 @@
                                     </div>
                                 </div>
                             </div>
-                        @endif
-                        <div class="mt-4 border-t border-gray-100 pt-2">
-                            <h2 class="subtitle">Adresses du client</h2>
+                        @endif --}}
+                        {{-- <div class="mt-4 border-t border-gray-100 pt-2">
+                            <h2 class="subtitle">Adresse du client</h2>
                             @if($userAddress->count() > 0)
                                 <div class="table-box-outline mt-3">
                                     <table>
@@ -123,7 +123,7 @@
                             @else
                                 <p class="empty-text mt-2">Le client n'as pas encore renseigné d'adresse</p>
                             @endif
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="flex-none ml-2">
                         <div class="container-sidebar-options bg-gray-100">
