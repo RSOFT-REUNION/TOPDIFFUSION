@@ -49,7 +49,7 @@
         <div class="grid grid-cols-4 gap-10 items-center mt-10">
             @foreach ($brands as $brand)
                 <div class="force-center">
-                    <img src="{{ asset('storage/images/brands/' . $brand->picture) }}" width="200px" />
+                    <a href="{{ $brand->url }}"><img src="{{ asset('storage/images/brands/' . $brand->picture) }}" width="200px" /></a>
                 </div>
             @endforeach
         </div>

@@ -78,7 +78,7 @@ Route::group([
         });
 
         Route::prefix('/mes-pages')->group(function () {
-            Route::get('/', [LegalController::class, 'showTest'])->name('bouton.test');
+            // Route::get('/', [LegalController::class, 'showTest'])->name('bouton.test');
             Route::get('/a-propos', [LegalController::class, 'showAbout'])->name('about');
             Route::post('/a-propos', [LegalController::class, 'postAbout'])->name('post.about');
             Route::get('/informations-legales', [LegalController::class, 'showLegal'])->name('legal');

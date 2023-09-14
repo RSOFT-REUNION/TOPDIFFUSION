@@ -56,13 +56,13 @@
                     {{-- @if ($category)
                         <p class="marque-tag bg-[#fbbc34] text-black">{{ $category->delivery }} %</p>
                     @endif --}}
-                    @if($product_infos->count() > 0)
+                    {{-- @if($product_infos->count() > 0)
                         @foreach($product_infos as $info)
                             @if($info->title == 'POS')
                                 <p class="ml-1 other-tag">{{ $info->value }}</p>
                             @endif
                         @endforeach
-                    @endif
+                    @endif --}}
                 </div>
                 <div class="product-title">
                     <h1>{{ $product->title }}</h1>
