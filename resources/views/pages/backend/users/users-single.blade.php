@@ -125,7 +125,10 @@
                             @if($user->professionnal == 1 && $user->verified == 0)
                                 <a href="{{ route('back.user.verified', ['user' => $user->customer_code]) }}" class="text-amber-500 bg-amber-100 border border-amber-200 rounded-lg"><i class="fa-solid fa-circle-check mr-3"></i>Valider le profil</a>
                             @endif
-                            <a href="" class="mt-1"><i class="fa-solid fa-pen-to-square mr-3"></i>Modifier le profil</a>
+                            <div class="flex-none">
+                                <a onclick="Livewire.emit('openModal', 'popups.back.clients.edit-client-profil', {{ json_encode(['user_id' => $user->id]) }})" class="btn-secondary cursor-pointer"><i class="fa-solid fa-pen-to-square mr-3"></i>Modifier les informations</a>
+                            </div>
+                            {{-- <a href="" class="mt-1"><i class="fa-solid fa-pen-to-square mr-3"></i>Modifier le profil</a> --}}
                         </div>
                     </div>
                 </div>

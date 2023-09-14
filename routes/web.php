@@ -66,7 +66,7 @@ Route::group([
             Route::get('/creation', [BoProductController::class, 'createProduct'])->name('back.product.create');
             Route::get('/creer-un-produit-{id}', [BoProductController::class, 'showCreateProduct'])->name('back.product.show.create');
             Route::get('/ajout-{id}-{product}', [BoProductController::class, 'showAddProduct'])->name('back.product.add');
-            Route::get('/categories', [BoProductController::class, 'showProductCategories'])->name('back.product.categories');
+            Route::get('/categoriess', [BoProductController::class, 'showProductCategories'])->name('back.product.categories');
             Route::get('/motos', [BoProductController::class, 'showProductBikes'])->name('back.product.bikes');
             Route::get('/marques', [BoProductController::class, 'showProductBrands'])->name('back.product.brands');
             Route::get('/options', [BoProductController::class, 'showProductOptions'])->name('back.product.options');
