@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Models\MyProduct;
 use App\Models\Product;
 use App\Models\ProductGroupTag;
 use App\Models\ProductTemp;
@@ -45,7 +46,7 @@ class BoProductController extends Controller
         $data = [];
         $data['group'] = 'products';
         $data['page'] = 'list';
-        $data['myProduct'] = Product::where('id', $id)->first();
+        $data['myProduct'] = MyProduct::where('id', $id)->first();
         return view('pages.backend.products.product-add', $data);
     }
 
