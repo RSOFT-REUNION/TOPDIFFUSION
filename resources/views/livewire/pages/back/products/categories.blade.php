@@ -40,8 +40,11 @@
                             <li class="@if($cat2->level === 2) ml-5 border-l-2 border-amber-400 pl-3 @elseif($cat2->level === 3) ml-10 border-l-2 border-gray-400 pl-3 @endif">
                                 <div class="category-container">
                                     <div class="category-content">
-                                        <div class="inline-flex items-center">
+                                        <div class="flex items-center justify-between">
                                             <p class="text-sm text-gray-400"><b>Niveau {{ $cat2->level }}</b> | {{ $cat2->slug }} </p>
+                                            @if($cat1->delivery)
+                                                <span class="bg-[#FBBC34] px-2 rounded-md text-black border font-semibold border-[#D9D9D9]">{{ $cat1->delivery }} %</span>
+                                            @endif
                                         </div>
                                         <h2>{{ $cat2->title }}</h2>
                                     </div>
@@ -52,8 +55,11 @@
                                     <li class="@if($cat3->level === 2) ml-5 border-l-2 border-amber-400 pl-3 @elseif($cat3->level === 3) ml-10 border-l-2 border-gray-400 pl-3 @endif">
                                         <div class="category-container">
                                             <div class="category-content">
-                                                <div class="inline-flex items-center">
+                                                <div class="flex items-center justify-between">
                                                     <p class="text-sm text-gray-400"><b>Niveau {{ $cat3->level }}</b> | {{ $cat3->slug }} </p>
+                                                    @if($cat1->delivery)
+                                                        <span class="bg-[#FBBC34] px-2 rounded-md text-black border font-semibold border-[#D9D9D9]">{{ $cat1->delivery }} %</span>
+                                                    @endif
                                                 </div>
                                                 <h2>{{ $cat3->title }}</h2>
                                             </div>

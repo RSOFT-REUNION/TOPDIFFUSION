@@ -39,49 +39,51 @@ class PopupAddCategory extends ModalComponent
     {
         $characters = ["é", "è", "ê", "ë", "à", "'", " ", "_", "&", "ç", "ù", "\"", "î", "ï"];
         $correct_characters = ["e", "e", "e", "e", "a", "", "-", "-", "", "c", "u", "", "i", "i"];
-        if($this->slug != null) {
+        if ($this->slug != null) {
             $correct_slug = str_replace($characters, $correct_characters, $this->slug);
         } else {
             $correct_slug = str_replace($characters, $correct_characters, $this->title);
         }
-        if($this->image){
-            $image_name = strtolower($correct_slug). '.' . $this->image->extension();
+        if ($this->image) {
+            $image_name = strtolower($correct_slug) . '.' . $this->image->extension();
         }
 
         $cat = new ProductCategory;
         $cat->title = $this->title;
         $cat->description = $this->description;
-        if($this->image){
+        if ($this->image) {
             $cat->cover = $image_name;
         }
-        if($this->delivery){
-            $cat->delivery = $this->delivery;
-        }
         $cat->slug = strtolower($correct_slug);
-        if($this->emplacement == '0'){
+        if ($this->emplacement == '0') {
             $cat->level = $this->level = 1;
         } else {
             $cat->parent_id = $this->emplacement;
             $categories = ProductCategory::where('id', $this->emplacement)->first();
-            if($categories->level == '1') {
+            if ($categories->level == '1') {
                 $cat->level = $this->level = '2';
             } elseif ($categories->level == '2') {
                 $cat->level = $this->level = '3';
             }
         }
-        if($this->professionnal) {
+        if ($this->delivery) {
+            $cat->delivery = $this->delivery;
+        } else {
+
+            $cat->delivery = $categories->delivery;
+        }
+        if ($this->professionnal) {
             $cat->professionnal = 1;
         }
-        if($cat->save()){
+        if ($cat->save()) {
             // Store Image in Storage Folder
-            if($this->image) {
+            if ($this->image) {
                 $this->image->storeAs('public/images/categories', $image_name);
             }
             // Store Image in Public Folder
             // $this->image->move(public_path('images/categories'), $image_name);
             return redirect()->route('back.product.categories');
         }
-
     }
 
     public function render()
