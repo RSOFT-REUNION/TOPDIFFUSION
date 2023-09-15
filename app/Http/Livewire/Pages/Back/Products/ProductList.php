@@ -29,9 +29,6 @@ class ProductList extends Component
         if (auth()->user()->admin == 1) {
             if (strlen($this->search) > 2) {
                 $this->jobs = MyProduct::where('title', 'like', $query)
-                    // ->orWhere('due_date', 'like', $query)
-                    // ->orWhere('code_client', 'like', $query)
-                    // ->orWhere('balance_of', 'like', $query)
                     ->get();
                 $this->is_search = true;
             } else if ($this->is_search) {
@@ -42,9 +39,6 @@ class ProductList extends Component
         } else {
             if (strlen($this->search) > 2) {
                 $this->jobs = MyProduct::where('title', 'like', $query)
-                    // ->where('code_client', auth()->user()->code)
-                    // ->orWhere('MyProductPromotions.due_date', 'like', $query)
-                    // ->orWhere('MyProductPromotions.num_facture', 'like', $query)
                     ->get();
                 $this->is_search = true;
             } else if ($this->is_search) {
@@ -64,7 +58,22 @@ class ProductList extends Component
     public function render()
     {
         $data = [];
-        $data['products'] = MyProduct::orderBy('created_at', 'desc')->get();
+        // Requête pour récupérer les données de my_product avec jointure sur my_product_swatch
+        $data['products'] = MyProduct::select('my_products.*', 'my_product_swatches.*')
+            ->leftJoin('my_product_swatches', 'my_products.id', '=', 'my_product_swatches.product_id')
+            ->orderBy('my_products.created_at', 'desc')
+            ->get();
+
+
+        foreach ($data['products'] as $product) {
+
+            $data['productName'] = $product->title;
+            $data['productSlug'] = $product->slug;
+            $data['productProfessionnalPrice'] = $product->professionnal_price;
+            $data['productCustomerPrice'] = $product->customer_price;
+            $data['productPourcentagePrice'] = $product->pourcentage_price;
+        }
+
 
         if ($this->jobs) {
             $products = $this->jobs;

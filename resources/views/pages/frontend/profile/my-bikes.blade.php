@@ -8,7 +8,7 @@
                     <h1>Mes motos</h1>
                 </div>
                 <div class="flex-none">
-                    <a onclick="Livewire.emit('openModal', 'popups.front.profile.add-user-bikes')" class="btn-secondary block cursor-pointer">Ajouter une moto</a>
+                    <a onclick="Livewire.emit('openModal', 'popups.front.profile.add-user-bikes')" class="btn-secondary block cursor-pointer">Sélectionner une moto</a>
                 </div>
             </div>
         </div>

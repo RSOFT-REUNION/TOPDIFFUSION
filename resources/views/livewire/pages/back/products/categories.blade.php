@@ -4,8 +4,7 @@
             <h1>Catégories</h1>
         </div>
         <div class="flex-none inline-flex items-center">
-            {{-- * Import CSV à travaillé plus tard --}}
-            {{-- <a wire:click="$emit('openModal', 'popups.back.products.import-categories')" class="btn-icon mr-2 cursor-pointer"><i class="fa-solid fa-file-import"></i></a> --}}
+            <a wire:click="$emit('openModal', 'popups.back.products.import-categories')" class="btn-icon mr-2 cursor-pointer"><i class="fa-solid fa-file-import"></i></a>
             @if($userSetting->product_categories_show == 1)
                 <a wire:click="changeShow" class="btn-icon mr-2 cursor-pointer" title="Affichage sous forme de tableaux"><i class="fa-solid fa-table"></i></a>
             @else
