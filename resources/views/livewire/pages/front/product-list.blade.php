@@ -9,7 +9,7 @@
             </div>
             <div class="flex-none inline-flex items-center">
                 @if($products->count() > 0)
-                    <a class="btn-secondary cursor-pointer"><i class="fa-solid fa-filter mr-3"></i>Filtrer</a>
+                    {{-- <a class="btn-secondary cursor-pointer"><i class="fa-solid fa-filter mr-3"></i>Filtrer</a> --}}
                     <p class="text-tag-count ml-2">{{ $products->count() }}</p>
                 @endif
             </div>

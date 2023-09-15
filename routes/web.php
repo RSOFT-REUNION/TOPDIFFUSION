@@ -108,5 +108,7 @@ Route::group([
             Route::get('/performance', [BoSettingController::class, 'showSettingPerform'])->name('back.setting.perform');
             Route::get('/information', [BoSettingController::class, 'showSettingInfo'])->name('back.setting.info');
         });
+
+        Route::get('/a-propos', [BackController::class, 'showAboutSite'])->name('back.aboutSite');
     });
 });

@@ -27,7 +27,7 @@
                                 class="fa-solid fa-sliders mr-3"></i>Réglages</a></li>
                     <li><a href="{{ route('back.team.list') }}" class="btn-sidebar"><i
                                 class="fa-solid fa-people-group mr-3"></i>Équipes</a></li>
-                    <li><a href="{{ route('back.product.list') }}" class="btn-sidebar"><i
+                    <li><a href="{{ route('back.aboutSite') }}" class="btn-sidebar"><i
                                 class="fa-solid fa-circle-info mr-3"></i>À propos</a></li>
                 </ul>
             @elseif($group == 'legal')
@@ -124,6 +124,15 @@
                             class="btn-sidebar @if ($page == 'perform') btn-sidebar-active @endif"><i
                                 class="fa-solid fa-gauge-simple-high mr-3"></i>Performances</a></li>
                 </ul>
+            @elseif($group == 'aboutSite')
+            <!-- Settings menus -->
+            <ul>
+                <li><a href="{{ route('back.dashboard') }}" class="btn-sidebar border-b border-gray-300 mb-3">
+                    <i class="fa-solid fa-arrow-left mr-3"></i>Retour</a></li>
+                <li><a href="{{ route('back.aboutSite') }}"
+                    class="btn-sidebar @if ($page == 'aboutSite') btn-sidebar-active @endif"><i
+                        class="fa-solid fa-gauge-simple-high mr-3"></i>Fonction à venir</a></li>
+            </ul>
             @endif
         </div>
         <div id="sidebar_entry-footer" class="flex-none">
