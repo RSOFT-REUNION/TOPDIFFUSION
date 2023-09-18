@@ -3,7 +3,7 @@
 @section('content-template')
     <!-- HERO BANNER -->
     @if ($carrousel)
-        <div class="flex flex-col h-screen">
+        <div class="flex flex-col">
             <div class="flex-none">
                 @livewire('components.front.hero-banner')
             </div>
