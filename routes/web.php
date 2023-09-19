@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\PagesLegal;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Back\LegalController;
@@ -51,6 +52,7 @@ Route::group([
     Route::get('/politique-de-confidentialite', [FrontController::class, 'showConfidential'])->name('front.confidential');
     Route::get('/informations-legales', [FrontController::class, 'showlegal'])->name('front.legal');
     Route::get('/faq-1', [FrontController::class, 'showFaq'])->name('front.faq');
+    Route::get('/mon-panier', [CartController::class, 'showCart'])->name('front.cart');
     // Ne pas oulbier de changer
 });
 

@@ -385,6 +385,20 @@
     border-radius: 10px;
     box-shadow: 0 4px 10px #00000030;
 }
+.container-resume-cart {
+    position: relative;
+    display: none;
+    width: 100%;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    .container-resume-cart-content {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 40%;
+    }
+}
 
 /* ------------ INPUTS --------------- */
 .textfield-search {
