@@ -10,6 +10,7 @@ use App\Models\MyProductStock;
 use App\Models\MyProductSwatch;
 use App\Models\ProductCategory;
 use App\Models\SettingGeneral;
+use App\Models\UserCart;
 use App\Models\UserSetting;
 use Livewire\Component;
 
@@ -57,8 +58,37 @@ class ProductPage extends Component
         // $this->category_id = ProductCategory::find($this->product->category_id);
     }
 
-    public function shop()
+    public function createCart()
     {
+        // Récupération des swatches du produit
+        $swatches = MyProductSwatch::where('product_id', $this->product_id)->get();
+
+        // Récupération du panier du client
+        $myCart = UserCart::where('user_id', auth()->user()->id)->where('product_id', $this->product_id)->first();
+
+        // Vérification si la ligne existe déjà
+        if($myCart) {
+            // Ajout des nouvelles quantités dans la ligne du panier
+            $myCart->quantity += $this->quantity;
+            $myCart->update();
+        } else {
+            // Création de l'article dans le panier
+            $cart = new UserCart;
+            $cart->product_id = $this->product_id;
+            $cart->user_id = auth()->user()->id;
+            if($swatches->count() === 1) {
+                foreach ($swatches as $swatch) {
+                    $cart->swatch_id = $swatch->id;
+                }
+            } else {
+                //
+            }
+            $cart->quantity = $this->quantity;
+            $cart->save();
+        }
+
+        // Recharge en temps reel le compteur
+        $this->emit('refreshLines');
     }
 
     public function getProductIsInFavoritesProperty()
