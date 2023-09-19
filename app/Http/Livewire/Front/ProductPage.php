@@ -139,7 +139,7 @@ class ProductPage extends Component
         $data = [];
         $data['tab'] = $this->active_tab;
         $data['product'] = MyProduct::where('id', $this->product_id)->first();
-        $data['product_infos'] = MyProductInfo::where('product_id', $this->product_id)->get();
+        // $data['product_infos'] = MyProductInfo::where('product_id', $this->product_id)->get();
         $data['product_pictures'] = MyProductPicture::where('product_id', $this->product_id)->get();
         $data['product_swatches'] = MyProductSwatch::where('product_id', $this->product_id)->get();
         $data['settings'] = SettingGeneral::where('id', 1)->first();

@@ -24,7 +24,7 @@ class BoUserController extends Controller
     public function showUserSingle($user)
     {
         $selectedUser = User::where('customer_code', $user)->first();
-
+        
         $data = [];
         $data['group'] = 'users';
         $data['page'] = 'list';

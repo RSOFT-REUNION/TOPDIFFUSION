@@ -3,14 +3,15 @@
 use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\PagesLegal;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Back\LegalController;
+use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\Back\BackController;
+use App\Http\Controllers\Back\LegalController;
+use App\Http\Controllers\Back\BoTeamController;
 use App\Http\Controllers\Back\BoUserController;
 use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\Front\ProductController;
 use App\Http\Controllers\Back\BoProductController;
 use App\Http\Controllers\Back\BoSettingController;
-use App\Http\Controllers\ErrorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,7 +69,7 @@ Route::group([
             Route::get('/creation', [BoProductController::class, 'createProduct'])->name('back.product.create');
             Route::get('/creer-un-produit-{id}', [BoProductController::class, 'showCreateProduct'])->name('back.product.show.create');
             Route::get('/ajout-{id}-{product}', [BoProductController::class, 'showAddProduct'])->name('back.product.add');
-            Route::get('/categories', [BoProductController::class, 'showProductCategories'])->name('back.product.categories');
+            Route::get('/categoriess', [BoProductController::class, 'showProductCategories'])->name('back.product.categories');
             Route::get('/motos', [BoProductController::class, 'showProductBikes'])->name('back.product.bikes');
             Route::get('/marques', [BoProductController::class, 'showProductBrands'])->name('back.product.brands');
             Route::get('/options', [BoProductController::class, 'showProductOptions'])->name('back.product.options');
@@ -80,7 +81,7 @@ Route::group([
         });
 
         Route::prefix('/mes-pages')->group(function () {
-            Route::get('/', [LegalController::class, 'showTest'])->name('bouton.test');
+            // Route::get('/', [LegalController::class, 'showTest'])->name('bouton.test');
             Route::get('/a-propos', [LegalController::class, 'showAbout'])->name('about');
             Route::post('/a-propos', [LegalController::class, 'postAbout'])->name('post.about');
             Route::get('/informations-legales', [LegalController::class, 'showLegal'])->name('legal');
@@ -97,6 +98,11 @@ Route::group([
             Route::get('/{user}/verified', [BoUserController::class, 'validateProfessionnal'])->name('back.user.verified');
         });
 
+        Route::prefix('/equipes')->group(function () {
+            Route::get('/liste', [BoTeamController::class, 'showListTeam'])->name('back.team.list');
+            Route::get('/{user}', [BoTeamController::class, 'showSingleMember'])->name('back.team.single');
+        });
+
         Route::prefix('/reglages')->group(function () {
             Route::get('/', [BoSettingController::class, 'showSettingGeneral'])->name('back.setting');
             Route::get('/paiement-et-taxes', [BoSettingController::class, 'showSettingPayment'])->name('back.setting.payment');
@@ -104,5 +110,7 @@ Route::group([
             Route::get('/performance', [BoSettingController::class, 'showSettingPerform'])->name('back.setting.perform');
             Route::get('/information', [BoSettingController::class, 'showSettingInfo'])->name('back.setting.info');
         });
+
+        Route::get('/a-propos', [BackController::class, 'showAboutSite'])->name('back.aboutSite');
     });
 });

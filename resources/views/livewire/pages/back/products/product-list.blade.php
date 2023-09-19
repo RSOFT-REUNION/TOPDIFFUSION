@@ -11,7 +11,8 @@
                     <i class="fa-solid fa-times"></i>
                 </button>
             @endif
-            <a href="" class="btn-icon mr-2"><i class="fa-solid fa-file-import"></i></a>
+            {{-- * Import CSV à gérer plus tard --}}
+            {{-- <a href="" class="btn-icon mr-2"><i class="fa-solid fa-file-import"></i></a> --}}
             <a href="{{ route('back.product.create') }}" class="btn-secondary cursor-pointer"><i class="fa-solid fa-plus mr-3"></i>Ajouter un produit</a>
         </div>
     </div>
@@ -21,17 +22,25 @@
                 <table>
                     <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Nom</th>
+                        <th>Nom du Produit</th>
+                        <th>Nom URL</th>
+                        <th>Prix Professionel</th>
+                        <th>Prix Client</th>
+                        @if ($productPourcentagePrice)
+                        <th>Pourcentage</th>
+                        @endif
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($products as $product)
                         <tr>
-                            <td>{{ $product->id }}</td>
-                            <td>{{ $product->title }}</td>
+                            <td>{{ $productName }}</td>
+                            <td>{{ $productSlug }}</td>
+                            <td>{{ $productProfessionnalPrice }} €</td>
+                            <td>{{ $productCustomerPrice }} €</td>
+                            @if ($productPourcentagePrice)
+                            <td>{{ $productPourcentagePrice }} %</td>
+                            @endif
                         </tr>
-                    @endforeach
                     </tbody>
                 </table>
             </div>

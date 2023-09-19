@@ -2,6 +2,11 @@
     <form wire:submit.prevent="create" enctype="multipart/form-data">
         @csrf
         <div id="entry-header" class="flex items-center">
+            <div class="my-2 mr-7">
+                <a onclick="window.history.back()" class="bg-secondary px-5 py-2 rounded-lg dark:bg-gray-700 cursor-pointer">
+                    <i class="fa-solid fa-arrow-left-long"></i>
+                </a>
+            </div>
             <div class="flex-1">
                 <h1>Ajout d'un produit</h1>
             </div>

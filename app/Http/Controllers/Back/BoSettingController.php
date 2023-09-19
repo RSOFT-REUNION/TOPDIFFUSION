@@ -39,7 +39,7 @@ class BoSettingController extends Controller
     {
         $data = [];
         $data['group'] = 'settings';
-        $data['page'] = 'avanced';
+        $data['page'] = 'advanced';
         return view('pages.backend.settings.setting-avancee', $data);
     }
 

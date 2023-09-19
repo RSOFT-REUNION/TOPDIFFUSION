@@ -20,14 +20,14 @@
                     <li><a href="{{ route('back.product.list') }}" class="btn-sidebar"><i
                                 class="fa-solid fa-comments mr-3"></i>S.A.V</a></li>
                     <h2>Mon site</h2>
-                    <li><a href="{{ route('bouton.test') }}" class="btn-sidebar"><i
+                    <li><a href="{{ route('about') }}" class="btn-sidebar"><i
                                 class="fa-solid fa-pager mr-3"></i>Pages</a></li>
                     <h2>Paramètres</h2>
                     <li><a href="{{ route('back.setting') }}" class="btn-sidebar"><i
                                 class="fa-solid fa-sliders mr-3"></i>Réglages</a></li>
-                    <li><a href="{{ route('back.product.list') }}" class="btn-sidebar"><i
+                    <li><a href="{{ route('back.team.list') }}" class="btn-sidebar"><i
                                 class="fa-solid fa-people-group mr-3"></i>Équipes</a></li>
-                    <li><a href="{{ route('back.product.list') }}" class="btn-sidebar"><i
+                    <li><a href="{{ route('back.aboutSite') }}" class="btn-sidebar"><i
                                 class="fa-solid fa-circle-info mr-3"></i>À propos</a></li>
                 </ul>
             @elseif($group == 'legal')
@@ -93,6 +93,15 @@
                             class="btn-sidebar @if ($page == 'list') btn-sidebar-active @endif"><i
                                 class="fa-solid fa-users mr-3"></i>Clients</a></li>
                 </ul>
+            @elseif($group == 'teams')
+            <!-- Users menus -->
+            <ul>
+                <li><a href="{{ route('back.dashboard') }}" class="btn-sidebar border-b border-gray-300 mb-3"><i
+                            class="fa-solid fa-arrow-left mr-3"></i>Retour</a></li>
+                <li><a href="{{ route('back.team.list') }}"
+                        class="btn-sidebar @if ($page == 'list') btn-sidebar-active @endif"><i
+                            class="fa-solid fa-users mr-3"></i>Equipes</a></li>
+            </ul>
             @elseif($group == 'settings')
                 <!-- Settings menus -->
                 <ul>
@@ -109,12 +118,21 @@
                             class="fa-solid fa-circle-info mr-3"></i>Informations</a></li>
                     <h2>Réglages avancée</h2>
                     <li><a href="{{ route('back.setting.avanced') }}"
-                            class="btn-sidebar @if ($page == 'avance') btn-sidebar-active @endif"><i
+                            class="btn-sidebar @if ($page == 'advanced') btn-sidebar-active @endif"><i
                                 class="fa-solid fa-gear mr-3"></i>Réglages généraux</a></li>
                     <li><a href="{{ route('back.setting.perform') }}"
-                            class="btn-sidebar @if ($page == 'performance') btn-sidebar-active @endif"><i
+                            class="btn-sidebar @if ($page == 'perform') btn-sidebar-active @endif"><i
                                 class="fa-solid fa-gauge-simple-high mr-3"></i>Performances</a></li>
                 </ul>
+            @elseif($group == 'aboutSite')
+            <!-- Settings menus -->
+            <ul>
+                <li><a href="{{ route('back.dashboard') }}" class="btn-sidebar border-b border-gray-300 mb-3">
+                    <i class="fa-solid fa-arrow-left mr-3"></i>Retour</a></li>
+                <li><a href="{{ route('back.aboutSite') }}"
+                    class="btn-sidebar @if ($page == 'aboutSite') btn-sidebar-active @endif"><i
+                        class="fa-solid fa-gauge-simple-high mr-3"></i>Fonction à venir</a></li>
+            </ul>
             @endif
         </div>
         <div id="sidebar_entry-footer" class="flex-none">
