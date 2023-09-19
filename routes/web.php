@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\PagesLegal;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Back\LegalController;
 use App\Http\Controllers\Back\BackController;
@@ -33,9 +32,10 @@ Route::get('/deconnexion', [FrontController::class, 'logout'])->name('logout');
 Route::get('/produit-{slug}', [ProductController::class, 'showProduct'])->name('front.product');
 Route::get('/liste-produit/categorie-{slug}', [ProductController::class, 'showProductList'])->name('front.product.list');
 
-Route::middleware(['App\Http\Middleware\RedirectIfMaintenanceModeActive']);
-
-Route::get('/maintenance', [ErrorController::class, 'showErrorMaintenance'])->name('maintenance');
+Route::middleware(['App\Http\Middleware\RedirectIfMaintenanceModeActive'])->group(function () {
+    Route::get('/maintenance', [ErrorController::class, 'showErrorMaintenance'])->name('maintenance');
+    Route::post('/maintenance', [FrontController::class, 'postLogin']);
+});
 
 // It's a user
 Route::group([
@@ -74,6 +74,7 @@ Route::group([
             Route::get('/promotions', [BoProductController::class, 'showPromotions'])->name('back.product.promotions');
             Route::get('/promotions-create', [BoProductController::class, 'showCreatePromotions'])->name('back.product.promotions-create');
             Route::get('/promotions-groupe/{id}', [BoProductController::class, 'showGroupPromotions'])->name('back.product.promotions-group');
+            Route::get('/team', [BackController::class, 'showTeam'])->name('back.team');
         });
 
         Route::prefix('/mes-pages')->group(function () {

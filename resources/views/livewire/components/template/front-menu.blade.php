@@ -1,7 +1,7 @@
 <div>
     <div class="inline-flex items-center" x-data="{ open: @entangle('active_tab') }" x-on:click.away="open = ''">
         @foreach($menus as $menu)
-            <a wire:click="@if($tab != $menu->id) changeTab({{ $menu->id }}) @else changeTab('') @endif" class="btn-menu-level-1 @if($tab == $menu->id) btn-menu-level-1_active @endif">{{ $menu->title }}@if($menu->hasSubCategory()->count() > 0 ) @if($tab == $menu->id) <i class="fa-solid fa-chevron-down ml-2"></i> @else <i class="fa-solid fa-chevron-up ml-2"></i> @endif @endif</a>
+            <a wire:click="@if($tab != $menu->id) changeTab({{ $menu->id }}) @else changeTab('') @endif" class="btn-menu-level-1 @if($tab == $menu->id) btn-menu-level-1_active @endif">{{ $menu->title }}@if($menu->hasSubCategory()->count() > 0 ) @if($tab == $menu->id) <i class="fa-solid fa-chevron-up ml-2"></i> @else <i class="fa-solid fa-chevron-down ml-2"></i> @endif @endif</a>
         @endforeach
     </div>
     @if($tab && $menus_level_2->count() > 0)

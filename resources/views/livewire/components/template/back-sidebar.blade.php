@@ -25,7 +25,7 @@
                     <h2>Paramètres</h2>
                     <li><a href="{{ route('back.setting') }}" class="btn-sidebar"><i
                                 class="fa-solid fa-sliders mr-3"></i>Réglages</a></li>
-                    <li><a href="{{ route('back.product.list') }}" class="btn-sidebar"><i
+                    <li><a href="{{ route('back.team') }}" class="btn-sidebar"><i
                                 class="fa-solid fa-people-group mr-3"></i>Équipes</a></li>
                     <li><a href="{{ route('back.product.list') }}" class="btn-sidebar"><i
                                 class="fa-solid fa-circle-info mr-3"></i>À propos</a></li>
@@ -74,7 +74,7 @@
                             class="btn-sidebar @if ($page == 'options') btn-sidebar-active @endif"><i
                                 class="fa-solid fa-sliders mr-3"></i>Options</a></li> --}}
 
-                                
+
                     <li><a href="{{ route('back.dashboard') }}" class="btn-sidebar border-b border-gray-300 mb-3"><i class="fa-solid fa-arrow-left mr-3"></i>Retour</a></li>
                     <li><a href="{{ route('back.product.list') }}" class="btn-sidebar @if($page == 'list') btn-sidebar-active @endif"><i class="fa-solid fa-cubes-stacked mr-3"></i>Produits</a></li>
                     <li><a href="{{ route('back.product.stocks') }}" class="btn-sidebar @if($page == 'stocks') btn-sidebar-active @endif"><i class="fa-solid fa-boxes-stacked mr-3"></i>Stocks</a></li>

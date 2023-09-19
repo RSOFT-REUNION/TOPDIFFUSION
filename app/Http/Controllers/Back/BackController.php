@@ -14,4 +14,12 @@ class BackController extends Controller
         $data['page'] = 'dashboard';
         return view('pages.backend.dashboard', $data);
     }
+
+    public function showTeam()
+    {
+        $data= [];
+        $data['group'] = 'home';
+        $data['page'] = 'team';
+        return view('pages.backend.team.team', $data);
+    }
 }
