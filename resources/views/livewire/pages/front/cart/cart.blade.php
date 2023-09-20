@@ -87,7 +87,15 @@
                     </ul>
                 </div>
             </div>
-            <button wire:click="" class="bg-secondary mt-2 block w-full py-3 rounded-lg font-bold">Commander</button>
+            @if($user_address->count() > 0)
+                <button wire:click="initOrder" class="bg-secondary mt-2 block w-full py-3 rounded-lg font-bold">Procéder au paiement</button>
+            @else
+                <p class="mt-2 bg-gray-100 border border-gray-200 rounded-md text-gray-500 text-sm px-3 py-1">
+                    Vous n'avez pas encore configuré d'adresse de livraison, afin de continuer, merci d'en renseigné une.
+                </p>
+                <button type="button" onclick="window.location.href='{{ route('front.profile') }}'" class="bg-secondary mt-2 block w-full py-3 rounded-lg font-bold">Renseigner une adresse</button>
+            @endif
+
         </div>
     </div>
 </main>
