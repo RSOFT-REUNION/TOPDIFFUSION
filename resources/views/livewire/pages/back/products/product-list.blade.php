@@ -17,7 +17,7 @@
         </div>
     </div>
     <div id="entry-content">
-        @if($products->count() > 0)
+        @if(count($productData) > 0)
             <div class="table-box-outline">
                 <table>
                     <thead>
@@ -26,21 +26,23 @@
                         <th>Nom URL</th>
                         <th>Prix Professionel</th>
                         <th>Prix Client</th>
-                        @if ($productPourcentagePrice)
+                        @if (isset($productData[0]['productPourcentagePrice']))
                         <th>Pourcentage</th>
                         @endif
                     </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>{{ $productName }}</td>
-                            <td>{{ $productSlug }}</td>
-                            <td>{{ $productProfessionnalPrice }} €</td>
-                            <td>{{ $productCustomerPrice }} €</td>
-                            @if ($productPourcentagePrice)
-                            <td>{{ $productPourcentagePrice }} %</td>
-                            @endif
-                        </tr>
+                        @foreach ($productData as $product)
+                            <tr>
+                                <td>{{ $product['productName'] }}</td>
+                                <td>{{ $product['productSlug'] }}</td>
+                                <td>{{ $product['productProfessionnalPrice'] }} €</td>
+                                <td>{{ $product['productCustomerPrice'] }} €</td>
+                                @if (isset($product['productPourcentagePrice']))
+                                <td>{{ $product['productPourcentagePrice'] }} %</td>
+                                @endif
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

@@ -7,15 +7,15 @@ use App\Models\Product;
 use App\Models\UserBike;
 use App\Models\UserData;
 use App\Models\MyProduct;
+use App\Models\MyFavorite;
 use App\Models\UserAddress;
 use App\Models\UserSetting;
 use App\Models\ProductBrand;
 use Illuminate\Http\Request;
-use App\Models\SettingGeneral;
-use App\Http\Controllers\Controller;
 use App\Models\CarrouselHome;
-use App\Models\MyFavorite;
+use App\Models\SettingGeneral;
 use Illuminate\Support\Carbon;
+use App\Http\Controllers\Controller;
 
 
 class FrontController extends Controller

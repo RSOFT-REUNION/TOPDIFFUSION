@@ -37,13 +37,13 @@ class BikesImport implements ToCollection, WithBatchInserts, WithProgressBar, Wi
 
     public function batchSize(): int
     {
-        // TODO: Implement batchSize() method.
+        // Implement batchSize() method.
         return 3000;
     }
 
     public function startRow(): int
     {
-        // TODO: Implement startRow() method.
+        // Implement startRow() method.
         return 2;
     }
 }

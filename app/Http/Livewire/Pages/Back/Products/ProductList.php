@@ -55,6 +55,7 @@ class ProductList extends Component
         $this->is_search = false;
         $this->jobs = [];
     }
+
     public function render()
     {
         $data = [];
@@ -64,16 +65,19 @@ class ProductList extends Component
             ->orderBy('my_products.created_at', 'desc')
             ->get();
 
+        $productData = [];
 
         foreach ($data['products'] as $product) {
-
-            $data['productName'] = $product->title;
-            $data['productSlug'] = $product->slug;
-            $data['productProfessionnalPrice'] = $product->professionnal_price;
-            $data['productCustomerPrice'] = $product->customer_price;
-            $data['productPourcentagePrice'] = $product->pourcentage_price;
+            $productData[] = [
+                'productName' => $product->title,
+                'productSlug' => $product->slug,
+                'productProfessionnalPrice' => $product->professionnal_price,
+                'productCustomerPrice' => $product->customer_price,
+                'productPourcentagePrice' => $product->pourcentage_price,
+            ];
         }
 
+        $data['productData'] = $productData;
 
         if ($this->jobs) {
             $products = $this->jobs;
