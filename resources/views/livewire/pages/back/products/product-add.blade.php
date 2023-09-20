@@ -863,7 +863,7 @@
                                 <tbody>
                                 @foreach($bikes as $bike)
                                     <tr>
-                                        <td><input type="checkbox" wire:model="bike_selected" value="{{ $bike->id }}" {{ $findBikeIfExist && $findBikeIfExist->bike_id == $bike->id ? 'checked' : '' }}></td>
+                                        <td><input type="checkbox" wire:model="bike_selected" value="{{ $bike->id }}" {{ $checkedBikes ? 'checked' : '' }}></td>
                                         <td>{{ $bike->marque }}</td>
                                         <td>{{ $bike->cylindree }}</td>
                                         <td>{{ $bike->modele }}</td>
@@ -875,6 +875,18 @@
                         </div>
                         <div class="mt-2">
                             {{ $bikes->links() }}
+                        </div>
+
+                        <div>
+                            @if (session()->has('message'))
+                            <div class="alert" id="alert">
+                                <div class="alert-success inline-flex items-center">
+                                    <p><i class="fa-solid fa-thumbs-up mr-3"></i>{{ session('message') }}</p>
+                                    <button type="button" class="bg-opacity-50 bg-white px-3 py-1 rounded-full ml-10 block"
+                                        data-dismiss="alert"><i class="fa-solid fa-xmark"></i></button>
+                                </div>
+                            </div>
+                            @endif
                         </div>
                         @if($bike_selected)
                             <hr class="my-3"/>

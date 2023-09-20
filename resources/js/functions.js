@@ -9,7 +9,7 @@ function timeoutAlert()
 {
     document.getElementById("alert").style.display = 'none'
 }
-setTimeout(timeoutAlert, 2000);
+setTimeout(timeoutAlert, 2000)
 
 
 

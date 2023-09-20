@@ -29,6 +29,7 @@ class ProductList extends Component
         if (auth()->user()->admin == 1) {
             if (strlen($this->search) > 2) {
                 $this->jobs = MyProduct::where('title', 'like', $query)
+                    ->orWhere('pourcentage_price', 'like', $query)
                     ->get();
                 $this->is_search = true;
             } else if ($this->is_search) {
