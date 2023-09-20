@@ -3,35 +3,48 @@
 namespace App\Http\Livewire\Pages\Back\Products;
 
 use Livewire\Component;
+use Illuminate\Support\Str;
 use App\Models\MyProduct;
 use App\Models\MyProductPromotion;
 use App\Models\MyProductPromotionItems;
 
 class PromotionsCreate extends Component
 {
+    public $mode;
+    public $percentage, $name_promo, $dateDebut, $dateFin, $codePromo;
 
-    public $checkedProducts = [];
-    public $checkedProduct = [];
-    public $title;
-    public $percentage;
-    public $image1;
-    public $image2;
-    public $image4;
-    public $image3;
-
-    public function updated($title, $value1)
+    public function formatDate($date)
     {
-        if ($title == "title") {
-            $this->title = $value1;
-        } elseif ($title == "percentage") {
-            $this->percentage = $value1;
-        }
+        return date("d/m/Y", strtotime($date));
     }
 
-    public function getCheckedProductIds()
+    public function generatePromoCode()
     {
-        return array_keys(array_filter($this->checkedProducts));
+        return 'PROMO' . strtoupper(Str::random(3));
     }
+
+    // public $checkedProducts = [];
+    // public $checkedProduct = [];
+    // public $title;
+    // public $percentage;
+    // public $image1;
+    // public $image2;
+    // public $image4;
+    // public $image3;
+
+    // public function updated($title, $value1)
+    // {
+    //     if ($title == "title") {
+    //         $this->title = $value1;
+    //     } elseif ($title == "percentage") {
+    //         $this->percentage = $value1;
+    //     }
+    // }
+
+    // public function getCheckedProductIds()
+    // {
+    //     return array_keys(array_filter($this->checkedProducts));
+    // }
 
     // public function test()
     // {
@@ -43,34 +56,34 @@ class PromotionsCreate extends Component
     //     dd($this->checkedProduct);
     // }
 
-    public function create()
-    {
-        foreach ($this->checkedProducts as $keys => $values) {
-            if ($values === true) {
-                $this->checkedProduct[] = $keys;
-            }
-        }
+    // public function create()
+    // {
+    //     foreach ($this->checkedProducts as $keys => $values) {
+    //         if ($values === true) {
+    //             $this->checkedProduct[] = $keys;
+    //         }
+    //     }
 
-        $productPromotion = new MyProductPromotion();
+    //     $productPromotion = new MyProductPromotion();
 
-        foreach ($this->checkedProduct as $value) {
-            $createPromotion = MyProduct::find($value);
-            if ($createPromotion) {
-                $productPromotion->title = $this->title;
-                $productPromotion->discount = $this->percentage;
-                $productPromotion->code = 'CODE';
+    //     foreach ($this->checkedProduct as $value) {
+    //         $createPromotion = MyProduct::find($value);
+    //         if ($createPromotion) {
+    //             $productPromotion->title = $this->title;
+    //             $productPromotion->discount = $this->percentage;
+    //             $productPromotion->code = 'CODE';
 
 
-                if ($productPromotion->save()) {
-                    $promoItem = new MyProductPromotionItems();
-                    $promoItem->group_id = $productPromotion->id;
-                    $promoItem->product_id = $createPromotion->id;
-                    $promoItem->save();
-                }
-            }
-        }
-        return redirect()->route('back.product.promotions');
-    }
+    //             if ($productPromotion->save()) {
+    //                 $promoItem = new MyProductPromotionItems();
+    //                 $promoItem->group_id = $productPromotion->id;
+    //                 $promoItem->product_id = $createPromotion->id;
+    //                 $promoItem->save();
+    //             }
+    //         }
+    //     }
+    //     return redirect()->route('back.product.promotions');
+    // }
 
     // public function CheckedProducts()
     // {
