@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Pages\Back\Products;
 
 use App\Models\bike;
 use Livewire\Component;
-use App\Models\UserBike;
 use App\Models\MyProduct;
 use App\Models\ProductTag;
 use App\Models\ProductTemp;
@@ -17,7 +16,6 @@ use App\Models\MyProductInfo;
 use Livewire\WithFileUploads;
 use App\Models\CompatibleBike;
 use App\Models\MyProductStock;
-use App\Models\ProductTempTag;
 use App\Models\MyProductSwatch;
 use App\Models\ProductCategory;
 use App\Models\ProductGroupTag;
@@ -49,6 +47,9 @@ class ProductAdd extends Component
     public $userBikeCompatible = false;
     public $findBikeIfExist;
 
+    public $Tbikes;
+    public $checkedBikes = [];
+
     public $search = '';
     public $jobs = [];
 
@@ -57,6 +58,19 @@ class ProductAdd extends Component
     public function mount($product_id)
     {
         $this->product = ProductTemp::where('id', $product_id)->first();
+
+        $this->Tbikes = Bike::all();
+
+        // Parcourez tous les motos pour vérifier s'ils sont déjà sélectionnés
+        foreach ($this->Tbikes as $bike) {
+            $findBikeIfChecked = CompatibleTempBike::where('bike_id', $bike->id)->first();
+
+            // Si la moto est déjà sélectionné, ajoutez-le au tableau $checkedBikes
+            if ($findBikeIfChecked) {
+                $this->bike_selected[] = $bike->id;
+                $this->checkedBikes[] = $bike->id;
+            }
+        }
     }
 
     public function pourcentageDelivery()
@@ -407,20 +421,23 @@ class ProductAdd extends Component
 
     public function add()
     {
-        $compatibleBike = new CompatibleTempBike;
-        $bike = bike::where('id', $this->bike_selected)->first();
-        $this->findBikeIfExist = CompatibleTempBike::where('bike_id', $bike->id)->first();
-
-        // FIXME: Session Flash ne s'affiche pas
-
-        if ($this->findBikeIfExist) {
-            Session::flash('success', 'Message TEST');
-        } else {
-            $compatibleBike->bike_id = $bike->id;
-            $compatibleBike->save();
-            $this->emit('refreshLines');
+        // Récupérer la liste des motos sélectionnées dans un tableau
+        $selectedBikes = collect($this->bike_selected)->map(function ($bikeId) {
+            return Bike::find($bikeId);
+        });
+        // Parcourir les motos sélectionnées et les enregistrer si elles n'existent pas
+        foreach ($selectedBikes as $bike) {
+            $this->findBikeIfExist = CompatibleTempBike::where('bike_id', $bike->id)->first();
+            // Si la moto n'existe pas, enregistrez-la en base
+            if (!$this->findBikeIfExist) {
+                $compatibleBike = new CompatibleTempBike;
+                $compatibleBike->bike_id = $bike->id;
+                $compatibleBike->save();
+                session()->flash('message', 'Sauvegardé');
+            }
         }
     }
+
 
     public function render()
     {

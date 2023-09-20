@@ -16,6 +16,7 @@ use App\Models\CarrouselHome;
 use App\Models\SettingGeneral;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 
 class FrontController extends Controller
