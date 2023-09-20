@@ -2,28 +2,35 @@
 
 namespace App\Http\Livewire\Pages\Back\Products;
 
+use App\Models\bike;
+use Livewire\Component;
+use App\Models\UserBike;
 use App\Models\MyProduct;
-use App\Models\MyProductInfo;
-use App\Models\MyProductPicture;
-use App\Models\MyProductStock;
-use App\Models\MyProductSwatch;
+use App\Models\ProductTag;
+use App\Models\ProductTemp;
+use Illuminate\Support\Str;
 use App\Models\ProductBrand;
+use App\Models\ProductTaxes;
+use Illuminate\Http\Request;
+use Livewire\WithPagination;
+use App\Models\MyProductInfo;
+use Livewire\WithFileUploads;
+use App\Models\CompatibleBike;
+use App\Models\MyProductStock;
+use App\Models\ProductTempTag;
+use App\Models\MyProductSwatch;
 use App\Models\ProductCategory;
 use App\Models\ProductGroupTag;
-use App\Models\ProductTag;
-use App\Models\ProductTaxes;
-use App\Models\ProductTemp;
 use App\Models\ProductTempInfo;
+use App\Models\MyProductPicture;
+use App\Models\CompatibleTempBike;
 use App\Models\ProductTempPictures;
 use App\Models\ProductTempSwatches;
-use App\Models\ProductTempTag;
-use Illuminate\Support\Str;
-use Livewire\Component;
-use Livewire\WithFileUploads;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class ProductAdd extends Component
 {
+    use WithPagination;
     use WithFileUploads;
     public $product;
     public $test, $title, $parent_category, $cover, $type, $pourcentage_price, $professionnal_price, $customer_price, $TVA_Custom, $TVA_None, $TVA_Class, $UGS, $brand, $stock_quantity, $short_description, $long_description, $slug, $delivery;
@@ -37,6 +44,13 @@ class ProductAdd extends Component
     public $showAddVariant = false;
     public $showAddTag = false;
     public $showAddPicture = false;
+
+    public $bike_selected = [];
+    public $userBikeCompatible = false;
+    public $findBikeIfExist;
+
+    public $search = '';
+    public $jobs = [];
 
     protected $listeners = ['refreshLines' => '$refresh'];
 
@@ -74,7 +88,7 @@ class ProductAdd extends Component
     public function updated($title)
     {
         $this->validateOnly($title);
-        if($this->customer_price && $this->pourcentage_price) {
+        if ($this->customer_price && $this->pourcentage_price) {
             $this->professionnal_price = ($this->customer_price - ($this->customer_price * $this->pourcentage_price / 100));
         }
     }
@@ -93,13 +107,13 @@ class ProductAdd extends Component
         $product->brand_id = $this->brand;
         $product->category_id = $this->parent_category;
         $product->type = $this->type;
-        if($this->cover) {
-            $product->cover = strtolower(str_replace($this->characters, $this->correct_characters, $this->title)) .'.'. $this->cover->extension();
+        if ($this->cover) {
+            $product->cover = strtolower(str_replace($this->characters, $this->correct_characters, $this->title)) . '.' . $this->cover->extension();
         }
-        if($product->save()) {
+        if ($product->save()) {
             // Insert picture in folders
-            if($this->cover) {
-                $this->cover->storeAs('public/images/products', strtolower(str_replace($this->characters, $this->correct_characters, $this->title)) .'.'. $this->cover->extension());
+            if ($this->cover) {
+                $this->cover->storeAs('public/images/products', strtolower(str_replace($this->characters, $this->correct_characters, $this->title)) . '.' . $this->cover->extension());
             }
             // Add Informations
             $infoTemp = ProductTempInfo::where('product_id', $this->product->id)->get();
@@ -120,8 +134,20 @@ class ProductAdd extends Component
                 $picture->save();
             }
 
+            // Add Compatible Bike
+            $bikes = CompatibleTempBike::all();
+            foreach ($bikes as $bike) {
+                $newBike = new CompatibleBike();
+                $newBike->product_id = $product->id;
+                $newBike->bike_id = $bike->bike_id;
+
+                if ($newBike->save()) {
+                    CompatibleTempBike::query()->delete();
+                };
+            }
+
             // Create a swatch
-            if($this->type == 1) {
+            if ($this->type == 1) {
                 $swatch = new MyProductSwatch;
                 $swatch->product_id = $product->id;
                 $swatch->type = 1;
@@ -129,11 +155,11 @@ class ProductAdd extends Component
                 $swatch->customer_price = $this->customer_price;
                 $swatch->pourcentage_price = $this->pourcentage_price;
                 $swatch->professionnal_price = $this->professionnal_price;
-                if($this->TVA_Custom) {
+                if ($this->TVA_Custom) {
                     $swatch->default_tva = 0;
                     $swatch->tva_class_id = $this->TVA_Class;
                 }
-                if($swatch->save()) {
+                if ($swatch->save()) {
                     // Fill the stocks
                     $stock = new MyProductStock;
                     $stock->product_id = $product->id;
@@ -154,21 +180,21 @@ class ProductAdd extends Component
                     $swatch->customer_price = $st->customer_price;
                     $swatch->pourcentage_price = $st->pourcentage_price;
                     $swatch->professionnal_price = $st->professionnal_price;
-                    if($st->default_tva == 0) {
+                    if ($st->default_tva == 0) {
                         $swatch->default_tva = 0;
                         $swatch->tva_class_id = $st->tva_class_id;
                     }
-                    if($swatch->save()) {
+                    if ($swatch->save()) {
                         // Fill the stocks
                         $stock = new MyProductStock;
                         $stock->product_id = $product->id;
                         $stock->is_swatch = 1;
-                        $stock->ugs = $swatch->ugs .'-'. $swatch->ugs_swatch;
+                        $stock->ugs = $swatch->ugs . '-' . $swatch->ugs_swatch;
                         $stock->quantity = 0;
                         $stock->save();
                     }
                 }
-            } elseif($this->type == 3) {
+            } elseif ($this->type == 3) {
                 $kitTemp = ProductTempSwatches::where('product_id', $this->product->id)->where('type', 3)->get();
                 foreach ($kitTemp as $st) {
                     $swatch = new MyProductSwatch;
@@ -184,16 +210,16 @@ class ProductAdd extends Component
                     $swatch->customer_price = $st->customer_price;
                     $swatch->pourcentage_price = $st->pourcentage_price;
                     $swatch->professionnal_price = $st->professionnal_price;
-                    if($st->default_tva == 0) {
+                    if ($st->default_tva == 0) {
                         $swatch->default_tva = 0;
                         $swatch->tva_class_id = $st->tva_class_id;
                     }
-                    if($swatch->save()) {
+                    if ($swatch->save()) {
                         // Fill the stocks
                         $stock = new MyProductStock;
                         $stock->product_id = $product->id;
                         $stock->is_swatch = 1;
-                        $stock->ugs = $swatch->ugs .'-'. $swatch->ugs_swatch;
+                        $stock->ugs = $swatch->ugs . '-' . $swatch->ugs_swatch;
                         $stock->quantity = 0;
                         $stock->save();
                     }
@@ -213,16 +239,16 @@ class ProductAdd extends Component
                     $swatch->customer_price = $st->customer_price;
                     $swatch->pourcentage_price = $st->pourcentage_price;
                     $swatch->professionnal_price = $st->professionnal_price;
-                    if($st->default_tva == 0) {
+                    if ($st->default_tva == 0) {
                         $swatch->default_tva = 0;
                         $swatch->tva_class_id = $st->tva_class_id;
                     }
-                    if($swatch->save()) {
+                    if ($swatch->save()) {
                         // Fill the stocks
                         $stock = new MyProductStock;
                         $stock->product_id = $product->id;
                         $stock->is_swatch = 1;
-                        $stock->ugs = $swatch->ugs .'-'. $swatch->ugs_swatch;
+                        $stock->ugs = $swatch->ugs . '-' . $swatch->ugs_swatch;
                         $stock->quantity = 0;
                         $stock->save();
                     }
@@ -238,14 +264,14 @@ class ProductAdd extends Component
         /*
          * Create a temporary swatches by type
          */
-        if($this->type == 1) {
+        if ($this->type == 1) {
             $simple = new ProductTempSwatches;
             $simple->product_id = $this->product->id;
             $simple->ugs = $this->UGS;
             $simple->customer_price = $this->customer_price;
             $simple->pourcentage_price = $this->pourcentage_price;
             $simple->professionnal_price = $this->professionnal_price;
-            if($this->TVA_Custom) {
+            if ($this->TVA_Custom) {
                 $simple->default_tva = 0;
                 $simple->tva_class_id = $this->TVA_Class;
             }
@@ -261,13 +287,12 @@ class ProductAdd extends Component
             $swatch->customer_price = $this->customer_price;
             $swatch->pourcentage_price = $this->pourcentage_price;
             $swatch->professionnal_price = $this->professionnal_price;
-            if($this->TVA_Custom) {
+            if ($this->TVA_Custom) {
                 $swatch->default_tva = 0;
                 $swatch->tva_class_id = $this->TVA_Class;
             }
             $swatch->save();
-
-        } elseif($this->type == 3) {
+        } elseif ($this->type == 3) {
             $kit = new ProductTempSwatches;
             $kit->product_id = $this->product->id;
             $kit->type = 3;
@@ -281,12 +306,12 @@ class ProductAdd extends Component
             $kit->customer_price = $this->customer_price;
             $kit->pourcentage_price = $this->pourcentage_price;
             $kit->professionnal_price = $this->professionnal_price;
-            if($this->TVA_Custom) {
+            if ($this->TVA_Custom) {
                 $kit->default_tva = 0;
                 $kit->tva_class_id = $this->TVA_Class;
             }
             $kit->save();
-        } elseif($this->type == 4) {
+        } elseif ($this->type == 4) {
             $tire = new ProductTempSwatches;
             $tire->product_id = $this->product->id;
             $tire->type = 4;
@@ -299,7 +324,7 @@ class ProductAdd extends Component
             $tire->customer_price = $this->customer_price;
             $tire->pourcentage_price = $this->pourcentage_price;
             $tire->professionnal_price = $this->professionnal_price;
-            if($this->TVA_Custom) {
+            if ($this->TVA_Custom) {
                 $tire->default_tva = 0;
                 $tire->tva_class_id = $this->TVA_Class;
             }
@@ -315,12 +340,11 @@ class ProductAdd extends Component
         $string = $random_string;
         $picture = new ProductTempPictures;
         $picture->product_id = $this->product->id;
-        $picture->picture_url = strtolower($string).'.'. $this->picture->extension();
-        if($picture->save()) {
-            $this->picture->storeAs('public/images/products_attachment', strtolower($string).'.'. $this->picture->extension());
+        $picture->picture_url = strtolower($string) . '.' . $this->picture->extension();
+        if ($picture->save()) {
+            $this->picture->storeAs('public/images/products_attachment', strtolower($string) . '.' . $this->picture->extension());
         }
         $this->emit('refreshLines');
-
     }
 
     public function addInformations()
@@ -370,9 +394,44 @@ class ProductAdd extends Component
         $this->emit('refreshLines');
     }
 
+    public function updatedSearch()
+    {
+        $query = '%' . $this->search . '%';
+        if (strlen($this->search) > 1) {
+            return bike::where('marque', 'like', $query)
+                ->orWhere('cylindree', 'like', $query)
+                ->orWhere('modele', 'like', $query)
+                ->orWhere('annee', 'like', $query);
+        }
+    }
+
+    public function add()
+    {
+        $compatibleBike = new CompatibleTempBike;
+        $bike = bike::where('id', $this->bike_selected)->first();
+        $this->findBikeIfExist = CompatibleTempBike::where('bike_id', $bike->id)->first();
+
+        // FIXME: Session Flash ne s'affiche pas
+
+        if ($this->findBikeIfExist) {
+            Session::flash('success', 'Message TEST');
+        } else {
+            $compatibleBike->bike_id = $bike->id;
+            $compatibleBike->save();
+            $this->emit('refreshLines');
+        }
+    }
+
     public function render()
     {
         $data = [];
+
+        $data = [];
+        if ($this->updatedSearch() != null) {
+            $data['bikes'] = $this->updatedSearch()->paginate(20);
+        } else {
+            $data['bikes'] = bike::orderBy('marque', 'asc')->paginate(20);
+        }
         $data['categories'] = ProductCategory::all();
         $data['brands'] = ProductBrand::all();
         $data['TVAs'] = ProductTaxes::all();
@@ -384,6 +443,7 @@ class ProductAdd extends Component
         $data['swatchTemp'] = ProductTempSwatches::where('product_id', $this->product->id)->where('type', 2)->get();
         $data['infoTemp'] = ProductTempInfo::where('product_id', $this->product->id)->get();
         $data['pictureTemp'] = ProductTempPictures::where('product_id', $this->product->id)->get();
+        $data['bikeTemp'] = CompatibleTempBike::all();
         return view('livewire.pages.back.products.product-add', $data);
     }
 }

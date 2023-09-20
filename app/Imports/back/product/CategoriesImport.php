@@ -62,7 +62,7 @@ class CategoriesImport implements ToCollection, WithBatchInserts, WithProgressBa
 
     public function batchSize(): int
     {
-        // TODO: Implement batchSize() method.
+        // Implement batchSize() method.
         return 3000;
     }
 }

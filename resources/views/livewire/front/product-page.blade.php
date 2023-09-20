@@ -165,7 +165,7 @@
             <a wire:click="changeTab('1')" class="@if($tab === '1') tab-active @else tab-desactive @endif">Description</a>
             <a wire:click="changeTab('2')" class="@if($tab === '2') tab-active @else tab-desactive @endif">Informations complèmentaires</a>
             @if($settings->bikes_compatibility == 1)
-                <a wire:click="changeTab('3')" class="@if($tab === '3') tab-active @else tab-desactive @endif">Liste des motos compatibles<i class="fa-solid fa-circle ml-2 text-red-500 text-sm"></i></a>
+                <a wire:click="changeTab('3')" class="@if($tab === '3') tab-active @else tab-desactive @endif">Liste des motos compatibles<i class="fa-solid fa-circle ml-2 @if (!$userBikeCompatible) text-red-500 @else text-green-500 @endif text-sm"></i></a>
             @endif
         </div>
         <div class="entry-content">
@@ -197,39 +197,47 @@
                     @endif
                 </ul>
             @elseif($tab === '3' && $settings->bikes_compatibility == 1)
-                <p class="text-red-500 bg-red-100 py-2 px-4 rounded-lg mb-3">
-                    Votre moto <b>MOTO</b> n'est pas compatible avec cette pièce
-                </p>
+                @if (!$userBikeCompatible)
+                    <p class="text-red-500 bg-red-100 py-2 px-4 rounded-lg mb-3">
+                        Votre moto <b>MOTO</b> n'est pas compatible avec cette pièce
+                    </p>
+                @else
+                    <p class="text-gree-500 bg-green-100 py-2 px-4 rounded-lg mb-3">
+                        Votre moto <b>MOTO</b> est compatible avec cette pièce
+                    </p>
+                @endif
                 <div class="table-box-outline">
                     <table>
-                        <thead>
-                        <tr>
-                            <th>Marques</th>
-                            <th>Cylindrées</th>
-                            <th>Modèles</th>
-                            <th>Années</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>KYMCO</td>
-                            <td>50</td>
-                            <td>GRAND DINK 50</td>
-                            <td>2004</td>
-                        </tr>
-                        <tr>
-                            <td>KYMCO</td>
-                            <td>50</td>
-                            <td>GRAND DINK 50</td>
-                            <td>2004</td>
-                        </tr>
-                        <tr>
-                            <td>KYMCO</td>
-                            <td>50</td>
-                            <td>GRAND DINK 50</td>
-                            <td>2004</td>
-                        </tr>
-                        </tbody>
+                        @foreach ($allCompatibleBike as $bike)
+                            <thead>
+                            <tr>
+                                <th>{{ $bike->bike->marque }}</th>
+                                <th>{{ $bike->bike->cylindree }}</th>
+                                <th>{{ $bike->bike->modele }}</th>
+                                <th>{{ $bike->bike->annee }}</th>
+                            </tr>
+                            </thead>
+                            {{-- <tbody>
+                            <tr>
+                                <td>KYMCO</td>
+                                <td>50</td>
+                                <td>GRAND DINK 50</td>
+                                <td>2004</td>
+                            </tr>
+                            <tr>
+                                <td>KYMCO</td>
+                                <td>50</td>
+                                <td>GRAND DINK 50</td>
+                                <td>2004</td>
+                            </tr>
+                            <tr>
+                                <td>KYMCO</td>
+                                <td>50</td>
+                                <td>GRAND DINK 50</td>
+                                <td>2004</td>
+                            </tr>
+                            </tbody> --}}
+                        @endforeach
                     </table>
                 </div>
             @endif

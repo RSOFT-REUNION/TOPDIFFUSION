@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Front;
 
+use App\Models\CompatibleBike;
 use App\Models\MyFavorite;
 use App\Models\MyProduct;
 use App\Models\MyProductInfo;
@@ -11,6 +12,7 @@ use App\Models\MyProductSwatch;
 use App\Models\ProductCategory;
 use App\Models\SettingGeneral;
 use App\Models\UserCart;
+use App\Models\UserBike;
 use App\Models\UserSetting;
 use Livewire\Component;
 
@@ -25,6 +27,8 @@ class ProductPage extends Component
     public $seenWidthValue = [];
     public $seenPignonValue = [];
     public $seenCrownValue = [];
+    public $userBikeCompatible = false;
+    // public $allCompatibleBike = [];
 
     public $productIsInFavorites = false;
 
@@ -36,7 +40,7 @@ class ProductPage extends Component
 
         $favorite = MyFavorite::where('product_id', $product_id)->first();
 
-        if($favorite){
+        if ($favorite) {
             $this->favoriteLike = true;
         } else {
             $this->favoriteLike = false;
@@ -149,6 +153,20 @@ class ProductPage extends Component
             $data['my_setting'] = UserSetting::where('user_id', auth()->user()->id)->first();
         }
         $data['increment'] = 1;
+
+        // Compatible BIKE
+        $userBike = UserBike::where('user_id', auth()->user()->id)->get();
+        $compatibleBikeIds = $userBike->pluck('bike_id')->toArray();
+        $data['allCompatibleBike'] = CompatibleBike::whereIn('bike_id', $compatibleBikeIds)->with('bike')->get();
+
+        $isUserBikeCompatible = $data['allCompatibleBike']->count() > 0; // Vérifier si la collection n'est pas vide
+
+        if ($isUserBikeCompatible) {
+            // L'utilisateur a au moins une moto compatible
+            $this->userBikeCompatible = true;
+        }
+
+
         return view('livewire.front.product-page', $data);
     }
 }
