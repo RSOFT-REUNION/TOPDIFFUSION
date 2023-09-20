@@ -114,3 +114,6 @@ Route::group([
         Route::get('/a-propos', [BackController::class, 'showAboutSite'])->name('back.aboutSite');
     });
 });
+
+// Routes pour le paiement
+Route::get('/returnURL', [CartController::class, 'showPaymentReturn']);

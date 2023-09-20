@@ -10,9 +10,11 @@ use App\Models\UserCart;
 use App\Models\UserOrder;
 use App\Models\UserOrderItem;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Livewire\Component;
+use Payline\PaylineSDK;
 
 class Cart extends Component
 {
@@ -66,8 +68,10 @@ class Cart extends Component
     // Initialise la commande par rapport au panier
     public function initOrder()
     {
+        // TODO: terminer de gérer la commande et le paiement
+
         // Format du numéro de document (ex: CM_HOARAU-VAPQR_2023-09-19_FHO87)
-        $document_number = 'CM_'. auth()->user()->customer_code .'_'. date('Y-m-d', strtotime(Carbon::now())) .'_'. strtoupper(Str::random(5));
+        $document_number = 'CM_'. auth()->user()->customer_code .'_'. strtoupper(Str::random(5));
 
         // Création de la commande
         $order = new UserOrder;
@@ -98,11 +102,108 @@ class Cart extends Component
 
             }
 
-            Session::flash('success', "Nous avons bien pris en compte votre commande.");
-            return redirect()->route('front.home');
+            // **** initié le paiement
+            $merchant_id = Config::get('payment.merchant_id');
+            $environment = Config::get('payment.environment');
+            $access_key = Config::get('payment.access_key');
+            $proxy_host = null;
+            $proxy_port = null;
+            $proxy_login = null;
+            $proxy_password = null;
+
+            $price = floatval($this->getPriceTotal());
+            $convert_price = number_format($price, '2', '', '');
+
+            $paylineSDK = new PaylineSDK($merchant_id, $access_key, $proxy_host, $proxy_port, $proxy_login, $proxy_password, $environment);
+
+            $doWebPaymentRequest = array();
+            $doWebPaymentRequest['cancelURL'] = 'http://localhost:8000/mon-panier';
+            $doWebPaymentRequest['returnURL'] = 'http://localhost:8000/returnURL';
+            $doWebPaymentRequest['notificationURL'] = 'http://localhost:8000/notificationURL';
+
+            // Le paiement
+            $doWebPaymentRequest['payment']['amount'] = $convert_price; // this value has to be an integer amount is sent in cents
+            $doWebPaymentRequest['payment']['currency'] = 978; // ISO 4217 code for euro
+            $doWebPaymentRequest['payment']['action'] = 101; // 101 stand for "authorization+capture"
+            $doWebPaymentRequest['payment']['mode'] = 'CPT'; // one shot payment
+
+            // La commande
+            $doWebPaymentRequest['order']['ref'] = $order->document_number; // the reference of your order
+            $doWebPaymentRequest['order']['amount'] = $convert_price; // may differ from payment.amount if currency is different
+            $doWebPaymentRequest['order']['currency'] = 978; // ISO 4217 code for euro
+            $doWebPaymentRequest['order']['date'] = date('d/m/Y H:i', strtotime(Carbon::now()));
+
+            // CONTRACT NUMBERS
+            $doWebPaymentRequest['payment']['contractNumber'] = '1234567';
+
+            $doWebPaymentResponse = $paylineSDK->doWebPayment($doWebPaymentRequest);
+
+            if($doWebPaymentResponse) {
+                /* FIXME: suppression du panier
+                 * Suppression du panier
+                 * ATTENTION : Avec cette methode nous n'attendons pas la réponse du payment, il faut retravailler cette méthode.
+                 */
+                $my_cart = UserCart::where('user_id', auth()->user()->id)->first();
+                $my_cart->delete();
+
+                //
+
+                return redirect($doWebPaymentResponse['redirectURL']);
+            } else {
+                // TODO: Traiter la réponse
+                dd("pas de reponse");
+            }
+
+//            Session::flash('success', "Nous avons bien pris en compte votre commande.");
+//            return redirect()->route('front.home');
         } else {
             Session::flash('erreur', "Une erreur s'est produite");
             return redirect()->route('front.home');
+        }
+    }
+
+    // TEST - Payment
+    public function payment($order_id)
+    {
+        $merchant_id = Config::get('payment.merchant_id');
+        $environment = Config::get('payment.environment');
+        $access_key = Config::get('payment.access_key');
+        $proxy_host = null;
+        $proxy_port = null;
+        $proxy_login = null;
+        $proxy_password = null;
+
+        $price = floatval($this->getPriceTotal());
+        $convert_price = number_format($price, '2', '', '');
+
+        $paylineSDK = new PaylineSDK($merchant_id, $access_key, $proxy_host, $proxy_port, $proxy_login, $proxy_password, $environment);
+
+        $doWebPaymentRequest = array();
+        $doWebPaymentRequest['cancelURL'] = 'http://localhost:8000/mon-panier';
+        $doWebPaymentRequest['returnURL'] = 'http://localhost:8000/returnURL';
+        $doWebPaymentRequest['notificationURL'] = 'http://localhost:8000/notificationURL';
+
+        // Le paiement
+        $doWebPaymentRequest['payment']['amount'] = $convert_price; // this value has to be an integer amount is sent in cents
+        $doWebPaymentRequest['payment']['currency'] = 978; // ISO 4217 code for euro
+        $doWebPaymentRequest['payment']['action'] = 101; // 101 stand for "authorization+capture"
+        $doWebPaymentRequest['payment']['mode'] = 'CPT'; // one shot payment
+
+        // La commande
+        $doWebPaymentRequest['order']['ref'] = $order->document_name; // the reference of your order
+        $doWebPaymentRequest['order']['amount'] = $convert_price; // may differ from payment.amount if currency is different
+        $doWebPaymentRequest['order']['currency'] = 978; // ISO 4217 code for euro
+        $doWebPaymentRequest['order']['date'] = date('d/m/Y H:i', strtotime(Carbon::now()));
+
+        // CONTRACT NUMBERS
+        $doWebPaymentRequest['payment']['contractNumber'] = '1234567';
+
+        $doWebPaymentResponse = $paylineSDK->doWebPayment($doWebPaymentRequest);
+
+        if($doWebPaymentResponse) {
+            return redirect($doWebPaymentResponse['redirectURL']);
+        } else {
+            dd("pas de reponse");
         }
     }
 

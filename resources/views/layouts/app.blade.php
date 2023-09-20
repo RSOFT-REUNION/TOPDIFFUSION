@@ -18,6 +18,14 @@
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://unpkg.com/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>
+    <!-- PAYMENTS -->
+    @if(\Illuminate\Support\Facades\Config::get('app.env' === 'local'))
+        <script src="https://homologation-payment.cdn.payline.com/cdn/scripts/widget-min.js"></script>
+        <link rel="stylesheet" href="https://homologation-payment.cdn.payline.com/cdn/styles/widget-min.css">
+    @else
+        <script src="https://payment.cdn.payline.com/cdn/scripts/widget-min.js"></script>
+        <link rel="stylesheet" href="https://payment.cdn.payline.com/cdn/styles/widget-min.css">
+    @endif
     <!-- STYLES -->
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     @vite([

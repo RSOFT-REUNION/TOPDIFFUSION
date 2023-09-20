@@ -12,6 +12,7 @@
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^2.12",
         "maatwebsite/excel": "^3.1.48",
+        "monext/payline-sdk": "^4.75",
         "nesbot/carbon": "^2.69",
         "spatie/laravel-flash": "^1.9",
         "wire-elements/modal": "^1.0"
