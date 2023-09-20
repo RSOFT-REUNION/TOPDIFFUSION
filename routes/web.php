@@ -98,11 +98,6 @@ Route::group([
             Route::get('/{user}/verified', [BoUserController::class, 'validateProfessionnal'])->name('back.user.verified');
         });
 
-        Route::prefix('/equipes')->group(function () {
-            Route::get('/liste', [BoTeamController::class, 'showListTeam'])->name('back.team.list');
-            Route::get('/{user}', [BoTeamController::class, 'showSingleMember'])->name('back.team.single');
-        });
-
         Route::prefix('/reglages')->group(function () {
             Route::get('/', [BoSettingController::class, 'showSettingGeneral'])->name('back.setting');
             Route::get('/paiement-et-taxes', [BoSettingController::class, 'showSettingPayment'])->name('back.setting.payment');
@@ -110,8 +105,6 @@ Route::group([
             Route::get('/performance', [BoSettingController::class, 'showSettingPerform'])->name('back.setting.perform');
             Route::get('/information', [BoSettingController::class, 'showSettingInfo'])->name('back.setting.info');
         });
-
-        Route::get('/a-propos', [BackController::class, 'showAboutSite'])->name('back.aboutSite');
     });
 });
 

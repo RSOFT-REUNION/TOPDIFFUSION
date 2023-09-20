@@ -11,14 +11,6 @@ use App\Http\Controllers\Controller;
 
 class BoTeamController extends Controller
 {
-    public function showListTeam()
-    {
-        $data = [];
-        $data['group'] = 'teams';
-        $data['page'] = 'list';
-        return view('pages.backend.users.team-list', $data);
-    }
-
     public function showSingleMember($user)
     {
         $selectedUser = User::where('customer_code', $user)->first();

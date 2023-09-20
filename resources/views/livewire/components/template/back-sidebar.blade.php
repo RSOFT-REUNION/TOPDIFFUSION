@@ -25,9 +25,9 @@
                     <h2>Paramètres</h2>
                     <li><a href="{{ route('back.setting') }}" class="btn-sidebar"><i
                                 class="fa-solid fa-sliders mr-3"></i>Réglages</a></li>
-                    <li><a href="{{ route('back.team.list') }}" class="btn-sidebar"><i
+                    <li><a href="" class="btn-sidebar"><i
                                 class="fa-solid fa-people-group mr-3"></i>Équipes</a></li>
-                    <li><a href="{{ route('back.aboutSite') }}" class="btn-sidebar"><i
+                    <li><a href="" class="btn-sidebar"><i
                                 class="fa-solid fa-circle-info mr-3"></i>À propos</a></li>
                 </ul>
             @elseif($group == 'legal')
