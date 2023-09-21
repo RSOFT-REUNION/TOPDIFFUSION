@@ -172,7 +172,7 @@ class ProductPage extends Component
         $data = [];
         $data['tab'] = $this->active_tab;
         $data['product'] = MyProduct::where('id', $this->product_id)->first();
-        // $data['product_infos'] = MyProductInfo::where('product_id', $this->product_id)->get();
+        $data['product_infos'] = MyProductInfo::where('product_id', $this->product_id)->get();
         $data['product_pictures'] = MyProductPicture::where('product_id', $this->product_id)->get();
         $data['product_swatches'] = MyProductSwatch::where('product_id', $this->product_id)->get();
         $data['settings'] = SettingGeneral::where('id', 1)->first();
@@ -184,6 +184,7 @@ class ProductPage extends Component
         $data['increment'] = 1;
         $data['swatch_info'] = MyProductSwatch::where('id', $this->config_swatch)->first();
 
+        // FIXME: Ne pas afficher toutes les motos (ils sont en doubles)
         // Compatible BIKE
         $userBike = UserBike::where('user_id', auth()->user()->id)->get();
         $compatibleBikeIds = $userBike->pluck('bike_id')->toArray();

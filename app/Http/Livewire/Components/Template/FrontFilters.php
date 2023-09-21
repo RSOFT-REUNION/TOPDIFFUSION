@@ -3,57 +3,170 @@
 namespace App\Http\Livewire\Components\Template;
 
 use App\Models\bike;
+use App\Models\MyProduct;
 use Livewire\Component;
 
 class FrontFilters extends Component
 {
     public $page;
 
-    protected $rules = [
-        'motor_brand' => 'required|string',
-        'motor_cylindree' => 'required|string',
-        'motor_modele' => 'required|string',
-        'motor_year' => 'required|string',
-    ];
-
-    public $motor_brand, $motor_cylindree, $motor_modele, $motor_year;
+    public $motor_brands = [];
+    public $motor_cylindree = [];
+    public $motor_modele = [];
+    public $motor_year = [];
     public $all_bikes_infos = [];
+
+    public $selectedBrand = null;
+    public $selectedCylindree = null;
+    public $selectedModele = null;
+    public $selectedYear = null;
+
+    public $selectedFilters = [
+        'motor_brands' => '',
+        'motor_cylindree' => '',
+        'motor_modele' => '',
+        'motor_year' => '',
+    ];
 
 
     public function mount()
     {
-        // * Touts les cylindrés
-        $this->all_bikes_infos = bike::all();
-        $this->motor_cylindree = $this->all_bikes_infos;
+        // * Toutes les marques
+        $this->motor_brands = Bike::get(['id', 'marque'])->pluck('marque', 'id')->toArray();
+
+        // Chargez les cylindrées compatibles pour la marque sélectionnée
+        if ($this->selectedBrand) {
+            $compatibleCylindrees = Bike::where('marque', $this->selectedBrand)->get(['id', 'cylindree'])->pluck('cylindree', 'id')->toArray();
+            $this->motor_cylindree = $compatibleCylindrees;
+        }
+
+        // Chargez les modèles compatibles pour la marque et la cylindrée sélectionnées
+        if ($this->selectedBrand && $this->selectedCylindree) {
+            $compatibleModeles = Bike::where('marque', $this->selectedBrand)
+                ->where('cylindree', $this->selectedCylindree)
+                ->get(['id', 'modele'])
+                ->pluck('modele', 'id')
+                ->toArray();
+            $this->motor_modele = $compatibleModeles;
+        }
+
+        // Chargez les années compatibles pour la marque, la cylindrée et le modèle sélectionnés
+        if ($this->selectedBrand && $this->selectedCylindree && $this->selectedModele) {
+            $compatibleYears = Bike::where('marque', $this->selectedBrand)
+                ->where('cylindree', $this->selectedCylindree)
+                ->where('modele', $this->selectedModele)
+                ->get(['id', 'annee'])
+                ->pluck('annee', 'id')
+                ->toArray();
+            $this->motor_year = $compatibleYears;
+        }
+    }
+
+
+
+    public function search()
+    {
+        $query = MyProduct::query();
+
+        // Rejoindre la table "compatible_bikes" pour obtenir les produits compatibles
+        $query->join('compatible_bikes', 'my_products.id', '=', 'compatible_bikes.product_id');
+
+        if ($this->selectedBrand) {
+            // Effectuez une jointure entre la table "bikes" et "product_brands" en utilisant le nom de la marque
+            $query->join('bikes', 'compatible_bikes.bike_id', '=', 'bikes.id')
+                ->join('product_brands', 'product_brands.title', '=', 'bikes.marque')
+                ->where('product_brands.title', $this->selectedBrand);
+        }
+
+        if ($this->selectedCylindree) {
+            // Filtrer les motos par cylindrée
+            $query->join('bikes as selected_bike_cylindree', 'compatible_bikes.bike_id', '=', 'selected_bike_cylindree.id')
+                ->where('selected_bike_cylindree.cylindree', $this->selectedCylindree);
+        }
+
+        if ($this->selectedModele) {
+            // Filtrer les motos par modèle
+            $query->join('bikes as selected_bike_modele', 'compatible_bikes.bike_id', '=', 'selected_bike_modele.id')
+                ->where('selected_bike_modele.modele', $this->selectedModele);
+        }
+
+        if ($this->selectedYear) {
+            // Filtrer les motos par année
+            $query->join('bikes as selected_bike_year', 'compatible_bikes.bike_id', '=', 'selected_bike_year.id')
+                ->where('selected_bike_year.annee', $this->selectedYear);
+        }
+
+        // Sélectionnez les produits correspondants
+        $query->select('my_products.*');
+
+        $searchBikeInfo = $query->get();
+
+        // Stockez les résultats dans la session
+        session(['bikesInfos' => $searchBikeInfo->toArray()]);
+
+        return redirect('/filtres');
+    }
+
+    public function updatedSelectedBrand($value)
+    {
+        if ($value) {
+            $compatibleCylindrees = Bike::where('marque', $value)->get(['id', 'cylindree'])->pluck('cylindree', 'id')->toArray();
+            $this->motor_cylindree = $compatibleCylindrees;
+        } else {
+            // Réinitialisez les cylindrées si aucune marque n'est sélectionnée
+            $this->motor_cylindree = [];
+        }
+
+        // Réinitialisez les autres filtres
+        $this->selectedCylindree = null;
+        $this->selectedModele = null;
+        $this->selectedYear = null;
+    }
+
+    public function updatedSelectedCylindree($value)
+    {
+        if ($this->selectedBrand && $value) {
+            $compatibleModeles = Bike::where('marque', $this->selectedBrand)
+                ->where('cylindree', $value)
+                ->get(['id', 'modele'])
+                ->pluck('modele', 'id')
+                ->toArray();
+            $this->motor_modele = $compatibleModeles;
+        } else {
+            // Réinitialisez les modèles si aucune marque ou cylindrée n'est sélectionnée
+            $this->motor_modele = [];
+        }
+
+        // Réinitialisez les autres filtres
+        $this->selectedModele = null;
+        $this->selectedYear = null;
+    }
+
+
+    public function updatedSelectedModele($value)
+    {
+        if ($this->selectedBrand && $this->selectedCylindree && $value) {
+            $compatibleYears = Bike::where('marque', $this->selectedBrand)
+                ->where('cylindree', $this->selectedCylindree)
+                ->where('modele', $value)
+                ->get(['id', 'annee'])
+                ->pluck('annee', 'id')
+                ->toArray();
+            $this->motor_year = $compatibleYears;
+        } else {
+            // Réinitialisez les années si aucune marque, cylindrée ou modèle n'est sélectionné
+            $this->motor_year = [];
+        }
+
+        // Réinitialisez les autres filtres
+        $this->selectedYear = null;
     }
 
     public function render()
     {
-        $searchBikeInfo = bike::all();
-
-        if ($this->motor_brand === 'SUZUKI') {
-            $searchBikeInfo->where('marque', $this->motor_brand);
-            // $this->filters_count++;
-        } 
-        elseif ($this->motor_cylindree) {
-            $searchBikeInfo->where('status', $this->motor_cylindree);
-            // $this->filters_count++;
-        }
-        // if ($this->code && auth()->user()->isAdmin()) {
-        //     $searchBikeInfo->where('code_client', 'LIKE', '%' . $this->code . '%');
-        //     // $this->filters_count++;
-        // }
-        if ($this->motor_modele) {
-            $searchBikeInfo->where('num_facture', 'LIKE', '%' . $this->motor_modele . '%');
-            // $this->filters_count++;
-        }
-        // if ($this->start_date) {
-        //     $searchBikeInfo->whereBetween('document_date', [$this->start_date, $this->end_date]);
-        //     $this->filters_count++;
-        // }
-
         $data = [];
-        $data['bikesInfos'] = $searchBikeInfo;
+        $data['page'] = 'filters';
+
         return view('livewire.components.template.front-filters', $data);
     }
 }
