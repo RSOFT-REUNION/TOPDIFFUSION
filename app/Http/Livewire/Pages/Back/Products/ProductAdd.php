@@ -58,7 +58,6 @@ class ProductAdd extends Component
     public function mount($product_id)
     {
         $this->product = ProductTemp::where('id', $product_id)->first();
-
         $this->Tbikes = Bike::all();
 
         // Parcourez tous les motos pour vérifier s'ils sont déjà sélectionnés
@@ -102,6 +101,7 @@ class ProductAdd extends Component
     public function updated($title)
     {
         $this->validateOnly($title);
+        $this->pourcentage_price = $this->delivery; // Initie le pourcentage de remise par rapport à la catégorie
         if ($this->customer_price && $this->pourcentage_price) {
             $this->professionnal_price = ($this->customer_price - ($this->customer_price * $this->pourcentage_price / 100));
         }

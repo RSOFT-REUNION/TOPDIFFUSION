@@ -20,13 +20,7 @@ class ProductPage extends Component
 {
     protected $listeners = ['refreshLines' => '$refresh'];
     public $active_tab = '1';
-    public $product_id, $quantity, $category_id, $favoriteLike;
-
-    public $seenChainsValue = [];
-    public $seenPasValue = [];
-    public $seenWidthValue = [];
-    public $seenPignonValue = [];
-    public $seenCrownValue = [];
+    public $product_id, $quantity, $category_id, $favoriteLike, $config_swatch;
     public $userBikeCompatible = false;
     // public $allCompatibleBike = [];
 
@@ -45,6 +39,9 @@ class ProductPage extends Component
         $this->product_id = $product_id;
         $category_id_product = MyProduct::where('id', $this->product_id)->first();
         $this->category_id = ProductCategory::find($category_id_product->category_id);
+        if($this->quantity == null) {
+            $this->quantity = 1;
+        }
 
         $favorite = MyFavorite::where('product_id', $product_id)->first();
 
@@ -54,18 +51,15 @@ class ProductPage extends Component
             $this->favoriteLike = false;
         }
 
-        // foreach ($variable as $key => $value) {
-        //     # code...
-        // }
-
         $picture = MyProductPicture::where('product_id', $product_id)->get();
 
-        $this->images = [
+        /*$this->images = [
             $picture->picture_url,
             MyProduct::where('product_id', $product_id)->get()
         ];
-        dd($this->images);
+        dd($this->images);*/
     }
+
     public function changeTab($tab)
     {
         switch ($tab) {
@@ -82,6 +76,20 @@ class ProductPage extends Component
         // $this->category_id = ProductCategory::find($this->product->category_id);
     }
 
+    // Ajouter une quantité au produit
+    public function addQuantity()
+    {
+        $this->quantity += 1;
+    }
+
+    // Supprimer une quantité au produit
+    public function minusQuantity()
+    {
+        if($this->quantity > 1) {
+            $this->quantity -= 1;
+        }
+    }
+
     public function createCart()
     {
         // Récupération des swatches du produit
@@ -89,6 +97,10 @@ class ProductPage extends Component
 
         // Récupération du panier du client
         $myCart = UserCart::where('user_id', auth()->user()->id)->where('product_id', $this->product_id)->first();
+        $product = MyProduct::where('id', $this->product_id)->first();
+        if($product->type == 1) {
+            $swatch = MyProductSwatch::where('product_id', $product->id)->first();
+        }
 
         // Vérification si la ligne existe déjà
         if($myCart) {
@@ -100,12 +112,10 @@ class ProductPage extends Component
             $cart = new UserCart;
             $cart->product_id = $this->product_id;
             $cart->user_id = auth()->user()->id;
-            if($swatches->count() === 1) {
-                foreach ($swatches as $swatch) {
-                    $cart->swatch_id = $swatch->id;
-                }
+            if($product->type == 1){
+                $cart->swatch_id = $swatch->id;
             } else {
-                //
+                $cart->swatch_id = $this->config_swatch;
             }
             $cart->quantity = $this->quantity;
             $cart->save();
@@ -157,7 +167,6 @@ class ProductPage extends Component
         }
     }
 
-
     public function render()
     {
         $data = [];
@@ -173,6 +182,7 @@ class ProductPage extends Component
             $data['my_setting'] = UserSetting::where('user_id', auth()->user()->id)->first();
         }
         $data['increment'] = 1;
+        $data['swatch_info'] = MyProductSwatch::where('id', $this->config_swatch)->first();
 
         // Compatible BIKE
         $userBike = UserBike::where('user_id', auth()->user()->id)->get();

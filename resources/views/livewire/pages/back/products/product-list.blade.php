@@ -2,6 +2,7 @@
     <div id="entry-header" class="flex items-center">
         <div class="flex-1">
             <h1>Produits</h1>
+{{--            <h1><a href="">Produits</a></h1>--}}
         </div>
         <div class="flex-none inline-flex items-center">
             <a href="" class="btn-icon mr-2"><i class="fa-solid fa-magnifying-glass"></i></a>

@@ -11,9 +11,9 @@
                                 @elseif($product_stock < 3 && $product_stock > 0)
                                     <p class="tags bg-orange-500 text-white">Plus que {{ $product_stock }}</p>
                                 @endif
-                                @if ($category)
+                                {{--@if ($category)
                                     <p class="tags bg-[#fbbc34] text-black">{{ $category->delivery }} %</p>
-                                @endif
+                                @endif--}}
                             </div>
                         </div>
                         <div class="flex-grow"></div>
@@ -59,7 +59,7 @@
                 </div>
             @endif
             <div class="mt-3">
-                <a href="" class="btn-secondary block text-center">Ajouter au panier</a>
+                <a href="{{ route('front.product', ['slug' => $product->slug]) }}" class="btn-secondary block text-center">En savoir plus</a>
             </div>
         </div>
     </div>
