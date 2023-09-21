@@ -11,7 +11,47 @@ use App\Models\MyProductPromotionItems;
 class PromotionsCreate extends Component
 {
     public $mode;
-    public $percentage, $name_promo, $dateDebut, $dateFin, $codePromo;
+    public $percentage, $name_promo, $dateDebut, $dateFin, $codePromo, $codePromoGen;
+    public $product_selected;
+    public $alex = [];
+    protected $listeners = ['productSelected' => 'handleProductSelected'];
+
+    public function mount()
+    {
+        $this->product_selected = [];
+    }
+
+    // public function handleProductSelected($products)
+    // {
+    //     // dd($products);
+    //     $existingIds = collect($this->product_selected)->pluck('id')->all();
+
+    //     foreach ($products as $productId) {
+    //         $newProduct = MyProduct::where('id', $productId)->first();
+    //         if ($newProduct && !in_array($newProduct->id, $existingIds)) {
+    //             $this->product_selected[] = $newProduct;
+    //         }
+    //     }
+    // }
+
+
+
+    public function btn() {
+        dd($this->product_selected);
+    }
+
+    public function handleProductSelected($product)
+    {
+        $this->alex[] = $product;
+        $this->product_selected = MyProduct::where('id', $product)->get();
+        $this->product_selected->map(function ($item) {
+            return [
+                'cover' => $item->cover,
+                'id' => $item->id,
+            ];
+        });;
+
+    }
 
     public function formatDate($date)
     {
@@ -20,8 +60,12 @@ class PromotionsCreate extends Component
 
     public function generatePromoCode()
     {
-        return 'PROMO' . strtoupper(Str::random(3));
+        if (!$this->codePromo) {
+            $this->codePromoGen = 'PROMO' . strtoupper(Str::random(3));
+        }
     }
+
+
 
     // public $checkedProducts = [];
     // public $checkedProduct = [];

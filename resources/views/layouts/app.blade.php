@@ -22,6 +22,7 @@
     <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     @vite([
         'resources/css/app.css',
+        'resources/js/app.js',
         'resources/scss/template.scss',
         'resources/scss/component.scss',
         'resources/scss/responsive.scss',
@@ -43,5 +44,6 @@
     @yield('meta-script')
     @livewire('livewire-ui-modal')
     @livewireScripts
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts@latest"></script>
 </body>
 </html>

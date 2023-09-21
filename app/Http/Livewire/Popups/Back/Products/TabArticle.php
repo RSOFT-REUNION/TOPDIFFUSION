@@ -15,9 +15,29 @@ class TabArticle extends ModalComponent
     public $jobs = [];
     public $is_search = false;
 
+    public $selectedProducts = [];
+
+    // public function updatedSelectedProducts()
+    // {
+    //     $this->emit('productSelected', $this->selectedProducts);
+    // }
+
+    public function updatedSelectedProducts()
+    {
+        // dd($this->selectedProducts);
+        foreach($this->selectedProducts as $productId) {
+            $this->emit('productSelected', $productId);
+        }
+    }
+
+
     public function mount()
     {
         $this->all_products = MyProduct::all();
+    }
+
+    public function btn() {
+        dd($this->selectedProducts);
     }
 
     public static function modalMaxWidth(): string

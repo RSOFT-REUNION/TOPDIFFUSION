@@ -25,7 +25,7 @@
                     @foreach($products as $product)
                         <tr>
                             <td>
-                                <input type="checkbox">
+                                <input type="checkbox" wire:model="selectedProducts" value="{{ $product->id }}" {{ in_array($product->id, $selectedProducts) ? 'checked' : '' }}>
                             </td>
                             <td>{{ $product->id }}</td>
                             <td>{{ $product->title }}</td>
@@ -34,6 +34,7 @@
                     </tbody>
                 </table>
             </div>
+            <a wire:click="btn">Ajouter</a>
         @else
             <p class="empty-text mt-2">Vous n'avez pas encore ajouté d'article</p>
         @endif
