@@ -15,7 +15,7 @@
                                 class="fa-solid fa-users mr-3"></i>Clients</a></li>
                     <li><a href="{{ route('back.product.list') }}" class="btn-sidebar"><i
                                 class="fa-solid fa-cubes-stacked mr-3"></i>Produits</a></li>
-                    <li><a href="{{ route('back.product.list') }}" class="btn-sidebar"><i
+                    <li><a href="{{ route('back.orders.orders') }}" class="btn-sidebar"><i
                                 class="fa-solid fa-file-contract mr-3"></i>Commandes</a></li>
                     <li><a href="{{ route('back.product.list') }}" class="btn-sidebar"><i
                                 class="fa-solid fa-comments mr-3"></i>S.A.V</a></li>
@@ -50,31 +50,6 @@
             @elseif($group == 'products')
                 <!-- Products menus -->
                 <ul>
-                    {{-- <li><a href="{{ route('back.dashboard') }}" class="btn-sidebar border-b border-gray-300 mb-3"><i
-                                class="fa-solid fa-arrow-left mr-3"></i>Retour</a></li>
-                    <li><a href="{{ route('back.product.list') }}"
-                            class="btn-sidebar @if ($page == 'list') btn-sidebar-active @endif"><i
-                                class="fa-solid fa-cubes-stacked mr-3"></i>Produits</a></li>
-                    <li><a href="{{ route('back.product.stocks') }}"
-                            class="btn-sidebar @if ($page == 'stocks') btn-sidebar-active @endif"><i
-                                class="fa-solid fa-boxes-stacked mr-3"></i>Stocks</a></li>
-                    <li><a href="{{ route('back.product.categories') }}"
-                            class="btn-sidebar @if ($page == 'categories') btn-sidebar-active @endif"><i
-                                class="fa-solid fa-layer-group mr-3"></i>Catégories</a></li>
-                    <li><a href="{{ route('back.product.bikes') }}"
-                            class="btn-sidebar @if ($page == 'bikes') btn-sidebar-active @endif"><i
-                                class="fa-solid fa-motorcycle mr-3"></i>Motos</a></li>
-                    <li><a href="{{ route('back.product.bikes') }}"
-                            class="btn-sidebar @if ($page == 'discounts') btn-sidebar-active @endif"><i
-                                class="fa-solid fa-tags mr-3"></i>Promotions</a></li>
-                    <li><a href="{{ route('back.product.brands') }}"
-                            class="btn-sidebar @if ($page == 'brands') btn-sidebar-active @endif"><i
-                                class="fa-solid fa-crown mr-3"></i>Marques</a></li>
-                    <li><a href="{{ route('back.product.options') }}"
-                            class="btn-sidebar @if ($page == 'options') btn-sidebar-active @endif"><i
-                                class="fa-solid fa-sliders mr-3"></i>Options</a></li> --}}
-
-                                
                     <li><a href="{{ route('back.dashboard') }}" class="btn-sidebar border-b border-gray-300 mb-3"><i class="fa-solid fa-arrow-left mr-3"></i>Retour</a></li>
                     <li><a href="{{ route('back.product.list') }}" class="btn-sidebar @if($page == 'list') btn-sidebar-active @endif"><i class="fa-solid fa-cubes-stacked mr-3"></i>Produits</a></li>
                     <li><a href="{{ route('back.product.stocks') }}" class="btn-sidebar @if($page == 'stocks') btn-sidebar-active @endif"><i class="fa-solid fa-boxes-stacked mr-3"></i>Stocks</a></li>
@@ -94,7 +69,7 @@
                                 class="fa-solid fa-users mr-3"></i>Clients</a></li>
                 </ul>
             @elseif($group == 'teams')
-            <!-- Users menus -->
+            <!-- Teams menus -->
             <ul>
                 <li><a href="{{ route('back.dashboard') }}" class="btn-sidebar border-b border-gray-300 mb-3"><i
                             class="fa-solid fa-arrow-left mr-3"></i>Retour</a></li>
@@ -133,6 +108,13 @@
                     class="btn-sidebar @if ($page == 'aboutSite') btn-sidebar-active @endif"><i
                         class="fa-solid fa-gauge-simple-high mr-3"></i>Fonction à venir</a></li>
             </ul>
+            @elseif($group == 'orders')
+                {{-- Orders menus --}}
+                <ul>
+                    <a href="{{ route('back.dashboard') }}" class="btn-sidebar border-b border-gray-300 mb-3"><i class="fa-solid fa-arrow-left mr-3"></i>Retour</a></li>
+                    <li><a href="{{ route('back.orders.orders') }}" class="btn-sidebar @if($page == 'orders') btn-sidebar-active @endif"><i class="fa-solid fa-file-lines mr-3"></i>Liste des commandes</a></li>
+                    <li><a href="{{ route('back.orders.orders') }}" class="mt-1 btn-sidebar @if($page == 'invoices') btn-sidebar-active @endif"><i class="fa-solid fa-file-lines mr-3"></i>Liste des factures</a></li>
+                </ul>
             @endif
         </div>
         <div id="sidebar_entry-footer" class="flex-none">

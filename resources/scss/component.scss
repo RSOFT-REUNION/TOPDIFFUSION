@@ -1218,3 +1218,21 @@
         margin-top: 5px;
     }
 }
+.text-input-white {
+    label {
+        font-weight: theme.$font-w-medium;
+        font-size: 14px;
+        margin-left: 10px;
+    }
+    p {
+        display: block;
+        width: 100%;
+        background-color: #FFF;
+        padding: 10px 15px;
+        border-radius: 5px;
+        font-weight: theme.$font-w-bold;
+        transition-duration: 300ms;
+        border: 1px solid transparent;
+        margin-top: 5px;
+    }
+}

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Back\BoOrderController;
 use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\PagesLegal;
 use Illuminate\Support\Facades\Route;
@@ -109,6 +110,12 @@ Route::group([
             Route::get('/avance', [BoSettingController::class, 'showSettingAvanced'])->name('back.setting.avanced');
             Route::get('/performance', [BoSettingController::class, 'showSettingPerform'])->name('back.setting.perform');
             Route::get('/information', [BoSettingController::class, 'showSettingInfo'])->name('back.setting.info');
+        });
+
+        Route::prefix('/commandes-factures')->group(function () {
+            Route::get('/commandes', [BoOrderController::class, 'showOrders'])->name('back.orders.orders');
+            Route::get('/commandes/{order}', [BoOrderController::class, 'showSingleOrder'])->name('back.orders.single');
+            Route::get('show-invoice', [BoOrderController::class, 'showInvoiceFile'])->name('back.orders.showInvoice');
         });
 
         Route::get('/a-propos', [BackController::class, 'showAboutSite'])->name('back.aboutSite');
