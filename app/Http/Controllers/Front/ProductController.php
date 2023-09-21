@@ -30,4 +30,13 @@ class ProductController extends Controller
         $data['setting'] = SettingGeneral::where('id', 1)->first();
         return view('pages.frontend.products.products-list', $data);
     }
+
+    public function showProductListAll()
+    {
+        $data = [];
+        // $data['slug'] = $slug;
+        $data['page'] = 'tout les produit';
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
+        return view('pages.frontend.products.product-list-all', $data);
+    }
 }

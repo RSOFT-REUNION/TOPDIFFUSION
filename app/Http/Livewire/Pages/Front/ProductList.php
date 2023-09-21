@@ -3,10 +3,10 @@
 namespace App\Http\Livewire\Pages\Front;
 
 use App\Models\MyProduct;
-use App\Models\MyProductCategories;
-use App\Models\Product;
 use App\Models\ProductCategory;
 use Livewire\Component;
+use App\Models\MyProductCategories;
+use App\Models\Product;
 
 class ProductList extends Component
 {

@@ -3,7 +3,7 @@
 @section('content-template')
     <!-- HERO BANNER -->
     @if ($carrousel)
-        <div class="flex flex-col h-screen">
+        <div class="flex flex-col">
             <div class="flex-none">
                 @livewire('components.front.hero-banner')
             </div>
@@ -26,7 +26,7 @@
                             width="50px" class="mr-3"></object>Nos Nouveautés</h2>
                 </div>
                 <div class="flex-none">
-                    <a href="{{ route('test-flash') }}" class="btn-outline">Voir tout</a>
+                    <a href="{{ route('front.product-all') }}" class="btn-outline">Voir tout</a>
                 </div>
             </div>
             <div class="grid grid-cols-3 gap-10 mt-10">

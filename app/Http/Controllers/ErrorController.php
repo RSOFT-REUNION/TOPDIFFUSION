@@ -8,6 +8,6 @@ class ErrorController extends Controller
 {
     public function showErrorMaintenance()
     {
-        return view('errors.503');
+        return view('pages.maintenance-page');
     }
 }

@@ -13,7 +13,9 @@ use App\Models\ProductCategory;
 
 class ProductThumbnails extends Component
 {
-    public $product, $category_id, $favoriteLike;
+    public $product, $category_id;
+
+    public $isFavorite = false;
 
     protected $listeners = ['refreshLines' => '$refresh'];
 
@@ -22,43 +24,28 @@ class ProductThumbnails extends Component
         $this->product = MyProduct::where('id', $product_id)->first();
         $this->category_id = ProductCategory::find($this->product->category_id);
 
-        $favorite = MyFavorite::where('product_id', $product_id)->first();
-
-        if($favorite){
-            $this->favoriteLike = true;
-        } else {
-            $this->favoriteLike = false;
+        if (auth()->check()) {
+            $this->isFavorite = MyFavorite::where('product_id', $product_id)->where('user_id', auth()->user()->id)->exists();
         }
     }
 
-    // public function isFavorited($product_id)
-    // {
-    //     $favorite = MyFavorite::where('product_id', $product_id)->first();
-
-    //     if($favorite){
-    //         $this->favoriteLike = true;
-    //     } else {
-    //         $this->favoriteLike = false;
-    //     }
-    // }
-
     public function addProductToFavorite($id)
     {
-        $actualUser = auth()->user()->id;
+        if (auth()->check()) {
+            $actualUser = auth()->user()->id;
 
-        $verifyIfProductExists = MyFavorite::where('product_id', $id)->first();
+            $verifyIfProductExists = MyFavorite::where('product_id', $id)->first();
 
+            if (!$verifyIfProductExists) {
+                $fav = new MyFavorite;
+                $fav->user_id = $actualUser;
+                $fav->product_id = $id;
+                $fav->save();
 
-        if (!$verifyIfProductExists) {
-            $fav = new MyFavorite([
-                'user_id' => $actualUser,
-                'product_id' => $id
-            ]);
-            if ($fav->save()) {
-                redirect()->route('front.home');
-            } else {
-                redirect()->route('about');
+                $this->isFavorite = true;
             }
+        } else {
+            redirect()->route('front.login');
         }
     }
 
@@ -71,10 +58,10 @@ class ProductThumbnails extends Component
 
         if ($favorite) {
             $favorite->delete();
-        } else {
-            redirect()->route('back.product.list');
+            $this->isFavorite = false;
         }
     }
+
 
     public function render()
     {
