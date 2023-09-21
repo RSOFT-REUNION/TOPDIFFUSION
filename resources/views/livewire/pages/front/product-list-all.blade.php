@@ -5,7 +5,7 @@
     <div class="entry-header mt-5">
         <div class="flex items-center">
             <div class="flex-1">
-                <h1>{{ $category->title }}</h1>
+                <h1>Voir tout</h1>
             </div>
             <div class="flex-none inline-flex items-center">
                 @if($products->count() > 0)
@@ -40,3 +40,4 @@
         @endif
     </div>
 </div>
+

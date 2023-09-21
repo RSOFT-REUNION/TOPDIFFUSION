@@ -30,6 +30,7 @@ Route::get('/inscription', [FrontController::class, 'showRegister'])->name('fron
 Route::get('/deconnexion', [FrontController::class, 'logout'])->name('logout');
 
 Route::get('/produit-{slug}', [ProductController::class, 'showProduct'])->name('front.product');
+Route::get('/produit', [ProductController::class, 'showProductListAll'])->name('front.product-all');
 Route::get('/liste-produit/categorie-{slug}', [ProductController::class, 'showProductList'])->name('front.product.list');
 
 Route::middleware(['App\Http\Middleware\RedirectIfMaintenanceModeActive'])->group(function () {
