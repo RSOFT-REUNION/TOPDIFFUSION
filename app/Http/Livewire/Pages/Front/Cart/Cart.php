@@ -93,6 +93,7 @@ class Cart extends Component
                 $orderItems->order_id = $order->id;
                 $orderItems->product_id = $ca->product_id;
                 $orderItems->quantity = $ca->quantity;
+                $orderItems->product_swatch_id = $swatch->id;
                 if(auth()->user()->professionnal === 1 && auth()->user()->verified === 1) {
                     $orderItems->product_price = $swatch->professionnal_price;
                 } else {
