@@ -14,12 +14,12 @@
             <img src="{{ asset('img/logos/Blue.svg') }}" width="650px">
             <p class="mb-5">Désolé, nous n'avons pas trouvé la page que vous recherchez.</p>
             <div class="flex flex-row items-center">
-                <div class="mr-5">
-                    <button class="btn-secondary">Retour a l'accueil</button>
+                <div class="mr-5 mt-5">
+                    <a href="{{ url('/') }}" class="btn-secondary">Retour a l'accueil</a>
                 </div>
-                <div>
+                {{-- <div>
                     <button class="font-semibold">contactez le support</button>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
