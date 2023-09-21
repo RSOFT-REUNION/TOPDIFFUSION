@@ -254,7 +254,10 @@ class FrontController extends Controller
 
     public function filtres()
     {
-        $bikesInfos = session('bikesInfos', []);
-        return view('filtres', compact('bikesInfos'));
+        $data = [];
+        $data['page'] = 'filters';
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
+        $data['bikesInfos'] = session('bikesInfos', []);
+        return view('filtres', $data);
     }
 }
