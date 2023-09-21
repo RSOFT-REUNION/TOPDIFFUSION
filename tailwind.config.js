@@ -13,8 +13,6 @@ export default {
         'secondary': '#FBBC34'
     },
   },
-  plugins: [
-    require('flowbite/plugin')
-  ],
+  plugins: [],
 }
 
