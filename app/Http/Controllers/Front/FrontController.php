@@ -251,4 +251,10 @@ class FrontController extends Controller
         $data['pageContent'] = Pages::where('key', 'faq')->first();
         return view('pages.frontend.legal.faq', $data);
     }
+
+    public function filtres()
+    {
+        $bikesInfos = session('bikesInfos', []);
+        return view('filtres', compact('bikesInfos'));
+    }
 }

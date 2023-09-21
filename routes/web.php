@@ -110,3 +110,4 @@ Route::group([
 
 // Routes pour le paiement
 Route::get('/returnURL', [CartController::class, 'showPaymentReturn']);
+Route::get('/filtres', [FrontController::class, 'filtres']);

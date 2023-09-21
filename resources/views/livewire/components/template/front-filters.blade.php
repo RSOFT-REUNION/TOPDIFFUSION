@@ -1,41 +1,45 @@
 @if ($page !== 'about' && $page !== 'faq' && $page !== 'confidential' && $page !== 'legal' && $page !== 'produit')
-    <div class="front-filters inline-flex items-center">
-        <object data="{{ asset('img/icons/motorcycle-of-big-size-black-silhouette.svg') }}" width="40px"
-            class="mr-5"></object>
-        <div class="textfield-filter">
-            <select wire:model="motor_brand">
-                <option value="">Marque</option>
-                @foreach($all_bikes_infos as $bike)
-                    <option value="{{ $bike->id }}">{{ $bike->marque }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="textfield-filter ml-2">
-            <select wire:model="motor_cylindree">
-                <option value="">Cylindrée</option>
-                @foreach($all_bikes_infos as $bike)
-                    <option value="{{ $bike->id }}">{{ $bike->cylindree }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="textfield-filter ml-2">
-            <select wire:model="motor_modele">
-                <option value="">Modèle</option>
-                @foreach($all_bikes_infos as $bike)
-                    <option value="{{ $bike->id }}">{{ $bike->modele }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="textfield-filter ml-2">
-            <select wire:model="motor_year">
-                <option value="">Année</option>
-                @foreach($all_bikes_infos as $bike)
-                    <option value="{{ $bike->id }}">{{ $bike->annee }}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="ml-2">
-            <button class="btn-secondary"><i class="fa-solid fa-magnifying-glass mr-2"></i>Rechercher</button>
-        </div>
+<div class="front-filters inline-flex items-center">
+    <object data="{{ asset('img/icons/motorcycle-of-big-size-black-silhouette.svg') }}" width="40px" class="mr-5"></object>
+
+    <div class="textfield-filter">
+        <select wire:model="selectedBrand">
+            <option value="">Marque</option>
+            @foreach ($motor_brands as $id => $brand)
+                <option value="{{ $brand }}">{{ $brand }}</option>
+            @endforeach
+        </select>
     </div>
+
+    <div class="textfield-filter ml-2">
+        <select class="@if(!$selectedBrand) cursor-not-allowed @endif" @if(!$selectedBrand) disabled @endif wire:model="selectedCylindree">
+            <option value="">Cylindrée</option>
+            @foreach ($motor_cylindree as $id => $cylindree)
+                <option value="{{ $id }}">{{ $cylindree }}</option>
+            @endforeach
+        </select>
+    </div>
+
+    <div class="textfield-filter ml-2">
+        <select class="@if(!$selectedCylindree) cursor-not-allowed @endif" @if(!$selectedCylindree) disabled @endif wire:model="selectedModele">
+            <option value="">Modèle</option>
+            @foreach ($motor_modele as $id => $modele)
+                <option value="{{ $id }}">{{ $modele }}</option>
+            @endforeach
+        </select>
+    </div>
+
+    <div class="textfield-filter ml-2">
+        <select class="@if(!$selectedModele) cursor-not-allowed @endif" @if(!$selectedModele) disabled @endif wire:model="selectedYear">
+            <option value="">Année</option>
+            @foreach ($motor_year as $id => $year)
+                <option value="{{ $id }}">{{ $year }}</option>
+            @endforeach
+        </select>
+    </div>
+
+    <div class="ml-2">
+        <button class="btn-secondary @if(!$selectedYear) cursor-not-allowed @endif" wire:click="search"><i class="fa-solid fa-magnifying-glass mr-2"></i>Rechercher</button>
+    </div>
+</div>
 @endif
