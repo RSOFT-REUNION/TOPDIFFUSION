@@ -46,8 +46,12 @@
                         <div class="flex flex-col w-full relative">
                             <label for="codePromo" class="my-1 mx-2">Code promo<span class="text-red-500">*</span></label>
                             <div class="rounded bg-[#f0f0f0] flex flex-row items-center" for="codePromo">
-                                <input type="text" wire:model="codePromo" min="0" max="95" id="codePromo" class="bg-[#f0f0f0] py-2.5 px-4 rounded w-full outline-secondary" placeholder="Générer votre code de promo">
-                                <button class="bg-secondary rounded h-1/2 mr-1 py-1.5 px-7">Générer</button>
+                                @if ($codePromoGen)
+                                    <input type="text" wire:model="codePromoGen" min="0" max="95" id="codePromo" class="bg-[#f0f0f0] py-2.5 px-4 rounded w-full outline-secondary" placeholder="Générer votre code de promo">
+                                @else
+                                    <input type="text" wire:model="codePromo" min="0" max="95" id="codePromo" class="bg-[#f0f0f0] py-2.5 px-4 rounded w-full outline-secondary" placeholder="Générer votre code de promo">
+                                @endif
+                                <a wire:click="generatePromoCode" class="bg-secondary rounded h-1/2 mr-1 py-1.5 px-7 cursor-pointer">Générer</a>
                             </div>
                         </div>
                     @endif
@@ -114,9 +118,9 @@
                                     @if ($mode == 1 && $dateDebut || $dateFin)
                                         <i class="fa-solid fa-circle-info text-gray-400"></i>
                                         <h1 class="font-light text-sm text-gray-400">Du @if ($dateDebut) {{ $this->formatDate($this->dateDebut) }}  @endif au {{ $this->formatDate($this->dateFin) }}</h1>
-                                    @elseif ($mode == 2 && $codePromo)
+                                    @elseif ($mode == 2 && ($codePromo || $codePromoGen))
                                         <i class="fa-solid fa-circle-info text-gray-400"></i>
-                                        <h1 class="font-light text-sm text-gray-400">{{ $codePromo }} {{ $this->generatePromoCode() }}</h1>
+                                        <h1 class="font-light text-sm text-gray-400">@if($codePromo) {{ $codePromo }} @elseif($codePromoGen) {{ $codePromoGen }} @endif</h1>
                                     @else
                                         <i class="fa-solid fa-circle-info text-gray-400"></i>
                                         <div class="bg-gray-400 animate-pulse h-2 w-1/3 rounded"></div>
@@ -157,19 +161,25 @@
                 </div>
             </div>
             <div class="grid grid-cols-4 auto-rows-auto gap-2 w-full h-full flex-wrap">
-                {{-- @if ($article)
-                    @foreach ($article as $articles)
-
+                {{-- @if ($product_selected)
+                    @foreach ($product_selected as $index =>$articles)
+                        <div class="h-[22vh] relative group shadow rounded-lg">
+                            <img class="rounded-lg h-[22vh] hover:bg-black hover:drop-shadow-xl" src="{{ asset('storage/images/products/'. $articles[$index]->cover) }}" alt="Description de l'image 1"/>
+                            <div class="flex flex-row justify-center items-end w-full h-full bg-black absolute top-0 rounded-lg opacity-0 group-hover:opacity-100 visibility-hidden group-hover:visibility-visible transition-opacity duration-300 shadow" style="background: rgb(2,0,36);
+                            background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(255,255,255,0) 100%);"><i class="fa-solid fa-trash text-white mb-5 cursor-pointer"></i></div>
+                            <h2 class="px-4 text-xl">{{ $articles->title }}</h2>
+                        </div>
                     @endforeach
                 @else
                         pas d'article dans la promotion
                 @endif --}}
-                <div class="h-[22vh] relative group shadow rounded-lg">
+                <a wire:click="btn">test</a>
+                {{-- <div class="h-[22vh] relative group shadow rounded-lg">
                     <img class="rounded-lg h-[22vh] hover:bg-black hover:drop-shadow-xl" src="{{ asset('storage/medias/main-carousel-img2.jpg') }}" alt="Description de l'image 1"/>
                     <div class="flex flex-row justify-center items-end w-full h-full bg-black absolute top-0 rounded-lg opacity-0 group-hover:opacity-100 visibility-hidden group-hover:visibility-visible transition-opacity duration-300 shadow" style="background: rgb(2,0,36);
                     background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(255,255,255,0) 100%);"><i class="fa-solid fa-trash text-white mb-5 cursor-pointer"></i></div>
                     <h2 class="px-4 text-xl">Produit 1</h2>
-                </div>
+                </div> --}}
             </div>
         </div>
         {{-- <div id="entry-content">
