@@ -15,7 +15,6 @@
                 <div class="flex-none entry-nav">
                     <ul>
                         <li><a href="{{ route('front.profile') }}" class="btn-sidebar @if($account_page == 'informations') btn-sidebar-active @endif"><i class="fa-solid fa-user mr-3"></i>Mes informations</a></li>
-                        <li><a href="{{ route('front.myFavorite') }}" class="btn-sidebar @if($account_page == 'favoris') btn-sidebar-active @endif mt-1"><i class="fa-solid fa-heart mr-3"></i>Mes favoris</a></li>
                         <li><a href="" class="btn-sidebar mt-1"><i class="fa-solid fa-file-invoice mr-3"></i>Mes commandes & factures</a></li>
                         <li><a href="{{ route('front.profile.bikes') }}" class="btn-sidebar mt-1 @if($account_page == 'bikes') btn-sidebar-active @endif"><i class="fa-solid fa-motorcycle mr-3"></i>Mes motos</a></li>
                     </ul>

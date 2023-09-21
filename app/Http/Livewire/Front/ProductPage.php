@@ -32,6 +32,14 @@ class ProductPage extends Component
 
     public $productIsInFavorites = false;
 
+    public $images = [];
+    public $activeImage = 0;
+
+    public function setActiveImage($index)
+    {
+        $this->activeImage = $index;
+    }
+
     public function mount($product_id)
     {
         $this->product_id = $product_id;
@@ -45,6 +53,18 @@ class ProductPage extends Component
         } else {
             $this->favoriteLike = false;
         }
+
+        // foreach ($variable as $key => $value) {
+        //     # code...
+        // }
+
+        $picture = MyProductPicture::where('product_id', $product_id)->get();
+
+        $this->images = [
+            $picture->picture_url,
+            MyProduct::where('product_id', $product_id)->get()
+        ];
+        dd($this->images);
     }
     public function changeTab($tab)
     {

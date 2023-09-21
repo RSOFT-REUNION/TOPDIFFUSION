@@ -4,9 +4,9 @@
         @livewire('components.breadcrumb', ['crumbs' => $crumbs])
     </div>
     <div class="flex items-center my-10">
+        <!-- Carousel -->
         <div class="flex-1 mr-2">
             <div class="product-images">
-                <!-- Carousel -->
                 <input type="radio" name="slides" checked="checked" id="slide-1">
                 @foreach($product_pictures as $pictures)
                     <input type="radio" name="slides" id="slide-{{ $pictures->id }}">
@@ -48,6 +48,32 @@
                 </ul>
             </div>
         </div>
+
+        
+        @if(count($images) > 1)
+            <div class="relative" x-data="{ activeImage: @entangle('activeImage'), timer: null }" x-init="timer = setInterval(() => { activeImage = (activeImage + 1) % {{ count($images) }}; }, 3000);">
+
+                <!-- Image principale -->
+                <div class="w-full">
+                    <img src="{{ $images[$activeImage] }}" alt="Image produit {{ $activeImage }}">
+                </div>
+
+                <!-- Miniatures -->
+                <div class="flex space-x-2 mt-4">
+                    @foreach($images as $index => $image)
+                        <img
+                            class="w-16 h-16 cursor-pointer border-2 {{ $activeImage === $index ? 'border-blue-500' : 'border-transparent' }}"
+                            src="{{ $image }}"
+                            alt="Miniature produit {{ $index }}"
+                            @click="activeImage = {{ $index }}; clearTimeout(timer); timer = setInterval(() => { activeImage = (activeImage + 1) % {{ count($images) }}; }, 3000);"
+                        >
+                    @endforeach
+                </div>
+
+            </div>
+            @endif
+
+        {{-- fin crousel --}}
         <div class="flex-1 ml-2">
             <form wire:submit.prevent="createCart">
                 @csrf

@@ -15,8 +15,9 @@
             <p class="mb-5">Désolés, nous sommes actuellement en cours de maintenance revenez plus tard.</p>
             <div class="flex flex-row items-center">
                 <div class="mr-5">
-                    <button class="btn-secondary">Connexion</button>
+                    <button class="btn-secondary" >Connexion</button>
                 </div>
+                @livewire('components.maintenance.btn-login')
             </div>
         </div>
     </div>

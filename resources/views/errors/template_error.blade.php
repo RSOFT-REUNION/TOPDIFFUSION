@@ -11,7 +11,7 @@
         ])
         <title>@yield('title')</title>
     </head>
-    <body class="flex flex-rows w-screen h-screen ">
+    <body class="flex flex-rows w-screen h-screen">
         @yield('message')
     </body>
 </html>
