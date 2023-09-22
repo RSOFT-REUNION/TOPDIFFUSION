@@ -49,7 +49,7 @@
         </div>
         <div class="flex-none width-300 ml-2">
             <div class="bg-gray-100 rounded-lg px-3 py-2">
-                <h2 class="text-2xl font-bold">Résumer</h2>
+                <h2 class="text-2xl font-bold">Résumé</h2>
             </div>
             <div class="bg-gray-100 rounded-lg px-3 py-2 mt-2">
                 <div class="">
