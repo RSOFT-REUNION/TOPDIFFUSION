@@ -69,30 +69,29 @@ class FrontFilters extends Component
         $query = MyProduct::query();
 
         // Rejoindre la table "compatible_bikes" pour obtenir les produits compatibles
-        $query->join('compatible_bikes', 'my_products.id', '=', 'compatible_bikes.product_id');
+        $query->join('compatible_bikes as cb1', 'my_products.id', '=', 'cb1.product_id');
 
         if ($this->selectedBrand) {
-            // Effectuez une jointure entre la table "bikes" et "product_brands" en utilisant le nom de la marque
-            $query->join('bikes', 'compatible_bikes.bike_id', '=', 'bikes.id')
-                ->join('product_brands', 'product_brands.title', '=', 'bikes.marque')
-                ->where('product_brands.title', $this->selectedBrand);
+            $query->join('compatible_bikes as cb2', 'my_products.id', '=', 'cb2.product_id')
+                ->join('bikes', 'cb2.bike_id', '=', 'bikes.id')
+                ->where('bikes.marque', '=', $this->selectedBrand);
         }
 
         if ($this->selectedCylindree) {
             // Filtrer les motos par cylindrée
-            $query->join('bikes as selected_bike_cylindree', 'compatible_bikes.bike_id', '=', 'selected_bike_cylindree.id')
+            $query->join('bikes as selected_bike_cylindree', 'cb2.bike_id', '=', 'selected_bike_cylindree.id')
                 ->where('selected_bike_cylindree.cylindree', $this->selectedCylindree);
         }
 
         if ($this->selectedModele) {
             // Filtrer les motos par modèle
-            $query->join('bikes as selected_bike_modele', 'compatible_bikes.bike_id', '=', 'selected_bike_modele.id')
+            $query->join('bikes as selected_bike_modele', 'cb2.bike_id', '=', 'selected_bike_modele.id')
                 ->where('selected_bike_modele.modele', $this->selectedModele);
         }
-
+        
         if ($this->selectedYear) {
             // Filtrer les motos par année
-            $query->join('bikes as selected_bike_year', 'compatible_bikes.bike_id', '=', 'selected_bike_year.id')
+            $query->join('bikes as selected_bike_year', 'cb2.bike_id', '=', 'selected_bike_year.id')
                 ->where('selected_bike_year.annee', $this->selectedYear);
         }
 

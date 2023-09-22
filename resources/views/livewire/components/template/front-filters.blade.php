@@ -39,7 +39,7 @@
         </div>
 
         <div class="ml-2">
-            <button class="btn-secondary @if(!$selectedYear) cursor-not-allowed @endif" @if(!$selectedYear) disabled @endif wire:click="search"><i class="fa-solid fa-magnifying-glass mr-2"></i>Rechercher</button>
+            <button class="btn-secondary @if(!$selectedYear) cursor-not-allowed @endif" {{-- @if(!$selectedYear) disabled @endif --}} wire:click="search"><i class="fa-solid fa-magnifying-glass mr-2"></i>Rechercher</button>
         </div>
     </div>
 @endif
