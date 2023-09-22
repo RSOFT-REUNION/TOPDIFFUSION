@@ -191,7 +191,7 @@
                 <div class="flex justify-between border-gray-200 border-b dark:border-gray-700 pb-3">
                 <dl>
                     <dt class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">Chiffre du panier moyen</dt>
-                    <dd class="leading-none text-3xl font-bold text-gray-900 dark:text-white">$1,752</dd>
+                    <dd class="leading-none text-3xl font-bold text-gray-900 dark:text-white">1,752 €</dd>
                 </dl>
                 <div
                     class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
