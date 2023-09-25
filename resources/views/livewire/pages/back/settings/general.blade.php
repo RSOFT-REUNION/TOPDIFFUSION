@@ -4,7 +4,7 @@
             <h1>Réglages généraux</h1>
         </div>
         <div class="flex-none inline-flex items-center">
-            <p class="mr-2 bg-green-100 text-green-700 px-2 py-1 rounded-lg">Site actif</p>
+            <p class="mr-2 {{$maintenanceState == 1 ? "text-green-700 bg-green-100" : "text-red-700 bg-red-100"}} px-2 py-1 rounded-lg">{{$maintenanceState == 1 ? "Site actif" : "Site inactif"}}</p>
             <a wire:click="$emit('openModal', 'pages.back.products.popup-add-product')" class="btn-secondary cursor-pointer">Envoyer des commentaires</a>
         </div>
     </div>
@@ -16,7 +16,7 @@
             </div>
             <div class="flex-none">
                 <label for="maintenance_mode" class="relative inline-flex items-center cursor-pointer">
-                    <input type="checkbox" wire:click="maintenance_mode" id="maintenance_mode" class="sr-only peer">
+                    <input type="checkbox" wire:click="maintenance_mode" id="maintenance_mode" class="sr-only peer" {{ $maintenanceState ? "checked" : ""}}>
                     <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                 </label>
             </div>

@@ -11,11 +11,26 @@ class General extends Component
 {
     public $prices_mode, $professionnal, $CarrouselHome;
 
+    public $maintenanceState;
+
+    protected $listeners = ['maintenanceModeChanged' => 'updateMaintenanceState'];
+
+    public function updateMaintenanceState($state)
+    {
+        $this->maintenanceState = $state;
+    }
+     
     public function mount()
     {
         $setting = SettingGeneral::where('id', 1)->first();
         $this->prices_mode = $setting->prices_type;
         $this->professionnal = $setting->professionnal_customers;
+        $state = SettingGeneral::where('maintenance_mode', 1)->first();
+        if($state) {
+            $this->maintenanceState = $state->maintenance_mode == 1 ? 1 : 0;
+        } else {
+            $this->maintenanceState = 0;
+        }
     }
 
 
@@ -27,6 +42,7 @@ class General extends Component
             $maintenanceMode = $setting->maintenance_mode == 1 ? 0 : 1;
             $setting->maintenance_mode = $maintenanceMode;
             $setting->save();
+            $this->emit('maintenanceModeChanged', $maintenanceMode);
         }
     }
 
