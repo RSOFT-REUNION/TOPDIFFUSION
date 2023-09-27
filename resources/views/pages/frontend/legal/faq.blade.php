@@ -15,13 +15,7 @@
                 </div>
             </div>
             <div class="tiny-content my-20 mx-28">
-                @if ($pageContent->content)
-                    {!! $pageContent->content !!}
-                @else
-                    @php
-                        abort_if(empty($pageContent->content), 404);
-                    @endphp
-                @endif
+                @livewire('components.back.faq-item')
             </div>
         </div>
     </main>
