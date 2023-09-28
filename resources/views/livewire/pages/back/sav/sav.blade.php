@@ -54,7 +54,7 @@
 
                 <a wire:click="toggleState('state2')" class="bg-secondary dark:bg-blue-800 hover:shadow-md duration-300 rounded-lg py-5 mb-5 text-black px-4 text-xl font-semibold flex justify-between gap-4 items-center cursor-pointer">
                     <div class="flex gap-3 items-center">
-                        <h1>Message déjâ lu</h1>
+                        <h1>Message lu</h1>
                     </div>
                     <i class="fa-solid fa-angle-up"></i>
                     {{-- <i class="fa-solid @if($state2) fa-angle-up @else fa-angle-down @endif"></i> --}}
