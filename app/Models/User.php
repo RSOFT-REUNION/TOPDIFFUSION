@@ -55,7 +55,7 @@ class User extends Authenticatable
 
     public function getCustomerTypeText()
     {
-        if($this->professionnal) {
+        if ($this->professionnal) {
             return 'Professionnel';
         } else {
             return 'Particulier';
@@ -64,10 +64,15 @@ class User extends Authenticatable
 
     public function getCustomerType()
     {
-        if($this->professionnal) {
+        if ($this->professionnal) {
             return '<span class="px-2 py-1 bg-amber-100 text-amber-500 rounded-lg">Professionnel</span>';
         } else {
             return '<span class="px-2 py-1 bg-gray-100 rounded-lg">Particulier</span>';
         }
+    }
+
+    public function customerGroup()
+    {
+        return $this->belongsTo(CustomerGroup::class, 'customer_group_id');
     }
 }

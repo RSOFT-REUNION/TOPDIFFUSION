@@ -24,7 +24,7 @@ class BoUserController extends Controller
     public function showUserSingle($user)
     {
         $selectedUser = User::where('customer_code', $user)->first();
-        
+
         $data = [];
         $data['group'] = 'users';
         $data['page'] = 'list';
@@ -35,6 +35,14 @@ class BoUserController extends Controller
         return view('pages.backend.users.users-single', $data);
     }
 
+    public function showUserGroup()
+    {
+        $data = [];
+        $data['group'] = 'users';
+        $data['page'] = 'group_user';
+        return view('pages.backend.users.group-users', $data);
+    }
+
     /*
      * Validate professionnal account
      */
@@ -43,8 +51,7 @@ class BoUserController extends Controller
         $selectedUser = User::where('customer_code', $user)->first();
         $selectedUser->verified = 1;
         $selectedUser->verified_at = Carbon::now();
-        if($selectedUser->update())
-        {
+        if ($selectedUser->update()) {
             return redirect()->route('back.user.single', ['user' => $selectedUser->customer_code]);
         }
     }

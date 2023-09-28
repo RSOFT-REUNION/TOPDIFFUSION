@@ -20,54 +20,59 @@
         @if($categories->count() > 0)
             @if($userSetting->product_categories_show == 1)
                 <ul>
-                @foreach($categories_1 as $cat1)
+                    @foreach($categories_1 as $cat1)
                     <li class="@if($cat1->level === 2) ml-5 border-l-2 border-amber-400 pl-3 @elseif($cat1->level === 3) ml-10 border-l-2 border-gray-400 pl-3 @endif">
-                        <div class="category-container">
-                            <div class="category-content">
-                                <div class="flex items-center justify-between">
-                                    <p class="text-sm text-gray-400"><b>Niveau {{ $cat1->level }}</b> | {{ $cat1->slug }} </p>
-                                    @if($cat1->delivery)
-                                        <span class="bg-[#FBBC34] px-2 rounded-md text-black border font-semibold border-[#D9D9D9]">{{ $cat1->delivery }} %</span>
-                                    @endif
+                        <a href="{{ route('back.product.single.categories', ['id' => $cat1->id]) }}" class="category-link"> <!-- Ajoutez la classe category-link -->
+                            <div class="category-container">
+                                <div class="category-content">
+                                    <div class="flex items-center justify-between">
+                                        <p class="text-sm text-gray-400"><b>Niveau {{ $cat1->level }}</b> | {{ $cat1->slug }} </p>
+                                        {{-- @if($cat1->delivery)
+                                            <span class="bg-[#FBBC34] px-2 rounded-md text-black border font-semibold border-[#D9D9D9]">{{ $cat1->delivery }} %</span>
+                                        @endif --}}
+                                    </div>
+                                    <h2>{{ $cat1->title }}</h2>
                                 </div>
-                                <h2>{{ $cat1->title }}</h2>
                             </div>
-                        </div>
+                        </a>
                     </li>
                     @foreach($categories_2 as $cat2)
                         @if($cat2->parent_id == $cat1->id)
                             <li class="@if($cat2->level === 2) ml-5 border-l-2 border-amber-400 pl-3 @elseif($cat2->level === 3) ml-10 border-l-2 border-gray-400 pl-3 @endif">
-                                <div class="category-container">
-                                    <div class="category-content">
-                                        <div class="flex items-center justify-between">
-                                            <p class="text-sm text-gray-400"><b>Niveau {{ $cat2->level }}</b> | {{ $cat2->slug }} </p>
-                                            @if($cat1->delivery)
-                                                <span class="bg-[#FBBC34] px-2 rounded-md text-black border font-semibold border-[#D9D9D9]">{{ $cat1->delivery }} %</span>
-                                            @endif
+                                <a href="{{ route('back.product.single.categories', ['id' => $cat2->id]) }}" class="category-link"> <!-- Ajoutez la classe category-link -->
+                                    <div class="category-container">
+                                        <div class="category-content">
+                                            <div class="flex items-center justify-between">
+                                                <p class="text-sm text-gray-400"><b>Niveau {{ $cat2->level }}</b> | {{ $cat2->slug }} </p>
+                                                {{-- @if($cat1->delivery)
+                                                    <span class="bg-[#FBBC34] px-2 rounded-md text-black border font-semibold border-[#D9D9D9]">{{ $cat1->delivery }} %</span>
+                                                @endif --}}
+                                            </div>
+                                            <h2>{{ $cat2->title }}</h2>
                                         </div>
-                                        <h2>{{ $cat2->title }}</h2>
                                     </div>
-                                </div>
+                                </a>
                             </li>
                             @foreach($categories_3 as $cat3)
                                 @if($cat3->parent_id == $cat2->id)
                                     <li class="@if($cat3->level === 2) ml-5 border-l-2 border-amber-400 pl-3 @elseif($cat3->level === 3) ml-10 border-l-2 border-gray-400 pl-3 @endif">
-                                        <div class="category-container">
-                                            <div class="category-content">
-                                                <div class="flex items-center justify-between">
-                                                    <p class="text-sm text-gray-400"><b>Niveau {{ $cat3->level }}</b> | {{ $cat3->slug }} </p>
-                                                    @if($cat1->delivery)
-                                                        <span class="bg-[#FBBC34] px-2 rounded-md text-black border font-semibold border-[#D9D9D9]">{{ $cat1->delivery }} %</span>
-                                                    @endif
+                                        <a href="{{ route('back.product.single.categories', ['id' => $cat3->id]) }}" class="category-link"> <!-- Ajoutez la classe category-link -->
+                                            <div class="category-container">
+                                                <div class="category-content">
+                                                    <div class="flex items-center justify-between">
+                                                        <p class="text-sm text-gray-400"><b>Niveau {{ $cat3->level }}</b> | {{ $cat3->slug }} </p>
+                                                        {{-- @if($cat1->delivery)
+                                                            <span class="bg-[#FBBC34] px-2 rounded-md text-black border font-semibold border-[#D9D9D9]">{{ $cat1->delivery }} %</span>
+                                                        @endif --}}
+                                                    </div>
+                                                    <h2>{{ $cat3->title }}</h2>
                                                 </div>
-                                                <h2>{{ $cat3->title }}</h2>
                                             </div>
-                                        </div>
+                                        </a>
                                     </li>
                                 @endif
                             @endforeach
                         @endif
-
                     @endforeach
                 @endforeach
             </ul>

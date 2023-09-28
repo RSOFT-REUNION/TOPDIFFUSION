@@ -21,6 +21,7 @@
         @if(count($productData) > 0)
             <div class="table-box-outline">
                 <table>
+                    {{-- {{ dd(auth()->user()->customerGroup->name) }} --}}
                     <thead>
                     <tr>
                         <th>Nom du Produit</th>

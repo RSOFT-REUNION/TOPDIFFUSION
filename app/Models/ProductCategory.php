@@ -24,4 +24,9 @@ class ProductCategory extends Model
         return MyProduct::where('category_id', $this->id)->get()->count();
     }
 
+    public function customerGroups()
+    {
+        return $this->belongsToMany(CustomerGroup::class, 'category_customer_group')
+            ->withPivot('discount_percentage');
+    }
 }

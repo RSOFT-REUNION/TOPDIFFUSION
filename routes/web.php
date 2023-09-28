@@ -72,7 +72,8 @@ Route::group([
             Route::get('/creation', [BoProductController::class, 'createProduct'])->name('back.product.create');
             Route::get('/creer-un-produit-{id}', [BoProductController::class, 'showCreateProduct'])->name('back.product.show.create');
             Route::get('/ajout-{id}-{product}', [BoProductController::class, 'showAddProduct'])->name('back.product.add');
-            Route::get('/categoriess', [BoProductController::class, 'showProductCategories'])->name('back.product.categories');
+            Route::get('/categories', [BoProductController::class, 'showProductCategories'])->name('back.product.categories');
+            Route::get('/categories-{id}', [BoProductController::class, 'showSingleProductCategories'])->name('back.product.single.categories');
             Route::get('/motos', [BoProductController::class, 'showProductBikes'])->name('back.product.bikes');
             Route::get('/marques', [BoProductController::class, 'showProductBrands'])->name('back.product.brands');
             Route::get('/options', [BoProductController::class, 'showProductOptions'])->name('back.product.options');
@@ -98,6 +99,7 @@ Route::group([
 
         Route::prefix('/clients')->group(function () {
             Route::get('/liste', [BoUserController::class, 'showUserList'])->name('back.user.list');
+            Route::get('/groupes-clients', [BoUserController::class, 'showUserGroup'])->name('back.user.userGroup');
             Route::get('/{user}', [BoUserController::class, 'showUserSingle'])->name('back.user.single');
             Route::get('/{user}/verified', [BoUserController::class, 'validateProfessionnal'])->name('back.user.verified');
         });

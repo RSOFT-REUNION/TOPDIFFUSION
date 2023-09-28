@@ -62,11 +62,12 @@
             @elseif($group == 'users')
                 <!-- Users menus -->
                 <ul>
-                    <li><a href="{{ route('back.dashboard') }}" class="btn-sidebar border-b border-gray-300 mb-3"><i
-                                class="fa-solid fa-arrow-left mr-3"></i>Retour</a></li>
-                    <li><a href="{{ route('back.user.list') }}"
-                            class="btn-sidebar @if ($page == 'list') btn-sidebar-active @endif"><i
-                                class="fa-solid fa-users mr-3"></i>Clients</a></li>
+                    <li><a href="{{ route('back.dashboard') }}" class="btn-sidebar border-b border-gray-300 mb-3">
+                        <i class="fa-solid fa-arrow-left mr-3"></i>Retour</a></li>
+                    <li><a href="{{ route('back.user.list') }}" class="btn-sidebar @if ($page == 'list') btn-sidebar-active @endif">
+                        <i class="fa-solid fa-users mr-3"></i>Clients</a></li>
+                    <li><a href="{{ route('back.user.userGroup') }}" class="btn-sidebar @if ($page == 'group_user') btn-sidebar-active @endif">
+                        <i class="fa-solid fa-users mr-3"></i>Groupes Clients</a></li>
                 </ul>
             @elseif($group == 'teams')
             <!-- Teams menus -->

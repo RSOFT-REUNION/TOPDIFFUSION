@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Back;
 use App\Http\Controllers\Controller;
 use App\Models\MyProduct;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Models\ProductGroupTag;
 use App\Models\ProductTemp;
 use App\Models\ProductTempSwatches;
@@ -56,6 +57,15 @@ class BoProductController extends Controller
         $data['group'] = 'products';
         $data['page'] = 'categories';
         return view('pages.backend.products.product-categories', $data);
+    }
+
+    public function showSingleProductCategories($id)
+    {
+        $data = [];
+        $data['group'] = 'products';
+        $data['page'] = 'categories';
+        $data['singleCat'] = ProductCategory::where('id', $id)->first();
+        return view('pages.backend.products.product-single-categories', $data);
     }
 
     public function showProductBikes()
@@ -122,5 +132,4 @@ class BoProductController extends Controller
         $data['page'] = 'promotions';
         return view('pages.backend.products.promotion-group-single', $data);
     }
-
 }
