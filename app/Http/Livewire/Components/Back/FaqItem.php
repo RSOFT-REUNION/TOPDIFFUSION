@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class FaqItem extends Component
 {
-    public $faq;
+    public $faq, $page;
     public $showAnswer = false;
 
     public function toggleAnswer()

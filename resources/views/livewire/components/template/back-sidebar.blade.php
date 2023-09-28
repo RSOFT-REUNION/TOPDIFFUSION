@@ -17,7 +17,7 @@
                                 class="fa-solid fa-cubes-stacked mr-3"></i>Produits</a></li>
                     <li><a href="{{ route('back.orders.orders') }}" class="btn-sidebar"><i
                                 class="fa-solid fa-file-contract mr-3"></i>Commandes</a></li>
-                    <li><a href="{{ route('back.product.list') }}" class="btn-sidebar"><i
+                    <li><a href="{{ route('back.sav') }}" class="btn-sidebar"><i
                                 class="fa-solid fa-comments mr-3"></i>S.A.V</a></li>
                     <h2>Mon site</h2>
                     <li><a href="{{ route('about') }}" class="btn-sidebar"><i
@@ -27,7 +27,7 @@
                                 class="fa-solid fa-sliders mr-3"></i>Réglages</a></li>
                     <li><a href="{{ route('back.team') }}" class="btn-sidebar"><i
                                 class="fa-solid fa-people-group mr-3"></i>Équipes</a></li>
-                    <li><a href="" class="btn-sidebar"><i
+                    <li><a href="{{ route('back.about') }}" class="btn-sidebar"><i
                                 class="fa-solid fa-circle-info mr-3"></i>À propos</a></li>
                 </ul>
             @elseif($group == 'legal')

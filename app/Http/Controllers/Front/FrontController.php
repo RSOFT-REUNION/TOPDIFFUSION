@@ -187,13 +187,15 @@ class FrontController extends Controller
     public function showAbout()
     {
         $page_date = Pages::where('key', 'about')->first();
-        Carbon::setLocale('fr');
-        $date = Carbon::parse($page_date->created_at);
-        $month = ucfirst($date->isoFormat('MMMM'));
-        $year = $date->isoFormat('YYYY');
-        $formattedDate = "$month $year";
         $data = [];
-        $data['formattedDate'] = $formattedDate;
+        if($page_date) {
+            Carbon::setLocale('fr');
+            $date = Carbon::parse($page_date->created_at);
+            $month = ucfirst($date->isoFormat('MMMM'));
+            $year = $date->isoFormat('YYYY');
+            $formattedDate = "$month $year";
+            $data['formattedDate'] = $formattedDate;
+        }
         $data['group'] = 'legal';
         $data['page'] = 'about';
         $data['setting'] = SettingGeneral::where('id', 1)->first();
@@ -204,13 +206,15 @@ class FrontController extends Controller
     public function showLegal()
     {
         $page_date = Pages::where('key', 'legal')->first();
-        Carbon::setLocale('fr');
-        $date = Carbon::parse($page_date->created_at);
-        $month = ucfirst($date->isoFormat('MMMM'));
-        $year = $date->isoFormat('YYYY');
-        $formattedDate = "$month $year";
         $data = [];
-        $data['formattedDate'] = $formattedDate;
+        if($page_date) {
+            Carbon::setLocale('fr');
+            $date = Carbon::parse($page_date->created_at);
+            $month = ucfirst($date->isoFormat('MMMM'));
+            $year = $date->isoFormat('YYYY');
+            $formattedDate = "$month $year";
+            $data['formattedDate'] = $formattedDate;
+        }
         $data['group'] = 'legal';
         $data['page'] = 'legal';
         $data['setting'] = SettingGeneral::where('id', 1)->first();
@@ -221,13 +225,15 @@ class FrontController extends Controller
     public function showConfidential()
     {
         $page_date = Pages::where('key', 'confidential')->first();
-        Carbon::setLocale('fr');
-        $date = Carbon::parse($page_date->created_at);
-        $month = ucfirst($date->isoFormat('MMMM'));
-        $year = $date->isoFormat('YYYY');
-        $formattedDate = "$month $year";
         $data = [];
-        $data['formattedDate'] = $formattedDate;
+        if($page_date) {
+            Carbon::setLocale('fr');
+            $date = Carbon::parse($page_date->created_at);
+            $month = ucfirst($date->isoFormat('MMMM'));
+            $year = $date->isoFormat('YYYY');
+            $formattedDate = "$month $year";
+            $data['formattedDate'] = $formattedDate;
+        }
         $data['group'] = 'legal';
         $data['page'] = 'confidential';
         $data['setting'] = SettingGeneral::where('id', 1)->first();
@@ -238,18 +244,20 @@ class FrontController extends Controller
     public function showFaq()
     {
         $page_date = Pages::where('key', 'faq')->first();
-        Carbon::setLocale('fr');
-        $date = Carbon::parse($page_date->created_at);
-        $month = ucfirst($date->isoFormat('MMMM'));
-        $year = $date->isoFormat('YYYY');
-        $formattedDate = "$month $year";
         $data = [];
-        $data['formattedDate'] = $formattedDate;
+        if($page_date) {
+            Carbon::setLocale('fr');
+            $date = Carbon::parse($page_date->created_at);
+            $month = ucfirst($date->isoFormat('MMMM'));
+            $year = $date->isoFormat('YYYY');
+            $formattedDate = "$month $year";
+            $data['formattedDate'] = $formattedDate;
+        }
         $data['group'] = 'legal';
         $data['page'] = 'faq';
         $data['setting'] = SettingGeneral::where('id', 1)->first();
         $data['pageContent'] = Pages::where('key', 'faq')->first();
-        return view('pages.frontend.legal.faq', $data);
+        return view( 'pages.frontend.legal.faq', $data);
     }
 
     public function filtres()

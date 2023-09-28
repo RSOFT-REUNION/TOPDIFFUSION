@@ -24,4 +24,22 @@ class BackController extends Controller
         $data['userAdmin'] = User::where('team', 1)->get();
         return view('pages.backend.team.team', $data);
     }
+
+    public function showSav()
+    {
+        $data= [];
+        $data['group'] = 'home';
+        $data['page'] = 'sav';
+        $data['userAdmin'] = User::where('team', 1)->get();
+        return view('pages.backend.sav.sav', $data);
+    }
+
+    public function showAbout()
+    {
+        $data= [];
+        $data['group'] = 'home';
+        $data['page'] = 'about';
+        $data['userAdmin'] = User::where('team', 1)->get();
+        return view('pages.backend.about.about', $data);
+    }
 }
