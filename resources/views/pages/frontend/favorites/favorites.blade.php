@@ -4,7 +4,7 @@
 
     <div class="flex flex-col">
         <div class="w-full bg-primary">
-            <div class="p-24 flex flex-row justify-between items-center">
+            <div class="py-10 px-24  flex flex-row justify-between items-center">
                 <div class="text-white gap-y-2 flex flex-col">
                     <h1 class="text-4xl font-bold">Mes Favoris</h1>
                 </div>

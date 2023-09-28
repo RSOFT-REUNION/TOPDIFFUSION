@@ -18,9 +18,8 @@ class FrontMenu extends Component
     {
         $data = [];
         $data['menus'] = ProductCategory::where('level', 1)->get();
-        $data['menus_level_2'] = ProductCategory::where('level', 2)->where('parent_id', $this->active_tab)->get();
+        $data['menus_level_2'] = ProductCategory::where('level', 2)->get();
         $data['menus_level_3'] = ProductCategory::where('level', 3)->get();
-        $data['tab'] = $this->active_tab;
         return view('livewire.components.template.front-menu', $data);
     }
 }

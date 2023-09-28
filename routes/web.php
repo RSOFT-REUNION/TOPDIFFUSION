@@ -83,6 +83,8 @@ Route::group([
             Route::get('/promotions-create', [BoProductController::class, 'showCreatePromotions'])->name('back.product.promotions-create');
             Route::get('/promotions-groupe/{id}', [BoProductController::class, 'showGroupPromotions'])->name('back.product.promotions-group');
             Route::get('/team', [BackController::class, 'showTeam'])->name('back.team');
+            Route::get('/sav', [BackController::class, 'showSav'])->name('back.sav');
+            Route::get('/a-propos', [BackController::class, 'showAbout'])->name('back.about');
         });
 
         Route::prefix('/mes-pages')->group(function () {
