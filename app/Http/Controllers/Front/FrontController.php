@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Models\Faq;
 use App\Models\Pages;
 use App\Models\Product;
 use App\Models\UserBike;
@@ -188,7 +189,7 @@ class FrontController extends Controller
     {
         $page_date = Pages::where('key', 'about')->first();
         $data = [];
-        if($page_date) {
+        if ($page_date) {
             Carbon::setLocale('fr');
             $date = Carbon::parse($page_date->created_at);
             $month = ucfirst($date->isoFormat('MMMM'));
@@ -207,7 +208,7 @@ class FrontController extends Controller
     {
         $page_date = Pages::where('key', 'legal')->first();
         $data = [];
-        if($page_date) {
+        if ($page_date) {
             Carbon::setLocale('fr');
             $date = Carbon::parse($page_date->created_at);
             $month = ucfirst($date->isoFormat('MMMM'));
@@ -226,7 +227,7 @@ class FrontController extends Controller
     {
         $page_date = Pages::where('key', 'confidential')->first();
         $data = [];
-        if($page_date) {
+        if ($page_date) {
             Carbon::setLocale('fr');
             $date = Carbon::parse($page_date->created_at);
             $month = ucfirst($date->isoFormat('MMMM'));
@@ -243,22 +244,27 @@ class FrontController extends Controller
 
     public function showFaq()
     {
-        $page_date = Pages::where('key', 'faq')->first();
         $data = [];
-        if($page_date) {
+
+        // Récupérez la FAQ la plus récente en fonction de la date de création ou de modification
+        $latestFaq = Faq::orderBy('updated_at', 'desc')->first();
+
+        if ($latestFaq) {
             Carbon::setLocale('fr');
-            $date = Carbon::parse($page_date->created_at);
+            $date = Carbon::parse($latestFaq->updated_at); // Utilisez la date de mise à jour de la FAQ la plus récente
             $month = ucfirst($date->isoFormat('MMMM'));
             $year = $date->isoFormat('YYYY');
             $formattedDate = "$month $year";
             $data['formattedDate'] = $formattedDate;
         }
+
         $data['group'] = 'legal';
         $data['page'] = 'faq';
         $data['setting'] = SettingGeneral::where('id', 1)->first();
-        $data['pageContent'] = Pages::where('key', 'faq')->first();
-        return view( 'pages.frontend.legal.faq', $data);
+
+        return view('pages.frontend.legal.faq', $data);
     }
+
 
     public function filtres()
     {

@@ -6,7 +6,9 @@
             <div class="w-full bg-primary">
                 <div class="p-24 flex flex-row justify-between items-center">
                     <div class="text-white gap-y-2 flex flex-col">
-                        <p class="text-xl">Mis à jours : @if($pageContent) {{ $formattedDate }} @endif</p>
+                        @if ($formattedDate)
+                            <p class="text-xl">Mis à jours : {{ $formattedDate }} </p>
+                        @endif
                         <h1 class="text-4xl font-bold">FAQ</h1>
                     </div>
                     <div class="text-white text-9xl">
@@ -14,7 +16,7 @@
                     </div>
                 </div>
             </div>
-            @if ($pageContent)
+            @if (true)
                 <div class="w-full px-20 py-10">
                     @livewire('components.back.faq-item', ['page' => $page])
                 </div>

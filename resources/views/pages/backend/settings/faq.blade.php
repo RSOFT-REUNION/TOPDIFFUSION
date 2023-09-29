@@ -16,7 +16,7 @@
         @endforeach --}}
 
         @livewire('components.back.faq-item')
-        @livewire('components.back.faq-item')
+        {{-- @livewire('components.back.faq-item') --}}
     </div>
 
 @endsection

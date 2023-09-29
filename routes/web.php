@@ -55,7 +55,7 @@ Route::group([
     Route::get('/a-propos', [FrontController::class, 'showAbout'])->name('front.about');
     Route::get('/politique-de-confidentialite', [FrontController::class, 'showConfidential'])->name('front.confidential');
     Route::get('/informations-legales', [FrontController::class, 'showlegal'])->name('front.legal');
-    Route::get('/faq-1', [FrontController::class, 'showFaq'])->name('front.faq');
+    Route::get('/faq', [FrontController::class, 'showFaq'])->name('front.faq');
     Route::get('/mon-panier', [CartController::class, 'showCart'])->name('front.cart');
     // Ne pas oulbier de changer
 });
