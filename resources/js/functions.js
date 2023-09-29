@@ -56,3 +56,10 @@ prevButton.addEventListener("click", (even) => {
     }
 });
 
+document.getElementById('submit').addEventListener('keyup', function(event) {
+    if (event.code === 'Enter')
+    {
+        event.preventDefault();
+        document.querySelector('form').submit();
+    }
+});

@@ -29,4 +29,9 @@ class UserOrderItem extends Model
         $result = $unit_price * $quantity;
         return number_format($result, '2', ',', ' ');
     }
+
+    public function ProductItem()
+    {
+        return $this->belongsTo(MyProduct::class, 'product_id');
+    }
 }

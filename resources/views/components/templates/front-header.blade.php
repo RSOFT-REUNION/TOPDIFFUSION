@@ -21,7 +21,7 @@
                                 class="fa-solid fa-user-plus mr-2"></i>Créer un compte</a>
                     @else
                         <a href="{{ route('front.favorite') }}" class="btn-icon mr-2" title="Favoris"><i class="fa-solid fa-heart"></i></a>
-                        <a class="hover:bg-gray-100 inline-flex items-center mr-2 px-4 py-3 rounded-full duration-300 cursor-pointer" id="btn_cart_resume">
+                        <a title="Mon Panier" class="hover:bg-gray-100 inline-flex items-center mr-2 px-4 py-3 rounded-full duration-300 cursor-pointer" id="btn_cart_resume">
                             <i id="icon_cart_resume" class="fa-solid fa-cart-shopping mr-2"></i>
                             @livewire('components.front.cart-counter')
                         </a>
@@ -29,7 +29,7 @@
                             @livewire('components.front-professionnal-switch')
                         @endif
                         <a href="{{ route('front.profile') }}" class="btn-secondary" title="Mon compte">Mon compte</a>
-                        <a href="{{ route('logout') }}" class="btn-icon ml-2" title="Panier"><i
+                        <a href="{{ route('logout') }}" class="btn-icon ml-2" title="Se deconnecter"><i
                                 class="fa-solid fa-arrow-right-to-bracket"></i></a>
                     @endif
                 </div>

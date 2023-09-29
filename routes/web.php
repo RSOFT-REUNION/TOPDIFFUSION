@@ -47,6 +47,8 @@ Route::group([
     'middleware' => ['App\Http\Middleware\Customer', 'App\Http\Middleware\CheckMaintenanceMode']
 ], function () {
     Route::get('/profil', [FrontController::class, 'showProfile'])->name('front.profile');
+    Route::get('/profil/commandes-&-factures', [FrontController::class, 'showCommandsInvoices'])->name('front.commands');
+    Route::get('/profil/commandes/{order}', [FrontController::class, 'showSingleOrder'])->name('front.orders.single');
     Route::get('/profil/suppression/adresse-{id}', [FrontController::class, 'deletedAddress'])->name('front.profile.delete.address');
     Route::get('/profil/mes-motos', [FrontController::class, 'showProfileBikes'])->name('front.profile.bikes');
     Route::get('/profil/mes-motos/suppression-{id}', [FrontController::class, 'deletedBike'])->name('front.profile.delete.bikes');

@@ -8,12 +8,14 @@ use App\Models\Product;
 use App\Models\UserBike;
 use App\Models\UserData;
 use App\Models\MyProduct;
+use App\Models\UserOrder;
 use App\Models\MyFavorite;
 use App\Models\UserAddress;
 use App\Models\UserSetting;
 use App\Models\ProductBrand;
 use Illuminate\Http\Request;
 use App\Models\CarrouselHome;
+use App\Models\UserOrderItem;
 use App\Models\SettingGeneral;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
@@ -99,6 +101,35 @@ class FrontController extends Controller
         $data['account_page'] = 'informations';
         $data['setting'] = SettingGeneral::where('id', 1)->first();
         return view('pages.frontend.profile.my-account', $data);
+    }
+
+    public function showCommandsInvoices()
+    {
+        $data = [];
+        $data['me'] = auth()->user();
+        $data['meData'] = UserData::where('user_id', auth()->user()->id)->first();
+        $data['addresses'] = UserAddress::where('user_id', auth()->user()->id)->get();
+        $data['page'] = 'commands';
+        $data['account_page'] = 'commands';
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
+        $data['orders'] = UserOrder::where('user_id', $data['me']->id)->get();
+        return view('pages.frontend.profile.my-command-invoice', $data);
+    }
+
+    // Affichage d'une commande seule
+    public function showSingleOrder($order)
+    {
+        $my_order = UserOrder::where('document_number', $order)->first();
+
+        $data = [];
+        $data['me'] = auth()->user();
+        $data['group'] = 'orders';
+        $data['page'] = 'orders';
+        $data['account_page'] = 'commands';
+        $data['order'] = $my_order;
+        $data['order_items'] = UserOrderItem::where('order_id', $my_order->id)->get();
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
+        return view('pages.frontend.orders.order-single', $data);
     }
 
     /*
