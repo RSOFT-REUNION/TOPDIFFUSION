@@ -95,7 +95,7 @@ class Cart extends Component
         $order->total_ship = 0;
         if($order->save()) {
             // Enregistrez l'activité de création de commande
-            ActivityLog::logActivity(auth()->user()->id, 'Commande créée', auth()->user()->firstname . ' ' . auth()->user()->lastname .' vient de passer une commande de ' . $this->getPriceTotal());
+            ActivityLog::logActivity(auth()->user()->id, 'Commande créée', auth()->user()->firstname . ' ' . auth()->user()->lastname .' vient de passer une commande de ' . $this->getPriceTotal() . ' €');
 
             // Ajout en base des articles du panier
             $cart = UserCart::where('user_id', auth()->user()->id)->get();

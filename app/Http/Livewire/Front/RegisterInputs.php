@@ -87,12 +87,8 @@ class RegisterInputs extends Component
                 $settings = new UserSetting;
                 $settings->user_id = $user->id;
                 if($settings->save()) {
-                    // Send user activity to log
-                    $userActivity = new ActivityLog;
-                    $userActivity->user_id = $user->id;
-                    $userActivity->activity_type = 'Inscription';
-                    $userActivity->activity_description = $user->firstname . ' ' . $user->lastname . ' vient de s\'inscrire';
-                    $userActivity->save();
+                    // Enregistrez l'activité de création d'un nouveau compte
+                    ActivityLog::logActivity(auth()->user()->id, 'Inscription', $user->firstname . ' ' . $user->lastname . ' vient de s\'inscrire');
                     // Send email to support & customer
                     return redirect()->route('front.login');
                 }
