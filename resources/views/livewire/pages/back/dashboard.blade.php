@@ -11,23 +11,23 @@
     </div>
     <div id="entry-content" class="mt-5">
         {{-- grids --}}
-{{--        {{ dd($sales) }}--}}
+{{--        {{ dd($productCreated) }}--}}
         <div class="grid grid-cols-4 grid-rows-2 gap-5 bg-gray-100 p-5 rounded-xl">
             <div class="bg-white p-5 flex flex-col justify-center gap-y-5 rounded-lg">
                 <h2 class="text-gray-500">Nombre de vente</h2>
                 <div class="flex flex-row items-end">
-                    <h3 class="font-bold mr-2 text-2xl">{{ $sales }}</h3>
-                    <span class="pb-0.5">semaine</span>
+                    <h3 class="font-bold mr-2 text-2xl">{{ $sales['total_sales'] }}</h3>
+                    <span class="pb-0.5">Cette semaine</span>
                 </div>
                 <div class="text-green-500">
                     <i class="fa-solid fa-arrow-trend-up"></i><span class="font-bold ml-2">+20 %</span>
                 </div>
             </div>
             <div class="bg-white p-5 flex flex-col justify-center gap-y-5 rounded-lg">
-                <h2 class="text-gray-500">Nombre de produit créé</h2>
+                <h2 class="text-gray-500">Nombre de produits créé</h2>
                 <div class="flex flex-row items-end">
-                    <h3 class="font-bold mr-2 text-2xl">05</h3>
-                    <span class="pb-0.5">ce mois-ci</span>
+                    <h3 class="font-bold mr-2 text-2xl">{{ $productCreated['total_productCreated'] }}</h3>
+                    <span class="pb-0.5">Ce mois-ci</span>
                 </div>
                 <div class="text-green-500">
                     <i class="fa-solid fa-arrow-trend-down"></i><span class="font-bold ml-2">+20</span>
@@ -36,7 +36,7 @@
             <div class="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 h-full row-span-2">
                 <div class="flex justify-between border-gray-200 border-b dark:border-gray-700 m-4 md:m-6 pb-3">
                 <dl>
-                    <dt class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">Chiffre des vente réaliser</dt>
+                    <dt class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">Chiffre des ventes réaliser</dt>
                     <dd class="leading-none text-3xl font-bold text-gray-900 dark:text-white">5,405 €</dd>
                 </dl>
                 <div
@@ -251,7 +251,7 @@
             <script>
                 // ApexCharts options and config
                 window.addEventListener("load", function() {
-                var options = {
+                const options = {
                     series: [
                     {
                         name: "Income",
@@ -274,9 +274,6 @@
                     toolbar: {
                         show: false,
                     }
-                    },
-                    fill: {
-                    opacity: 1,
                     },
                     plotOptions: {
                     bar: {
@@ -353,10 +350,10 @@
             </script>
 
             <div class="bg-white p-5 flex flex-col justify-center gap-y-5 rounded-lg">
-                <h2 class="text-gray-500">Nombre nouveau compte</h2>
+                <h2 class="text-gray-500">Nombre de nouveau compte</h2>
                 <div class="flex flex-row items-end">
-                    <h3 class="font-bold mr-2 text-2xl">50</h3>
-                    <span class="pb-0.5">ce mois-ci</span>
+                    <h3 class="font-bold mr-2 text-2xl">{{ $newAccountCreated['total_new_account'] }}</h3>
+                    <span class="pb-0.5">Ce mois-ci</span>
                 </div>
                 <div class="text-red-500">
                     <i class="fa-solid fa-arrow-trend-down"></i><span class="font-bold ml-2">+9</span>
@@ -365,8 +362,8 @@
             <div class="bg-white p-5 flex flex-col justify-center gap-y-5 rounded-lg">
                 <h2 class="text-gray-500">Meilleure vente</h2>
                 <div class="flex flex-row items-end">
-                    <h3 class="font-bold mr-2 text-2xl">Produit</h3>
-                    <span class="pb-0.5">ce mois-ci</span>
+                    <h3 class="font-bold mr-2 text-2xl">{{ $productMoreSold['product_name'] }}</h3>
+                    <span class="pb-0.5">Ce mois-ci</span>
                 </div>
                 <div class="text-green-500">
                     <i class="fa-solid fa-arrow-trend-down"></i><span class="font-bold ml-2">Produit</span>
@@ -375,9 +372,13 @@
         </div>
         <div class="mt-7">
             <h2 class="text-2xl font-bold">Historique d’activité du site</h2>
-            <div class="bg-gray-100 flex flex-row justify-center items-center rounded-lg mt-7">
-                <h3 class="py-5">alexandre vient de s'inscrire</h3>
-            </div>
+            @foreach($activityLog as $log)
+                <div class="{{ $log->getActivityColor() }} flex flex-row justify-center items-center rounded-lg mt-7">
+                    <h3 class="py-5">
+                        {{ $log->activity_description }}
+                    </h3>
+                </div>
+            @endforeach
         </div>
     </div>
 </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Front;
 
+use App\Models\ActivityLog;
 use App\Models\CompatibleBike;
 use App\Models\MyFavorite;
 use App\Models\MyProduct;
@@ -102,11 +103,20 @@ class ProductPage extends Component
             $swatch = MyProductSwatch::where('product_id', $product->id)->first();
         }
 
+        $productName = $product->title;
+
         // Vérification si la ligne existe déjà
         if($myCart) {
             // Ajout des nouvelles quantités dans la ligne du panier
             $myCart->quantity += $this->quantity;
             $myCart->update();
+
+            // Enregistrez l'activité de mise à jour du panier
+            ActivityLog::logActivity(
+                auth()->user()->id,
+                'Mise à jour du panier',
+                auth()->user()->firstname . ' ' . auth()->user()->lastname . ' a ajouté ' . $this->quantity . " " . $productName . ' au panier'
+            );
         } else {
             // Création de l'article dans le panier
             $cart = new UserCart;
@@ -119,6 +129,15 @@ class ProductPage extends Component
             }
             $cart->quantity = $this->quantity;
             $cart->save();
+
+            // Récupération du nom de l'article
+            // Enregistrez l'activité d'ajout d'article au panier avec le nom de l'article
+            ActivityLog::logActivity(
+                auth()->user()->id,
+                'Article ajouté au panier',
+                auth()->user()->firstname . ' ' . auth()->user()->lastname . ' a ajouté ' . $productName . ' au panier'
+            );
+
         }
 
         // Recharge en temps reel le compteur

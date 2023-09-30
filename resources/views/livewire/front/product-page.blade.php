@@ -26,7 +26,7 @@
                                         <p class="inline-block marque-tag bg-[#fbbc34] font-bold text-black">{{ $category->delivery }} %</p>
                                     @endif--}}
                                 </div>
-                                <img src="{{ asset('storage/images/products/'. $product->cover) }}">
+                                <img src="{{ asset('storage/images/products/'. $product->cover) }}" alt="image du produit">
                             </div>
                         </figure>
                     </li>
@@ -34,16 +34,16 @@
                         <li class="carousel_slide">
                             <figure>
                                 <div>
-                                    <img src="{{ asset('storage/images/products_attachment/'. $pictures->picture_url) }}">
+                                    <img src="{{ asset('storage/images/products_attachment/'. $pictures->picture_url) }}" alt="image du produit">
                                 </div>
                             </figure>
                         </li>
                     @endforeach
                 </ul>
                 <ul class="carousel_thumbnails">
-                    <li><label for="slide-1"><img src="{{ asset('storage/images/products/'. $product->cover) }}"></label></li>
+                    <li><label for="slide-1"><img src="{{ asset('storage/images/products/'. $product->cover) }}" alt="image du produit"></label></li>
                     @foreach($product_pictures as $pictures)
-                        <li><label for="slide-{{ $pictures->id }}"><img src="{{ asset('storage/images/products_attachment/'. $pictures->picture_url) }}"></label></li>
+                        <li><label for="slide-{{ $pictures->id }}"><img src="{{ asset('storage/images/products_attachment/'. $pictures->picture_url) }}" alt="image du produit"></label></li>
                     @endforeach
                 </ul>
             </div>
@@ -116,23 +116,23 @@
                                     @if($config_swatch != null)
                                         @if($product->type === 3 )
                                             <div class="inline-flex items-center justify-between w-full border-t-2 border-gray-100 px-5 py-3">
-                                                <label for="" class="text-gray-500 text-sm">CHAINE sélectionnée:</label>
+                                                <label for="" class="text-gray-500 text-sm">CHAINE sélectionnée :</label>
                                                 <p class="font-bold">{{ $swatch_info->chain }}</p>
                                             </div>
                                             <div class="inline-flex items-center justify-between w-full border-t-2 border-gray-100 px-5 py-3">
-                                                <label for="" class="text-gray-500 text-sm">PAS sélectionnée:</label>
+                                                <label for="" class="text-gray-500 text-sm">PAS sélectionnée :</label>
                                                 <p class="font-bold">{{ $swatch_info->pas }}</p>
                                             </div>
                                             <div class="inline-flex items-center justify-between w-full border-t-2 border-gray-100 px-5 py-3">
-                                                <label for="" class="text-gray-500 text-sm">LONGUEUR sélectionnée:</label>
+                                                <label for="" class="text-gray-500 text-sm">LONGUEUR sélectionnée :</label>
                                                 <p class="font-bold">{{ $swatch_info->width }}</p>
                                             </div>
                                             <div class="inline-flex items-center justify-between w-full border-t-2 border-gray-100 px-5 py-3">
-                                                <label for="" class="text-gray-500 text-sm">PIGNON sélectionnée:</label>
+                                                <label for="" class="text-gray-500 text-sm">PIGNON sélectionné :</label>
                                                 <p class="font-bold">{{ $swatch_info->pignon }}</p>
                                             </div>
                                             <div class="inline-flex items-center justify-between w-full border-t-2 border-gray-100 px-5 py-3">
-                                                <label for="" class="text-gray-500 text-sm">COURONNE sélectionnée:</label>
+                                                <label for="" class="text-gray-500 text-sm">COURONNE sélectionnée :</label>
                                                 <p class="font-bold">{{ $swatch_info->crown }}</p>
                                             </div>
                                         @elseif($product->type === 2)

@@ -45,4 +45,9 @@ class UserCart extends Model
         $amount = $this->getSwatches()->professionnal_price * $this->quantity;
         return $amount;
     }
+
+    public function product()
+    {
+        return $this->belongsTo(MyProduct::class, 'product_id');
+    }
 }

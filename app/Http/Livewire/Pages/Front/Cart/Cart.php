@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Pages\Front\Cart;
 
+use App\Models\ActivityLog;
 use App\Models\MyProduct;
 use App\Models\MyProductSwatch;
 use App\Models\User;
@@ -40,7 +41,19 @@ class Cart extends Component
     public function deleteProduct($cart)
     {
         $cart = UserCart::where('id', $cart)->first();
+        if ($cart){
+        $productName = $cart->product->title;
         $cart->delete();
+            // Enregistrez l'activité de suppression d'article au panier avec le nom de l'article
+            ActivityLog::logActivity(
+                auth()->user()->id,
+                'Article supprimé du panier',
+                auth()->user()->firstname . ' ' . auth()->user()->lastname . ' a supprimé ' . $productName . ' de son panier'
+            );
+        } else {
+            session()->flash('error', 'Error lors de la suppression.');
+        }
+
     }
 
     // Permet de savoir la quantité d'articles présent dans le panier
@@ -81,6 +94,9 @@ class Cart extends Component
         $order->total_amount = $this->getPriceTotal();
         $order->total_ship = 0;
         if($order->save()) {
+            // Enregistrez l'activité de création de commande
+            ActivityLog::logActivity(auth()->user()->id, 'Commande créée', auth()->user()->firstname . ' ' . auth()->user()->lastname .' vient de passer une commande de ' . $this->getPriceTotal());
+
             // Ajout en base des articles du panier
             $cart = UserCart::where('user_id', auth()->user()->id)->get();
             foreach ($cart as $ca)
