@@ -2,10 +2,10 @@
     @foreach ($showQuestionResponse as $faq)
             <div wire:click.stop="toggleAnswer({{ $faq->id }})" class="bg-gray-100 rounded-md p-5 mt-5 hover:shadow-lg duration-500">
                 <div class="flex flex-row justify-between cursor-pointer">
-                    <div wire:click.stop class="flex flex-row items-center gap-x-5 group">
+                    <div class="flex flex-row items-center gap-x-5 group">
                         <i class="fa-solid {{ $showAnswers[$faq->id] ? 'fa-caret-down' : 'fa-caret-right' }} "></i>
                         @if($editing && $faq->id === $editingFaqId)
-                            <input wire:model="currentQuestion" type="text" value="{{ $currentQuestion }}">
+                            <input wire:click.stop class="font-bold text-xl" wire:model="currentQuestion" type="text" value="{{ $currentQuestion }}">
 
 {{--                            <button wire:click="stopEditing({{ $faq->id }})">Enregistrer</button>--}}
                         @else
@@ -27,7 +27,7 @@
                 </div>
                 @if($showAnswers[$faq->id])
                     <div class="flex flex-row justify-end mt-5 border-l pl-10 ml-1">
-                        <div wire:click.stop class="bg-secondary rounded-md p-5">
+                        <div wire:click.stop class="bg-secondary rounded-md p-5 w-full">
                             @if($editing && $faq->id === $editingFaqId)
                                 <input wire:model="currentResponse" type="text" value="{{ $currentResponse }}">
                             @else
