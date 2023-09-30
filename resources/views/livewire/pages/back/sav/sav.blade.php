@@ -5,14 +5,14 @@
         </div>
     </div>
     <div class="flex flex-row h-5/6 gap-x-5">
-        <div class="flex flex-col bg-gray-200 dark:bg-gray-900 w-96 rounded-lg overflow-y-auto">
+        <div class="flex flex-col bg-[#f0f0f0] w-96 rounded-lg overflow-y-auto">
             <div class="p-4">
                 <a wire:click="toggleState('state')"
                     class="bg-secondary dark:bg-blue-800 hover:shadow-md duration-300 rounded-lg py-5 mb-5 text-black px-4 text-xl font-semibold flex justify-between gap-4 items-center cursor-pointer">
                     <div class="flex gap-3 items-center">
                         <h1>SAV en cours</h1>
                     </div>
-                    <i class="fa-solid fa-angle-up"></i>
+                    <i class="fa-solid  {{ $state ? 'fa-angle-down' : 'fa-angle-up'}}"></i>
                     {{-- <i class="fa-solid @if ($state) fa-angle-up @else fa-angle-down @endif"></i> --}}
                 </a>
                 {{-- block au click --}}
@@ -21,7 +21,7 @@
                         @foreach ($ticketInProgress as $tk)
                             <div class="mb-5 cursor-pointer">
                                 <div wire:click="getMessage({{ $tk->id }})"
-                                    class="flex flex-row justify-between p-4 bg-gray-300 dark:bg-gray-800 rounded-md">
+                                    class="flex flex-row justify-between p-4 bg-gray-300 hover:shadow-lg duration-300 hover:bg-opacity-70 dark:bg-gray-800 rounded-md">
                                     <div class="flex flex-col">
                                         <p>Code client : {{ $tk->user->customer_code }}</p>
                                         <p class="pt-2">Sujet : {{ $tk->getSubject() }}</p>
@@ -60,7 +60,7 @@
                     <div class="flex gap-3 items-center">
                         <h1>Historique</h1>
                     </div>
-                    <i class="fa-solid fa-angle-up"></i>
+                    <i class="fa-solid {{ $state2 ? 'fa-angle-down' : 'fa-angle-up'}}"></i>
                     {{-- <i class="fa-solid @if ($state2) fa-angle-up @else fa-angle-down @endif"></i> --}}
                 </a>
                 {{-- block au click --}}
@@ -69,7 +69,7 @@
                         @foreach ($history as $his)
                             <div class="mb-5 cursor-pointer">
                                 <div wire:click="getMessage({{ $his->id }})"
-                                    class="flex flex-row justify-between p-4 bg-gray-300 dark:bg-gray-800 rounded-md">
+                                    class="flex flex-row justify-between p-4 bg-gray-300 hover:shadow-lg duration-300 hover:bg-opacity-70 dark:bg-gray-800 rounded-md">
                                     <div class="flex flex-col">
                                         <p>Code client : {{ $his->user->customer_code }}</p>
                                         <p class="pt-2">Sujet : {{ $his->getSubject() }}</p>
@@ -109,7 +109,7 @@
                                 <div
                                     class="flex @if (auth()->user()->id == $message->user_id) justify-end @else justify-start @endif mr-10">
                                     <div
-                                        class="@if (auth()->user()->id == $message->user_id) bg-yellow-100 dark:bg-yellow-700  @else bg-gray-100 dark:bg-gray-900 @endif rounded-lg w-3/4 h-28">
+                                        class="@if (auth()->user()->id == $message->user_id) bg-secondary  @else bg-[#f0f0f0] @endif rounded-lg w-3/4 h-28">
                                         <div class=" flex flex-col justify-center p-4">
                                             <div class="border-b pb-2">
                                                 <h1 class="text-lg font-bold">Envoyé le {{ $message->getCreatedAt() }}
