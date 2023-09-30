@@ -115,7 +115,7 @@ class ProductPage extends Component
             ActivityLog::logActivity(
                 auth()->user()->id,
                 'Mise à jour du panier',
-                auth()->user()->firstname . ' ' . auth()->user()->lastname . ' a ajouté ' . $this->quantity . " " . $productName . ' au panier'
+                ' a ajouté ' . $this->quantity . " " . $productName . ' au panier'
             );
         } else {
             // Création de l'article dans le panier
@@ -135,7 +135,7 @@ class ProductPage extends Component
             ActivityLog::logActivity(
                 auth()->user()->id,
                 'Article ajouté au panier',
-                auth()->user()->firstname . ' ' . auth()->user()->lastname . ' a ajouté ' . $productName . ' au panier'
+                ' a ajouté ' . $productName . ' au panier'
             );
 
         }
