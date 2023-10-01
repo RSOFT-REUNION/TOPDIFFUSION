@@ -1252,3 +1252,16 @@ input[type="number"]::-webkit-outer-spin-button {
 [x-cloak] {
     display: none;
 }
+
+.card-container {
+    perspective: 1000px;
+}
+
+.card {
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+}
+
+.card.flipped {
+    transform: rotateY(180deg);
+}

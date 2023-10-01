@@ -6,8 +6,6 @@
                         <i class="fa-solid {{ $showAnswers[$faq->id] ? 'fa-caret-down' : 'fa-caret-right' }} "></i>
                         @if($editing && $faq->id === $editingFaqId)
                             <input wire:click.stop class="font-bold text-xl" wire:model="currentQuestion" type="text" value="{{ $currentQuestion }}">
-
-{{--                            <button wire:click="stopEditing({{ $faq->id }})">Enregistrer</button>--}}
                         @else
                             <h2 class="font-bold text-xl">{{ $faq->question }}</h2>
                         @endif
