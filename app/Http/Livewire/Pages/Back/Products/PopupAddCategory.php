@@ -69,8 +69,8 @@ class PopupAddCategory extends ModalComponent
         if ($this->delivery) {
             $cat->delivery = $this->delivery;
         } else {
-
-            $cat->delivery = $categories->delivery;
+            $cat->delivery = null;
+//            $cat->delivery = $categories->delivery;
         }
         if ($this->professionnal) {
             $cat->professionnal = 1;

@@ -14,7 +14,7 @@ class Sav extends Component
     public $ticketInProgress, $history, $ticket_user, $user, $messages, $tick, $message_input;
     public $ticketClients;
 
-    protected $listeners = ['newMessageReceived' => 'getMessage'];
+    protected $listeners = ['newMessage' => 'getMessage'];
 
     public $state = TRUE;
     public $state2 = FALSE;
@@ -78,15 +78,15 @@ class Sav extends Component
                  }
                 $this->getMessage($this->tick->id);
                 $this->message_input = '';
-                $this->emit('newMessageReceived', $this->tick->id);
+                $this->emit('newMessage', $this->tick->id);
             }
-        };
+        }
     }
 
     public function getMessage($id)
     {
         $this->messages =  Messages::where('ticket_id', $id)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'asc')
             ->get();
         $this->tick = MessagesGroups::find($id);
         $this->test = false;

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name'); // Nom du groupe de clients
             $table->decimal('discount_percentage', 5, 2); // Pourcentage de remise par catégorie
-            $table->tinyInteger('is_default')->default(0); // Colonne pour indiquer si le groupe est par défaut (0 ou 1)
+            $table->boolean('is_default')->default(0); // Colonne pour indiquer si le groupe est par défaut (0 ou 1)
             $table->timestamps();
         });
     }

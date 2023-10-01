@@ -6,11 +6,11 @@
             <div class="arianne my-4">
                 <p><a href="{{ route('front.home') }}"><i class="fa-solid fa-house mr-2"></i>Accueil</a> / Mon profil</p>
             </div>
-            {{-- @if($me->professionnal === 1 && $me->verified != 1)
+            @if($me->professionnal === 1 && $me->verified != 1)
                 <div class="px-3 py-2 mb-3 bg-amber-100 text-amber-600 rounded-lg">
-                    Votre compte professionnel est en cours de vérification, une fois celui-ci vérifié, vous recevrez un e-mail de confirmation et vous pourrais profiter de tous les avantages lié aux professionnels.
+                    Votre compte professionnel est en cours de vérification, une fois celui-ci vérifié, vous recevrez un e-mail de confirmation et vous pourrait profiter de tous les avantages liés aux professionnels.
                 </div>
-            @endif --}}
+            @endif
             <div class="flex">
                 <div class="flex-none entry-nav">
                     <ul>

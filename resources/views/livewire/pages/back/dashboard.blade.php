@@ -364,7 +364,14 @@
             <div class="bg-white p-5 flex flex-col justify-center gap-y-5 rounded-lg">
                 <h2 class="text-gray-500">Meilleure vente</h2>
                 <div class="flex flex-row items-end">
-                    <h3 class="font-bold mr-2 text-2xl">{{ $productMoreSold['product_name'] }}</h3>
+                    <h3 class="font-bold mr-2 text-2xl">
+                        @if(isset($productMoreSold['product_name']))
+                            {{ $productMoreSold['product_name'] }}
+                        @else
+                            Pas de produit encore acheté
+                        @endif
+                    </h3>
+
                     <span class="pb-0.5">Ce mois-ci</span>
                 </div>
                 <div class="text-green-500">

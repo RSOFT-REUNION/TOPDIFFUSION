@@ -9,7 +9,7 @@ class CustomerGroup extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'discount_percentage', 'isDefault'];
+    protected $fillable = ['name', 'discount_percentage', 'is_default'];
 
 
     public function users()

@@ -63,7 +63,7 @@
                 </div>
                 @if (!$ticket->closed)
                     <div class="mt-4">
-                        <a onclick="Livewire.emit('openModal', 'pages.ticket.add-message', {{ json_encode(['ticket' => $ticket->id, 'user' => auth()->user()->id]) }})" class="flex bg-gray-100 w-full items-center justify-center rounded-[5px] h-[40px] cursor-pointer mr-2.5 dark:bg-gray-900">
+                        <a onclick="Livewire.emit('openModal', 'pages.front.sav.add-message', {{ json_encode(['ticket' => $ticket->id, 'user' => auth()->user()->id]) }})" class="flex bg-gray-100 w-full items-center justify-center rounded-[5px] h-[40px] cursor-pointer mr-2.5 dark:bg-gray-900">
                             <i class="fa-solid fa-plus mr-3 h-5 w-5"></i>
                             <h2 class="text-xl font-bold">Ajouter un message</h2>
                         </a>
@@ -74,7 +74,7 @@
                     @endif
 
                 @else
-                    @if (auth()->user()->isAdmin())
+                    @if (auth()->user()->team)
                         @livewire('components.ticket.btn-cloture', ['ticket' => $ticket, 'label' => 'Rouvrir le ticket', 'icon' => 'arrow-rotate-left', 'wire' => 'reOpen', 'class' => 'rounded-[5px] h-[40px] mr-2.5 bg-gray-100 dark:bg-gray-900'])
                     @endif
                 @endif

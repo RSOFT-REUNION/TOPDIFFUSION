@@ -38,9 +38,10 @@ class BackController extends Controller
 
     public function showSingleSav($id)
     {
-        $ticket_user = MessagesGroups::where('id', $id)->first();
         $data = [];
-        $data['ticket'] = MessagesGroups::where('id', $id)->first();
+        $ticket_user = Messages::where('id', $id)->first();
+        $data['ticket'] = MessagesGroups::where('id', $ticket_user->ticket_id)->first();
+//        dd($data['ticket']);
         $data['nav_page'] = 'customers';
         $data['user'] = User::where('id', $ticket_user->user_id)->first();
         $data['messages'] = Messages::where('ticket_id', $id)

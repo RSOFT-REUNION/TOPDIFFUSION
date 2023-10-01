@@ -25,4 +25,13 @@ class Messages extends Model
     {
         return User::where('id', $this->user_id)->first();
     }
+
+    public function getMessage($id)
+    {
+        $this->messages =  Messages::where('ticket_id', $id)
+            ->orderBy('created_at', 'asc')
+            ->get();
+        $this->tick = MessagesGroups::find($id);
+        $this->test = false;
+    }
 }

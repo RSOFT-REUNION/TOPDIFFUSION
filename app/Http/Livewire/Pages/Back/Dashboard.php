@@ -67,6 +67,7 @@ class Dashboard extends Component
             ->orderByDesc('total_sales')
             ->first();
 
+//        dd($productMoreSold);
         return $productMoreSold;
     }
 
