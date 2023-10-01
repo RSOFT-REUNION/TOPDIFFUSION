@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Pages\Back\Sav;
 use App\Models\Messages;
 use App\Models\MessagesGroups;
 use App\Models\User;
+use App\Notifications\NewMessage;
 use Livewire\Component;
 
 class Sav extends Component
@@ -70,11 +71,11 @@ class Sav extends Component
 
         if ($message->save()) {
             if (auth()->user()->team) {
-                $messageGroup->created_by;
-                // $recipientUser = User::find($recipientUserId);
-                // if ($recipientUser) {
-                //     $recipientUser->notify(new NewMessageReceived($message));
-                // }
+                $recipientUserId = $messageGroup->created_by;
+                 $recipientUser = User::find($recipientUserId);
+                 if ($recipientUser) {
+                     $recipientUser->notify(new NewMessage($message));
+                 }
                 $this->getMessage($this->tick->id);
                 $this->message_input = '';
                 $this->emit('newMessageReceived', $this->tick->id);

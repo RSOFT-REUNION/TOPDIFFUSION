@@ -54,7 +54,6 @@
                         @endforeach
                     </div>
                 @endif
-
                 <a wire:click="toggleState('state2')"
                     class="bg-secondary dark:bg-blue-800 hover:shadow-md duration-300 rounded-lg py-5 mb-5 text-black px-4 text-xl font-semibold flex justify-between gap-4 items-center cursor-pointer">
                     <div class="flex gap-3 items-center">
@@ -99,7 +98,7 @@
                 @endif
             </div>
         </div>
-        @include('components.flash-messages')
+        @livewire('components.notifications.notifications')
         <div class=" flex-1 h-full">
             <div class="flex flex-col h-full">
                 <div class="h-full overflow-y-auto">

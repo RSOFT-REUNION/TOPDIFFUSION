@@ -86,6 +86,7 @@ Route::group([
             Route::get('/promotions-groupe/{id}', [BoProductController::class, 'showGroupPromotions'])->name('back.product.promotions-group');
             Route::get('/team', [BackController::class, 'showTeam'])->name('back.team');
             Route::get('/sav', [BackController::class, 'showSav'])->name('back.sav');
+            Route::get('/sav-{id}', [BackController::class, 'showSingleSav'])->name('sav.single');
             Route::get('/a-propos', [BackController::class, 'showAbout'])->name('back.about');
         });
 
