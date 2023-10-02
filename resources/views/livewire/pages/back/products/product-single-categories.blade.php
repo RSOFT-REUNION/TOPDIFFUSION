@@ -23,7 +23,7 @@
                                 <input type="text"  wire:model="discountPercentages.{{ $group->id }}" placeholder="Entrez le pourcentage de remise..." class="focus:outline-none p-3 rounded-lg w-80 bg-gray-200 border border-gray-300 text-sm">
                             </label>
                         </div>
-                        {{ dd($group->pivot->discount_percentage) }}
+{{--                        {{ dd($group->pivot->discount_percentage) }}--}}
                     @if ($discountPercentages[$group->id])
                         <button type="submit" class="ml-2 bg-[#FBBC34] px-4 py-2.5 rounded-lg"><i class="fa-solid fa-floppy-disk"></i></button>
                         @endif
