@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Popups\Back\clients;
+namespace App\Http\Livewire\Popups\Back\Clients;
 
 use App\Models\User;
 use App\Models\UserData;
