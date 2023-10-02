@@ -28,13 +28,18 @@ class ProductCategory extends Model
 
     public function customerGroups()
     {
+        // Déclare une relation many to many avec le modèle CustomerGroup.
+        // Utilise la table pivot 'category_customer_group' pour les associations.
+        // Inclut le champ 'discount_percentage' de la table pivot.
         return $this->belongsToMany(CustomerGroup::class, 'category_customer_group')
             ->withPivot('discount_percentage');
     }
     public static function getAllDiscountPercentages()
     {
+        // Récupère toutes les catégories de produits avec leurs groupes de clients associés et les pourcentages de remise.
         return self::with('customerGroups')->get()
             ->map(function ($category) {
+                // Pour chaque catégorie de produits, transforme les données en un format spécifique.
                 $groupData = $category->customerGroups
                     ->map(function ($group) {
                         return [
@@ -45,7 +50,7 @@ class ProductCategory extends Model
                     })
                     ->toArray();
 
-                // Ajoutez-le "category_id" et le "category_name" à chaque élément du tableau "groups"
+                // Ajoute les données de catégorie à chaque élément du tableau.
                 foreach ($groupData as &$group) {
                     $group['category_id'] = $category->id;
                     $group['category_name'] = $category->title;
@@ -53,15 +58,18 @@ class ProductCategory extends Model
 
                 return $groupData;
             })
-            ->flatten(1); // Aplatit le tableau pour obtenir un seul tableau résultant
+            ->flatten(1); // Aplatit le tableau multidimensionnel pour obtenir un seul tableau résultant
     }
 
 
     public static function getUsersByGroup()
     {
+        // Récupère tous les groupes de clients avec leurs utilisateurs associés.
         $groups = CustomerGroup::with('users')->get();
 
-        $flattenedData = $groups->flatMap(function ($group) {
+        // Aplatit les données pour obtenir un tableau unique.
+        return $groups->flatMap(function ($group) {
+            // Pour chaque groupe de clients, mappe les utilisateurs et les données de groupe.
             return $group->users->map(function ($user) use ($group) {
                 return [
                     'group_id' => $group->id,
@@ -72,8 +80,6 @@ class ProductCategory extends Model
                 ];
             });
         });
-
-        return $flattenedData;
     }
 
 

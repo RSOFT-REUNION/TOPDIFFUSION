@@ -71,8 +71,8 @@ class User extends Authenticatable
         }
     }
 
-    public function customerGroup()
+    public function customerGroups()
     {
-        return $this->belongsTo(CustomerGroup::class, 'customer_group_id');
+        return $this->belongsToMany(CustomerGroup::class, 'customer_group_user', 'user_id', 'customer_group_id');
     }
 }

@@ -46,8 +46,6 @@ class ProductSingleCategories extends Component
         }
     }
 
-
-
     public function updateDiscountPercentage($groupId)
     {
         // Vérifiez si le groupe avec l'ID $groupId existe
@@ -56,8 +54,6 @@ class ProductSingleCategories extends Component
         if ($group) {
             // Mettez à jour le pourcentage de remise pour la catégorie actuelle et le groupe spécifié
             $category = $this->findCategory;
-
-
             if ($category) {
                 $category->customerGroups()->syncWithoutDetaching([
                     $groupId => [
@@ -66,7 +62,6 @@ class ProductSingleCategories extends Component
                     ]
                 ]);
 
-                $this->isModified = true;
                 return back()->with('success', 'Le pourcentage de remise a été mis à jour avec succès.');
             } else {
                 session()->flash('error', 'La catégorie n\'existe pas.');
@@ -76,10 +71,8 @@ class ProductSingleCategories extends Component
         }
 
         // Rechargez les données après la mise à jour
-       return $this->mount($this->categoryId);
+       $this->mount($this->categoryId);
     }
-
-
 
     public function render()
     {

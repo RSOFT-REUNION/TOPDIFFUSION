@@ -4,10 +4,14 @@
             <h1>Groupe Clients</h1>
         </div>
         <div class="flex-none inline-flex items-center">
-            <a class="btn-secondary" wire:click="$emit('openModal', 'popups.back.users.add-groupe-users')">Ajouter un groupe</a>
+            <a class="btn-secondary cursor-pointer" wire:click="$emit('openModal', 'popups.back.users.add-groupe-users')">Ajouter un groupe</a>
         </div>
     </div>
-    <!-- Vue pour la création d'un groupe de clients  BRUNO-->
+    @if(empty($groupUser))
+        <h1 class="flex justify-center font-bold">PAS DE GROUPE ENCORE CREE</h1>
+    @else
+
+    <!-- Vue pour la création d'un groupe de clients BRUNO-->
     {{-- <form wire:submit.prevent="createGroupUser">
         @csrf
         <div class="textfield">
@@ -54,10 +58,14 @@
                 <div class="card w-[300px] h-[300px]" :class="{ 'flipped': flipped }">
                     <div class="card-front absolute w-full]">
                         <div class="grid grid-cols-2 grid-rows-2 gap-1 w-[300px]">
-                            <div class="object-cover rounded-md h-[120px] bg-secondary flex flex-row justify-center items-center text-4xl text-white">A</div>
-                            <div class="object-cover rounded-md h-[120px] bg-secondary flex flex-row justify-center items-center text-4xl text-white">B</div>
-                            <div class="object-cover rounded-md h-[120px] bg-secondary flex flex-row justify-center items-center text-4xl text-white">B</div>
-                            <div class="object-cover rounded-md h-[120px] bg-secondary flex flex-row justify-center items-center text-4xl text-white">A</div>
+                            @foreach ($group->users as $user)
+                                @if (!empty($user->firstname))
+                                    <div class="object-cover rounded-md h-[120px] bg-secondary flex flex-row justify-center items-center text-4xl text-white">{{ strtoupper(substr($user->firstname, 0, 1)) }}</div>
+                                @endif
+                            @endforeach
+                                {{-- <div class="object-cover rounded-md h-[120px] bg-secondary flex flex-row justify-center items-center text-4xl text-white">B</div> --}}
+                                {{-- <div class="object-cover rounded-md h-[120px] bg-secondary flex flex-row justify-center items-center text-4xl text-white">B</div> --}}
+                                {{-- <div class="object-cover rounded-md h-[120px] bg-secondary flex flex-row justify-center items-center text-4xl text-white">A</div> --}}
                         </div>
                         <div class="border-t border-dashed mt-4 mb-3 px-4">
                             <div class="flex flex-row mt-3 justify-between">
@@ -81,13 +89,37 @@
                     <div class="card-back absolute w-full h-full" @click.stop style="backface-visibility: hidden; transform: rotateY(180deg);">
                         <div class="bg-[#f0f0f0] rounded-lg relative">
                             <div class="grid grid-cols-2 grid-rows-2 gap-1 w-[300px]">
-                                <select id="userSelect" wire:model="selectedUsers" multiple class="w-full h-[200px] bg-gray-50 col-span-2 row-span-full border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" size="5">
+                                <ul class="w-full h-[200px] bg-gray-50 col-span-2 row-span-full border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 overflow-auto" size="5">
+                                    <div class="btn-check-line flex items-center mt-2">
+                                        <p class="ml-2 mr-2">Utilisateurs sans groupe.</p>
+                                    </div>
                                     @foreach ($usersList as $user)
-                                        <option value="{{ $user->id }}">{{ $user->lastname }} {{ $user->firstname }}</option>
+                                        <li class="flex items-center justify-between py-2">
+                                            <label class="flex items-center space-x-2">
+                                                <input type="checkbox" wire:model="selectedUsers" value="{{ $user->id }}" class="form-checkbox h-5 w-5 text-blue-600">
+                                                <span>{{ $user->firstname }} {{ $user->lastname }} ({{$user->customer_code}})</span>
+                                            </label>
+                                        </li>
                                     @endforeach
-                                </select>
-                                <button wire:click="stopEditing({{ $group->id }})" @click="flipped = false" class="bg-secondary w-full col-span-2 py-1.5 font-medium rounded-lg">Enregistrer</button>
+                                        <div class="btn-check-line flex items-center mt-2">
+                                            <p class="ml-2 mr-2">Utilisateurs actuellement dans le groupe.</p>
+                                        </div>
+                                    @foreach ($usersWithRelation as $user)
+                                        <li class="flex items-center justify-between py-2">
+                                            <label class="flex items-center space-x-2">
+                                                <span>{{ $user->firstname }} {{ $user->lastname }} ({{$user->customer_code}})</span>
+                                            </label>
+                                            <button wire:click.prevent="removeUserFromGroup({{ $user->id }})" class="text-red-600 hover:text-red-800 focus:outline-none">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </li>
+                                    @endforeach
+                                </ul>
+
+                                <button wire:click="updateGroupUser({{ $group->id }})" @click="flipped = false" class="bg-secondary w-full col-span-2 py-1.5 font-medium rounded-lg">Enregistrer</button>
                             </div>
+
+
                             <div class="border-t border-dashed mt-5 mb-3 px-4">
                                 <div class="flex flex-row mt-4 justify-between">
                                     <div class="flex flex-col">
@@ -115,6 +147,7 @@
         @endforeach
     </div>
     @include('components.flash-messages')
+    @endif
     {{-- Affichage des groupes avec les remises BRUNO --}}
     {{-- <div>
         @foreach ($discounts as $category)

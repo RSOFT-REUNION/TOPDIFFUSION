@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\DB;
 class Dashboard extends Component
 {
 
-    public $sales, $productCreated, $newAccountCreated, $productMoreSold, $activityLog, $averagePurchase, $totalSalesRevenue;
+    public $sales, $productCreated, $newAccountCreated, $productMoreSold, $averagePurchase, $totalSalesRevenue;
+
+    protected $activityLog = [];
     public function mount()
     {
         $this->sales = $this->salesPerWeek();
@@ -121,7 +123,7 @@ class Dashboard extends Component
     public function getActivityLog()
     {
         // Récupérez les données avec l'heure d'enregistrement
-        $activityLog = ActivityLog::orderByDesc('created_at')->get();
+        $activityLog = ActivityLog::orderByDesc('created_at')->paginate(4);
 
         // Modifiez les descriptions d'activité pour inclure le temps écoulé
         $activityLog->transform(function ($log) {
@@ -136,6 +138,8 @@ class Dashboard extends Component
 
     public function render()
     {
-        return view('livewire.pages.back.dashboard');
+        return view('livewire.pages.back.dashboard', [
+            'activityLog' => $this->activityLog,
+        ]);
     }
 }

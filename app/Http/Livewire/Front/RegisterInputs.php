@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Front;
 
 use App\Models\ActivityLog;
+use App\Models\CustomerGroup;
 use App\Models\User;
 use App\Models\UserData;
 use App\Models\UserSetting;
@@ -73,6 +74,7 @@ class RegisterInputs extends Component
             $user->verified_at = Carbon::now();
         }
         if($user->save()) {
+
             // Create users data
             $data = new UserData;
             $data->user_id = $user->id;
@@ -88,7 +90,7 @@ class RegisterInputs extends Component
                 $settings->user_id = $user->id;
                 if($settings->save()) {
                     // Enregistrez l'activité de création d'un nouveau compte
-                    ActivityLog::logActivity(auth()->user()->id, 'Inscription', ' vient de s\'inscrire');
+                    ActivityLog::logActivity($user->id, 'Inscription', $user->firstname . " " . $user->lastname . ' vient de s\'inscrire');
                     // Send email to support & customer
                     return redirect()->route('front.login');
                 }

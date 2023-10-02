@@ -443,7 +443,6 @@ class ProductAdd extends Component
     {
         $data = [];
 
-        $data = [];
         if ($this->updatedSearch() != null) {
             $data['bikes'] = $this->updatedSearch()->paginate(20);
         } else {
