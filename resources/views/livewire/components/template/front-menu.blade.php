@@ -110,7 +110,7 @@
                                     x-transition:leave-end="opacity-0 max-h-0 overflow-y-hidden"
                                     @mouseenter="subMenuOpen = true"
                                     @mouseleave="subMenuOpen = false"
-                                    class="absolute top-0 left-full mt-0 w-64 bg-white text-black z-20 rounded-lg p-4">
+                                    class="absolute top-0 left-[200px] mt-0 w-64 bg-white text-black z-20 rounded-lg p-4">
                                     <!-- Contenu du sous-menu -->
                                     @foreach($menus_level_3 as $mem3)
                                         @if($mem3->parent_id === $mem->id)
