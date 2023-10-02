@@ -48,7 +48,7 @@ class Cart extends Component
             ActivityLog::logActivity(
                 auth()->user()->id,
                 'Article supprimé du panier',
-                auth()->user()->firstname . ' ' . auth()->user()->lastname . ' a supprimé ' . $productName . ' de son panier'
+                ' a supprimé ' . $productName . ' de son panier'
             );
         } else {
             session()->flash('error', 'Error lors de la suppression.');
@@ -95,7 +95,7 @@ class Cart extends Component
         $order->total_ship = 0;
         if($order->save()) {
             // Enregistrez l'activité de création de commande
-            ActivityLog::logActivity(auth()->user()->id, 'Commande créée', auth()->user()->firstname . ' ' . auth()->user()->lastname .' vient de passer une commande de ' . $this->getPriceTotal() . ' €');
+            ActivityLog::logActivity(auth()->user()->id, 'Commande créée', ' vient de passer une commande de ' . $this->getPriceTotal() . ' €');
 
             // Ajout en base des articles du panier
             $cart = UserCart::where('user_id', auth()->user()->id)->get();

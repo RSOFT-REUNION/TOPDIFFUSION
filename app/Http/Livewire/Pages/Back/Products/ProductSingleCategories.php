@@ -41,10 +41,11 @@ class ProductSingleCategories extends Component
                 $this->discountPercentages[$group->id] = $this->discountPercentages[$group->id]->pivot->discount_percentage;
             } else {
                 // Traitez le cas où la relation n'existe pas
-                $this->discountPercentages[$group->id] = 0; // Par exemple, définissez-le à 0
+                $this->discountPercentages[$group->id] = 0;
             }
         }
     }
+
 
 
     public function updateDiscountPercentage($groupId)
@@ -65,8 +66,8 @@ class ProductSingleCategories extends Component
                     ]
                 ]);
 
-                session()->flash('success', 'Le pourcentage de remise a été mis à jour avec succès.');
                 $this->isModified = true;
+                return back()->with('success', 'Le pourcentage de remise a été mis à jour avec succès.');
             } else {
                 session()->flash('error', 'La catégorie n\'existe pas.');
             }
@@ -75,7 +76,7 @@ class ProductSingleCategories extends Component
         }
 
         // Rechargez les données après la mise à jour
-        $this->mount($this->categoryId);
+       return $this->mount($this->categoryId);
     }
 
 

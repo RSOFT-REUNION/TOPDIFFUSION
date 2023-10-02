@@ -35,7 +35,7 @@ class BoSettingController extends Controller
     /*
      * Show avanced settings
      */
-    public function showSettingAvanced()
+    public function showSettingAdvanced()
     {
         $data = [];
         $data['group'] = 'settings';

@@ -433,7 +433,7 @@ class ProductAdd extends Component
                 $compatibleBike = new CompatibleTempBike;
                 $compatibleBike->bike_id = $bike->id;
                 $compatibleBike->save();
-                session()->flash('message', 'Sauvegardé');
+                session()->flash('success', 'Sauvegardé');
             }
         }
     }

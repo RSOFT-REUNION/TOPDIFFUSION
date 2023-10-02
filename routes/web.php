@@ -2,12 +2,10 @@
 
 use App\Http\Controllers\Back\BoOrderController;
 use App\Http\Controllers\Front\CartController;
-use App\Http\Controllers\PagesLegal;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\Back\BackController;
 use App\Http\Controllers\Back\LegalController;
-use App\Http\Controllers\Back\BoTeamController;
 use App\Http\Controllers\Back\BoUserController;
 use App\Http\Controllers\Front\FrontController;
 use App\Http\Controllers\Front\ProductController;
@@ -31,11 +29,11 @@ Route::get('/', [FrontController::class, 'showHome'])->name('front.home');
 Route::get('/connexion', [FrontController::class, 'showLogin'])->name('front.login');
 Route::post('/connexion', [FrontController::class, 'postLogin']);
 Route::get('/inscription', [FrontController::class, 'showRegister'])->name('front.register');
-Route::get('/deconnexion', [FrontController::class, 'logout'])->name('logout');
+Route::get('/déconnexion', [FrontController::class, 'logout'])->name('logout');
 
 Route::get('/produit-{slug}', [ProductController::class, 'showProduct'])->name('front.product');
 Route::get('/produit', [ProductController::class, 'showProductListAll'])->name('front.product-all');
-Route::get('/liste-produit/categorie-{slug}', [ProductController::class, 'showProductList'])->name('front.product.list');
+Route::get('/liste-produit/categories-{slug}', [ProductController::class, 'showProductList'])->name('front.product.list');
 
 Route::middleware(['App\Http\Middleware\RedirectIfMaintenanceModeActive'])->group(function () {
     Route::get('/maintenance', [ErrorController::class, 'showErrorMaintenance'])->name('maintenance');
@@ -55,11 +53,13 @@ Route::group([
     Route::get('/profil/mes-favoris', [FrontController::class, 'showFavorite'])->name('front.myFavorite');
     Route::get('/favoris/{sort?}', [FrontController::class, 'showFavorite'])->name('front.favorite');
     Route::get('/a-propos', [FrontController::class, 'showAbout'])->name('front.about');
-    Route::get('/politique-de-confidentialite', [FrontController::class, 'showConfidential'])->name('front.confidential');
-    Route::get('/informations-legales', [FrontController::class, 'showlegal'])->name('front.legal');
+    Route::get('/politique-de-confidentialité', [FrontController::class, 'showConfidential'])->name('front.confidential');
+    Route::get('/informations-legals', [FrontController::class, 'showLegal'])->name('front.legal');
     Route::get('/faq', [FrontController::class, 'showFaq'])->name('front.faq');
     Route::get('/mon-panier', [CartController::class, 'showCart'])->name('front.cart');
-    // Ne pas oulbier de changer
+    Route::get('/sav-{id}', [BackController::class, 'showSingleSav'])->name('sav.single');
+
+    // Ne pas oublier de changer
 });
 
 // It's a team member
@@ -72,7 +72,7 @@ Route::group([
         Route::prefix('/produits')->group(function () {
             Route::get('/liste', [BoProductController::class, 'showProductList'])->name('back.product.list');
             Route::get('/creation', [BoProductController::class, 'createProduct'])->name('back.product.create');
-            Route::get('/creer-un-produit-{id}', [BoProductController::class, 'showCreateProduct'])->name('back.product.show.create');
+            Route::get('/créer-un-produit-{id}', [BoProductController::class, 'showCreateProduct'])->name('back.product.show.create');
             Route::get('/ajout-{id}-{product}', [BoProductController::class, 'showAddProduct'])->name('back.product.add');
             Route::get('/categories', [BoProductController::class, 'showProductCategories'])->name('back.product.categories');
             Route::get('/categories-{id}', [BoProductController::class, 'showSingleProductCategories'])->name('back.product.single.categories');
@@ -93,10 +93,10 @@ Route::group([
             // Route::get('/', [LegalController::class, 'showTest'])->name('bouton.test');
             Route::get('/a-propos', [LegalController::class, 'showAbout'])->name('about');
             Route::post('/a-propos', [LegalController::class, 'postAbout'])->name('post.about');
-            Route::get('/informations-legales', [LegalController::class, 'showLegal'])->name('legal');
-            Route::post('/informations-legales', [LegalController::class, 'postLegal'])->name('post.legal');
-            Route::get('/politique-de-confidentialite', [LegalController::class, 'showConfidential'])->name('confidential');
-            Route::post('/politique-de-confidentialite', [LegalController::class, 'postConfidential'])->name('post.confidential');
+            Route::get('/informations-legals', [LegalController::class, 'showLegal'])->name('legal');
+            Route::post('/informations-legals', [LegalController::class, 'postLegal'])->name('post.legal');
+            Route::get('/politique-de-confidentialité', [LegalController::class, 'showConfidential'])->name('confidential');
+            Route::post('/politique-de-confidentialité', [LegalController::class, 'postConfidential'])->name('post.confidential');
             Route::get('/faq', [LegalController::class, 'showFaq'])->name('faq');
             Route::post('/faq', [LegalController::class, 'postFaq']);
         });
@@ -105,13 +105,13 @@ Route::group([
             Route::get('/liste', [BoUserController::class, 'showUserList'])->name('back.user.list');
             Route::get('/groupes-clients', [BoUserController::class, 'showUserGroup'])->name('back.user.userGroup');
             Route::get('/{user}', [BoUserController::class, 'showUserSingle'])->name('back.user.single');
-            Route::get('/{user}/verified', [BoUserController::class, 'validateProfessionnal'])->name('back.user.verified');
+            Route::get('/{user}/verified', [BoUserController::class, 'validateProfessional'])->name('back.user.verified');
         });
 
-        Route::prefix('/reglages')->group(function () {
+        Route::prefix('/réglages')->group(function () {
             Route::get('/', [BoSettingController::class, 'showSettingGeneral'])->name('back.setting');
             Route::get('/paiement-et-taxes', [BoSettingController::class, 'showSettingPayment'])->name('back.setting.payment');
-            Route::get('/avance', [BoSettingController::class, 'showSettingAvanced'])->name('back.setting.avanced');
+            Route::get('/avance', [BoSettingController::class, 'showSettingAdvanced'])->name('back.setting.advanced');
             Route::get('/performance', [BoSettingController::class, 'showSettingPerform'])->name('back.setting.perform');
             Route::get('/information', [BoSettingController::class, 'showSettingInfo'])->name('back.setting.info');
         });

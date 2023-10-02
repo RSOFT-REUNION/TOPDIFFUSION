@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('customer_group_user', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('customer_group_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->unique();
             $table->timestamps();
 
             $table->foreign('customer_group_id')->references('id')->on('customer_groups')->onDelete('cascade');

@@ -15,7 +15,9 @@
                 <div class="whitespace-nowrap font-['K2D'] self-start ml-4">
                     Message : <div class="text-secondary contents">*</div>
                 </div>
-                <textarea wire:model="message" rows="6" class="hover:tracking-wider duration-300 border-solid flex flex-col shrink-0 outline-none items-start pl-3 py-2 border-black/10 border rounded w-full dark:bg-gray-700 dark:border-gray-800" wire:model="message" placeholder="Entrez votre message"></textarea>
+                <label>
+                    <textarea wire:model="message" rows="6" class="hover:tracking-wider duration-300 border-solid flex flex-col shrink-0 outline-none items-start pl-3 py-2 border-black/10 border rounded w-full dark:bg-gray-700 dark:border-gray-800" wire:model="message" placeholder="Entrez votre message"></textarea>
+                </label>
             </div>
 
             <div class="flex justify-end my-7">

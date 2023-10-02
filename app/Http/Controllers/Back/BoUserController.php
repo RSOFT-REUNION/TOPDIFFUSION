@@ -46,7 +46,7 @@ class BoUserController extends Controller
     /*
      * Validate professionnal account
      */
-    public function validateProfessionnal($user)
+    public function validateProfessional($user)
     {
         $selectedUser = User::where('customer_code', $user)->first();
         $selectedUser->verified = 1;

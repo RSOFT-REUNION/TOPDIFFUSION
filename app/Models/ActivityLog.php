@@ -9,6 +9,10 @@ class ActivityLog extends Model
 {
     use HasFactory;
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
     public static function logActivity($userId, $activityType, $activityDescription)
     {
         $activityLog = new ActivityLog;
@@ -16,6 +20,11 @@ class ActivityLog extends Model
         $activityLog->activity_type = $activityType;
         $activityLog->activity_description = $activityDescription;
         $activityLog->save();
+
+        // Récupérer les informations de l'utilisateur
+        $user = User::find($userId);
+
+        return $user;
     }
     public function getActivityColor()
     {

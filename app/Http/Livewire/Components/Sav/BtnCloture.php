@@ -39,7 +39,7 @@ class BtnCloture extends Component
         $reopen->closed = false;
         $reopen->state = 2;
         if ($reopen->save()) {
-            session()->flash('error', 'Ticket Réouvert');
+            session()->flash('success', 'Ticket Réouvert');
             return redirect()->route('back.sav');
         } else {
             session()->flash('error', 'Erreur. Veuillez réessayé');

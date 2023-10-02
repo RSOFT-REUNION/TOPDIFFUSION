@@ -11,7 +11,6 @@
     </div>
     <div id="entry-content" class="mt-5">
         {{-- grids --}}
-{{--        {{ dd($productCreated) }}--}}
         <div class="grid grid-cols-4 grid-rows-2 gap-5 bg-gray-100 p-5 rounded-xl">
             <div class="bg-white p-5 flex flex-col justify-center gap-y-5 rounded-lg">
                 <h2 class="text-gray-500">Nombre de vente</h2>
@@ -37,7 +36,7 @@
                 <div class="flex justify-between border-gray-200 border-b dark:border-gray-700 m-4 md:m-6 pb-3">
                 <dl>
                     <dt class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">Chiffre des ventes réaliser</dt>
-                    <dd class="leading-none text-3xl font-bold text-gray-900 dark:text-white">5,405 €</dd>
+                    <dd class="leading-none text-3xl font-bold text-gray-900 dark:text-white">{{ $totalSalesRevenue }} €</dd>
                 </dl>
                 <div
                     class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
@@ -156,8 +155,11 @@
                     },
                     ],
                     xaxis: {
-                    categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
-                    labels: {
+                        categories: [
+                            '01 Janvier', '02 Février', '03 Mars', '04 Avril', '05 Mai', '06 Juin', '07 Juillet', '08 Août',
+                            '09 Septembre', '10 Octobre', '11 Novembre', '12 Décembre'
+                        ],
+                        labels: {
                         show: false,
                     },
                     axisBorder: {
@@ -183,7 +185,7 @@
                 <div class="flex justify-between border-gray-200 border-b dark:border-gray-700 pb-3">
                 <dl>
                     <dt class="text-base font-normal text-gray-500 dark:text-gray-400 pb-1">Chiffre du panier moyen</dt>
-                    <dd class="leading-none text-3xl font-bold text-gray-900 dark:text-white">1,752 €</dd>
+                    <dd class="leading-none text-3xl font-bold text-gray-900 dark:text-white">{{ $averagePurchase }} €</dd>
                 </dl>
                 <div
                     class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
@@ -362,7 +364,14 @@
             <div class="bg-white p-5 flex flex-col justify-center gap-y-5 rounded-lg">
                 <h2 class="text-gray-500">Meilleure vente</h2>
                 <div class="flex flex-row items-end">
-                    <h3 class="font-bold mr-2 text-2xl">{{ $productMoreSold['product_name'] }}</h3>
+                    <h3 class="font-bold mr-2 text-2xl">
+                        @if(isset($productMoreSold['product_name']))
+                            {{ $productMoreSold['product_name'] }}
+                        @else
+                            Pas de produit encore acheté
+                        @endif
+                    </h3>
+
                     <span class="pb-0.5">Ce mois-ci</span>
                 </div>
                 <div class="text-green-500">
@@ -375,7 +384,11 @@
             @foreach($activityLog as $log)
                 <div class="{{ $log->getActivityColor() }} flex flex-row justify-center items-center rounded-lg mt-7">
                     <h3 class="py-5">
-                        {{ $log->activity_description }}
+                        @if ($log->user)
+                            {{ $log->user->firstname }} {{ $log->user->lastname }}
+                        @endif
+                        <span class="font-bold">{{ $log->activity_description }}</span>
+                        <span>{{ $log->created_at->diffForHumans() }}</span>
                     </h3>
                 </div>
             @endforeach

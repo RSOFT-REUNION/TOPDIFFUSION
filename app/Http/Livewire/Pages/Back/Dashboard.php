@@ -5,7 +5,9 @@ namespace App\Http\Livewire\Pages\Back;
 use App\Models\ActivityLog;
 use App\Models\MyProduct;
 use App\Models\User;
+use App\Models\UserOrder;
 use App\Models\UserOrderItem;
+use Illuminate\Support\Carbon;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 
@@ -13,8 +15,7 @@ use Illuminate\Support\Facades\DB;
 class Dashboard extends Component
 {
 
-    public $sales, $productCreated, $newAccountCreated, $productMoreSold, $activityLog;
-
+    public $sales, $productCreated, $newAccountCreated, $productMoreSold, $activityLog, $averagePurchase, $totalSalesRevenue;
     public function mount()
     {
         $this->sales = $this->salesPerWeek();
@@ -22,6 +23,9 @@ class Dashboard extends Component
         $this->newAccountCreated = $this->newAccountCreatedThisMonth();
         $this->productMoreSold = $this->productMoreSold();
         $this->activityLog = $this->getActivityLog();
+        $this->averagePurchase = $this->averagePurchase();
+        $this->totalSalesRevenue = $this->salesRevenue();
+        $this->monthlyAverage = $this->averagePurchase();
     }
     public function salesPerWeek()
     {
@@ -63,8 +67,56 @@ class Dashboard extends Component
             ->orderByDesc('total_sales')
             ->first();
 
+//        dd($productMoreSold);
         return $productMoreSold;
     }
+
+    public function averagePurchase()
+    {
+        // Date il y a 7 jours à partir d'aujourd'hui
+        $sevenDaysAgo = Carbon::now()->subDays(7);
+
+        // Obtenir la somme des montants des commandes pour les 7 derniers jours
+        $totalSalesRevenue = UserOrder::where('created_at', '>=', $sevenDaysAgo)
+            ->sum('total_amount');
+
+        // Obtenir le nombre de clients uniques ayant effectué des achats au cours de la période
+        $uniqueCustomerCount = UserOrder::where('created_at', '>=', $sevenDaysAgo)
+            ->distinct('user_id')
+            ->count('user_id');
+
+
+        // Calculer le panier moyen en fonction du nombre de clients
+        if ($uniqueCustomerCount > 0) {
+            $averagePurchase = $totalSalesRevenue / $uniqueCustomerCount;
+        } else {
+            $averagePurchase = null; // Valeur par défaut ici
+        }
+
+        // Formater le résultat avec une virgule comme séparateur décimal
+        if ($averagePurchase !== null) {
+            $averagePurchase = number_format($averagePurchase, 2, ',', '.');
+        }
+
+        return $averagePurchase;
+    }
+
+    public function salesRevenue()
+    {
+        // Date il y a 7 jours à partir d'aujourd'hui
+        $sevenDaysAgo = Carbon::now()->subDays(7);
+
+        // Obtenir la somme des montants des commandes pour les 7 derniers jours
+        $totalSalesRevenue = UserOrderItem::where('created_at', '>=', $sevenDaysAgo)
+            ->sum(DB::raw('quantity * product_price'));
+
+        // Formater le chiffre d'affaires réalisé avec une virgule comme séparateur décimal
+        $totalSalesRevenue = number_format($totalSalesRevenue, 2, ',', '.');
+
+        return $totalSalesRevenue;
+    }
+
+
 
     public function getActivityLog()
     {
@@ -74,7 +126,6 @@ class Dashboard extends Component
         // Modifiez les descriptions d'activité pour inclure le temps écoulé
         $activityLog->transform(function ($log) {
             $timeAgo = now()->diffInMinutes($log->created_at);
-            $log->activity_description = $log->activity_description . ' il y a ' . $timeAgo . ' minutes';
             return $log;
         });
 

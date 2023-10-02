@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <div class="flex-1">
-                        <h2 class="subtitle">Cette catégorie semble vide..</h2>
+                        <h2 class="subtitle">Cette catégorie semble vide...</h2>
                         <p class="text-gray-500 mt-3">N'hésitez pas à nous contacter si vous souhaitez plus d'informations ou à parcourir nos autres catégories</p>
                     </div>
                 </div>
