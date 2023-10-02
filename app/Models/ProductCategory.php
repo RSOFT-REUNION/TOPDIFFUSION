@@ -61,20 +61,21 @@ class ProductCategory extends Model
     {
         $groups = CustomerGroup::with('users')->get();
 
-        $groupData = $groups->map(function ($group) {
-            return [
-                'group_name' => $group->name,
-                'users' => $group->users->map(function ($user) {
-                    return [
-                        'user_id' => $user->id,
-                        'user_firstname' => $user->firstname,
-                        'user_lastname' => $user->lastname,
-                    ];
-                }),
-            ];
+        $flattenedData = $groups->flatMap(function ($group) {
+            return $group->users->map(function ($user) use ($group) {
+                return [
+                    'group_id' => $group->id,
+                    'group_name' => $group->name,
+                    'user_id' => $user->id,
+                    'user_firstname' => $user->firstname,
+                    'user_lastname' => $user->lastname,
+                ];
+            });
         });
 
-        return $groupData;
+        return $flattenedData;
     }
+
+
 
 }

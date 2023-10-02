@@ -6,6 +6,7 @@
         <div class="flex-none inline-flex items-center">
             <a class="btn-secondary" wire:click="$emit('openModal', 'popups.back.users.add-groupe-users')">Ajouter un groupe</a>
         </div>
+    </div>
     <!-- Vue pour la création d'un groupe de clients  BRUNO-->
     {{-- <form wire:submit.prevent="createGroupUser">
         @csrf
