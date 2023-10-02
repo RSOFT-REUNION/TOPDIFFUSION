@@ -88,7 +88,7 @@
                      x-transition:leave="transition-all ease-in-out duration-300"
                      x-transition:leave-start="opacity-100 max-h-[1000px] overflow-y-auto"
                      x-transition:leave-end="opacity-0 max-h-0 overflow-y-hidden"
-                     class="absolute left-0 mt-2 grid grid-flow-row-dense grid-cols-1 md:grid-cols-4 gap-4 max-h-96 w-full bg-white text-black z-10 shadow-2xl rounded-br-lg rounded-bl-lg">
+                     class="absolute left-0 mt-2 flex flex-col gap-4 max-h-96 w-full bg-white text-black z-10 shadow-2xl rounded-br-lg rounded-bl-lg">
 
                     @foreach($menus_level_2 as $mem)
                         @if($mem->parent_id === $menu->id)
@@ -101,14 +101,16 @@
 
                                 <!-- Sous-menu -->
                                 <div x-show="subMenuOpen"
-                                     x-cloak
-                                     x-transition:enter="transition-all ease-in-out duration-500"
-                                     x-transition:enter-start="opacity-0 transform translate-x-0"
-                                     x-transition:enter-end="opacity-100 transform translate-x-full"
-                                     x-transition:leave="transition-all ease-in-out duration-500"
-                                     x-transition:leave-start="opacity-100 transform translate-x-full"
-                                     x-transition:leave-end="opacity-0 transform translate-x-0"
-                                     class="absolute top-0 left-full mt-0 w-64 bg-white text-black z-20 rounded-lg p-4">
+                                    x-cloak
+                                    x-transition:enter="transition-all ease-in-out duration-700"
+                                    x-transition:enter-start="opacity-0 max-h-0 overflow-y-hidden"
+                                    x-transition:enter-end="opacity-100 max-h-[1000px] overflow-y-auto"
+                                    x-transition:leave="transition-all ease-in-out duration-300"
+                                    x-transition:leave-start="opacity-100 max-h-[1000px] overflow-y-auto"
+                                    x-transition:leave-end="opacity-0 max-h-0 overflow-y-hidden"
+                                    @mouseenter="subMenuOpen = true"
+                                    @mouseleave="subMenuOpen = false"
+                                    class="absolute top-0 left-full mt-0 w-64 bg-white text-black z-20 rounded-lg p-4">
                                     <!-- Contenu du sous-menu -->
                                     @foreach($menus_level_3 as $mem3)
                                         @if($mem3->parent_id === $mem->id)
@@ -128,3 +130,6 @@
     </div>
 
 </div>
+
+
+{{-- grid grid-flow-row-dense grid-cols-1 md:grid-cols-4 --}}
