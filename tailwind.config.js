@@ -8,6 +8,9 @@ export default {
   ],
   theme: {
     extend: {},
+    scale: {
+        '102': '1.01',
+      },
     colors: {
         'primary': '#092143',
         'secondary': '#FBBC34'
