@@ -19,6 +19,8 @@ use App\Models\UserOrderItem;
 use App\Models\SettingGeneral;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
+use App\Models\MessagesGroups;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 
@@ -144,11 +146,16 @@ class FrontController extends Controller
 
     public function showProfileSav()
     {
+        $message = MessagesGroups::where('user_id', Auth::id())->first();
+        $command_number = $message->command_number;
+
         $data = [];
         $data['me'] = auth()->user();
         $data['nav-sidebar'] = auth()->user();
         $data['account_page'] = 'sav';
         $data['page'] = 'sav';
+        $data['order'] = UserOrder::where('document_number', $command_number)->first();
+        $data['savGroup'] = MessagesGroups::where('user_id', Auth::id())->get();
         $data['setting'] = SettingGeneral::where('id', 1)->first();
         return view('pages.frontend.profile.my-sav', $data);
     }
