@@ -73,7 +73,7 @@
         @foreach($menus as $menu)
             <div class="group py-3" x-data="{ isOpen: false, subMenuOpenIndex: null }"
                  @mouseenter="isOpen = true"
-                 {{-- @mouseleave="isOpen = false" --}}
+                 @mouseleave="isOpen = false"
                  :class="{ 'bg-white text-black': isOpen }">
 
                 <a href="#" class="btn-menu-level-1">
