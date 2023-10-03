@@ -17,6 +17,7 @@
                         <li><a href="{{ route('front.profile') }}" class="btn-sidebar @if($account_page == 'informations') btn-sidebar-active @endif"><i class="fa-solid fa-user mr-3"></i>Mes informations</a></li>
                         <li><a href="{{ route('front.commands') }}" class="btn-sidebar mt-1 @if($account_page == 'commands') btn-sidebar-active @endif"><i class="fa-solid fa-file-invoice mr-3"></i>Mes commandes & factures</a></li>
                         <li><a href="{{ route('front.profile.bikes') }}" class="btn-sidebar mt-1 @if($account_page == 'bikes') btn-sidebar-active @endif"><i class="fa-solid fa-motorcycle mr-3"></i>Mes motos</a></li>
+                        <li><a href="{{ route('front.profile.sav') }}" class="btn-sidebar mt-1 @if($account_page == 'sav') btn-sidebar-active @endif"><i class="fa-solid fa-comments mr-3"></i>Mes demande SAV</a></li>
                     </ul>
                 </div>
                 <div class="flex-1 entry-content pl-4">

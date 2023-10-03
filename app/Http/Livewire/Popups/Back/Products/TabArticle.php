@@ -15,21 +15,9 @@ class TabArticle extends ModalComponent
     public $jobs = [];
     public $is_search = false;
 
+    public $currentPage = 1;
+
     public $selectedProducts = [];
-
-    // public function updatedSelectedProducts()
-    // {
-    //     $this->emit('productSelected', $this->selectedProducts);
-    // }
-
-    public function updatedSelectedProducts()
-    {
-        // dd($this->selectedProducts);
-        foreach($this->selectedProducts as $productId) {
-            $this->emit('productSelected', $productId);
-        }
-    }
-
 
     public function mount()
     {
@@ -37,7 +25,7 @@ class TabArticle extends ModalComponent
     }
 
     public function btn() {
-        dd($this->selectedProducts);
+        $this->emit('productsSelected', $this->selectedProducts);
     }
 
     public static function modalMaxWidth(): string
@@ -79,6 +67,10 @@ class TabArticle extends ModalComponent
         $this->jobs = [];
     }
 
+    public function setPage($page) {
+        $this->currentPage = $page;
+    }
+
     public function render()
     {
         $data = [];
@@ -97,7 +89,7 @@ class TabArticle extends ModalComponent
         if ($this->jobs) {
             $data['products'] = $products;
         } else {
-            $data['products'] = $products->paginate($this->perPage);
+            $data['products'] = MyProduct::paginate(8, ['*'], 'page', $this->currentPage);
         }
         return view('livewire.popups.back.products.tab-article', $data);
     }

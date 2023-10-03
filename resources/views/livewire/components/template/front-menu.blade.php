@@ -26,41 +26,41 @@
             </div>
         </div>
     @endif --}}
-    {{-- <div class="inline-flex items-center">
+
+    {{-- <div class="inline-flex relative items-center w-full">
         @foreach($menus as $menu)
-        <div class="group relative py-3">
-            <a wire:click="@if($tab != $menu->id) changeTab({{ $menu->id }}) @else changeTab('') @endif" class="btn-menu-level-1 @if($tab == $menu->id) btn-menu-level-1_active @endif">{{ $menu->title }}@if($menu->hasSubCategory()->count() > 0 ) @if($tab == $menu->id) <i class="fa-solid fa-chevron-up ml-2"></i> @else <i class="fa-solid fa-chevron-down ml-2"></i> @endif @endif</a>
-                <div class="absolute left-0 mt-2 w-full bg-white text-black opacity-0 group-hover:opacity-100 transition z-10">
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-200">Option 1</a>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-200">Option 2</a>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-200">Option 3</a>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-200">Option 3</a>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-200">Option 3</a>
-                </div>
-        </div>
-        @endforeach
-    </div> --}}
-    {{-- <div class="inline-flex items-center">
-        @foreach($menus as $menu)
-            <div class="group relative py-3">
+            <div class="group py-3" x-data="{ isOpen: false }"
+                 @mouseenter="isOpen = true"
+                 @mouseleave="isOpen = false"
+                 :class="{ 'bg-white text-black': isOpen }">
+
                 <a href="#" class="btn-menu-level-1">
                     {{ $menu->title }}
-                    @if($menu->hasSubCategory()->count() > 0 )
-                        <i class="fa-solid fa-chevron-down ml-2"></i>
-                    @endif
                 </a>
-                <div class="absolute left-0 mt-2 w-full bg-white text-black transform scale-y-0 group-hover:scale-y-100 origin-top transition-transform z-10">
+
+                <div x-show="isOpen"
+                     x-cloak
+                     x-transition:enter="transition-all ease-in-out duration-700"
+                     x-transition:enter-start="opacity-0 max-h-0 overflow-y-hidden"
+                     x-transition:enter-end="opacity-100 max-h-[1000px] overflow-y-auto"
+                     x-transition:leave="transition-all ease-in-out duration-300"
+                     x-transition:leave-start="opacity-100 max-h-[1000px] overflow-y-auto"
+                     x-transition:leave-end="opacity-0 max-h-0 overflow-y-hidden"
+                     class="absolute left-0 mt-2 grid grid-flow-row-dense grid-cols-1 md:grid-cols-4 gap-4 max-h-96 w-full bg-white text-black z-10 shadow-2xl rounded-br-lg rounded-bl-lg">
+
                     @foreach($menus_level_2 as $mem)
                         @if($mem->parent_id === $menu->id)
-                            <div class="menu-mega-categories">
-                                <h2><a href="{{ route('front.product.list', ['slug' => $mem->slug]) }}">{{ $mem->title }}</a></h2>
-                                <ul class="mt-3">
-                                    @foreach($menus_level_3 as $mem3)
-                                        @if($mem3->parent_id === $mem->id)
+                            <div class="menu-mega-categories px-4">
+                                <h2 class="font-bold my-5 hover:text-secondary">
+                                    <a href="{{ route('front.product.list', ['slug' => $mem->slug]) }}">{{ $mem->title }}</a>
+                                </h2>
+                                @foreach($menus_level_3 as $mem3)
+                                    @if($mem3->parent_id === $mem->id)
+                                        <ul class="my-5 px-4 py-2 hover:bg-gray-200">
                                             <li><a href="{{ route('front.product.list', ['slug' => $mem3->slug]) }}">{{ $mem3->title }}</a></li>
-                                        @endif
-                                    @endforeach
-                                </ul>
+                                        </ul>
+                                    @endif
+                                @endforeach
                             </div>
                         @endif
                     @endforeach
@@ -69,66 +69,82 @@
         @endforeach
     </div> --}}
 
-    {{-- <div class="inline-flex items-center w-full">
+    <div class="inline-flex relative items-center w-full">
         @foreach($menus as $menu)
-            <div class="group relative w-full py-3">
-                <a href="#" class="btn-menu-level-1">
-                    {{ $menu->title }}
-                    @if($menu->hasSubCategory()->count() > 0 )
-                        <i class="fa-solid fa-chevron-down ml-2"></i>
-                    @endif
-                </a>
-                <div class="absolute left-0 mt-2 flex h-96 flex-col flex-wrap  w-full bg-white text-black transform scale-y-0 group-hover:scale-y-100 origin-top transition-transform z-10 shadow-2xl rounded-br-lg rounded-bl-lg">
-                    @foreach($menus_level_2 as $mem)
-                        @if($mem->parent_id === $menu->id)
-                            <div class="menu-mega-categories px-4">
-                                <h2 class="font-bold my-5 hover:text-secondary"><a href="{{ route('front.product.list', ['slug' => $mem->slug]) }}">{{ $mem->title }}</a></h2>
-                                    @foreach($menus_level_3 as $mem3)
-                                        @if($mem3->parent_id === $mem->id)
-                                            <ul class="my-5 px-4 py-2 hover:bg-gray-200">
-                                                <li><a href="{{ route('front.product.list', ['slug' => $mem3->slug]) }}">{{ $mem3->title }}</a></li>
-                                            </ul>
-                                        @endif
-                                    @endforeach
-                            </div>
-                        @endif
-                    @endforeach
-                </div>
-            </div>
-        @endforeach
-    </div> --}}
+            <div class="group py-3" x-data="{ isOpen: false, subMenuOpenIndex: null }"
+                 @mouseenter="isOpen = true"
+                 {{-- @mouseleave="isOpen = false" --}}
+                 :class="{ 'bg-white text-black': isOpen }">
 
-    <div class="inline-flex items-center w-full">
-        @foreach($menus as $menu)
-            <div class="group relative w-full py-3" x-data="{ isOpen: false }" @mouseenter="isOpen = true" @mouseleave="isOpen = false">
                 <a href="#" class="btn-menu-level-1">
                     {{ $menu->title }}
-                    @if($menu->hasSubCategory()->count() > 0 )
-                        <i class="fa-solid fa-chevron-down ml-2"></i>
-                    @endif
                 </a>
-                <div
-                    x-show="isOpen"
+
+                <div x-show="isOpen"
                     x-cloak
-                    x-transition:enter="transition-transform ease-out duration-300"
-                    x-transition:enter-start="transform scale-y-0"
-                    x-transition:enter-end="transform scale-y-100"
-                    x-transition:leave="transition-transform ease-in duration-300"
-                    x-transition:leave-start="transform scale-y-100"
-                    x-transition:leave-end="transform scale-y-0"
-                    class="absolute left-0 mt-2 flex h-96 flex-col flex-wrap  w-full bg-white text-black z-10 shadow-2xl rounded-br-lg rounded-bl-lg"
-                >
-                    @foreach($menus_level_2 as $mem)
+                    x-transition:enter="transition-all ease-in-out duration-700"
+                    x-transition:enter-start="opacity-0 max-h-0 overflow-y-hidden"
+                    x-transition:enter-end="opacity-100 max-h-[1000px] overflow-y-auto"
+                    x-transition:leave="transition-all ease-in-out duration-300"
+                    x-transition:leave-start="opacity-100 max-h-[1000px] overflow-y-auto"
+                    x-transition:leave-end="opacity-0 max-h-0 overflow-y-hidden"
+                    class="absolute left-0 mt-2 flex flex-col gap-4 max-h-96 p-4 w-full bg-white text-black z-10 shadow-2xl rounded-br-lg rounded-bl-lg">
+
+                    @foreach($menus_level_2 as $index => $mem)
                         @if($mem->parent_id === $menu->id)
-                            <div class="menu-mega-categories px-4">
-                                <h2 class="font-bold my-5 hover:text-secondary"><a href="{{ route('front.product.list', ['slug' => $mem->slug]) }}">{{ $mem->title }}</a></h2>
+                            <div class="menu-mega-categories flex flex-col px-4 group w-1/5 outline-none overflow-hidden"
+                            @mouseenter="subMenuOpenIndex = {{ $index }}"
+                            @mouseleave="subMenuOpenIndex = null">
+                                <h2 class="font-bold my-5 hover:text-secondary"
+                                    @if ($index != $index)
+                                        @mouseenter="{{'subMenuOpen'.$index}} = false"
+                                    @endif
+                                    @mouseenter="{{'subMenuOpen'.$index}} = true"
+                                    >
+                                    {{-- @mouseleave="subMenuOpen = false"> --}}
+                                    <a href="{{ route('front.product.list', ['slug' => $mem->slug]) }}">{{ $mem->title }}</a>
+                                </h2>
+
+
+                                <!-- Sous-menu -->
+                                <div x-show="subMenuOpenIndex === {{ $index }}"
+                                x-cloak
+                                x-transition:enter="transition-all ease-in-out duration-700"
+                                x-transition:enter-start="opacity-0 max-h-0 overflow-y-hidden"
+                                x-transition:enter-end="opacity-100 max-h-[1000px] overflow-y-auto"
+                                x-transition:leave="transition-all ease-in-out duration-300"
+                                x-transition:leave-start="opacity-100 max-h-[1000px] overflow-y-auto"
+                                x-transition:leave-end="opacity-0 max-h-0 overflow-y-hidden"
+                                {{-- @mouseleave="{{'subMenuOpen'.$index}} = false" --}}
+                                class="absolute top-0 left-[300px] max-h-60 flex flex-wrap flex-col mt-0 w-64 bg-white text-black z-10 rounded-lg p-4 overflow-">
+                                @if ($index) <!-- Après le troisième élément -->
+                                    <div class="h-full border-l border-dashed absolute"></div>
+                                @endif
+                                    <!-- Contenu du sous-menu -->
                                     @foreach($menus_level_3 as $mem3)
                                         @if($mem3->parent_id === $mem->id)
-                                            <ul class="my-5 px-4 py-2 hover:bg-gray-200">
+                                            <ul class="ml-20">
+                                                <li><a class="px-4 py-2 flex flex-col hover:bg-gray-200" href="{{ route('front.product.list', ['slug' => $mem3->slug]) }}">{{ $mem3->title }}</a></li>
+                                            </ul>
+                                            <ul class="px-4 py-2 flex flex-col hover:bg-gray-200 ml-20">
+                                                <li><a href="{{ route('front.product.list', ['slug' => $mem3->slug]) }}">{{ $mem3->title }}</a></li>
+                                            </ul>
+                                            <ul class="px-4 py-2 flex flex-col hover:bg-gray-200 ml-20">
+                                                <li><a href="{{ route('front.product.list', ['slug' => $mem3->slug]) }}">{{ $mem3->title }}</a></li>
+                                            </ul>
+                                            <ul class="px-4 py-2 flex flex-col hover:bg-gray-200 ml-20">
+                                                <li><a href="{{ route('front.product.list', ['slug' => $mem3->slug]) }}">{{ $mem3->title }}</a></li>
+                                            </ul>
+                                            <ul class="px-4 py-2 flex flex-col hover:bg-gray-200 ml-20">
+                                                <li><a href="{{ route('front.product.list', ['slug' => $mem3->slug]) }}">{{ $mem3->title }}</a></li>
+                                            </ul>
+                                            <ul class="px-4 py-2 flex flex-col hover:bg-gray-200 ml-20">
                                                 <li><a href="{{ route('front.product.list', ['slug' => $mem3->slug]) }}">{{ $mem3->title }}</a></li>
                                             </ul>
                                         @endif
                                     @endforeach
+                                </div>
+
                             </div>
                         @endif
                     @endforeach
@@ -137,14 +153,10 @@
         @endforeach
     </div>
 
-
-
-
 </div>
-{{-- @push('scripts')
-    <script>
-        document.addEventListener('click', function(event) {
-            @this.set('active_tab', '');
-        });
-    </script>
-@endpush --}}
+
+
+{{-- grid grid-flow-row-dense grid-cols-1 md:grid-cols-4 --}}
+{{-- @if ($index == 2 || $index == 4 || $index == 6 || $index == 8 || $index == 10) <!-- Après le troisième élément -->
+                <div class="w-full border-t border-dashed my-5"></div>
+            @endif --}}

@@ -142,6 +142,17 @@ class FrontController extends Controller
         return redirect()->route('front.profile');
     }
 
+    public function showProfileSav()
+    {
+        $data = [];
+        $data['me'] = auth()->user();
+        $data['nav-sidebar'] = auth()->user();
+        $data['account_page'] = 'sav';
+        $data['page'] = 'sav';
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
+        return view('pages.frontend.profile.my-sav', $data);
+    }
+
     public function showProfileBikes()
     {
         $data = [];

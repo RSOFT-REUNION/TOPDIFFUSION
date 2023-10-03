@@ -49,6 +49,7 @@ Route::group([
     Route::get('/profil/commandes/{order}', [FrontController::class, 'showSingleOrder'])->name('front.orders.single');
     Route::get('/profil/suppression/adresse-{id}', [FrontController::class, 'deletedAddress'])->name('front.profile.delete.address');
     Route::get('/profil/mes-motos', [FrontController::class, 'showProfileBikes'])->name('front.profile.bikes');
+    Route::get('/profil/mes-demande-sav', [FrontController::class, 'showProfileSav'])->name('front.profile.sav');
     Route::get('/profil/mes-motos/suppression-{id}', [FrontController::class, 'deletedBike'])->name('front.profile.delete.bikes');
     Route::get('/profil/mes-favoris', [FrontController::class, 'showFavorite'])->name('front.myFavorite');
     Route::get('/favoris/{sort?}', [FrontController::class, 'showFavorite'])->name('front.favorite');
