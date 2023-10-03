@@ -10,6 +10,7 @@
         </div>
     </div>
 
+    {{-- Pour afficher les message --}}
     <div class="h-[500px]">
 
     </div>
