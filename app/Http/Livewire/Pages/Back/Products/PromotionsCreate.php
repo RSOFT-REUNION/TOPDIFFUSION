@@ -7,6 +7,8 @@ use Illuminate\Support\Str;
 use App\Models\MyProduct;
 use App\Models\MyProductPromotion;
 use App\Models\MyProductPromotionItems;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class PromotionsCreate extends Component
 {
@@ -16,6 +18,7 @@ class PromotionsCreate extends Component
     public $alex = [];
     protected $listeners = ['productsSelected' => 'addSelectedProducts'];
     public $products;
+    public $active;
 
     public function addSelectedProducts($selectedProductIds) {
         $ids = array_map('intval', $selectedProductIds);
@@ -27,6 +30,20 @@ class PromotionsCreate extends Component
         $this->products = array_filter($this->products, function ($product) use ($productId) {
             return $product['id'] !== $productId;
         });
+    }
+
+    public function activePromo()
+    {
+        if($this->active === 1) {
+            $this->active = "0";
+        } elseif($this->active === 0) {
+            $this->active = "1";
+        }
+    }
+
+    public function test()
+    {
+        dd($this->active);
     }
 
     public function formatDate($date)
@@ -41,16 +58,76 @@ class PromotionsCreate extends Component
         }
     }
 
+    protected function messages()
+    {
+        return [
+            'name_promo.required' => 'Le nom de la promotion est obligatoire.',
+            'name_promo.string' => 'Le nom de la promotion doit être une chaîne de caractères.',
+            'name_promo.max' => 'Le nom de la promotion ne doit pas dépasser 95 caractères.',
+            'name_promo.min' => 'Le nom de la promotion doit avoir au moins 6 caractères.',
+
+            'mode.required' => 'Le choix du mode est obligatoire.',
+            'mode.in' => 'Le mode sélectionné n’est pas valide.',
+
+            'dateDebut.required_if' => 'La date de début est requise quand le mode est défini à 1.',
+            'dateDebut.date' => 'La date de début doit être une date valide.',
+
+            'dateFin.required_if' => 'La date de fin est requise quand le mode est défini à 1.',
+            'dateFin.date' => 'La date de fin doit être une date valide.',
+            'dateFin.after_or_equal' => 'La date de fin doit être postérieure ou égale à la date de début.',
+
+            // 'codePromo.required_if' => 'Le code promo est requis quand le mode est défini à 2.',
+            'codePromo.string' => 'Le code promo doit être une chaîne de caractères.',
+            'codePromo.max' => 'Le code promo ne doit pas dépasser 95 caractères.',
+
+            // 'codePromoGen.required_if' => 'Le code promo est requis quand le mode est défini à 2.',
+
+            'percentage.required' => 'Le pourcentage est obligatoire.',
+            'percentage.numeric' => 'Le pourcentage doit être un nombre.',
+            'percentage.min' => 'Le pourcentage doit être au moins 0.',
+            'percentage.max' => 'Le pourcentage ne doit pas dépasser 95.',
+        ];
+    }
+
     public function create()
     {
+        if ($this->mode == 1) {
+            $validationRules = [
+                'name_promo' => 'required|string|max:95|min:6',
+                'mode' => 'required|in:0,1,2',
+                'dateDebut' => 'required|date',
+                'dateFin' => 'required|date|after_or_equal:dateDebut',
+                'percentage' => 'required|numeric|min:0|max:95',
+            ];
+        } else if ($this->mode == 2) {
+            $validationRules = [
+                'name_promo' => 'required|string|max:95|min:6',
+                'mode' => 'required|in:0,1,2',
+                // 'codePromo' => 'required|string|max:95',
+                'percentage' => 'required|numeric|min:0|max:95',
+            ];
+        } else {
+            $validationRules = [];
+        }
+
+        $this->validate($validationRules);
+
         $productPromotion = new MyProductPromotion();
 
         foreach ($this->products as $value) {
             $createPromotion = MyProduct::find($value['id']);
             if ($createPromotion) {
-                $productPromotion->title = $this->name_promo;
-                $productPromotion->discount = $this->percentage;
-                $productPromotion->code = $this->codePromoGen;
+                if ($this->mode == 1) {
+                    $productPromotion->active = $this->active;
+                    $productPromotion->title = $this->name_promo;
+                    $productPromotion->discount = $this->percentage;
+                    $productPromotion->start_date = $this->dateDebut;
+                    $productPromotion->end_date = $this->dateFin;
+                } else if ($this->mode == 2) {
+                    $productPromotion->title = $this->name_promo;
+                    $productPromotion->discount = $this->percentage;
+                    $productPromotion->code = $this->codePromoGen ? $this->codePromoGen : $this->codePromo;
+                }
 
 
                 if ($productPromotion->save()) {

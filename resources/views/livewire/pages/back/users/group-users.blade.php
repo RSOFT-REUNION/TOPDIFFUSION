@@ -141,7 +141,7 @@
                     </div>
                 </div>
             </div>
-            @if ($index == 2 || $index == 4 || $index == 6 || $index == 8 || $index == 10) <!-- Après le troisième élément -->
+            @if (($index + 1) % 3 == 0) <!-- Après le troisième élément -->
                 <div class="w-full border-t border-dashed my-5"></div>
             @endif
         @endforeach

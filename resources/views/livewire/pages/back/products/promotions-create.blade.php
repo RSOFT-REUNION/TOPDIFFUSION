@@ -17,8 +17,9 @@
         <div id="entry-content">
             <div class="grid grid-cols-4 mt-10 gap-x-7">
                 <div class="col-span-3">
-                    <div class="flex flex-col w-full mb-4 text-xl font-bold">
-                        <input type="text" wire:model="name_promo" min="0" max="95" id="title" class="py-4 px-4 rounded bg-[#f0f0f0] outline-secondary" placeholder="Entrez le nom de votre promotion">
+                    <div class="flex flex-col w-full mb-4">
+                        <input type="text" wire:model="name_promo" min="0" max="95" id="title" class="py-4 px-4 rounded bg-[#f0f0f0] outline-secondary text-xl font-bold" placeholder="Entrez le nom de votre promotion">
+                        @error('name_promo') <span class="text-red-500">{{ $message }}</span> @enderror
                     </div>
                     <div class="flex flex-col w-full mb-4 relative">
                         <label for="title" class="my-1 mx-2">Type de remise<span class="text-red-500">*</span></label>
@@ -30,16 +31,19 @@
                         <div class=" absolute right-5 top-10 text-xl">
                             <i class="fa-solid fa-angle-down"></i>
                         </div>
+                        @error('mode') <span class="text-red-500">{{ $message }}</span> @enderror
                     </div>
                     @if ($mode == 1)
                         <div class="flex flex-rowl w-full gap-x-2 mb-4 relative">
                             <div class="flex flex-col w-full ">
                                 <label for="dateDebut" class="my-1 mx-2">Date de début<span class="text-red-500">*</span></label>
                                 <input type="date" wire:model="dateDebut" min="0" max="95" id="dateDebut" class="py-2.5 px-4 rounded w-full bg-[#f0f0f0] outline-secondary">
+                                @error('dateDebut') <span class="text-red-500">{{ $message }}</span> @enderror
                             </div>
                             <div class="flex flex-col w-full">
                                 <label for="dateFin" class="my-1 mx-2">Date de fin<span class="text-red-500">*</span></label>
                                 <input type="date" wire:model="dateFin" min="0" max="95" id="dateFin" class="py-2.5 px-4 rounded w-full bg-[#f0f0f0] outline-secondary">
+                                @error('dateFin') <span class="text-red-500">{{ $message }}</span> @enderror
                             </div>
                         </div>
                     @elseif($mode == 2)
@@ -53,11 +57,14 @@
                                 @endif
                                 <a wire:click="generatePromoCode" class="bg-secondary rounded h-1/2 mr-1 py-1.5 px-7 cursor-pointer">Générer</a>
                             </div>
+                            @error('codePromoGen') <span class="text-red-500">{{ $message }}</span> @enderror
+                            @error('codePromo') <span class="text-red-500">{{ $message }}</span> @enderror
                         </div>
                     @endif
                     <div class="flex flex-col w-full">
                         <label for="title" class="my-1 mx-2">Pourcentage de remise<span class="text-red-500">*</span></label>
                         <input type="number" wire:model="percentage" min="0" max="95" id="title" class="py-2.5 px-4 rounded bg-[#f0f0f0] outline-secondary" placeholder="Entrez un pourcentage de remise">
+                        @error('percentage') <span class="text-red-500">{{ $message }}</span> @enderror
                     </div>
                 </div>
                 <div class="bg-[#f0f0f0] rounded-lg relative">
@@ -105,12 +112,15 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="pr-3">
-                                <label class="relative inline-flex items-center mr-5 cursor-pointer text-gray-200">
-                                    <input type="checkbox" value="" class="sr-only peer" checked>
-                                    <div class="w-11 h-6 bg-gray-700 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
-                                    </label>
+                            <div class="pr-3 mt-1">
+                                <label class="relative inline-flex items-center mr-5 cursor-pointer" wire:click="activePromo">
+                                    <input type="checkbox" value="" class="sr-only" @if($active) checked @endif wire:model="active"> <!-- Ajout du wire:model pour la synchronisation -->
+                                    <div class="{{ $active ? 'bg-green-600' : 'bg-red-600' }} w-11 h-6 rounded-full transition-all">
+                                        <div class="{{ $active ? 'translate-x-full bg-white' : 'translate-x-0 bg-gray-400' }} absolute top-0.5 left-[2px] w-5 h-5 rounded-full transition-transform"></div>
+                                    </div>
+                                </label>
                             </div>
+                            <button wire:click="test">test</button>
                         </div>
                     </div>
                 </div>
@@ -129,18 +139,6 @@
                 </div>
             </div>
             <div class="grid grid-cols-4 auto-rows-auto gap-2 w-full h-full flex-wrap mt-7">
-                {{-- @if ($products)
-                    @foreach ($products as $index =>$articles)
-                        <div class="h-[22vh] relative group shadow rounded-lg">
-                            <img class="rounded-lg h-[22vh] hover:bg-black hover:drop-shadow-xl" src="{{ asset('storage/images/products/'. $articles[$index]->cover) }}" alt="Description de l'image 1"/>
-                            <div class="flex flex-row justify-center items-end w-full h-full bg-black absolute top-0 rounded-lg opacity-0 group-hover:opacity-100 visibility-hidden group-hover:visibility-visible transition-opacity duration-300 shadow" style="background: rgb(2,0,36);
-                            background: linear-gradient(0deg, rgba(2,0,36,1) 0%, rgba(255,255,255,0) 100%);"><i class="fa-solid fa-trash text-white mb-5 cursor-pointer"></i></div>
-                            <h2 class="px-4 text-xl">{{ $articles->title }}</h2>
-                        </div>
-                    @endforeach
-                @else
-                        pas d'article dans la promotion
-                @endif --}}
                 @if ($products)
                     @foreach ($products as $index => $articles)
                         <div class="h-[22vh] relative group shadow rounded-lg">

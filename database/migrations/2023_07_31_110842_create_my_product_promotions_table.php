@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('my_product_promotions', function (Blueprint $table) {
             $table->id();
-            $table->boolean('active')->default(1);
+            $table->boolean('active');
             $table->integer('type')->default(1);
             $table->string('title');
             $table->double('discount');

@@ -105,18 +105,18 @@
                                     <a href="{{ route('front.product.list', ['slug' => $mem->slug]) }}">{{ $mem->title }}</a>
                                 </h2>
 
-
                                 <!-- Sous-menu -->
-                                <div x-show="subMenuOpenIndex === {{ $index }}"
+                                <div
                                 x-cloak
+                                x-show="subMenuOpenIndex === {{ $index }}"
                                 x-transition:enter="transition-all ease-in-out duration-700"
                                 x-transition:enter-start="opacity-0 max-h-0 overflow-y-hidden"
                                 x-transition:enter-end="opacity-100 max-h-[1000px] overflow-y-auto"
                                 x-transition:leave="transition-all ease-in-out duration-300"
                                 x-transition:leave-start="opacity-100 max-h-[1000px] overflow-y-auto"
                                 x-transition:leave-end="opacity-0 max-h-0 overflow-y-hidden"
-                                {{-- @mouseleave="{{'subMenuOpen'.$index}} = false" --}}
-                                class="absolute top-0 left-[300px] max-h-60 flex flex-wrap flex-col mt-0 w-64 bg-white text-black z-10 rounded-lg p-4 overflow-">
+                                @mouseleave="{{'subMenuOpen'.$index}} = false"
+                                class="absolute top-[15px] left-[300px] h-56 flex flex-wrap flex-col bg-white text-black z-10 rounded-lg">
                                 @if ($index) <!-- Après le troisième élément -->
                                     <div class="h-full border-l border-dashed absolute"></div>
                                 @endif
@@ -126,25 +126,9 @@
                                             <ul class="ml-20">
                                                 <li><a class="px-4 py-2 flex flex-col hover:bg-gray-200" href="{{ route('front.product.list', ['slug' => $mem3->slug]) }}">{{ $mem3->title }}</a></li>
                                             </ul>
-                                            <ul class="px-4 py-2 flex flex-col hover:bg-gray-200 ml-20">
-                                                <li><a href="{{ route('front.product.list', ['slug' => $mem3->slug]) }}">{{ $mem3->title }}</a></li>
-                                            </ul>
-                                            <ul class="px-4 py-2 flex flex-col hover:bg-gray-200 ml-20">
-                                                <li><a href="{{ route('front.product.list', ['slug' => $mem3->slug]) }}">{{ $mem3->title }}</a></li>
-                                            </ul>
-                                            <ul class="px-4 py-2 flex flex-col hover:bg-gray-200 ml-20">
-                                                <li><a href="{{ route('front.product.list', ['slug' => $mem3->slug]) }}">{{ $mem3->title }}</a></li>
-                                            </ul>
-                                            <ul class="px-4 py-2 flex flex-col hover:bg-gray-200 ml-20">
-                                                <li><a href="{{ route('front.product.list', ['slug' => $mem3->slug]) }}">{{ $mem3->title }}</a></li>
-                                            </ul>
-                                            <ul class="px-4 py-2 flex flex-col hover:bg-gray-200 ml-20">
-                                                <li><a href="{{ route('front.product.list', ['slug' => $mem3->slug]) }}">{{ $mem3->title }}</a></li>
-                                            </ul>
                                         @endif
                                     @endforeach
                                 </div>
-
                             </div>
                         @endif
                     @endforeach
@@ -152,6 +136,7 @@
             </div>
         @endforeach
     </div>
+
 
 </div>
 
