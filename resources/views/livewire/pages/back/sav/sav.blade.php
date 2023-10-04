@@ -98,7 +98,7 @@
                 @endif
             </div>
         </div>
-        @livewire('components.notifications.notifications')
+        {{-- @livewire('components.notifications.notifications') --}}
         <div class=" flex-1 h-full">
             <div class="flex flex-col h-full">
                 <div class="h-full overflow-y-auto">

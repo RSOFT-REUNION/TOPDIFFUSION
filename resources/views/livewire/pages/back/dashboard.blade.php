@@ -366,9 +366,9 @@
                 <div class="flex flex-row items-end">
                     <h3 class="font-bold mr-2 text-2xl">
                         @if(isset($productMoreSold['product_name']))
-                            {{ $productMoreSold['product_name'] }}
+                            {{ strlen($productMoreSold['product_name']) > 7 ? substr($productMoreSold['product_name'], 0, 7) . '...' : $productMoreSold['product_name'] }}
                         @else
-                            Pas de produit encore acheté
+                            Pas de produit
                         @endif
                     </h3>
 
@@ -379,10 +379,26 @@
 {{--                </div>--}}
             </div>
         </div>
-        <div class="mt-7">
-            <h2 class="text-2xl font-bold">Historique d’activité du site</h2>
+        <div class="mt-7 flex flex-col gap-y-3">
+            <div class="flex flex-row items-center justify-between mb-7">
+                <div class="flex flex-row items-center ">
+                    <h2 class="text-2xl font-bold">Historique d’activité du site</h2>
+                </div>
+                <div class="flex flex-row items-center gap-x-3 mr-2">
+                    <div class="bg-green-400 h-4 w-4 rounded-full"></div>
+                    <span>Commande Passée</span>
+                    <div class="bg-blue-400 h-4 w-4 rounded-full"></div>
+                    <span>Article ajouté au panier</span>
+                    <div class="bg-red-500 h-4 w-4 rounded-full"></div>
+                    <span>Article supprimé du panier</span>
+                    <div class="bg-purple-400 h-4 w-4 rounded-full"></div>
+                    <span>Inscription</span>
+                    <div class="bg-gray-200 h-4 w-4 rounded-full"></div>
+                    <span>Autre</span>
+                </div>
+            </div>
             @foreach($activityLog as $log)
-                <div class="{{ $log->getActivityColor() }} flex flex-row justify-center items-center rounded-lg mt-7">
+                <div class="{{ $log->getActivityColor() }} flex flex-row justify-center items-center rounded-lg">
                     <h3 class="py-5">
                         @if ($log->user)
                             {{ $log->user->firstname }} {{ $log->user->lastname }}

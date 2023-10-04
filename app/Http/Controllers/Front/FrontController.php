@@ -154,7 +154,8 @@ class FrontController extends Controller
         $data['nav-sidebar'] = auth()->user();
         $data['account_page'] = 'sav';
         $data['page'] = 'sav';
-        $data['order'] = UserOrder::where('document_number', $command_number)->first();
+        // $data['order'] = UserOrder::where('document_number', $command_number)->first();
+        // print_r($data['order']);
         $data['savGroup'] = MessagesGroups::where('user_id', Auth::id())->get();
         $data['setting'] = SettingGeneral::where('id', 1)->first();
         return view('pages.frontend.profile.my-sav', $data);
