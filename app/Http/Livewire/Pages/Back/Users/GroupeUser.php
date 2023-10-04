@@ -189,7 +189,7 @@ class GroupeUser extends Component
             // L'utilisateur a été détaché du groupe avec succès
             $this->selectedUsers = [];
 
-            session()->flash('success', $user->name . ' a été détaché du groupe avec succès.');
+            session()->flash('success', $user->firstname . ' a été détaché du groupe avec succès.');
         } else {
             // La suppression n'a pas réussi, car aucune entrée correspondante n'a été trouvée
             session()->flash('error', 'L\'utilisateur n\'a pas pu être détaché du groupe.');

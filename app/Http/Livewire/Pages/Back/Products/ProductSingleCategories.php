@@ -62,7 +62,8 @@ class ProductSingleCategories extends Component
                     ]
                 ]);
 
-                return back()->with('success', 'Le pourcentage de remise a été mis à jour avec succès.');
+                session()->flash('success', 'Le pourcentage de remise a été mis à jour avec succès.');
+//                return back()->with('success', 'Le pourcentage de remise a été mis à jour avec succès.')
             } else {
                 session()->flash('error', 'La catégorie n\'existe pas.');
             }
@@ -70,8 +71,8 @@ class ProductSingleCategories extends Component
             session()->flash('error', 'Le groupe de clients n\'existe pas.');
         }
 
-        // Rechargez les données après la mise à jour
-       $this->mount($this->categoryId);
+//        // Rechargez les données après la mise à jour
+//       $this->mount($this->categoryId);
     }
 
     public function render()
