@@ -21,7 +21,7 @@
         @if($products->count() > 0)
             <div class="grid grid-cols-3 gap-10 mt-10">
                 @foreach($products as $product)
-                    @livewire('components.front.products.pro0duct-thumbnails', ['product_id' => $product->id])
+                    @livewire('components.front.products.product-thumbnails', ['product_id' => $product->id])
                 @endforeach
             </div>
             <div class="mt-5">
@@ -30,7 +30,7 @@
         @else
             <div class="flex items-center">
                 <div class="flex-1">+
-                    
+
                     <div class="force-center">
                         <object data="{{ asset('img/icons/Empty-amico.svg') }}" width="400px"></object>
                     </div>
@@ -53,6 +53,9 @@
 
              <div class="bg-gray-100 rounded-md w-96 p-7 absolute top-0">
                 <h2 class="font-bold text-2xl mb-7">Filtres</h2>
+                 @if($selectedBrands)
+                     <button wire:click="clear"><i class="fa-solid fa-x"></i></button>
+                 @endif
 {{--                <div>--}}
 {{--                    <div class="flex flex-row items-center justify-between">--}}
 {{--                        <h3 class="font-medium">Categories</h3>--}}
@@ -103,15 +106,19 @@
                     </div>
                     <div class="border-l ml-1 pl-5 mt-5 py-2">
                         <div class="flex flex-col gap-y-3">
-                            <div class="flex flex-row gap-x-4">
-                                <input type="checkbox" name="stock_status" id="En_stock">
-                                <label for="En_stock">En stock</label>
-                                {{ $stocks->count() }}
+                            <div class="flex flex-row justify-between">
+                                <div class="flex flex-row gap-x-4">
+                                    <input type="checkbox" name="stock_status" id="En_stock">
+                                    <label for="En_stock">En stock</label>
+                                </div>
+                                <span class="">{{ $stocks->count() }}</span>
                             </div>
-                            <div class="flex flex-row gap-x-4">
-                                <input type="checkbox" name="stock_status" id="En_stock">
-                                <label for="En_stock">Stock faible</label>
-                                <span>{{ $low_stock->count() }}</span>
+                            <div class="flex justify-between flex-row">
+                                <div class="flex flex-row gap-x-4">
+                                    <input type="checkbox" name="stock_status" id="En_stock">
+                                    <label for="En_stock">Stock faible</label>
+                                </div>
+                                <span class="">{{ $low_stock->count() }}</span>
                             </div>
                         </div>
                     </div>
@@ -126,21 +133,22 @@
                             <div class="flex flex-col justify-center gap-y-3">
                                 <div class="flex flex-row gap-x-3">
                                     <input type="radio" class="bg-secondary text-secondary" name="de_croissant" id="croissant">
-                                    <label for="croissant">Croissant</label>
+                                    <label wire:model="croissant" for="croissant">Croissant</label>
                                 </div>
                                 <div class="flex flex-row gap-x-3">
                                     <input type="radio" name="de_croissant" id="decroissant">
-                                    <label for="decroissant">Décroissant</label>
+                                    <label wire:model="decroissant" for="decroissant">Décroissant</label>
                                 </div>
                             </div>
                             <div class="flex flex-col ">
                                 <h4>Entre :</h4>
                                 <div class="flex flex-row items-center mt-5">
                                     <label for="startPrice"></label>
-                                    <input class="w-full py-2 pl-5 rounded-lg" type="number" name="startPrice" id="startPrice" placeholder="Prix"><span class="ml-3">€</span>
+                                    <input wire:model="startPrice" class="w-full py-2 pl-5 rounded-lg" type="number" name="startPrice" id="startPrice" placeholder="Prix"><span class="ml-3">€</span>
                                     <span class="mx-4">ET</span>
                                     <label for="endPrice"></label>
-                                    <input class="w-full py-2 pl-5 rounded-lg" type="number" name="endPrice" id="endPrice" placeholder="Prix"><span class="ml-3">€</span>
+                                    <input wire:model="endPrice" class="w-full py-2 pl-5 rounded-lg" type="number" name="endPrice" id="endPrice" placeholder="Prix"><span class="ml-3">€</span>
+                                    @if($startPrice && $endPrice) {{ dd('ok') }} @endif
                                 </div>
                             </div>
                         </div>

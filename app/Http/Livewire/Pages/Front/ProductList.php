@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Pages\Front;
 
-use App\Models\bike;
 use App\Models\MyProduct;
 use App\Models\MyProductStock;
 use App\Models\ProductBrand;
@@ -10,7 +9,6 @@ use App\Models\ProductCategory;
 use Livewire\Component;
 use App\Models\MyProductCategories;
 use App\Models\Product;
-use function Symfony\Component\Translation\t;
 
 class ProductList extends Component
 {
@@ -21,8 +19,9 @@ class ProductList extends Component
 
     public $selectedBrands = [];
 
-    public $identifiant;
+    public $startPrice, $endPrice;
 
+    public $croissant, $decroissant;
 
     public function mount($slug)
     {
@@ -48,27 +47,45 @@ class ProductList extends Component
     {
         $this->selectedBrands = [];
     }
+
     public function render()
     {
         $data = [];
         $data['category'] = ProductCategory::where('slug', $this->slug)->first();
-        $data['products'] = MyProduct::where('category_id', $this->categories->id)->paginate(8);
+//        $data['products'] = MyProduct::where('category_id', $this->categories->id)->paginate(8);
+        $baseQuery = MyProduct::where('category_id', $this->categories->id);
         $data['stocks'] = MyProductStock::where('quantity', '>', 3)->get();
         $data['low_stock'] = MyProductStock::whereIn('quantity', [1, 2, 3])->get();
 
-        // Gestion des filtres
+        // Filtrer par marque
         if ($this->selectedBrands) {
-            if (count($this->selectedBrands) > 2) {
-                dd($this->selectedBrands);
-                $data['products'] = MyProduct::whereIn('brand_id', $this->selectedBrands)->paginate(8);
-            } else {
-                $data['products'] = MyProduct::where('brand_id', $this->selectedBrands)->paginate(8);
-            }
-        } else {
-            $this->clear();
-            $data['products'] = MyProduct::where('category_id', $this->categories->id)->paginate(8);
+            $baseQuery->whereIn('brand_id', $this->selectedBrands);
         }
+
+        // Filtrer par prix
+        if ($this->startPrice && $this->endPrice) {
+            $baseQuery = $baseQuery->join('my_product_swatches', 'my_products.id', '=', 'my_product_swatches.product_id')
+                ->whereBetween('my_product_swatches.professionnal_price', [$this->startPrice, $this->endPrice]);
+        }
+
+        // Trier les produits
+        if ($this->croissant) {
+            $orderByField = auth()->user()->professionnal ? 'professionnal_price' : 'customer_price';
+            $baseQuery->orderBy($orderByField, 'asc');
+        } elseif ($this->decroissant) {
+            $orderByField = auth()->user()->professionnal ? 'professionnal_price' : 'customer_price';
+            $baseQuery->orderBy($orderByField, 'desc');
+        }
+
+        // Paginer les résultats
+        $products = $baseQuery->paginate(8);
+
+//        dd($products);
+
+
+        $data['products'] = $products;
         return view('livewire.pages.front.product-list', $data);
     }
+
 }
 
