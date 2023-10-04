@@ -73,8 +73,11 @@ class RegisterInputs extends Component
             $user->professionnal = 0;
             $user->verified_at = Carbon::now();
         }
-        if($user->save()) {
 
+        // Récupérer le groupe de clients par défaut
+        $defaultGroup = CustomerGroup::where('is_default', 1)->first();
+        $user->customer_group_id = $defaultGroup->id;
+        if($user->save()) {
             // Create users data
             $data = new UserData;
             $data->user_id = $user->id;
@@ -90,7 +93,7 @@ class RegisterInputs extends Component
                 $settings->user_id = $user->id;
                 if($settings->save()) {
                     // Enregistrez l'activité de création d'un nouveau compte
-                    ActivityLog::logActivity($user->id, 'Inscription', $user->firstname . " " . $user->lastname . ' vient de s\'inscrire');
+                    ActivityLog::logActivity($user->id, 'Inscription', ' vient de s\'inscrire');
                     // Send email to support & customer
                     return redirect()->route('front.login');
                 }

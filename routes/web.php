@@ -106,6 +106,7 @@ Route::group([
             Route::get('/liste', [BoUserController::class, 'showUserList'])->name('back.user.list');
             Route::get('/groupes-clients', [BoUserController::class, 'showUserGroup'])->name('back.user.userGroup');
             Route::get('/{user}', [BoUserController::class, 'showUserSingle'])->name('back.user.single');
+            Route::post('/{user}', [BoUserController::class, 'moveUserToAnotherGroup'])->name('updateGroupUser');
             Route::get('/{user}/verified', [BoUserController::class, 'validateProfessional'])->name('back.user.verified');
         });
 

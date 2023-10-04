@@ -49,8 +49,9 @@
                     </table>
                 </div>
             </div>
-            @if ($products->hasPages())
-            <div class="flex mt-10">
+            @if ($products instanceof \Illuminate\Pagination\LengthAwarePaginator && $products->hasPages())
+
+                <div class="flex mt-10">
 
                 <nav class="flex flex-row items-center justify-center w-full">
                     @if ($products->onFirstPage())
@@ -87,7 +88,7 @@
                 </nav>
                 @if ($selectedProducts)
                     <div class="w-10 bg-secondary flex justify-center items-center rounded-md">{{ count($selectedProducts) }}</div>
-                @endif
+            @endif
             </div>
                 @endif
             <div class="mt-10">

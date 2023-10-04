@@ -121,7 +121,7 @@
                                     </table>
                                 </div>
                             @else
-                                <p class="empty-text mt-2">Le client n'as pas encore renseigné d'adresse</p>
+                                <p class="empty-text mt-2">Le client n'a pas encore renseigné d'adresse</p>
                             @endif
                         </div>
                     </div>
@@ -133,9 +133,33 @@
                             <div class="flex-none">
                                 <a onclick="Livewire.emit('openModal', 'popups.back.clients.edit-client-profil', {{ json_encode(['user_id' => $user->id]) }})" class="btn-secondary cursor-pointer"><i class="fa-solid fa-pen-to-square mr-3"></i>Modifier les informations</a>
                             </div>
-                            {{-- <a href="" class="mt-1"><i class="fa-solid fa-pen-to-square mr-3"></i>Modifier le profil</a> --}}
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="flex-1 mt-3 mr-2">
+                <div>
+                    <div>
+                        <h2 class="subtitle">Groupe du client : {{ $user->customerGroupId->name }}</h2>
+                    </div>
+                    <div>
+                        @foreach ($availableGroups as $group)
+                            <form method="POST" action="{{ route('updateGroupUser', ['user' => $user->id, 'newGroupId' => $group->id]) }}">
+                                @csrf
+                                <div>
+                                    <label for="newGroup">Sélectionnez le nouveau groupe :</label>
+                                    <select name="newGroup" id="newGroup" class="form-select">
+                                        <option value="{{ $group->id }}">{{ $group->name }}</option>
+                                    </select>
+                                    <input type="hidden" name="user_id" value="{{ $user->id }}">
+                                </div>
+                                <div>
+                                    <button type="submit" class="btn-secondary">Déplacer dans ce groupe</button>
+                                </div>
+                            </form>
+                        @endforeach
+                    </div>
+
                 </div>
             </div>
         </div>

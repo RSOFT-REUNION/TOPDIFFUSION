@@ -31,7 +31,6 @@
                                     </div>
                                     <div class="mt-2 flex flex-row items-center gap-x-3">
                                         <i class="fa-solid fa-circle-info text-gray-400"></i><h1 class="font-light text-sm text-gray-400">
-                                            @if ($promo->code)
                                                 {{ $promo->code }}
                                             @elseif($promo->start_date && $promo->end_date)
                                                 {{ $this->formatDate($promo->start_date )}} au {{ $this->formatDate($promo->end_date )}}

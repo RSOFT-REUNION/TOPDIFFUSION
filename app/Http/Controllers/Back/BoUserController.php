@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Models\CustomerGroup;
 use App\Models\User;
 use App\Models\UserAddress;
 use App\Models\UserBike;
@@ -28,12 +29,51 @@ class BoUserController extends Controller
         $data = [];
         $data['group'] = 'users';
         $data['page'] = 'list';
-        $data['user'] = $selectedUser;
+//        $data['user'] = $selectedUser;
+        $data['groupUser'] = CustomerGroup::all();
+        $data['user'] = User::with('customerGroupId')->find($selectedUser->id);
+        $data['availableGroups'] = CustomerGroup::where('id', '!=', $data['user']->customerGroupId->id)->get();
         $data['userData'] = UserData::where('user_id', $selectedUser->id)->first();
         $data['userAddress'] = UserAddress::where('user_id', $selectedUser->id)->get();
         $data['userBikes'] = UserBike::where('user_id', $selectedUser->id)->get();
         return view('pages.backend.users.users-single', $data);
     }
+
+    public function moveUserToAnotherGroup($user)
+    {
+
+        $newGroupId = 1;
+        // Vérifiez si l'utilisateur existe et si le nouveau groupe existe
+        $foundUser = User::find($user);
+        $newGroup = CustomerGroup::find($newGroupId);
+
+        if (!$foundUser || !$newGroup) {
+            // Gérer les erreurs si l'utilisateur ou le groupe n'existe pas
+            return false;
+        }
+
+        // Obtenez l'ancien groupe de l'utilisateur
+        $oldGroupId = $foundUser->customer_group_id;
+
+        // Détachez l'utilisateur de l'ancien groupe s'il était déjà associé
+        if ($oldGroupId) {
+            $oldGroup = CustomerGroup::find($oldGroupId);
+            if ($oldGroup) {
+                $oldGroup->users()->detach($foundUser->id);
+            }
+        }
+
+        // Associez l'utilisateur au nouveau groupe
+        $newGroup->users()->attach($foundUser->id);
+
+        // Mettez à jour l'ID du groupe pour l'utilisateur
+        $foundUser->customer_group_id = $newGroupId;
+        $foundUser->save();
+
+        return true; // Retournez true pour indiquer que l'opération s'est bien déroulée.
+    }
+
+
 
     public function showUserGroup()
     {

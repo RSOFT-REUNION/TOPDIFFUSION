@@ -20,21 +20,33 @@
                         @csrf
                         <div>
                             <label>
-                                <input type="text"  wire:model="discountPercentages.{{ $group->id }}" placeholder="Entrez le pourcentage de remise..." class="focus:outline-none p-3 rounded-lg w-80 bg-gray-200 border border-gray-300 text-sm">
+                                <input id="percentage" type="text" wire:model="discountPercentages.{{ $group->id }}" placeholder="Entrez le pourcentage de remise..." class="focus:outline-none p-3 rounded-lg w-80 bg-gray-200 border border-gray-300 text-sm">
                             </label>
                         </div>
-{{--                        {{ dd($group->pivot->discount_percentage) }}--}}
-                    @if ($discountPercentages[$group->id])
-                        <button type="submit" class="ml-2 bg-[#FBBC34] px-4 py-2.5 rounded-lg"><i class="fa-solid fa-floppy-disk"></i></button>
+                        {{-- Utilisez une variable de drapeau pour déterminer si le bouton "save" doit être affiché --}}
+                        @php
+                            $showSaveButton = false;
+                        @endphp
+                        @foreach ($group->productCategories as $category)
+                            @if ($category->pivot->discount_percentage != $discountPercentages[$group->id])
+                                {{-- Si au moins une catégorie nécessite un enregistrement, activez le drapeau --}}
+                                @php
+                                    $showSaveButton = true;
+                                @endphp
+                            @endif
+                        @endforeach
+                        {{-- Affichez le bouton "save" uniquement si le drapeau est activé --}}
+                        @if ($showSaveButton)
+                            <button id="save" type="submit" class="ml-2 bg-[#FBBC34] px-4 py-2.5 rounded-lg"><i class="fa-solid fa-floppy-disk"></i></button>
                         @endif
                     </form>
                 </div>
             @endforeach
         @else
-            <div class="flex flex-row justify-between items-center border-b border-b-gray-200 pb-4 mt-4">
-                <p>Pas de groupes créés pour le moment</p>
-                <a href="{{ route('back.user.userGroup') }}" class="bg-secondary px-1.5">Créer un groupe</a>
-            </div>
+                <div class="flex flex-row justify-between items-center border-b border-b-gray-200 pb-4 mt-4">
+                    <p>Pas de groupes créés pour le moment</p>
+                    <a href="{{ route('back.user.userGroup') }}" class="btn-secondary px-1.5">Créer un groupe</a>
+                </div>
         @endif
 
     </div>

@@ -67,4 +67,22 @@ class MyProduct extends Model
             break;
         }
     }
+
+    public function promotions()
+    {
+        return $this->belongsToMany(MyProductPromotion::class, 'my_product_promotion_items', 'product_id', 'group_id');
+    }
+    public function getDiscount()
+    {
+        // On récupère la remise du produit en fonction de la promotion actuelle
+        $currentPromotion = $this->promotions->first();
+
+        if ($currentPromotion) {
+            return $currentPromotion->discount;
+        }
+
+        return 0; // Si aucune promotion n'est associée au produit, retournez 0 ou la valeur par défaut souhaitée.
+    }
+
+
 }
