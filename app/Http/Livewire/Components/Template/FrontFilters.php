@@ -50,7 +50,7 @@ class FrontFilters extends Component
             $this->motor_modele = $compatibleModeles;
         }
 
-        // Chargez les années compatibles pour la marque, la cylindrée et le modèle sélectionnés
+        // Chargez les années compatibles pour la marque, la cylindrée et le modèle sélectionné
         if ($this->selectedBrand && $this->selectedCylindree && $this->selectedModele) {
             $compatibleYears = Bike::where('marque', $this->selectedBrand)
                 ->where('cylindree', $this->selectedCylindree)
@@ -88,7 +88,7 @@ class FrontFilters extends Component
             $query->join('bikes as selected_bike_modele', 'cb2.bike_id', '=', 'selected_bike_modele.id')
                 ->where('selected_bike_modele.modele', $this->selectedModele);
         }
-        
+
         if ($this->selectedYear) {
             // Filtrer les motos par année
             $query->join('bikes as selected_bike_year', 'cb2.bike_id', '=', 'selected_bike_year.id')
