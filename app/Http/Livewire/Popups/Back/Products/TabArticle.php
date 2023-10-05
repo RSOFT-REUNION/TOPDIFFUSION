@@ -38,7 +38,7 @@ class TabArticle extends ModalComponent
     {
         $query = '%' . $this->search . '%';
 
-        if (auth()->user()->admin == 1) {
+        if (auth()->user()->team == 1) {
             if (strlen($this->search) > 2) {
                 $this->jobs = MyProduct::where('title', 'like', $query)
                     ->get();
@@ -76,23 +76,28 @@ class TabArticle extends ModalComponent
     public function render()
     {
         $data = [];
-        $data['products'] = MyProduct::orderBy('created_at', 'desc')->get();
 
+        // Construisez la requête en fonction des critères de tri nécessaires
         if ($this->jobs) {
-            $products = $this->jobs;
+            $data['products'] = $this->jobs;
         } else {
             if (auth()->user()->team == 1) {
-                $products = MyProduct::query()->orderBy('title')->orderBy('slug')->orderBy('cover');
+                $productsQuery = MyProduct::query()
+                    ->orderBy('title')
+                    ->orderBy('slug')
+                    ->orderBy('cover');
             } else {
-                $products = MyProduct::query()->orderBy('title');
+                $productsQuery = MyProduct::query()
+                    ->orderBy('title');
             }
+
+            $data['products'] = $productsQuery->paginate(8, ['*'], 'page', $this->currentPage);
         }
 
-        if ($this->jobs) {
-            $data['products'] = $products;
-        } else {
-            $data['products'] = MyProduct::paginate(8, ['*'], 'page', $this->currentPage);
-        }
         return view('livewire.popups.back.products.tab-article', $data);
     }
+
 }
+
+
+

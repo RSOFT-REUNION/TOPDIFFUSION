@@ -27,8 +27,8 @@ class ProductSingleCategories extends Component
         // Récupérez la catégorie actuelle
         $this->category = ProductCategory::findOrFail($categoryId);
 
-        // Récupérez la liste des groupes depuis la base de données
-        $this->groups = CustomerGroup::all();
+        // Récupérez la liste des groupes depuis la base de données avec sa relation
+        $this->groups = CustomerGroup::with('productCategories')->get();
 
         // Initialisez $discountPercentages avec les pourcentages de remise actuels pour chaque groupe
         foreach ($this->groups as $group) {
@@ -71,8 +71,8 @@ class ProductSingleCategories extends Component
             session()->flash('error', 'Le groupe de clients n\'existe pas.');
         }
 
-//        // Rechargez les données après la mise à jour
-//       $this->mount($this->categoryId);
+       // Rechargez les données après la mise à jour
+       $this->refresh();
     }
 
     public function render()

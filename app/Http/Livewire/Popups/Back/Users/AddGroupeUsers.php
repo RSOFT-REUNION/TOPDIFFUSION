@@ -9,11 +9,13 @@ use App\Models\User;
 
 class AddGroupeUsers extends ModalComponent
 {
-    public $name, $discount_percentage, $is_default;
+    public $name, $discount_percentage, $is_default, $discount_default;
     public $selectedUsers = [];
     public $checkedUsers = [];
 
     public $search = '';
+
+    public $user;
 
     protected $rules = [
         'name' => 'required|unique:product_group_tags,title',
@@ -53,6 +55,7 @@ class AddGroupeUsers extends ModalComponent
         $groupUser->name = $this->name;
         $groupUser->discount_percentage = $this->discount_percentage;
         $groupUser->is_default = $isNewGroupDefault ? 1 : 0; // Définissez le nouveau groupe comme par défaut si la case est cochée
+        $groupUser->discount_default = $this->discount_default ? 1 : 0; // Définissez la remise par défaut si la case est cochée
 
         if ($groupUser->save()) {
             // Une fois que le groupe est créé, attribuez les utilisateurs sélectionnés
@@ -62,20 +65,19 @@ class AddGroupeUsers extends ModalComponent
             $groupId = $groupUser->id;
 
             foreach ($this->selectedUsers as $userId) {
-                $user = User::find($userId);
-                if ($user) {
-                    $user->customer_group_id = $groupId;
-                    $user->save();
+                $this->user = User::find($userId);
+                if ($this->user) {
+                    $this->user->customer_group_id = $groupId;
+                    $this->user->save();
                 }
             }
 
             $categories = ProductCategory::all();
-
             // Parcourez toutes les catégories et créez des relations avec le nouveau groupe
             foreach ($categories as $category) {
                 $category->customerGroups()->attach($groupId, [
                     'category_id' => $category->id,
-                    'customer_group_id' => $groupId,
+                    'customer_group_id' => $this->user->customer_group_id,
                     'discount_percentage' => $this->discount_percentage,
                 ]);
             }
@@ -100,6 +102,12 @@ class AddGroupeUsers extends ModalComponent
         }
     }
 
+    public function updateGroupUserFromSingleClient()
+    {
+        dd('ok');
+    }
+
+
     public function render()
     {
         $data = [];
@@ -116,7 +124,6 @@ class AddGroupeUsers extends ModalComponent
             ->paginate(8);
 
         }
-
         return view('livewire.popups.back.users.add-groupe-users', $data);
     }
 }

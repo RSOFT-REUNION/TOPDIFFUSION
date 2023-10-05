@@ -121,7 +121,7 @@
                                     </table>
                                 </div>
                             @else
-                                <p class="empty-text mt-2">Le client n'as pas encore renseigné d'adresse</p>
+                                <p class="empty-text mt-2">Le client n'a pas encore renseigné d'adresse</p>
                             @endif
                         </div>
                     </div>
@@ -133,7 +133,26 @@
                             <div class="flex-none">
                                 <a onclick="Livewire.emit('openModal', 'popups.back.clients.edit-client-profil', {{ json_encode(['user_id' => $user->id]) }})" class="btn-secondary cursor-pointer"><i class="fa-solid fa-pen-to-square mr-3"></i>Modifier les informations</a>
                             </div>
-                            {{-- <a href="" class="mt-1"><i class="fa-solid fa-pen-to-square mr-3"></i>Modifier le profil</a> --}}
+                            <div class="flex">
+                                <h2 class="subtitle">Groupe du client : {{ $user->customerGroupId->name }}</h2>
+                            </div>
+                            <div class="container-sidebar-options bg-gray-100">
+                                <form method="POST" action="{{ route('updateGroupUser', ['user' => $user->id]) }}">
+                                    @csrf
+                                    <div class="flex">
+                                        <select name="newGroup" id="newGroup" class="form-select">
+                                            @foreach ($availableGroups as $group)
+                                                <option value="{{ $group->id }}">{{ $group->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <label for="newGroup">Sélectionnez le nouveau groupe :</label>
+                                        <input type="hidden" name="user_id" value="{{ $user->id }}">
+                                    </div>
+                                    <div>
+                                        <button type="submit" class="btn-secondary">Déplacer dans ce groupe</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
