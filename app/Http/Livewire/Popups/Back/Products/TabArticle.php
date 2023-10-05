@@ -23,6 +23,11 @@ class TabArticle extends ModalComponent
     {
         $this->all_products = MyProduct::all();
         $this->selectedProducts = session('selectedProducts', []);
+
+        // Pour vider la session lorsque la page se recharge
+        if (session()->has('selectedProducts')) {
+            session()->forget('selectedProducts');
+        }
     }
 
     public function btn()
@@ -93,11 +98,15 @@ class TabArticle extends ModalComponent
                     ->orderBy('title');
             }
 
+            // Ajoutez une clause whereDoesntHave pour exclure les produits liés à un groupe de promotions
+            $productsQuery->whereDoesntHave('promotions');
+
             $data['products'] = $productsQuery->paginate(8, ['*'], 'page', $this->currentPage);
         }
 
         return view('livewire.popups.back.products.tab-article', $data);
     }
+
 
 }
 
