@@ -1,5 +1,5 @@
 <div>
-    <form wire:submit.prevent="create" enctype="multipart/form-data">
+    <form wire:submit.prevent="update" enctype="multipart/form-data">
         <div id="entry-header" class="flex items-center">
             <div class="my-2 mr-7">
                 <a onclick="window.history.back()" class="bg-secondary px-5 py-2 rounded-lg dark:bg-gray-700 cursor-pointer">

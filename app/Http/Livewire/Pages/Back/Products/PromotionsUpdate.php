@@ -114,7 +114,7 @@ class PromotionsUpdate extends Component
         return redirect(route('back.product.promotions'));
     }
 
-    public function create()
+    public function update()
     {
         if ($this->mode == 1) {
             $validationRules = [
@@ -137,7 +137,7 @@ class PromotionsUpdate extends Component
 
         $this->validate($validationRules);
 
-        $productPromotion = new MyProductPromotion();
+        $productPromotion = $this->init;
 
         foreach ($this->products as $value) {
             $createPromotion = MyProduct::find($value['id']);
