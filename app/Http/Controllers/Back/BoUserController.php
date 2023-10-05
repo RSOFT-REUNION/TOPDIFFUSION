@@ -39,16 +39,17 @@ class BoUserController extends Controller
         return view('pages.backend.users.users-single', $data);
     }
 
-    public function moveUserToAnotherGroup($user)
+    public function moveUserToAnotherGroup(Request $request, $user)
     {
+        // Récupérez le nouvel ID de groupe à partir de la requête
+        $newGroupId = $request->input('newGroup');
 
-        $newGroupId = 1;
-        // Vérifiez si l'utilisateur existe et si le nouveau groupe existe
+        // Assurez-vous que l'utilisateur existe et que le nouveau groupe existe
         $foundUser = User::find($user);
         $newGroup = CustomerGroup::find($newGroupId);
 
         if (!$foundUser || !$newGroup) {
-            // Gérer les erreurs si l'utilisateur ou le groupe n'existe pas
+            // Gérez les erreurs si l'utilisateur ou le groupe n'existe pas
             return false;
         }
 
@@ -68,10 +69,14 @@ class BoUserController extends Controller
 
         // Mettez à jour l'ID du groupe pour l'utilisateur
         $foundUser->customer_group_id = $newGroupId;
-        $foundUser->save();
 
-        return true; // Retournez true pour indiquer que l'opération s'est bien déroulée.
+        if ($foundUser->save()) {
+            return back()->with('success', $foundUser->firstname . ' ' . $foundUser->lastname . ' a bien été changé de groupe.');
+        } else {
+            return back()->with('success', 'Changement non effectué.');
+        }
     }
+
 
 
 

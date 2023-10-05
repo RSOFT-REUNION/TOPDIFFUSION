@@ -133,33 +133,28 @@
                             <div class="flex-none">
                                 <a onclick="Livewire.emit('openModal', 'popups.back.clients.edit-client-profil', {{ json_encode(['user_id' => $user->id]) }})" class="btn-secondary cursor-pointer"><i class="fa-solid fa-pen-to-square mr-3"></i>Modifier les informations</a>
                             </div>
+                            <div class="flex">
+                                <h2 class="subtitle">Groupe du client : {{ $user->customerGroupId->name }}</h2>
+                            </div>
+                            <div class="container-sidebar-options bg-gray-100">
+                                <form method="POST" action="{{ route('updateGroupUser', ['user' => $user->id]) }}">
+                                    @csrf
+                                    <div class="flex">
+                                        <select name="newGroup" id="newGroup" class="form-select">
+                                            @foreach ($availableGroups as $group)
+                                                <option value="{{ $group->id }}">{{ $group->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        <label for="newGroup">Sélectionnez le nouveau groupe :</label>
+                                        <input type="hidden" name="user_id" value="{{ $user->id }}">
+                                    </div>
+                                    <div>
+                                        <button type="submit" class="btn-secondary">Déplacer dans ce groupe</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="flex-1 mt-3 mr-2">
-                <div>
-                    <div>
-                        <h2 class="subtitle">Groupe du client : {{ $user->customerGroupId->name }}</h2>
-                    </div>
-                    <div>
-                        @foreach ($availableGroups as $group)
-                            <form method="POST" action="{{ route('updateGroupUser', ['user' => $user->id, 'newGroupId' => $group->id]) }}">
-                                @csrf
-                                <div>
-                                    <label for="newGroup">Sélectionnez le nouveau groupe :</label>
-                                    <select name="newGroup" id="newGroup" class="form-select">
-                                        <option value="{{ $group->id }}">{{ $group->name }}</option>
-                                    </select>
-                                    <input type="hidden" name="user_id" value="{{ $user->id }}">
-                                </div>
-                                <div>
-                                    <button type="submit" class="btn-secondary">Déplacer dans ce groupe</button>
-                                </div>
-                            </form>
-                        @endforeach
-                    </div>
-
                 </div>
             </div>
         </div>
