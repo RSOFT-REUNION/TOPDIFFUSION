@@ -22,10 +22,12 @@ class TabArticle extends ModalComponent
     public function mount()
     {
         $this->all_products = MyProduct::all();
+        $this->selectedProducts = session('selectedProducts', []);
     }
 
     public function btn()
     {
+        session(['selectedProducts' => $this->selectedProducts]);
         $this->emit('productsSelected', $this->selectedProducts);
     }
 

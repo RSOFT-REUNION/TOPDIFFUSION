@@ -37,6 +37,11 @@ class PromotionsUpdate extends Component
             $this->mode = 1;
         }
         $this->percentage = $this->init->discount;
+
+        // Récupérez les produits liés à la promotion actuelle ici
+        $this->products = MyProduct::whereIn('id', function($query) use ($id) {
+            $query->select('product_id')->from('my_product_promotion_items')->where('group_id', $id);
+        })->orderBy('created_at', 'desc')->get();
     }
 
     public function addSelectedProducts($selectedProductIds) {
@@ -170,7 +175,7 @@ class PromotionsUpdate extends Component
     public function render()
     {
         $data = [];
-        $data['products'] = MyProduct::orderBy('created_at', 'desc')->get();
+        $data['productsItems'] = $this->products;
         return view('livewire.pages.back.products.promotions-update', $data);
     }
 }
