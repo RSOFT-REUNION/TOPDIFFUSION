@@ -133,23 +133,24 @@
                             <div class="flex-none">
                                 <a onclick="Livewire.emit('openModal', 'popups.back.clients.edit-client-profil', {{ json_encode(['user_id' => $user->id]) }})" class="btn-secondary cursor-pointer"><i class="fa-solid fa-pen-to-square mr-3"></i>Modifier les informations</a>
                             </div>
-                            <div class="flex">
-                                <h2 class="subtitle">Groupe du client : {{ $user->customerGroupId->name }}</h2>
-                            </div>
-                            <div class="container-sidebar-options bg-gray-100">
+                        </div>
+                        <div class="bg-gray-100 mt-5 rounded-lg p-6 flex flex-col gap-y-5">
+                            <h2 class="subtitle">Groupe du client</h2>
+                            <span class="font-medium text-xl text-secondary">{{ $user->customerGroupId->name }}</span>
+                            <div class="">
                                 <form method="POST" action="{{ route('updateGroupUser', ['user' => $user->id]) }}">
                                     @csrf
-                                    <div class="flex">
-                                        <select name="newGroup" id="newGroup" class="form-select">
+                                    <div class="flex flex-col">
+                                        <label for="newGroup">Sélectionnez le nouveau groupe :</label>
+                                        <select name="newGroup" id="newGroup" class=" outline-none border-none rounded-md py-2 pl-4 mt-2">
                                             @foreach ($availableGroups as $group)
                                                 <option value="{{ $group->id }}">{{ $group->name }}</option>
                                             @endforeach
                                         </select>
-                                        <label for="newGroup">Sélectionnez le nouveau groupe :</label>
                                         <input type="hidden" name="user_id" value="{{ $user->id }}">
                                     </div>
                                     <div>
-                                        <button type="submit" class="btn-secondary">Déplacer dans ce groupe</button>
+                                        <button type="submit" class="btn-secondary mt-5">Déplacer dans ce groupe</button>
                                     </div>
                                 </form>
                             </div>
