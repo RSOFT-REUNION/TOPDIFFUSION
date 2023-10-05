@@ -13,7 +13,7 @@
                 <a class="hover:bg-red-100 duration-500 ease-out px-4 py-3 rounded-full mr-7 cursor-pointer" wire:click="delete">
                     <i class="fa-solid fa-trash"></i>
                 </a>
-                <button type="submit" class="btn-secondary flex gap-x-4 items-center"><i class="fa-solid fa-square-plus text-lg"></i>Publier ma promotion</button>
+                <button type="submit" class="btn-secondary flex gap-x-4 items-center"><i class="fa-solid fa-square-plus text-lg"></i>Mettre a jours ma promotion</button>
             </div>
         </div>
 
