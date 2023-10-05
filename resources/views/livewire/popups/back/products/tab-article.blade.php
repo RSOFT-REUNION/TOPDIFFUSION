@@ -49,9 +49,9 @@
                     </table>
                 </div>
             </div>
+
             @if ($products->hasPages())
             <div class="flex mt-10">
-
                 <nav class="flex flex-row items-center justify-center w-full">
                     @if ($products->onFirstPage())
                         <span aria-disabled="true" wire:click.prevent="setPage({{ $products->currentPage() - 1 }})">

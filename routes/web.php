@@ -84,6 +84,7 @@ Route::group([
             Route::get('/stocks', [BoProductController::class, 'showProductStocks'])->name('back.product.stocks');
             Route::get('/promotions', [BoProductController::class, 'showPromotions'])->name('back.product.promotions');
             Route::get('/promotions-create', [BoProductController::class, 'showCreatePromotions'])->name('back.product.promotions-create');
+            Route::get('/promotions-update/{id}', [BoProductController::class, 'showGroupPromotionsUpdate'])->name('back.product.promotions-update');
             Route::get('/promotions-groupe/{id}', [BoProductController::class, 'showGroupPromotions'])->name('back.product.promotions-group');
             Route::get('/team', [BackController::class, 'showTeam'])->name('back.team');
             Route::get('/sav', [BackController::class, 'showSav'])->name('back.sav');

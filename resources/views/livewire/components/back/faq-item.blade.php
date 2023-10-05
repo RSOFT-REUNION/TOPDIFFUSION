@@ -24,7 +24,7 @@
                     @endif
                 </div>
                 @if($showAnswers[$faq->id])
-                    <div class="flex flex-row justify-end mt-5 border-l pl-10 ml-1">
+                    <div class="flex flex-row justify-end mt-5 border-l border-gray-300 pl-10 ml-1">
                         <div wire:click.stop class="bg-secondary rounded-md p-5 w-full">
                             @if($editing && $faq->id === $editingFaqId)
                                 <input wire:model="currentResponse" type="text" value="{{ $currentResponse }}">

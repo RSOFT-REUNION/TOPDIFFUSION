@@ -89,7 +89,7 @@
             @if($addresses->count() > 0)
                 <div class="mt-4 grid grid-cols-3 gap-4">
                     @foreach($addresses as $address)
-                        <div class="grid-item-profile">
+                        {{-- <div class="grid-item-profile">
                             <h3>{{ $address->address }}</h3>
                             <h4>{{ $address->address_bis }}</h4>
                             <h4>{{ $address->city }} | {{ $address->postal_code }}</h4>
@@ -98,6 +98,23 @@
                             <div class="inline-flex items-center mt-3 border-t border-gray-200 pt-2">
                                 <a href="{{ route('front.profile.delete.address', ['id' => $address->id]) }}" class="mr-3 hover:text-red-500"><i class="fa-solid fa-trash"></i></a>
                                 <a onclick="Livewire.emit('openModal', 'popups.front.profile.edit-address', {{ json_encode(['address_id' => $address->id]) }})" class="ml-3 hover:text-amber-500 cursor-pointer"><i class="fa-solid fa-edit"></i></a>
+                            </div>
+                        </div> --}}
+                        <div class="flex flex-col bg-gray-100 rounded-lg">
+                            <div class="flex flex-row justify-between items-center py-3 px-5 w-full border-b border-white">
+                                <div class="flex flex-row gap-x-3 items-center">
+                                    <i class="fa-solid fa-map-location-dot"></i>
+                                    <h2 class="text-xl font-bold">{{ $address->title }}</h2>
+                                </div>
+                                <div class="flex flex-row gap-x-3 items-center">
+                                    <i onclick="Livewire.emit('openModal', 'popups.front.profile.edit-address', {{ json_encode(['address_id' => $address->id]) }})" class="fa-solid fa-pen-to-square hover:text-secondary cursor-pointer duration-300"></i>
+                                    <a href="{{ route('front.profile.delete.address', ['id' => $address->id]) }}"><i class="fa-solid fa-trash hover:text-red-700 cursor-pointer duration-300"></i></a>
+                                </div>
+                            </div>
+                            <div class="flex flex-row flex-wrap px-5 gap-y-3 items-center h-full py-3">
+                                <div class="bg-white w-full rounded-lg py-3 px-5 flex flex-row items-center">
+                                    <h2>{{ $address->address }} {{ $address->address_bis }} {{ $address->city }} | {{ $address->postal_code }} {{ $address->country }}</h2>
+                                </div>
                             </div>
                         </div>
                     @endforeach

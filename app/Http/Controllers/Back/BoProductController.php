@@ -132,4 +132,13 @@ class BoProductController extends Controller
         $data['page'] = 'promotions';
         return view('pages.backend.products.promotion-group-single', $data);
     }
+
+    public function showGroupPromotionsUpdate($id)
+    {
+        $data = [];
+        $data['group'] = 'products';
+        $data['page'] = 'promotions';
+        $data['id'] = $id;
+        return view('pages.backend.products.promotions-update', $data);
+    }
 }

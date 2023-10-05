@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class MyProductPromotionItems extends Model
 {
     use HasFactory;
+
+    public function product(){
+        return $this->belongsTo(MyProduct::class, 'product_id');
+    }
+
 }

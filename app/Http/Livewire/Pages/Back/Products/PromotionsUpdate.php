@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Livewire\Pages\Back\Products;
-
 use Livewire\Component;
 use Illuminate\Support\Str;
 use App\Models\MyProduct;
@@ -10,15 +9,35 @@ use App\Models\MyProductPromotionItems;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
-class PromotionsCreate extends Component
+class PromotionsUpdate extends Component
 {
-    public $mode;
-    public $percentage, $name_promo, $dateDebut, $dateFin, $codePromo, $codePromoGen;
-    public $product_selected;
+    public $percentage, $name_promo, $dateDebut, $dateFin, $codePromo, $codePromoGen, $init, $mode, $product_selected, $products;
     public $alex = [];
     protected $listeners = ['productsSelected' => 'addSelectedProducts'];
-    public $products;
     public $active = false;
+
+    public function mount($id)
+    {
+        $this->init = MyProductPromotion::where('id', $id)->first();
+
+        $this->name_promo = $this->init->title;
+        $this->percentage = $this->init->discount;
+        $this->active = $this->init->active;
+        if ($this->init->code && str_starts_with($this->init->code, 'PROMO')) {
+            $this->codePromo = $this->init->code;
+            $this->mode = 2;
+        } else {
+            $this->codePromoGen = $this->init->code;
+            $this->mode = 2;
+        }
+
+        if ($this->init->start_date) {
+            $this->dateDebut = $this->init->start_date;
+            $this->dateFin = $this->init->end_date;
+            $this->mode = 1;
+        }
+        $this->percentage = $this->init->discount;
+    }
 
     public function addSelectedProducts($selectedProductIds) {
         $ids = array_map('intval', $selectedProductIds);
@@ -39,11 +58,6 @@ class PromotionsCreate extends Component
         } elseif($this->active === 0) {
             $this->active = "1";
         }
-    }
-
-    public function test()
-    {
-        dd($this->active);
     }
 
     public function formatDate($date)
@@ -87,6 +101,17 @@ class PromotionsCreate extends Component
             'percentage.min' => 'Le pourcentage doit être au moins 0.',
             'percentage.max' => 'Le pourcentage ne doit pas dépasser 95.',
         ];
+    }
+
+    public function delete()
+    {
+        $itemsPromo = MyProductPromotionItems::where('group_id', $this->init->id)->get();
+        foreach ($itemsPromo as $items) {
+            $items->delete();
+        }
+        $this->init->delete();
+
+        return redirect(route('back.product.promotions'));
     }
 
     public function create()
@@ -146,6 +171,6 @@ class PromotionsCreate extends Component
     {
         $data = [];
         $data['products'] = MyProduct::orderBy('created_at', 'desc')->get();
-        return view('livewire.pages.back.products.promotions-create', $data);
+        return view('livewire.pages.back.products.promotions-update', $data);
     }
 }

@@ -104,6 +104,25 @@
                 <div class="h-full overflow-y-auto">
                     <div class="flex flex-col gap-6 h-full">
                         @if ($messages)
+                        <div class="flex @if (auth()->user()->team) justify-start @else justify-end @endif mr-10">
+                            <div class="@if (auth()->user()->id == $tick->user_id) bg-yellow-100 dark:bg-yellow-700 @else bg-gray-100 dark:bg-gray-900 @endif rounded-lg w-3/4 h-28">
+                                <div class=" flex flex-col justify-center p-4">
+                                    <div class="border-b pb-2">
+                                        <h1 class="text-lg font-bold">Envoyé le {{ $tick->getCreatedAt() }} | par
+                                            @if (auth()->user()->id == $tick->user_id)
+                                                vous
+                                            @else
+                                                {{ $tick->getCreatedBy()->firstname }}
+                                                {{ $tick->getCreatedBy()->lastname }}
+                                            @endif
+                                        </h1>
+                                    </div>
+                                    <div class="pt-2">
+                                        <span class="font-medium">{{ $tick->message }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                             @foreach ($messages as $message)
                                 <div class="flex @if (auth()->user()->id == $message->user_id) justify-end @else justify-start @endif mr-10">
                                     <div class="@if (auth()->user()->id == $message->user_id) bg-secondary  @else bg-[#f0f0f0] @endif rounded-lg w-3/4 h-28">
@@ -125,25 +144,6 @@
                                     </div>
                                 </div>
                             @endforeach
-                            <div class="flex @if (auth()->user()->team) justify-start @else justify-end @endif mr-10">
-                                <div class="@if (auth()->user()->id == $tick->user_id) bg-yellow-100 dark:bg-yellow-700 @else bg-gray-100 dark:bg-gray-900 @endif rounded-lg w-3/4 h-28">
-                                    <div class=" flex flex-col justify-center p-4">
-                                        <div class="border-b pb-2">
-                                            <h1 class="text-lg font-bold">Envoyé le {{ $tick->getCreatedAt() }} | par
-                                                @if (auth()->user()->id == $tick->user_id)
-                                                    vous
-                                                @else
-                                                    {{ $tick->getCreatedBy()->firstname }}
-                                                    {{ $tick->getCreatedBy()->lastname }}
-                                                @endif
-                                            </h1>
-                                        </div>
-                                        <div class="pt-2">
-                                            <span class="font-medium">{{ $tick->message }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         @endif
                     </div>
                 </div>

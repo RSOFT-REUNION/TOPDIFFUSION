@@ -24,7 +24,8 @@ class TabArticle extends ModalComponent
         $this->all_products = MyProduct::all();
     }
 
-    public function btn() {
+    public function btn()
+    {
         $this->emit('productsSelected', $this->selectedProducts);
     }
 
@@ -67,7 +68,8 @@ class TabArticle extends ModalComponent
         $this->jobs = [];
     }
 
-    public function setPage($page) {
+    public function setPage($page)
+    {
         $this->currentPage = $page;
     }
 
