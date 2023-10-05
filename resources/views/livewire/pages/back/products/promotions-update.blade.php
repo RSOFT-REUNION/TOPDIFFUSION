@@ -79,8 +79,8 @@
                         @endif
                     </div>
                     <div class="grid grid-cols-2 grid-rows-2 gap-1 p-2">
-                        @if ($products)
-                            @foreach ($products as $key => $index)
+                        @if ($productsItems)
+                            @foreach ($productsItems as $key => $index)
                                 @if ($key <= 3)
                                     <img class="h-[150px] w-full rounded" src="{{ asset('storage/images/products/'. $index['cover']) }}" alt="logo">
                                 @endif
@@ -141,8 +141,8 @@
                 </div>
             </div>
             <div class="grid grid-cols-4 auto-rows-auto gap-2 w-full h-full flex-wrap mt-7">
-                @if ($products)
-                    @foreach ($products as $index => $articles)
+                @if ($productsItems)
+                    @foreach ($productsItems as $index => $articles)
                         <div class="h-[22vh] relative group shadow rounded-lg">
                             <img class="rounded-lg h-[22vh] hover:bg-black hover:drop-shadow-xl" src="{{ asset('storage/images/products/'. $articles['cover']) }}" alt="Description de l'image 1"/>
                             <div class="flex flex-row justify-center items-end w-full h-full bg-black absolute top-0 rounded-lg opacity-0 group-hover:opacity-100 visibility-hidden group-hover:visibility-visible transition-opacity duration-300 shadow" style="background: rgb(2,0,36);
@@ -152,7 +152,7 @@
                     @endforeach
                 @endif
             </div>
-                @if(!$products)
+                @if(!$productsItems)
                     <div class="w-full flex flex-row justify-center items-center bg-gray-100 py-4 rounded-lg">
                         Pas d'article dans la promotion
                     </div>

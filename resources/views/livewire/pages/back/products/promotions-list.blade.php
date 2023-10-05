@@ -18,13 +18,11 @@
                             <h2>{{ $promo->discount }} %</h2>
                         </div>
                         <div class="grid grid-cols-2 grid-rows-2 gap-1 w-[300px] p-2">
-                            <img class="object-cover rounded-md h-[120px]" src="{{ asset('storage/images/products/') }}" alt="Description de l'image 1"/>
-                            <img class="object-cover rounded-md h-[120px]" src="{{ asset('storage/images/products/' ) }}" alt="Description de l'image 1"/>
-                            <img class="object-cover rounded-md h-[120px]" src="{{ asset('storage/images/products/' ) }}" alt="Description de l'image 1"/>
-                            <img class="object-cover rounded-md h-[120px]" src="{{ asset('storage/images/products/' ) }}" alt="Description de l'image 1"/>
-                            {{-- @foreach ($promo->promotionIte as $promoItem)
-                                <img class="object-cover rounded-md h-[120px]" src="{{ asset('storage/images/products/' . $promoItem->product->cover) }}" alt="Image du produit en promotion"/>
-                            @endforeach --}}
+                            @foreach ($promo->products as $index => $product)
+                                @if ($index < 4)
+                                    <img class="object-cover rounded-md h-[120px]" src="{{ asset('storage/images/products/' . $product->cover) }}" alt="Image du produit en promotion"/>
+                                @endif
+                            @endforeach
                         </div>
                         <div class="pl-3 pb-3">
                             <div class="flex flex-row mt-2 justify-between">
