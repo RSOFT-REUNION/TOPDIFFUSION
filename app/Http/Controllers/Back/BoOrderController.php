@@ -27,7 +27,7 @@ class BoOrderController extends Controller
         $data['page'] = 'orders';
         $data['order'] = $my_order;
         $data['order_items'] = UserOrderItem::where('order_id', $my_order->id)->get();
-        return view('pages.frontend.orders.order-single', $data);
+        return view('pages.backend.orders.order-single', $data);
     }
 
     // Affichage de la facture
