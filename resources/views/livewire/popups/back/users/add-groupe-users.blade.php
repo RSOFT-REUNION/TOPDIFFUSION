@@ -94,25 +94,9 @@
             <div class="mt-10">
                 <button type="submit" class="btn-secondary block w-full">Ajouter</button>
             </div>
+            </div>
         </form>
     </div>
-    <script>
-        const userSelect = document.getElementById('userSelect');
-
-        userSelect.addEventListener('click', function(event) {
-            const option = event.target;
-            if (option.tagName === 'OPTION' && !option.selected) {
-                option.selected = true;
-            }
-        });
-
-        userSelect.addEventListener('dblclick', function(event) {
-            const option = event.target;
-            if (option.tagName === 'OPTION') {
-                option.selected = false;
-            }
-        });
-    </script>
 </div>
 
 
