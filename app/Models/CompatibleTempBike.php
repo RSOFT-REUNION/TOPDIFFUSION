@@ -10,4 +10,9 @@ class CompatibleTempBike extends Model
     use HasFactory;
 
     protected $table = 'compatible_temp_bikes';
+
+    public function getBike()
+    {
+        return bike::where('id', $this->bike_id)->first();
+    }
 }

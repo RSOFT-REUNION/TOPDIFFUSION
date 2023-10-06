@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Models\CompatibleTempBike;
 use App\Models\MyProduct;
 use App\Models\Product;
 use App\Models\ProductGroupTag;
 use App\Models\ProductTemp;
+use App\Models\ProductTempInfo;
+use App\Models\ProductTempPictures;
 use App\Models\ProductTempSwatches;
 use Illuminate\Http\Request;
 
@@ -14,6 +17,40 @@ class BoProductController extends Controller
 {
     public function showProductList()
     {
+        // Suppression des tables temporaire
+        $temp_products = ProductTemp::all();
+        $temp_swatches = ProductTempSwatches::all();
+        $temp_infos = ProductTempInfo::all();
+        $temp_pictures = ProductTempPictures::all();
+        $temp_bikes = CompatibleTempBike::all();
+
+        // Vérification de la quantité
+        if($temp_swatches->count() > 0) {
+            foreach ($temp_swatches as $temp){
+                $temp->delete();
+            }
+        }
+        if($temp_infos->count() > 0) {
+            foreach ($temp_infos as $temp){
+                $temp->delete();
+            }
+        }
+        if($temp_pictures->count() > 0) {
+            foreach ($temp_pictures as $temp){
+                $temp->delete();
+            }
+        }
+        if($temp_products->count() > 0) {
+            foreach ($temp_products as $temp){
+                $temp->delete();
+            }
+        }
+        if($temp_bikes->count() > 0) {
+            foreach ($temp_bikes as $temp){
+                $temp->delete();
+            }
+        }
+
         $data = [];
         $data['group'] = 'products';
         $data['page'] = 'list';
@@ -24,11 +61,7 @@ class BoProductController extends Controller
     {
         $proTemp = new ProductTemp;
         if ($proTemp->save()) {
-            $proSwatch = new ProductTempSwatches;
-            $proSwatch->product_id = $proTemp->id;
-            if ($proSwatch->save()) {
-                return redirect()->route('back.product.show.create', ['id' => $proTemp->id]);
-            }
+            return redirect()->route('back.product.show.create', ['id' => $proTemp->id]);
         }
     }
 

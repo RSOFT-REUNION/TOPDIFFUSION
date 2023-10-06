@@ -61,24 +61,7 @@ class ProductList extends Component
     {
         $data = [];
         // Requête pour récupérer les données de my_product avec jointure sur my_product_swatch
-        $data['products'] = MyProduct::select('my_products.*', 'my_product_swatches.*')
-            ->leftJoin('my_product_swatches', 'my_products.id', '=', 'my_product_swatches.product_id')
-            ->orderBy('my_products.created_at', 'desc')
-            ->get();
-
-        $productData = [];
-
-        foreach ($data['products'] as $product) {
-            $productData[] = [
-                'productName' => $product->title,
-                'productSlug' => $product->slug,
-                'productProfessionnalPrice' => $product->professionnal_price,
-                'productCustomerPrice' => $product->customer_price,
-                'productPourcentagePrice' => $product->pourcentage_price,
-            ];
-        }
-
-        $data['productData'] = $productData;
+        $data['products'] = MyProduct::orderBy('created_at', 'desc')->get();
 
         if ($this->jobs) {
             $products = $this->jobs;

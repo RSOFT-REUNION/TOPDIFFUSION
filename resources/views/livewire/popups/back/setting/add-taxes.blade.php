@@ -41,6 +41,10 @@
                     <p class="text-error">{{ $errors->first('state_code') }}</p>
                 @endif
             </div>
+            <div class="mt-2">
+                <input type="checkbox" id="default" wire:model="default">
+                <label for="default">Il s'agit de ma classe par défaut</label>
+            </div>
             <div class="mt-5">
                 <button type="submit" class="btn-secondary">Ajouter</button>
             </div>

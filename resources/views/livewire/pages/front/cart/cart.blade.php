@@ -88,7 +88,12 @@
                 </div>
             </div>
             @if($user_address->count() > 0)
-                <button wire:click="initOrder" class="bg-secondary mt-2 block w-full py-3 rounded-lg font-bold">Procéder au paiement</button>
+                @if(auth()->user()->professionnal === 1 && auth()->user()->verified === 1)
+                    <button wire:click="initOrder" class="bg-gray-100 mt-2 block w-full py-3 rounded-lg font-bold border border-transparent hover:bg-secondary/30 hover:border-secondary duration-300">Chèque à la livraison</button>
+                    <button wire:click="initOrder" class="bg-gray-100 mt-2 block w-full py-3 rounded-lg font-bold border border-transparent hover:bg-secondary/30 hover:border-secondary duration-300">Virement à la livraison</button>
+                @endif
+                <hr class="my-2 border-gray-100">
+                <button wire:click="initOrder" class="bg-primary text-white border border-transparent hover:bg-primary/30 hover:border-primary hover:text-primary duration-300 mt-2 block w-full py-3 rounded-lg font-bold">Payer directement par carte</button>
             @else
                 <p class="mt-2 bg-gray-100 border border-gray-200 rounded-md text-gray-500 text-sm px-3 py-1">
                     Vous n'avez pas encore configuré d'adresse de livraison, afin de continuer, merci d'en renseigné une.
