@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('product_temps', function (Blueprint $table) {
             $table->id();
+            $table->string('title')->nullable();
+            $table->integer('type')->nullable();
+            $table->string('cover')->nullable();
+            $table->string('slug')->nullable();
+            $table->text('long_description')->nullable();
+            $table->text('short_description')->nullable();
+            $table->integer('brand_id')->nullable();
+            $table->integer('category_id')->nullable();
             $table->timestamps();
         });
     }

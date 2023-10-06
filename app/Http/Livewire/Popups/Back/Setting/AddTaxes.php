@@ -8,7 +8,7 @@ use LivewireUI\Modal\ModalComponent;
 
 class AddTaxes extends ModalComponent
 {
-    public $title, $rate, $country_code, $state_code;
+    public $title, $rate, $country_code, $state_code, $default;
 
     protected $rules = [
         'title' => 'required|unique:product_taxes,title',
@@ -34,8 +34,8 @@ class AddTaxes extends ModalComponent
     {
         $this->validate();
 
-        $characters = [',', ' '];
-        $goodCharacters = ['.', ''];
+        $characters = [',', ' ', '%'];
+        $goodCharacters = ['.', '', ''];
 
         $tax = new ProductTaxes;
         $tax->title = $this->title;
@@ -44,6 +44,20 @@ class AddTaxes extends ModalComponent
         $tax->state_code = $this->state_code;
         if($tax->save())
         {
+            // Vérification de la taxe déjà par défaut afin d'effectuer les modifications
+            if($this->default){
+                $allTax = ProductTaxes::where('default', 1)->first();
+                if($allTax) {
+                    $allTax->default = 0;
+                    if($allTax->update()){
+                        $tax->default = 1;
+                        $tax->update();
+                    }
+                } else {
+                    $tax->default = 1;
+                    $tax->update();
+                }
+            }
             return redirect()->route('back.setting.payment');
         }
     }

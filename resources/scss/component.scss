@@ -252,7 +252,7 @@
     position: fixed;
     width: 300px;
     background-color: theme.$gray-2;
-    z-index: 999;
+    z-index: 1;
     border-right: 2px solid #00000010;
 
     #sidebar_entry-content {
@@ -757,13 +757,12 @@
 
 .product_create_picture {
     background-color: #e5e7eb;
-    height: 200px;
-    width: 200px;
+    aspect-ratio: 1;
     display: flex;
     padding: 10px;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
+    border-radius: 5px;
     color: #9ca3af;
 }
 
@@ -1110,22 +1109,22 @@
     width: 100%;
     border-radius: 5px;
     overflow: hidden;
-    border: 1px solid #00000010;
+    border: 1px solid #f3f4f6;
 
     table {
         width: 100%;
 
         th {
             padding: 10px;
-            background-color: #00000020;
-            border-bottom: 1px solid #00000010;
+            background-color: #f3f4f6;
+            border-bottom: 1px solid #f3f4f6;
         }
 
         tr {
-            border-top: 1px solid #00000010;
+            border-top: 1px solid #f3f4f6;
 
             &:nth-child(even) {
-                background-color: #00000010;
+                background-color: #f9fafb;
             }
         }
 

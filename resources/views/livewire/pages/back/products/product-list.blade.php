@@ -18,31 +18,31 @@
         </div>
     </div>
     <div id="entry-content">
-        @if(count($productData) > 0)
+        @if(count($products) > 0)
             <div class="table-box-outline">
                 <table>
                     {{-- {{ dd(auth()->user()->customerGroup->name) }} --}}
                     <thead>
                     <tr>
-                        <th>Nom du Produit</th>
-                        <th>Nom URL</th>
-                        <th>Prix Professionel</th>
-                        <th>Prix Client</th>
-                        @if (isset($productData[0]['productPourcentagePrice']))
-                        <th>Pourcentage</th>
-                        @endif
+                        <th><i class="fa-solid fa-image"></i></th>
+                        <th>UGS</th>
+                        <th>Nom</th>
+                        <th>Type</th>
+                        <th>Prix Client HT</th>
+                        <th>Prix Pro. TTC</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach ($productData as $product)
+                        @foreach ($products as $product)
                             <tr>
-                                <td>{{ $product['productName'] }}</td>
-                                <td>{{ $product['productSlug'] }}</td>
-                                <td>{{ $product['productProfessionnalPrice'] }} €</td>
-                                <td>{{ $product['productCustomerPrice'] }} €</td>
-                                @if (isset($product['productPourcentagePrice']))
-                                <td>{{ $product['productPourcentagePrice'] }} %</td>
-                                @endif
+                                <td class="w-[70px]"><img src="{{ asset('storage/images/products/'. $product->cover) }}" width="50px"></td>
+                                <td>{{ $product->getUgs() }}</td>
+                                <td>{{ $product->title }}</td>
+                                <td>{!! $product->getTypeBadge() !!}</td>
+                                <td>{{ number_format($product->getPriceHT(), '2', ',', ' ') }} €</td>
+                                <td>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} €</td>
+                                <td></td>
                             </tr>
                         @endforeach
                     </tbody>

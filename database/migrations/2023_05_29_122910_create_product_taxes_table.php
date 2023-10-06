@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('postal_code')->nullable();
             $table->string('city')->nullable();
             $table->string('rate');
+            $table->boolean('default')->default(0);
             $table->boolean('deleted')->default(0);
             $table->timestamps();
         });
