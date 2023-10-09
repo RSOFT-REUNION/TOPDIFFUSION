@@ -200,7 +200,7 @@ class GroupeUser extends Component
     {
         $data = [];
         $data['groupUser'] = CustomerGroup::all();
-        $data['usersList'] = User::where('team', '0')
+        $data['usersList'] = User::whereIn('team', ['0', '1'])
             ->whereNotExists(function ($query) {
                 $query->select(DB::raw(1))
                     ->from('customer_group_user')
