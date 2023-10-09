@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('category_customer_group', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product_category_id');
-            $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('customer_group_id');
+            $table->unsignedBigInteger('product_category_id'); // Référence à la catégorie de produits
+            $table->unsignedBigInteger('customer_group_id'); // Référence au groupe de clients
             $table->decimal('discount_percentage', 5, 2);
             $table->timestamps();
         });

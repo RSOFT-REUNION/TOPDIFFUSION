@@ -47,7 +47,7 @@ class AddGroupeUsers extends ModalComponent
                 session()->flash('success', $defaultGroup->name . ' n\'est plus le groupe par défaut');
             } else {
                 session()->flash('error', $defaultGroup->name . ' est toujours le groupe par défaut');
-            };
+            }
         }
 
         // Créez d'abord le groupe de clients
@@ -58,26 +58,35 @@ class AddGroupeUsers extends ModalComponent
         $groupUser->discount_default = $this->discount_default ? 1 : 0; // Définissez la remise par défaut si la case est cochée
 
         if ($groupUser->save()) {
+            // Récupère l'id du dernier groupe créé
+            $lastInsertedGroupId = $groupUser->id;
+
             // Une fois que le groupe est créé, attribuez les utilisateurs sélectionnés
             $groupUser->users()->sync($this->selectedUsers);
 
             // Récupérez l'ID du groupe nouvellement créé
             $groupId = $groupUser->id;
 
-            foreach ($this->selectedUsers as $userId) {
-                $this->user = User::find($userId);
-                if ($this->user) {
-                    $this->user->customer_group_id = $groupId;
-                    $this->user->save();
+            // Initialisez $this->user à null en dehors de la boucle
+            $this->user = null;
+            if ($this->selectedUsers) {
+                foreach ($this->selectedUsers as $userId) {
+                    $this->user = User::find($userId);
+                    if ($this->user) {
+                        $this->user->customer_group_id = $groupId;
+                        $this->user->save();
+                    }
                 }
             }
 
             $categories = ProductCategory::all();
             // Parcourez toutes les catégories et créez des relations avec le nouveau groupe
             foreach ($categories as $category) {
+                // Vérifiez si $this->user est défini avant d'accéder à sa propriété customer_group_id
+                $customerGroupId = $this->user ? $this->user->customer_group_id : $lastInsertedGroupId;
                 $category->customerGroups()->attach($groupId, [
-                    'category_id' => $category->id,
-                    'customer_group_id' => $this->user->customer_group_id,
+                    'product_category_id' => $category->id,
+                    'customer_group_id' => $customerGroupId,
                     'discount_percentage' => $this->discount_percentage,
                 ]);
             }
@@ -114,11 +123,11 @@ class AddGroupeUsers extends ModalComponent
 
         if ($this->updatedSearch() != null) {
             $data['usersList'] = $this->updatedSearch()
-                ->where('team', '0')
+                ->whereIn('team', ['0', '1'])
                 ->whereDoesntHave('customerGroups')
                 ->paginate(20);
         } else {
-        $data['usersList'] = User::where('team', '0')
+        $data['usersList'] = User::whereIn('team', ['0', '1'])
             ->whereDoesntHave('customerGroups')
             ->orderBy('firstname', 'asc')
             ->paginate(8);
