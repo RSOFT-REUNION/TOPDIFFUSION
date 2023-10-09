@@ -43,44 +43,26 @@
                     </tbody>
                 </table>
             </div>
-{{--            @if ($bikes instanceof \Illuminate\Pagination\LengthAwarePaginator && $bikes->hasPages())--}}
-{{--                <div class="flex mt-7">--}}
-{{--                    <nav class="flex flex-row items-center justify-center w-full">--}}
-{{--                        @if ($bikes->onFirstPage())--}}
-{{--                            <span aria-disabled="true" wire:click.prevent="setPage({{ $bikes->currentPage() - 1 }})">--}}
-{{--                            <span class="relative inline-flex items-center px-4 py-[11px] -ml-px text-sm font-medium text-gray-300 rounded-l-lg bg-white border border-gray-300 cursor-default leading-5"><i class="fa-solid fa-angle-left"></i></span>--}}
-{{--                        </span>--}}
-{{--                        @else--}}
-{{--                            <span aria-disabled="true" wire:click.prevent="setPage({{ $bikes->currentPage() - 1 }})">--}}
-{{--                            <span class="relative inline-flex items-center px-4 py-[11px] -ml-px text-sm font-medium text-gray-700 bg-white rounded-l-lg border border-gray-300 cursor-pointer leading-5 hover:text-black hover:bg-secondary "><i class="fa-solid fa-angle-left"></i></span>--}}
-{{--                        </span>--}}
-{{--                        @endif--}}
+            @if ($bikes->hasPages())
+                <div class="flex items-center justify-center mt-7">
+                    {{-- Bouton "Précédent" --}}
+{{--                    @if ($bikes->onFirstPage())--}}
+{{--                        <button class="px-2 py-1 text-sm font-medium text-gray-300 bg-white border border-gray-300 cursor-default rounded-l-lg" disabled><i class="fa-solid fa-angle-left"></i> Précédent</button>--}}
+{{--                    @else--}}
+                        <button wire:click="setPreviousPage" class="px-2 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 cursor-pointer rounded-l-lg"><i class="fa-solid fa-angle-left"></i> Précédent</button>
+{{--                    @endif--}}
 
-{{--                        @foreach ($bikes->getUrlRange(1, $bikes->lastPage()) as $page => $url)--}}
-{{--                            @if ($page == $bikes->currentPage())--}}
-{{--                                <span aria-current="page">--}}
-{{--                                <span class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-300 bg-white border border-gray-300 cursor-default leading-5">{{ $page }}</span>--}}
-{{--                            </span>--}}
-{{--                            @else--}}
-{{--                                <a wire:click.prevent="setPage({{ $page }})" class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 hover:text-black hover:bg-secondary focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150 cursor-pointer">--}}
-{{--                                    {{ $page }}--}}
-{{--                                </a>--}}
-{{--                            @endif--}}
-{{--                        @endforeach--}}
-
-{{--                        @if ($bikes->hasMorePages())--}}
-{{--                            <span aria-disabled="true" wire:click.prevent="setPage({{ $bikes->currentPage() + 1 }})">--}}
-{{--                            <span class="relative inline-flex items-center px-4 py-[11px] -ml-px text-sm font-medium text-gray-700 bg-white rounded-r-lg border border-gray-300 cursor-pointer leading-5 hover:text-black hover:bg-secondary "><i class="fa-solid fa-angle-right"></i></span>--}}
-{{--                        </span>--}}
-{{--                        @else--}}
-{{--                            <span aria-disabled="true">--}}
-{{--                            <span class="relative inline-flex items-center px-4 py-[11px] -ml-px text-sm font-medium text-gray-300 bg-white rounded-r-lg  border border-gray-300 cursor-default leading-5"><i class="fa-solid fa-angle-right"></i></span>--}}
-{{--                        </span>--}}
-{{--                        @endif--}}
-{{--                    </nav>--}}
-{{--                </div>--}}
+                    {{-- Bouton "Suivant" --}}
+                    @if ($bikes->hasMorePages())
+                        <button wire:click="setNextPage" class="px-2 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 cursor-pointer rounded-r-lg">Suivant <i class="fa-solid fa-angle-right"></i></button>
+                    @else
+                        <button class="px-2 py-1 text-sm font-medium text-gray-300 bg-white border border-gray-300 cursor-default rounded-r-lg" disabled>Suivant <i class="fa-solid fa-angle-right"></i></button>
+                    @endif
+                </div>
+            @endif
+{{--            @if($bikes->count() > 0)--}}
+{{--                {{ $bikes->links() }}--}}
 {{--            @endif--}}
-        {{ $bikes->links() }}
             <div class="mt-5">
                 <button type="submit" class="bg-primary text-white py-2.5 block w-full border border-transparent rounded-md hover:bg-primary/70 hover:border-primary duration-300"><i class="fa-solid fa-plus mr-3"></i>Ajouter</button>
             </div>

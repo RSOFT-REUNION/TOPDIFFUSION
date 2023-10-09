@@ -64,10 +64,16 @@ class AddBikes extends ModalComponent
         }
     }
 
-    public function setPage($page)
+    public function setNextPage()
     {
-        $this->currentPage = $page;
+        $this->currentPage++;
     }
+
+    public function setPreviousPage()
+    {
+        $this->currentPage--;
+    }
+
 
     public function render()
     {
@@ -75,7 +81,7 @@ class AddBikes extends ModalComponent
         if ($this->updatedSearch() != null) {
             $data['bikes'] = $this->updatedSearch()->paginate(8, ['*'], 'page', $this->currentPage);
         } else {
-            $data['bikes'] = $this->getBikeNotSelected()->paginate(10);
+            $data['bikes'] = $this->getBikeNotSelected()->paginate(8, ['*'], 'page', $this->currentPage);
         }
         return view('livewire.popups.back.products.product-add.add-bikes', $data);
     }

@@ -96,6 +96,7 @@ class TabArticle extends ModalComponent
             } else {
                 $productsQuery = MyProduct::query()
                     ->orderBy('title');
+
             }
 
             // Ajoutez une clause whereDoesntHave pour exclure les produits liés à un groupe de promotions
