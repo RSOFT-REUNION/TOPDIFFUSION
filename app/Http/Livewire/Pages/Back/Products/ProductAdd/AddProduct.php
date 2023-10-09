@@ -54,7 +54,7 @@ class AddProduct extends Component
 
     public function updated()
     {
-        if($this->TVA_custom == 'default') {
+        /*if($this->TVA_custom == 'default') {
             // Si nous utilisons la règle de TVA par défaut
             $tva = ProductTaxes::where('default', 1)->first();
             $tva_rate = $tva->rate / 100;
@@ -73,7 +73,7 @@ class AddProduct extends Component
             }
         } else {
             $this->price_TTC = $this->price_HT;
-        }
+        }*/
     }
 
     // Fonction permettant la création de l'article
@@ -162,6 +162,30 @@ class AddProduct extends Component
                     $swatch->tva_rate = $ts->tva_rate;
                     $swatch->swatch_group_id = $ts->swatch_group_id;
                     $swatch->swatch_tags_id = $ts->swatch_tags_id;
+                    if($swatch->save()) {
+                        // Remplissage des stocks
+                        $stock = new MyProductStock;
+                        $stock->product_id = $product->id;
+                        $stock->is_swatch = 1;
+                        $stock->ugs = $swatch->ugs.'-'.$swatch->ugs_swatch;
+                        $stock->quantity = 0;
+                        $stock->save();
+                    }
+                } elseif($product->type == 4) {
+                    $swatch = new ProductTempSwatches;
+                    $swatch->ugs = $ts->ugs;
+                    $swatch->ugs_swatch = $ts->ugs_swatch;
+                    $swatch->product_id = $ts->product->id;
+                    $swatch->type = '4';
+                    $swatch->tire_position = $ts->position;
+                    $swatch->tire_width = $ts->width;
+                    $swatch->tire_height = $ts->height;
+                    $swatch->tire_diameter = $ts->diameter;
+                    $swatch->tire_charge = $ts->indice;
+                    $swatch->price_ht = $ts->price_ht;
+                    $swatch->price_ttc = $ts->price_ttc;
+                    $swatch->have_tva = $ts->have_tva;
+                    $swatch->default_tva = $ts->default_tva;
                     if($swatch->save()) {
                         // Remplissage des stocks
                         $stock = new MyProductStock;

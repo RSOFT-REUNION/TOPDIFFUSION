@@ -15,7 +15,7 @@
                             <div class="flex-none inline-flex items-center">
                                 <p class="border-r border-gray-200 pr-2 mr-2 text-xl"><span class="text-sm text-gray-500">QTE.</span> {{ $cart->quantity }}</p>
                                 @if(!auth()->guest() && auth()->user()->professionnal === 1 && auth()->user()->verified === 1)
-                                    <h2 class="font-bold text-xl">{{ number_format($cart->getSwatches()->professionnal_price, '2', ',', ' ') }} €</h2>
+                                    <h2 class="font-bold text-xl">{{ $cart->getSwatches()->getPriceTTC() }} €</h2>
                                 @else
                                     <h2 class="font-bold text-xl">{{ number_format($cart->getSwatches()->customer_price, '2', ',', ' ') }} €</h2>
                                 @endif
