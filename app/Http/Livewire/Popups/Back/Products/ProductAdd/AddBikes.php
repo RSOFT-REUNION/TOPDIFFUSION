@@ -4,10 +4,12 @@ namespace App\Http\Livewire\Popups\Back\Products\ProductAdd;
 
 use App\Models\bike;
 use App\Models\CompatibleTempBike;
+use Livewire\WithPagination;
 use LivewireUI\Modal\ModalComponent;
 
 class AddBikes extends ModalComponent
 {
+    use WithPagination;
     public $bike_selected = [];
     public $checkedBikes = [];
     public $search = '';
@@ -73,7 +75,7 @@ class AddBikes extends ModalComponent
         if ($this->updatedSearch() != null) {
             $data['bikes'] = $this->updatedSearch()->paginate(8, ['*'], 'page', $this->currentPage);
         } else {
-            $data['bikes'] = $this->getBikeNotSelected()->paginate(8, ['*'], 'page', $this->currentPage);
+            $data['bikes'] = $this->getBikeNotSelected()->paginate(10);
         }
         return view('livewire.popups.back.products.product-add.add-bikes', $data);
     }
