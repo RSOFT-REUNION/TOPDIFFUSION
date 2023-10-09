@@ -40,11 +40,11 @@
     <div class="container-our-brands">
         <div class="container mx-auto">
             <h2 class="title text-center">Nos marques partenaires</h2>
-            <p class="mt-5">
+            {{-- <p class="mt-5">
                 Lorem ipsum dolor sit amet consectetur. Viverra mauris tortor lobortis integer tincidunt pellentesque
                 convallis nisl vitae. In sit amet pellentesque non lectus dignissim quis. Et sed sed nulla vitae vestibulum.
                 Eleifend habitasse ullamcorper blandit vel amet.
-            </p>
+            </p> --}}
         </div>
         <div class="grid grid-cols-4 gap-10 items-center mt-10">
             @foreach ($brands as $brand)

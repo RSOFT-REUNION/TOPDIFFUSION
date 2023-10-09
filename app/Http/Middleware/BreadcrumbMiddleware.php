@@ -17,7 +17,7 @@ class BreadcrumbMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        /*$crumbs = [
+        $crumbs = [
             ['url' => route('front.home'), 'label' => 'Accueil']
         ];
 
@@ -41,10 +41,12 @@ class BreadcrumbMiddleware
             }
         }
 
-        // dd($crumbs);
+        if ($request->routeIs('front.product-all')) {
+            $crumbs[] = ['url' => route('front.product-all'), 'label' => 'Voir tout'];
+        }
 
         view()->share('crumbs', $crumbs);
-         */
-//        return $next($request);
+
+      return $next($request);
     }
 }

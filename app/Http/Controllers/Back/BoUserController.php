@@ -29,10 +29,10 @@ class BoUserController extends Controller
         $data = [];
         $data['group'] = 'users';
         $data['page'] = 'list';
-//        $data['user'] = $selectedUser;
         $data['groupUser'] = CustomerGroup::all();
         $data['user'] = User::with('customerGroupId')->find($selectedUser->id);
         $data['availableGroups'] = CustomerGroup::where('id', '!=', $data['user']->customerGroupId->id)->get();
+        // dd($data['availableGroups'] );
         $data['userData'] = UserData::where('user_id', $selectedUser->id)->first();
         $data['userAddress'] = UserAddress::where('user_id', $selectedUser->id)->get();
         $data['userBikes'] = UserBike::where('user_id', $selectedUser->id)->get();

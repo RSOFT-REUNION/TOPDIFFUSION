@@ -11,7 +11,7 @@
     </div>
     <div id="entry-content" class="mt-5">
         {{-- grids --}}
-        <div class="grid grid-cols-4 grid-rows-2 gap-5 bg-gray-100 p-5 rounded-xl">
+        <div class="grid grid-cols-4 grid-rows-auto gap-5 bg-gray-100 p-5 rounded-xl">
             <div class="bg-white p-5 flex flex-col justify-center gap-y-5 rounded-lg">
                 <h2 class="text-gray-500">Nombre de vente</h2>
                 <div class="flex flex-row items-end">

@@ -7,7 +7,7 @@
             @if ($group == 'home')
                 <ul>
                     <li><a href="{{ route('back.dashboard') }}" class="btn-sidebar"><i class="fa-solid fa-house-chimney mr-3"></i>Tableau de bord</a></li>
-                    <li><a href="{{ route('back.dashboard') }}" class="btn-sidebar"><i class="fa-solid fa-chart-column mr-3"></i>Statistiques</a></li>
+                    {{-- <li><a href="{{ route('back.dashboard') }}" class="btn-sidebar"><i class="fa-solid fa-chart-column mr-3"></i>Statistiques</a></li> --}}
                     <h2>Mon activité</h2>
                     <li><a href="{{ route('back.user.list') }}" class="btn-sidebar"><i class="fa-solid fa-users mr-3"></i>Clients</a></li>
                     <li><a href="{{ route('back.product.list') }}" class="btn-sidebar"><i class="fa-solid fa-cubes-stacked mr-3"></i>Produits</a></li>

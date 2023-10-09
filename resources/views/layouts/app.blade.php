@@ -39,13 +39,32 @@
     @livewireStyles
 </head>
 <body class="antialiased">
-    @if($settingGlobal->development_mode == 1)
+    <div class="mobile">
+        <div class="bg-gray-100 rounded-lg absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1/2 p-10 sm:text-base text-xs shadow-lg">
+            <div class="flex flex-col items-center mb-2">
+                <img class="mb-5" src="{{ asset('img/logos/Blue.svg') }}" width="250px" alt="LOGO"/>
+                <h1 class="text-red-600 mb-10">Résolution d'écran non compatible</h1>
+                <p>Nous sommes désolés, mais notre site n'est pas encore optimisé pour les appareils mobiles. Cependant, nous travaillons activement à cette amélioration.</p>
+                <p>Si vous avez accès à un ordinateur de bureau ou à un ordinateur portable, vous pourrez profiter pleinement de notre site depuis l'un de ces appareils. Merci de votre compréhension.</p>
+            </div>
+        </div>
+    </div>
+    <div class="ordinateur">
+        @if($settingGlobal->development_mode == 1)
+            <div id="development_box">
+                <p><i class="fa-brands fa-dev mr-3"></i>Mode développement</p>
+            </div>
+        @endif
+        @include('components.flash-messages')
+        @yield('content-app')
+    </div>
+    {{-- @if($settingGlobal->development_mode == 1)
         <div id="development_box">
             <p><i class="fa-brands fa-dev mr-3"></i>Mode développement</p>
         </div>
     @endif
     @include('components.flash-messages')
-    @yield('content-app')
+    @yield('content-app') --}}
     <!-- SCRIPTS -->
     @vite('resources/js/functions.js')
     @vite('resources/js/clickable.js')

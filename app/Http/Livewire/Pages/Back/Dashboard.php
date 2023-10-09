@@ -123,7 +123,7 @@ class Dashboard extends Component
     public function getActivityLog()
     {
         // Récupérez les données avec l'heure d'enregistrement
-        $activityLog = ActivityLog::orderByDesc('created_at')->paginate(4);
+        $activityLog = ActivityLog::orderByDesc('created_at')->paginate(6);
 
         // Modifiez les descriptions d'activité pour inclure le temps écoulé
         $activityLog->transform(function ($log) {

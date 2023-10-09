@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Front;
 
 use App\Models\Faq;
 use App\Models\Pages;
-use App\Models\Product;
 use App\Models\UserBike;
 use App\Models\UserData;
 use App\Models\MyProduct;
@@ -21,7 +20,6 @@ use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
 use App\Models\MessagesGroups;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 
 
 class FrontController extends Controller
@@ -102,6 +100,7 @@ class FrontController extends Controller
         $data['page'] = 'profil';
         $data['account_page'] = 'informations';
         $data['setting'] = SettingGeneral::where('id', 1)->first();
+        $data['savGroup'] = MessagesGroups::where('user_id', Auth::id())->first();
         return view('pages.frontend.profile.my-account', $data);
     }
 
@@ -146,9 +145,6 @@ class FrontController extends Controller
 
     public function showProfileSav()
     {
-        $message = MessagesGroups::where('user_id', Auth::id())->first();
-        $command_number = $message->command_number;
-
         $data = [];
         $data['me'] = auth()->user();
         $data['nav-sidebar'] = auth()->user();
@@ -157,6 +153,7 @@ class FrontController extends Controller
         // $data['order'] = UserOrder::where('document_number', $command_number)->first();
         // print_r($data['order']);
         $data['savGroup'] = MessagesGroups::where('user_id', Auth::id())->get();
+        $data['sav'] = MessagesGroups::where('user_id', Auth::id())->first();
         $data['setting'] = SettingGeneral::where('id', 1)->first();
         return view('pages.frontend.profile.my-sav', $data);
     }
@@ -186,19 +183,6 @@ class FrontController extends Controller
     /**
      *  Legal information
      */
-
-    //! a verifier
-    // public function showTest()
-    // {)
-    //     $data = [];
-    //     $data['group'] = 'legal';
-    //     $data['page'] = 'test';
-    //     $data['setting'] = SettingGeneral::where('id', 1)->first();
-    //     return view('pages.frontend.legal.about', $data);
-    // }
-
-
-
     public function showFavorite(Request $request, $sort = 'desc')
     {
         $data = [];
