@@ -12,6 +12,10 @@ class AddBikes extends ModalComponent
     public $checkedBikes = [];
     public $search = '';
 
+    public $currentPage = 1;
+
+
+    public $perPage = 10;
     public function addBikes()
     {
         // Récupérer la liste des motos sélectionnées dans un tableau
@@ -58,13 +62,18 @@ class AddBikes extends ModalComponent
         }
     }
 
+    public function setPage($page)
+    {
+        $this->currentPage = $page;
+    }
+
     public function render()
     {
         $data = [];
         if ($this->updatedSearch() != null) {
-            $data['bikes'] = $this->updatedSearch()->get();
+            $data['bikes'] = $this->updatedSearch()->paginate(8, ['*'], 'page', $this->currentPage);
         } else {
-            $data['bikes'] = $this->getBikeNotSelected()->get();
+            $data['bikes'] = $this->getBikeNotSelected()->paginate(8, ['*'], 'page', $this->currentPage);
         }
         return view('livewire.popups.back.products.product-add.add-bikes', $data);
     }

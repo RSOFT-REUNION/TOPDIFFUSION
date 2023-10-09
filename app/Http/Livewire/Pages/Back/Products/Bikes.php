@@ -10,7 +10,7 @@ class Bikes extends Component
     public function render()
     {
         $data = [];
-        $data['bikes'] = bike::orderBy('marque', 'asc')->paginate(50);
+        $data['bikes'] = bike::orderBy('marque', 'asc')->paginate(10);
         return view('livewire.pages.back.products.bikes', $data);
     }
 }

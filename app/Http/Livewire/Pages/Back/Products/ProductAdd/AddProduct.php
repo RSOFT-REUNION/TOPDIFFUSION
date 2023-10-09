@@ -342,7 +342,7 @@ class AddProduct extends Component
         $data['temp_swatch'] = ProductTempSwatches::where('product_id', $this->product->id)->get();
         $data['temp_pictures'] = ProductTempPictures::where('product_id', $this->product->id)->get();
         $data['taxes'] = ProductTaxes::all();
-        $data['bikes'] = CompatibleTempBike::all();
+        $data['bikes'] = CompatibleTempBike::paginate(10);
         return view('livewire.pages.back.products.product-add.add-product', $data);
     }
 }
