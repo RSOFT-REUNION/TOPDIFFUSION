@@ -81,5 +81,17 @@ class User extends Authenticatable
         return $this->belongsTo(CustomerGroup::class, 'customer_group_id');
     }
 
+    public function addToDefaultGroup()
+    {
+        // Trouvez le groupe par défaut
+        $defaultGroup = CustomerGroup::where('is_default', 1)->first();
 
+        if ($defaultGroup) {
+            // Créez une entrée dans la table customer_group_user
+            CustomerGroupUser::create([
+                'user_id' => $this->id,
+                'customer_group_id' => $defaultGroup->id,
+            ]);
+        }
+    }
 }

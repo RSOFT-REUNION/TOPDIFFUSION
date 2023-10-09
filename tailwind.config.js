@@ -7,14 +7,16 @@ export default {
     "./node_modules/flowbite/**/*.js"
   ],
   theme: {
-    extend: {},
+    extend: {
+        colors: {
+            'primary': '#092143',
+            'secondary': '#FBBC34'
+        },
+    },
     // scale: {
     //     '102': '1.01',
     //   },
-    colors: {
-        'primary': '#092143',
-        'secondary': '#FBBC34'
-    },
+
   },
   plugins: [],
 }

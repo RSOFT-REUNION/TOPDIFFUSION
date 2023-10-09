@@ -77,6 +77,38 @@ class MyProduct extends Model
         }
     }
 
+    // Récupérer le prix Pro avec les remises
+    public function getPriceWithDiscount()
+    {
+        $price = $this->getPriceHT();
+        $user = auth()->user();
+        $user_group = CustomerGroup::where('id', auth()->user()->customer_group_id)->first();
+        $product_category = ProductCategory::where('id', $this->category_id)->first();
+        $product_category_discount = $product_category->customerGroups()->where('customer_group_id', $user_group->id)->first()->pivot->discount_percentage;
+        if($product_category_discount != null) {
+            $discount_amount = $price * ($product_category_discount / 100);
+            $discount = $price - $discount_amount;
+            return $discount;
+        } else {
+            dd("PAS OK");
+        }
+    }
+
+    // Récupérer le % de remise du client
+    public function getCustomerDiscount()
+    {
+        $price = $this->getPriceHT();
+        $user = auth()->user();
+        $user_group = CustomerGroup::where('id', auth()->user()->customer_group_id)->first();
+        $product_category = ProductCategory::where('id', $this->category_id)->first();
+        $product_category_discount = $product_category->customerGroups()->where('customer_group_id', $user_group->id)->first()->pivot->discount_percentage;
+        if($product_category_discount != null) {
+            return $product_category_discount;
+        } else {
+            dd("PAS OK");
+        }
+    }
+
     public function promotions()
     {
         return $this->belongsToMany(MyProductPromotion::class, 'my_product_promotion_items', 'product_id', 'group_id');

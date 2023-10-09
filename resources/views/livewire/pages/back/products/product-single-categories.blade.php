@@ -24,21 +24,21 @@
                             </label>
                         </div>
                         {{-- Utilisez une variable de drapeau pour déterminer si le bouton "save" doit être affiché --}}
-                        @php
-                            $showSaveButton = false;
-                        @endphp
-                        @foreach ($group->productCategories as $category)
-                            @if ($category->pivot->discount_percentage != $discountPercentages[$group->id])
-                                {{-- Si au moins une catégorie nécessite un enregistrement, activez le drapeau --}}
-                                @php
-                                    $showSaveButton = true;
-                                @endphp
-                            @endif
-                        @endforeach
+{{--                        @php--}}
+{{--                            $showSaveButton = false;--}}
+{{--                        @endphp--}}
+{{--                        @foreach ($group->productCategories as $category)--}}
+{{--                            @if ($category->pivot->discount_percentage != $discountPercentages[$group->id])--}}
+{{--                                --}}{{-- Si au moins une catégorie nécessite un enregistrement, activez le drapeau --}}
+{{--                                @php--}}
+{{--                                    $showSaveButton = true;--}}
+{{--                                @endphp--}}
+{{--                            @endif--}}
+{{--                        @endforeach--}}
                         {{-- Affichez le bouton "save" uniquement si le drapeau est activé --}}
-                        @if ($showSaveButton)
+{{--                        @if ($showSaveButton)--}}
                             <button id="save" type="submit" class="ml-2 bg-[#FBBC34] px-4 py-2.5 rounded-lg"><i class="fa-solid fa-floppy-disk"></i></button>
-                        @endif
+{{--                        @endif--}}
                     </form>
                 </div>
             @endforeach

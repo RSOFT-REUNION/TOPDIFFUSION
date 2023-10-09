@@ -43,7 +43,26 @@
                     </tbody>
                 </table>
             </div>
+            @if ($bikes->hasPages())
+                <div class="flex items-center justify-center mt-7">
+                    {{-- Bouton "Précédent" --}}
+{{--                    @if ($bikes->onFirstPage())--}}
+{{--                        <button class="px-2 py-1 text-sm font-medium text-gray-300 bg-white border border-gray-300 cursor-default rounded-l-lg" disabled><i class="fa-solid fa-angle-left"></i> Précédent</button>--}}
+{{--                    @else--}}
+                        <button wire:click="setPreviousPage" class="px-2 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 cursor-pointer rounded-l-lg"><i class="fa-solid fa-angle-left"></i> Précédent</button>
+{{--                    @endif--}}
 
+                    {{-- Bouton "Suivant" --}}
+                    @if ($bikes->hasMorePages())
+                        <button wire:click="setNextPage" class="px-2 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 cursor-pointer rounded-r-lg">Suivant <i class="fa-solid fa-angle-right"></i></button>
+                    @else
+                        <button class="px-2 py-1 text-sm font-medium text-gray-300 bg-white border border-gray-300 cursor-default rounded-r-lg" disabled>Suivant <i class="fa-solid fa-angle-right"></i></button>
+                    @endif
+                </div>
+            @endif
+{{--            @if($bikes->count() > 0)--}}
+{{--                {{ $bikes->links() }}--}}
+{{--            @endif--}}
             <div class="mt-5">
                 <button type="submit" class="bg-primary text-white py-2.5 block w-full border border-transparent rounded-md hover:bg-primary/70 hover:border-primary duration-300"><i class="fa-solid fa-plus mr-3"></i>Ajouter</button>
             </div>

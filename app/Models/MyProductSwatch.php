@@ -9,6 +9,21 @@ class MyProductSwatch extends Model
 {
     use HasFactory;
 
+
+    // Récupérer le prix TTC du produit
+    public function getPriceTTC()
+    {
+        $price = $this->price_ttc;
+        return number_format($price, '2', ',', ' ');
+    }
+
+    // Récupérer le prix HT du produit
+    public function getPriceHT()
+    {
+        $price = $this->price_ht;
+        return number_format($price, '2', ',', ' ');
+    }
+
     public function getPriceProfessionnal()
     {
         $price =  $this->professionnal_price;

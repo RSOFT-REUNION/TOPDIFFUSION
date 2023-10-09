@@ -78,6 +78,8 @@ class RegisterInputs extends Component
         $defaultGroup = CustomerGroup::where('is_default', 1)->first();
         $user->customer_group_id = $defaultGroup->id;
         if($user->save()) {
+
+            $user->addToDefaultGroup();
             // Create users data
             $data = new UserData;
             $data->user_id = $user->id;

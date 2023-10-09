@@ -8,8 +8,7 @@ use App\Models\ProductCategory;
 
 class ProductSingleCategories extends Component
 {
-
-
+    protected $listeners = ['refreshLines' => '$refresh'];
     public $categoryId;
 
     public $groups;
@@ -58,12 +57,14 @@ class ProductSingleCategories extends Component
                 $category->customerGroups()->syncWithoutDetaching([
                     $groupId => [
                         'discount_percentage' => $this->discountPercentages[$groupId],
-                        'category_id' => $this->categoryId
+                        'product_category_id' => $this->categoryId
                     ]
                 ]);
 
                 session()->flash('success', 'Le pourcentage de remise a été mis à jour avec succès.');
-//                return back()->with('success', 'Le pourcentage de remise a été mis à jour avec succès.')
+                $this->emit('refreshLines');
+
+            // return back()->with('success', 'Le pourcentage de remise a été mis à jour avec succès.')
             } else {
                 session()->flash('error', 'La catégorie n\'existe pas.');
             }
@@ -72,7 +73,7 @@ class ProductSingleCategories extends Component
         }
 
        // Rechargez les données après la mise à jour
-       $this->refresh();
+        $this->emit('refreshLines');
     }
 
     public function render()
