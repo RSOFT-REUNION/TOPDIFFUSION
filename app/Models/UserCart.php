@@ -50,4 +50,5 @@ class UserCart extends Model
     {
         return $this->belongsTo(MyProduct::class, 'product_id');
     }
+
 }

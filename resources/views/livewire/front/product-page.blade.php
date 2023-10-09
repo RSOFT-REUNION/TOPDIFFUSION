@@ -1,8 +1,8 @@
 <div>
-    <div class="arianne my-4">
-        {{-- <p><a href="{{ route('front.home') }}"><i class="fa-solid fa-house mr-2"></i>Accueil</a> / Produit</p> --}}
+    {{--<div class="arianne my-4">
+        --}}{{-- <p><a href="{{ route('front.home') }}"><i class="fa-solid fa-house mr-2"></i>Accueil</a> / Produit</p> --}}{{--
         @livewire('components.breadcrumb', ['crumbs' => $crumbs])
-    </div>
+    </div>--}}
     <div class="flex items-center my-10">
         <!-- Carousel -->
         <div class="flex-1 mr-2">
@@ -151,12 +151,12 @@
                 <div class="product-prices">
                     @if($product->type == 1)
                         @if(!auth()->guest() && auth()->user()->professionnal === 1 && auth()->user()->verified === 1 && $my_setting->professionnal_prices === 1)
-                            <h2>{{ number_format($product->getPriceProfessionnal(), '2', ',', ' ') }} €</h2>
+                            <h2>{{ number_format($product->getPriceWithDiscount(), '2', ',', ' ') }} €</h2>
                         @else
-                            <h2>{{ number_format($product->getPriceCustomer(), '2', ',', ' ') }} €</h2>
+                            <h2>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} €</h2>
                         @endif
                         @if(!auth()->guest() && auth()->user()->professionnal === 1 && auth()->user()->verified === 1 && $settings->prices_type === 1 && $my_setting->professionnal_prices === 1)
-                            <p>Prix public conseillé: <b>{{ number_format($product->getPriceCustomer(), '2', ',', ' ') }} €</b> (-{{ $product->getPricePourcentage() }} %)</p>
+                            <p>Prix public conseillé: <b>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} €</b> (-{{ number_format($product->getCustomerDiscount(), '0', ',', ' ') }} %)</p>
                         @endif
                     @else
                         @if($config_swatch)

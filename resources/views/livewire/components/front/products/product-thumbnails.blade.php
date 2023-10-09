@@ -41,9 +41,11 @@
             <h2 class="mt-2">{{ $product->title }}</h2>
             <div class="inline-flex prices">
                 @if(!auth()->guest() && auth()->user()->professionnal === 1 && auth()->user()->verified === 1 && $my_setting->professionnal_prices === 1)
-                    <h3 class="items-center inline-flex">{{ number_format($product->getPriceProfessionnal(), '2', ',', ' ') }} € @if($product->multipleSwatch() == 1) <i class="fa-solid fa-circle-plus ml-3 text-amber-500 text-sm"></i> @endif</h3>
+                    <h3>{{ number_format($product->getPriceWithDiscount(), '2', ',', ' ') }} €</h3>
+                    <p class="text-sm text-gray-400">HT (-{{ number_format($product->getCustomerDiscount(), '0', ',', ' ') }} %)</p>
                 @else
-                    <h3>{{ number_format($product->getPriceCustomer(), '2', ',', ' ') }} €</h3>
+                    <h3>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} €</h3>
+                    <p class="text-sm text-gray-400">TTC</p>
                 @endif
             </div>
             @if(!auth()->guest() && auth()->user()->professionnal === 1 && auth()->user()->verified === 1 && $setting->prices_type === 1 && $my_setting->professionnal_prices === 1)
@@ -53,7 +55,7 @@
                             <p>Prix public conseillé</p>
                         </div>
                         <div class="flex-none">
-                            <h3>{{ number_format($product->getPriceCustomer(), '2', ',', ' ') }} €</h3>
+                            <h3>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} € (TTC)</h3>
                         </div>
                     </div>
                 </div>
