@@ -45,7 +45,7 @@ class CategoriesImport implements ToCollection, WithBatchInserts, WithProgressBa
                 }
                 if($cat->save()) {
                     if($row[5] != null) {
-                        $parentCategory = ProductCategory::where('slug', $row[1])->first()->id;
+                        $parentCategory = ProductCategory::where('slug', strtolower(str_replace($characters, $correct_characters, $row[1])))->first()->id;
                         $category = ProductCategory::where('id', $cat->id)->first();
                         $category->parent_id = $parentCategory;
                         $category->update();

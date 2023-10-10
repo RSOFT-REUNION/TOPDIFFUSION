@@ -205,16 +205,22 @@ class ProductPage extends Component
 
         // FIXME: Ne pas afficher toutes les motos (ils sont en doubles)
         // Compatible BIKE
-        $userBike = UserBike::where('user_id', auth()->user()->id)->get();
-        $compatibleBikeIds = $userBike->pluck('bike_id')->toArray();
-        $data['allCompatibleBike'] = CompatibleBike::whereIn('bike_id', $compatibleBikeIds)->with('bike')->get();
+        if(!auth()->guest()) {
+            $userBike = UserBike::where('user_id', auth()->user()->id)->get();
+            $compatibleBikeIds = $userBike->pluck('bike_id')->toArray();
+            $data['allCompatibleBike'] = CompatibleBike::whereIn('bike_id', $compatibleBikeIds)->with('bike')->get();
 
-        $isUserBikeCompatible = $data['allCompatibleBike']->count() > 0; // Vérifier si la collection n'est pas vide
+            $isUserBikeCompatible = $data['allCompatibleBike']->count() > 0; // Vérifier si la collection n'est pas vide
 
-        if ($isUserBikeCompatible) {
-            // L'utilisateur a au moins une moto compatible
-            $this->userBikeCompatible = true;
+            if ($isUserBikeCompatible) {
+                // L'utilisateur a au moins une moto compatible
+                $this->userBikeCompatible = true;
+            }
+        } else {
+            $data['allCompatibleBike'] = CompatibleBike::where('product_id', $this->product_id)->orderBy('marque', 'asc')->get();
         }
+
+
 
 
         return view('livewire.front.product-page', $data);

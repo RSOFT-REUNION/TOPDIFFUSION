@@ -14,7 +14,7 @@ class MyProductSwatch extends Model
     public function getPriceTTC()
     {
         $price = $this->price_ttc;
-        return number_format($price, '2', ',', ' ');
+        return $price;
     }
 
     // Récupérer le prix HT du produit
@@ -22,6 +22,21 @@ class MyProductSwatch extends Model
     {
         $price = $this->price_ht;
         return number_format($price, '2', ',', ' ');
+    }
+
+    // Récupérer le prix Pro avec les remises
+    public function getPriceWithDiscount()
+    {
+        $price = $this->price_ht;
+        $product = MyProduct::where('id', $this->product_id)->first();
+        $user_group = CustomerGroup::where('id', auth()->user()->customer_group_id)->first();
+        $product_category = ProductCategory::where('id', $product->category_id)->first();
+        $product_category_discount = $product_category->customerGroups()->where('customer_group_id', $user_group->id)->first()->pivot->discount_percentage;
+        if($product_category_discount != null) {
+            $discount_amount = $price * ($product_category_discount / 100);
+            $discount = $price - $discount_amount;
+            return $discount;
+        }
     }
 
     public function getPriceProfessionnal()

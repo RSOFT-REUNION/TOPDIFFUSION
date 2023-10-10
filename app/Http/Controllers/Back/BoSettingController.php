@@ -33,6 +33,17 @@ class BoSettingController extends Controller
     }
 
     /*
+     * Show Shipping
+     */
+    public function showSettingShipping()
+    {
+        $data = [];
+        $data['group'] = 'settings';
+        $data['page'] = 'shipping';
+        return view('pages.backend.settings.setting-shipping', $data);
+    }
+
+    /*
      * Show avanced settings
      */
     public function showSettingAdvanced()

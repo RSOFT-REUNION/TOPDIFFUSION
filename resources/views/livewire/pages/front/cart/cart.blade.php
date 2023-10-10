@@ -7,7 +7,7 @@
                     <thead>
                     <tr>
                         <th class="text-left py-4">Produit</th>
-                        <th>Prix unitaire</th>
+                        <th>Prix unitaire (HT)</th>
                         <th>Quantité</th>
                         <th>Dispo.</th>
                         <th>Prix total (TTC)</th>
@@ -70,7 +70,11 @@
                                     <h3 class="text-sm">Livraison</h3>
                                 </div>
                                 <div class="flex-none">
-                                    <p class="text-xl font-bold">0,00 €</p>
+                                    @if(auth()->user()->professionnal == 1 && auth()->user()->verified == 1)
+                                        <p class="bg-green-500 text-white px-2 py-0.5 rounded-md">Offert</p>
+                                    @else
+                                        {!! $shipping !!}
+                                    @endif
                                 </div>
                             </div>
                         </li>
@@ -80,7 +84,7 @@
                                     <h3 class="text-sm">Total TTC</h3>
                                 </div>
                                 <div class="flex-none">
-                                    <p class="text-xl font-bold">{{ $total_price }} €</p>
+                                    <p class="text-xl font-bold">{{ number_format($total_price, '2', ',', ' ') }} €</p>
                                 </div>
                             </div>
                         </li>
@@ -89,8 +93,8 @@
             </div>
             @if($user_address->count() > 0)
                 @if(auth()->user()->professionnal === 1 && auth()->user()->verified === 1)
-                    <button wire:click="initOrder" class="bg-gray-100 mt-2 block w-full py-3 rounded-lg font-bold border border-transparent hover:bg-secondary/30 hover:border-secondary duration-300">Chèque à la livraison</button>
-                    <button wire:click="initOrder" class="bg-gray-100 mt-2 block w-full py-3 rounded-lg font-bold border border-transparent hover:bg-secondary/30 hover:border-secondary duration-300">Virement à la livraison</button>
+                    <button wire:click="initOrderCheck" class="bg-gray-100 mt-2 block w-full py-3 rounded-lg font-bold border border-transparent hover:bg-secondary/30 hover:border-secondary duration-300">Chèque à la livraison</button>
+                    <button wire:click="initOrderBilling" class="bg-gray-100 mt-2 block w-full py-3 rounded-lg font-bold border border-transparent hover:bg-secondary/30 hover:border-secondary duration-300">Virement à la livraison</button>
                 @endif
                 <hr class="my-2 border-gray-100">
                 <button wire:click="initOrder" class="bg-primary text-white border border-transparent hover:bg-primary/30 hover:border-primary hover:text-primary duration-300 mt-2 block w-full py-3 rounded-lg font-bold">Payer directement par carte</button>
@@ -100,7 +104,6 @@
                 </p>
                 <button type="button" onclick="window.location.href='{{ route('front.profile') }}'" class="bg-secondary mt-2 block w-full py-3 rounded-lg font-bold">Renseigner une adresse</button>
             @endif
-
         </div>
     </div>
 </main>
