@@ -22,9 +22,6 @@
                                     @elseif($product_stock < 3 && $product_stock > 0)
                                         <p class="inline-block bg-orange-500 stock-tag-on text-white">Plus que {{ $product_stock }}</p>
                                     @endif
-                                    {{--@if ($category)
-                                        <p class="inline-block marque-tag bg-[#fbbc34] font-bold text-black">{{ $category->delivery }} %</p>
-                                    @endif--}}
                                 </div>
                                 <img src="{{ asset('storage/images/products/'. $product->cover) }}" alt="image du produit">
                             </div>
@@ -79,16 +76,6 @@
                 @csrf
                 <div class="inline-flex items-center gap-x-3">
                     <p class="marque-tag">{{ $product->getBrand()->title }}</p>
-                    {{-- @if ($category)
-                        <p class="marque-tag bg-[#fbbc34] text-black">{{ $category->delivery }} %</p>
-                    @endif --}}
-                    {{-- @if($product_infos->count() > 0)
-                        @foreach($product_infos as $info)
-                            @if($info->title == 'POS')
-                                <p class="ml-1 other-tag">{{ $info->value }}</p>
-                            @endif
-                        @endforeach
-                    @endif --}}
                 </div>
                 <div class="product-title">
                     <h1>{{ $product->title }}</h1>
@@ -151,28 +138,28 @@
                 <div class="product-prices">
                     @if($product->type == 1)
                         @if(!auth()->guest() && auth()->user()->professionnal === 1 && auth()->user()->verified === 1 && $my_setting->professionnal_prices === 1)
-                            <h2>{{ number_format($product->getPriceWithDiscount(), '2', ',', ' ') }} €</h2>
+                            <h2>{{ number_format($product->getPriceWithDiscount(), '2', ',', ' ') }} € <span class="text-sm text-gray-400">HT</span></h2>
                         @else
-                            <h2>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} €</h2>
+                            <h2>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} € <span class="text-sm text-gray-400">TTC</span></h2>
                         @endif
                         @if(!auth()->guest() && auth()->user()->professionnal === 1 && auth()->user()->verified === 1 && $settings->prices_type === 1 && $my_setting->professionnal_prices === 1)
-                            <p>Prix public conseillé: <b>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} €</b> (-{{ number_format($product->getCustomerDiscount(), '0', ',', ' ') }} %)</p>
+                            <p>Prix public conseillé (TTC): <b>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} €</b> (-{{ number_format($product->getCustomerDiscount(), '0', ',', ' ') }} %)</p>
                         @endif
                     @else
                         @if($config_swatch)
                             @if(!auth()->guest() && auth()->user()->professionnal === 1 && auth()->user()->verified === 1 && $my_setting->professionnal_prices === 1)
-                                <h2>{{ $swatch_info->getPriceProfessionnal() }} €</h2>
+                                <h2>{{ number_format($product->getPriceWithDiscount(), '2', ',', ' ') }} € <span class="text-sm text-gray-400">HT</span></h2>
                             @else
-                                <h2>{{ $swatch_info->getPriceCustomer() }} €</h2>
+                                <h2>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} € <span class="text-sm text-gray-400">TTC</span></h2>
                             @endif
                             @if(!auth()->guest() && auth()->user()->professionnal === 1 && auth()->user()->verified === 1 && $settings->prices_type === 1 && $my_setting->professionnal_prices === 1)
-                                <p>Prix public conseillé: <b>{{ $swatch_info->getPriceCustomer() }} €</b> (-{{ $product->getPricePourcentage() }} %)</p>
+                                <p>Prix public conseillé: <b>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} €</b> (-{{ number_format($product->getCustomerDiscount(), '0', ',', ' ') }} %)</p>
                             @endif
                         @else
                             @if(!auth()->guest() && auth()->user()->professionnal === 1 && auth()->user()->verified === 1 && $my_setting->professionnal_prices === 1)
-                                <h2>{{ number_format($product->getPriceProfessionnal(), '2', ',', ' ') }} €</h2>
+                                <h2>{{ number_format($product->getPriceWithDiscount(), '2', ',', ' ') }} € <span class="text-sm text-gray-400">HT</span></h2>
                             @else
-                                <h2>{{ number_format($product->getPriceCustomer(), '2', ',', ' ') }} €</h2>
+                                <h2>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} € <span class="text-sm text-gray-400">TTC</span></h2>
                             @endif
                         @endif
                     @endif
@@ -255,36 +242,24 @@
                 @endif
                 <div class="table-box-outline">
                     <table>
-                        @foreach ($allCompatibleBike as $bike)
-                            <thead>
-                            <tr>
-                                <th>{{ $bike->bike->marque }}</th>
-                                <th>{{ $bike->bike->cylindree }}</th>
-                                <th>{{ $bike->bike->modele }}</th>
-                                <th>{{ $bike->bike->annee }}</th>
-                            </tr>
-                            </thead>
-                            {{-- <tbody>
-                            <tr>
-                                <td>KYMCO</td>
-                                <td>50</td>
-                                <td>GRAND DINK 50</td>
-                                <td>2004</td>
-                            </tr>
-                            <tr>
-                                <td>KYMCO</td>
-                                <td>50</td>
-                                <td>GRAND DINK 50</td>
-                                <td>2004</td>
-                            </tr>
-                            <tr>
-                                <td>KYMCO</td>
-                                <td>50</td>
-                                <td>GRAND DINK 50</td>
-                                <td>2004</td>
-                            </tr>
-                            </tbody> --}}
-                        @endforeach
+                        <thead>
+                        <tr>
+                            <th>Marque</th>
+                            <th>Cylindrée</th>
+                            <th>Modèle</th>
+                            <th>Année</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($allCompatibleBike as $bike)
+                                <tr>
+                                    <td>{{ $bike->bike->marque }}</td>
+                                    <td>{{ $bike->bike->cylindree }}</td>
+                                    <td>{{ $bike->bike->modele }}</td>
+                                    <td>{{ $bike->bike->annee }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
                     </table>
                 </div>
             @endif

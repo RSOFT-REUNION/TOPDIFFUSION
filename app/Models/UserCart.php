@@ -23,7 +23,7 @@ class UserCart extends Model
     // Avoir le prix unitaire de chaque article
     public function getUnitPrice()
     {
-        return number_format($this->getSwatches()->professionnal_price, '2', ',', ' ');
+        return number_format($this->getSwatches()->getPriceWithDiscount(), '2', ',', ' ');
     }
 
     // Récupérer la quantité en stock de l'article
@@ -35,15 +35,26 @@ class UserCart extends Model
     // Avoir le prix total de chaque article à la ligne
     public function getTotalPriceLine()
     {
-        $amount = $this->getSwatches()->professionnal_price * $this->quantity;
-        return number_format($amount, '2', ',', ' ');
+        if(auth()->user()->professionnal == 1 && auth()->user()->verified == 1) {
+            $amount = $this->getSwatches()->getPriceWithDiscount() * $this->quantity;
+            return number_format($amount, '2', ',', ' ');
+        } else {
+            $amount = $this->getSwatches()->getPriceTTC() * $this->quantity;
+            return number_format($amount, '2', ',', ' ');
+        }
+
     }
 
     // Avoir le prix total de chaque article à la ligne sans la mise en forme
     public function getTotalPriceLineBlank()
     {
-        $amount = $this->getSwatches()->professionnal_price * $this->quantity;
-        return $amount;
+        if(auth()->user()->professionnal == 1 && auth()->user()->verified == 1) {
+            $amount = $this->getSwatches()->getPriceWithDiscount() * $this->quantity;
+            return $amount;
+        } else {
+            $amount = $this->getSwatches()->getPriceTTC() * $this->quantity;
+            return $amount;
+        }
     }
 
     public function product()

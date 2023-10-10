@@ -114,6 +114,7 @@ Route::group([
         Route::prefix('/réglages')->group(function () {
             Route::get('/', [BoSettingController::class, 'showSettingGeneral'])->name('back.setting');
             Route::get('/paiement-et-taxes', [BoSettingController::class, 'showSettingPayment'])->name('back.setting.payment');
+            Route::get('/livraison', [BoSettingController::class, 'showSettingShipping'])->name('back.setting.shipping');
             Route::get('/avance', [BoSettingController::class, 'showSettingAdvanced'])->name('back.setting.advanced');
             Route::get('/performance', [BoSettingController::class, 'showSettingPerform'])->name('back.setting.perform');
             Route::get('/information', [BoSettingController::class, 'showSettingInfo'])->name('back.setting.info');

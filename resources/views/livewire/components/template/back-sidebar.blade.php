@@ -60,6 +60,7 @@
                     <li><a href="{{ route('back.dashboard') }}" class="btn-sidebar border-b border-gray-300 mb-3"><i class="fa-solid fa-arrow-left mr-3"></i>Retour</a></li>
                     <li><a href="{{ route('back.setting') }}" class="btn-sidebar @if ($page == 'general') btn-sidebar-active @endif"><i class="fa-solid fa-sliders mr-3"></i>Réglages généraux</a></li>
                     <li><a href="{{ route('back.setting.payment') }}" class="btn-sidebar mt-1 @if ($page == 'payment') btn-sidebar-active @endif"><i class="fa-solid fa-credit-card mr-3"></i>Paiement & taxes</a></li>
+                    <li><a href="{{ route('back.setting.shipping') }}" class="btn-sidebar mt-1 @if ($page == 'shipping') btn-sidebar-active @endif"><i class="fa-solid fa-shipping-fast mr-3"></i>Livraison</a></li>
                     <li><a href="{{ route('back.setting.info') }}" class="btn-sidebar mt-1 @if ($page == 'informations') btn-sidebar-active @endif"><i class="fa-solid fa-circle-info mr-3"></i>Informations</a></li>
                     <h2>Réglages avancés</h2>
                     <li><a href="{{ route('back.setting.advanced') }}"

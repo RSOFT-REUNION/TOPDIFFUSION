@@ -29,7 +29,9 @@ class CartController extends Controller
             $getWebPaymentDetailsRequest['paylinetoken'] = $_GET['paylinetoken']; // web payment session unique identifier
 
             $getWebPaymentDetailsResponse = $paylineSDK->getWebPaymentDetails($getWebPaymentDetailsRequest);
-            dd($getWebPaymentDetailsResponse);
+            if($getWebPaymentDetailsRequest == '02305') {
+                $data['response_payment'] = 'Paiement annulé';
+            }
         }
 
         $cart = UserCart::where('user_id', auth()->user()->id)->first();
@@ -49,6 +51,8 @@ class CartController extends Controller
     // Récupération de la réponse du controller
     public function showPaymentReturn(Request $request)
     {
+        $data = [];
+
         $merchant_id = Config::get('payment.merchant_id');
         $environment = Config::get('payment.environment');
         $access_key = Config::get('payment.access_key');
@@ -63,11 +67,13 @@ class CartController extends Controller
             $getWebPaymentDetailsRequest = array();
             $getWebPaymentDetailsRequest['paylinetoken'] = $_GET['paylinetoken']; // web payment session unique identifier
 
-            $getWebPaymentDetailsResponse = $paylineSDK->getWebPaymentDetails($getWebPaymentDetailsRequest);
-            dd($getWebPaymentDetailsResponse);
+            $getWebPaymentDetailsResponse = $paylineSDK->doWebPayment($getWebPaymentDetailsRequest);
+            $data['response_payment'] = $getWebPaymentDetailsResponse['result']['longMessage'];
+        } else {
+            $data['response_payment'] = 'Paiement annulé';
         }
 
-        $data = [];
+
         $data['page'] = 'success_payment';
         $data['setting'] = SettingGeneral::where('id', 1)->first();
         return view('pages.frontend.cart.success-payment', $data);

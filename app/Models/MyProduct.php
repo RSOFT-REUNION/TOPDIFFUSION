@@ -89,8 +89,6 @@ class MyProduct extends Model
             $discount_amount = $price * ($product_category_discount / 100);
             $discount = $price - $discount_amount;
             return $discount;
-        } else {
-            dd("PAS OK");
         }
     }
 
