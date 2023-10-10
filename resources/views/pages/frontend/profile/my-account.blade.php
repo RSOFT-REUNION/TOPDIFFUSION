@@ -48,34 +48,36 @@
                 <p>Date d'inscription</p>
             </div>
         </div>
-        <hr class="my-3">
-        <div class="flex items-center mx-4">
-            <div class="flex-1">
-                <h2 class="subtitle">Mon entreprise</h2>
-            </div>
-        </div>
-        <div class="flex mt-3">
-            <div class="flex-1 mr-2">
-                <div class="text-input">
-                    <label for="name">Raison sociale</label>
-                    <p>{{ $meData->company_name }}</p>
-                </div>
-                <div class="text-input mt-2">
-                    <label for="name">Numéro RCS</label>
-                    <p>{{ $meData->company_rcs }}</p>
+        @if (auth()->user()->professionnal)
+            <hr class="my-3">
+            <div class="flex items-center mx-4">
+                <div class="flex-1">
+                    <h2 class="subtitle">Mon entreprise</h2>
                 </div>
             </div>
-            <div class="flex-1 ml-2">
-                <div class="text-input">
-                    <label for="name">Nom commercial</label>
-                    <p>@if($meData->company_com_name) {{ $meData->company_com_name }} @else <span class="text-blue-500">Aucun nom commercial renseigné</span> @endif</p>
+            <div class="flex mt-3">
+                <div class="flex-1 mr-2">
+                    <div class="text-input">
+                        <label for="name">Raison sociale</label>
+                        <p>{{ $meData->company_name }}</p>
+                    </div>
+                    <div class="text-input mt-2">
+                        <label for="name">Numéro RCS</label>
+                        <p>{{ $meData->company_rcs }}</p>
+                    </div>
                 </div>
-                <div class="text-input mt-2">
-                    <label for="name">Numéro de TVA</label>
-                    <p>{{ $meData->company_tva }}</p>
+                <div class="flex-1 ml-2">
+                    <div class="text-input">
+                        <label for="name">Nom commercial</label>
+                        <p>@if($meData->company_com_name) {{ $meData->company_com_name }} @else <span class="text-blue-500">Aucun nom commercial renseigné</span> @endif</p>
+                    </div>
+                    <div class="text-input mt-2">
+                        <label for="name">Numéro de TVA</label>
+                        <p>{{ $meData->company_tva }}</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
         <hr class="my-3">
         <div class="flex items-center mx-4">
             <div class="flex-1">
