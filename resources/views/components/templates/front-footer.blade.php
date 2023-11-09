@@ -21,7 +21,12 @@
                             <li class="hover:cursor-pointer"><a href="{{ route('front.profile') }}">Mon compte</a></li>
                             <li class="hover:cursor-pointer"><a href="{{ route('logout') }}">Me déconnecter</a></li>
                         @endif
-                        <li><a href="{{ route('front.faq') }}">FAQ</a></li>
+                        @php
+                            $faqCount = \App\Models\Faq::count();
+                        @endphp
+                        @if($faqCount > 0)
+                            <li><a href="{{ route('front.faq') }}">FAQ</a></li>
+                        @endif
                     </ul>
                 </div>
                 @if ($setting->main_phone || $setting->main_email)

@@ -86,7 +86,7 @@ class FrontController extends Controller
     public function logout()
     {
         auth()->logout();
-
+        
         return redirect()->route('front.home');
     }
 
@@ -295,6 +295,7 @@ class FrontController extends Controller
         $data['group'] = 'legal';
         $data['page'] = 'faq';
         $data['setting'] = SettingGeneral::where('id', 1)->first();
+        $data['Faq'] = Faq::first();
 
         return view('pages.frontend.legal.faq', $data);
     }
