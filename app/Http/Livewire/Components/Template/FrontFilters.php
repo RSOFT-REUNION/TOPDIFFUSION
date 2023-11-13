@@ -103,7 +103,17 @@ class FrontFilters extends Component
         // Stockez les résultats dans la session
         session(['bikesInfos' => $searchBikeInfo->toArray()]);
 
-        return redirect('/filtres');
+        // return redirect('/filtres');
+
+        // Récupérer l'ID de la moto par rapport aux filtres séléctionnés
+        $bike = bike::where('marque', $this->selectedBrand)
+            ->where('cylindree', $this->selectedCylindree)
+            ->where('modele', $this->selectedModele)
+            ->where('annee', $this->selectedYear)
+            ->first();
+
+        // Redirigez l'utilisateur vers la page de résultats avec la moto dans les paramètres d'URL
+        return redirect()->route('front.product.filtres', ['id' => $bike->id]);
     }
 
     public function updatedSelectedBrand($value)

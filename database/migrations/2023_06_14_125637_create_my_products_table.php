@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug');
             $table->integer('type')->default(1); // 1 -> Simple Product; 2 -> Swatches Product;
+            $table->integer('kit_element')->nullable();
             $table->string('cover')->nullable();
             $table->foreignId('category_id')->constrained('product_categories', 'id');
             $table->foreignId('brand_id')->nullable()->constrained('product_brands', 'id');

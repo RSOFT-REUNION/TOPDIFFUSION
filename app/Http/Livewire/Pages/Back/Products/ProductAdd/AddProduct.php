@@ -23,7 +23,7 @@ class AddProduct extends Component
     use WithFileUploads;
 
     public $product;
-    public $title, $slug, $cover, $type;
+    public $title, $slug, $cover, $type, $kit_type;
     public $UGS;
     public $short_description, $long_description;
     public $TVA_custom = 'default';
@@ -42,6 +42,7 @@ class AddProduct extends Component
         $this->product = ProductTemp::where('id', $product_id)->first();
         $this->title = $this->product->title;
         $this->type = $this->product->type;
+        $this->kit_type = $this->product->kit_element;
         $this->slug = ($this->slug == $this->title) ? strtolower(str_replace($this->characters, $this->correct_characters, $this->title)) : strtolower(str_replace($this->characters, $this->correct_characters, $this->slug));
         $this->short_description = $this->product->short_description;
         $this->long_description = $this->product->long_description;
@@ -243,6 +244,7 @@ class AddProduct extends Component
         $temp = $this->product;
         $temp->title = $this->title;
         $temp->slug = $this->slug;
+        $temp->kit_element = $this->kit_type;
         $temp->type = $this->type;
         if ($this->cover) {
             $temp->cover = strtolower(str_replace($this->characters, $this->correct_characters, $this->title)) . '.' . $this->cover->extension();

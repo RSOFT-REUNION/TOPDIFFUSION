@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Models\bike;
+use App\Models\CompatibleBike;
 use App\Models\Faq;
 use App\Models\Pages;
 use App\Models\UserBike;
@@ -86,7 +88,7 @@ class FrontController extends Controller
     public function logout()
     {
         auth()->logout();
-        
+
         return redirect()->route('front.home');
     }
 
@@ -301,12 +303,18 @@ class FrontController extends Controller
     }
 
 
-    public function filtres()
+    public function filtres($id)
     {
+        if($id) {
+            // Récupérère les infos de la motos
+            $bike = bike::where('id', $id)->first();
+        }
+
         $data = [];
         $data['page'] = 'filters';
         $data['setting'] = SettingGeneral::where('id', 1)->first();
         $data['bikesInfos'] = session('bikesInfos', []);
+        $data['bike'] = $bike;
         return view('filtres', $data);
     }
 }
