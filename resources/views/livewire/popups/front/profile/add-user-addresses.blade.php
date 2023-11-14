@@ -64,7 +64,11 @@
                 <input type="checkbox" id="main" wire:model="main">
                 <label for="main">Il s'agit de mon adresse par défaut</label>
             </div>
-            <div class="mt-10">
+            <div class="flex flex-row items-center justify-center gap-x-4 bg-secondary bg-opacity-20 w-full rounded-lg border border-secondary py-2 mt-5">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <h3>Nous ne livrons pas à mafate</h3>
+            </div>
+            <div class="mt-5">
                 <button type="submit" class="btn-secondary block w-full">Ajouter</button>
             </div>
         </form>
