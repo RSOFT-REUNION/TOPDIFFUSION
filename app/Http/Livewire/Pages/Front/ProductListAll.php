@@ -28,7 +28,7 @@ class ProductListAll extends Component
     public function render()
     {
         $data = [];
-        $data['products'] = MyProduct::orderBy('created_at', 'desc')->paginate(9);
+        $data['products'] = MyProduct::orderBy('created_at', 'desc')->paginate(15);
         return view('livewire.pages.front.product-list-all', $data);
     }
 }
