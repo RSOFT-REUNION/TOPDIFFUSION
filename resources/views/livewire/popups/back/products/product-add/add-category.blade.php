@@ -15,11 +15,25 @@
             <label for="category">Catégorie<span class="text-red-500">*</span></label>
             <select wire:model="category" id="category">
                 <option value="">-- Sélectionner une catégorie --</option>
-                @foreach($categories as $category)
-                    <option value="{{ $category->id }}">{{ $category->title }}</option>
+
+                @foreach($categories_level_1 as $category1)
+                    <optgroup label="{{ $category1->title }}">
+                        @foreach($categories_level_2 as $category2)
+                            @if($category2->parent_id === $category1->id)
+                                <option value="{{ $category2->id }}">{{ $category2->title }}</option>
+
+                                @foreach($categories_level_3 as $category3)
+                                    @if($category3->parent_id === $category2->id)
+                                        <option value="{{ $category3->id }}">— {{ $category3->title }}</option>
+                                    @endif
+                                @endforeach
+                            @endif
+                        @endforeach
+                    </optgroup>
                 @endforeach
             </select>
-            @if($errors->has('parent_category'))
+
+        @if($errors->has('parent_category'))
                 <p class="text-error">{{ $errors->first('parent_category') }}</p>
             @endif
         </div>
