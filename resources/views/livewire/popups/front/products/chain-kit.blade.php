@@ -21,15 +21,31 @@
                     <div class="p-4">
                         <div class="textfield-white">
                             <label for="sprocket_size">Denture</label>
-                            <select id="sprocket_size">
-                                <option value="1">14</option>
+                            <select id="sprocket_size" wire:model="gear_type">
+                                <option value="">--</option>
+                                @foreach($products as $product)
+                                    @if($product->kit_element == 2)
+                                        @foreach($product_swatches as $swatch)
+                                            @if($swatch->product_id == $product->id)
+                                                {{-- TODO: Revoir la manière dont nous récupérons cette données. --}}
+                                                <option value="{{ $swatch->id }}">{{ $swatch->gear_tooth }}</option>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                @endforeach
                             </select>
                         </div>
                         <div class="flex items-center gap-2 mt-2">
                             <div class="flex-grow">
                                 <div class="text-input-white">
                                     <label for="chain_parts">Pièce</label>
-                                    <p>73301-14</p>
+                                    <p>
+                                        @if($gear_type != null)
+                                            {{ $gear->ugs }}{{ $gear->ugs_swatch }}
+                                        @else
+                                            --
+                                        @endif
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -42,8 +58,18 @@
                     <div class="p-4">
                         <div class="textfield-white">
                             <label for="chain_type">Type de chaine</label>
-                            <select id="chain_type">
-                                <option value="1">A520MX6</option>
+                            <select id="chain_type" wire:model="chain_type">
+                                <option value="">-- Sélectionner --</option>
+                                @foreach($products as $product)
+                                    @if($product->kit_element == 1)
+                                        @foreach($product_swatches as $swatch)
+                                            @if($swatch->product_id == $product->id)
+                                                {{-- TODO: Revoir la manière dont nous récupérons cette données. --}}
+                                                <option value="{{ $swatch->id }}">{{ $swatch->chains_reference }} - {{ $swatch->chains_length }}</option>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                @endforeach
                             </select>
                         </div>
                         <div class="flex items-center gap-2 mt-2">
@@ -56,13 +82,25 @@
                             <div class="flex-none w-1/4">
                                 <div class="text-input-white">
                                     <label for="chain_length">Longueur</label>
-                                    <p>118</p>
+                                    <p>
+                                        @if($chain_type != null)
+                                            {{ $chain->chains_length }}
+                                        @else
+                                            --
+                                        @endif
+                                    </p>
                                 </div>
                             </div>
                             <div class="flex-grow">
                                 <div class="text-input-white">
                                     <label for="chain_parts">Pièce</label>
-                                    <p>A520MX6-GG 118L</p>
+                                    <p>
+                                        @if($chain_type != null)
+                                            {{ $chain->ugs }}{{ $chain->ugs_swatch }}
+                                        @else
+                                            --
+                                        @endif
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -75,15 +113,31 @@
                     <div class="p-4">
                         <div class="textfield-white">
                             <label for="crown_size">Denture</label>
-                            <select id="crown_size">
-                                <option value="1">51</option>
+                            <select id="crown_size" wire:model="crown_type">
+                                <option value="">--</option>
+                                @foreach($products as $product)
+                                    @if($product->kit_element == 3)
+                                        @foreach($product_swatches as $swatch)
+                                            @if($swatch->product_id == $product->id)
+                                                {{-- TODO: Revoir la manière dont nous récupérons cette données. --}}
+                                                <option value="{{ $swatch->id }}">{{ $swatch->crown_tooth }}</option>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                @endforeach
                             </select>
                         </div>
                         <div class="flex items-center gap-2 mt-2">
                             <div class="flex-grow">
                                 <div class="text-input-white">
                                     <label for="chain_parts">Pièce</label>
-                                    <p>72304N-51</p>
+                                    <p>
+                                        @if($crown_type != null)
+                                            {{ $crown->ugs }}{{ $crown->ugs_swatch }}
+                                        @else
+                                            --
+                                        @endif
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -93,8 +147,12 @@
         </div>
         <div class="mt-4 text-right">
             <div class="inline-flex items-center">
-                <p class="font-bold text-xl pr-2 mr-2 border-r border-slate-200">342,00 €</p>
-                <button class="btn-secondary">Ajouter mon kit au panier</button>
+                @if($chain_type && $gear_type && $crown_type)
+                    <p class="font-bold text-xl pr-2 mr-2 border-r border-slate-200">{{ number_format($price, '2', ',', ' ') }} €</p>
+                @endif
+                @if(auth()->user())
+                    <button class="btn-secondary">Ajouter mon kit au panier</button>
+                @endif
             </div>
         </div>
     </div>

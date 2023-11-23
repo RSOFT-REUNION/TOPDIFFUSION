@@ -26,6 +26,7 @@ class AddProduct extends Component
     public $title, $slug, $cover, $type, $kit_type;
     public $UGS;
     public $short_description, $long_description;
+    public $chains_reference, $chains_ugs, $gear_reference, $gear_ugs, $crown_reference, $crown_ugs;
     public $TVA_custom = 'default';
     public $list_tva_custom;
     public $price_HT, $price_TTC;
@@ -93,6 +94,7 @@ class AddProduct extends Component
         $product->slug = $temp_product->slug;
         $product->cover = $temp_product->cover;
         $product->type = $temp_product->type;
+        $product->kit_element = $temp_product->kit_element;
         $product->short_description = $temp_product->short_description;
         $product->long_description = $temp_product->long_description;
         $product->brand_id = $temp_product->brand_id;
@@ -173,7 +175,7 @@ class AddProduct extends Component
                         $stock->save();
                     }
                 } elseif($product->type == 4) {
-                    $swatch = new ProductTempSwatches;
+                    $swatch = new MyProductSwatch;
                     $swatch->ugs = $ts->ugs;
                     $swatch->ugs_swatch = $ts->ugs_swatch;
                     $swatch->product_id = $ts->product->id;
@@ -195,6 +197,71 @@ class AddProduct extends Component
                         $stock->ugs = $swatch->ugs.'-'.$swatch->ugs_swatch;
                         $stock->quantity = 0;
                         $stock->save();
+                    }
+                } elseif ($product->type == 3) {
+                    if($product->kit_element == 1) {
+                        $swatch = new MyProductSwatch;
+                        $swatch->product_id = $product->id;
+                        $swatch->type = '3';
+                        $swatch->ugs = $ts->ugs;
+                        $swatch->ugs_swatch = $ts->ugs_swatch;
+                        $swatch->chains_reference = $ts->chains_reference;
+                        $swatch->chains_length = $ts->chains_length;
+                        $swatch->price_ht = $ts->price_ht;
+                        $swatch->price_ttc = $ts->price_ttc;
+                        $swatch->have_tva = $ts->have_tva;
+                        $swatch->default_tva = $ts->default_tva;
+                        if($swatch->save()) {
+                            // Remplissage des stocks
+                            $stock = new MyProductStock;
+                            $stock->product_id = $product->id;
+                            $stock->is_swatch = 1;
+                            $stock->ugs = $swatch->ugs.'-'.$swatch->ugs_swatch;
+                            $stock->quantity = 0;
+                            $stock->save();
+                        }
+                    } elseif($product->kit_element == 2) {
+                        $swatch = new MyProductSwatch;
+                        $swatch->product_id = $product->id;
+                        $swatch->type = '3';
+                        $swatch->ugs = $ts->ugs;
+                        $swatch->ugs_swatch = $ts->ugs_swatch;
+                        $swatch->gear_reference = $ts->gear_reference;
+                        $swatch->gear_tooth = $ts->gear_tooth;
+                        $swatch->price_ht = $ts->price_ht;
+                        $swatch->price_ttc = $ts->price_ttc;
+                        $swatch->have_tva = $ts->have_tva;
+                        $swatch->default_tva = $ts->default_tva;
+                        if($swatch->save()) {
+                            // Remplissage des stocks
+                            $stock = new MyProductStock;
+                            $stock->product_id = $product->id;
+                            $stock->is_swatch = 1;
+                            $stock->ugs = $swatch->ugs.'-'.$swatch->ugs_swatch;
+                            $stock->quantity = 0;
+                            $stock->save();
+                        }
+                    } else {
+                        $swatch = new MyProductSwatch;
+                        $swatch->product_id = $product->id;
+                        $swatch->type = '3';
+                        $swatch->ugs = $ts->ugs;
+                        $swatch->ugs_swatch = $ts->ugs_swatch;
+                        $swatch->crown_reference = $ts->crown_reference;
+                        $swatch->crown_tooth = $ts->crown_tooth;
+                        $swatch->price_ht = $ts->price_ht;
+                        $swatch->price_ttc = $ts->price_ttc;
+                        $swatch->have_tva = $ts->have_tva;
+                        $swatch->default_tva = $ts->default_tva;
+                        if($swatch->save()) {
+                            // Remplissage des stocks
+                            $stock = new MyProductStock;
+                            $stock->product_id = $product->id;
+                            $stock->is_swatch = 1;
+                            $stock->ugs = $swatch->ugs.'-'.$swatch->ugs_swatch;
+                            $stock->quantity = 0;
+                            $stock->save();
+                        }
                     }
                 }
             }
@@ -308,6 +375,12 @@ class AddProduct extends Component
 
     }
 
+    // Ajout d'un élément Kit chaine - chaine
+    public function addChainKitChainTemp()
+    {
+        //
+    }
+
     // Suppression d'une moto comptible
     public function deleteCompatibleBike($id)
     {
@@ -345,6 +418,9 @@ class AddProduct extends Component
         $data['temp_pictures'] = ProductTempPictures::where('product_id', $this->product->id)->get();
         $data['taxes'] = ProductTaxes::all();
         $data['bikes'] = CompatibleTempBike::paginate(10);
+        $data['temp_chains'] = ProductTempSwatches::where('product_id', $this->product->id)->where('type', 3)->where('chains_reference', '!=', null)->get();
+        $data['temp_gears'] = ProductTempSwatches::where('product_id', $this->product->id)->where('type', 3)->where('gear_reference', '!=', null)->get();
+        $data['temp_crowns'] = ProductTempSwatches::where('product_id', $this->product->id)->where('type', 3)->where('crown_reference', '!=', null)->get();
         return view('livewire.pages.back.products.product-add.add-product', $data);
     }
 }

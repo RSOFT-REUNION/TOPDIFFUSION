@@ -20,10 +20,12 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->foreignId('swatch_group_id')->nullable()->constrained('product_group_tags', 'id');
             $table->foreignId('swatch_tags_id')->nullable()->constrained('product_tags', 'id');
-            $table->foreignId('kit_id')->nullable()->constrained('kits', 'id');
-            $table->foreignId('chain_id')->nullable()->constrained('kits_chains', 'id');
-            $table->foreignId('crown_id')->nullable()->constrained('kits_crowns', 'id');
-            $table->foreignId('pignons_id')->nullable()->constrained('kits_pignons', 'id');
+            $table->string('chains_reference')->nullable(); // Référence de la chaine
+            $table->string('chains_length')->nullable(); // Longueur de la chaine
+            $table->string('crown_reference')->nullable(); // Référence de la couronne
+            $table->string('crown_tooth')->nullable(); // Denture de la couronne
+            $table->string('gear_reference')->nullable(); // Référence du pignon
+            $table->string('gear_tooth')->nullable(); // Denture du pignon
             $table->string('tire_position')->nullable();
             $table->string('tire_width')->nullable();
             $table->string('tire_height')->nullable();
