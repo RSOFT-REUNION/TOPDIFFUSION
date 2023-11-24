@@ -15,6 +15,12 @@ class MyProduct extends Model
     {
         return ProductBrand::where('id', $this->brand_id)->first();
     }
+
+    public function swatches()
+    {
+        return $this->hasMany(MyProductSwatch::class, 'product_id');
+    }
+
     public function getCategory()
     {
         return ProductCategory::where('id', $this->category_id)->first();

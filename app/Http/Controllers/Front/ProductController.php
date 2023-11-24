@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\MyProduct;
 use App\Models\MyProductPicture;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Models\SettingGeneral;
 use Illuminate\Http\Request;
 
@@ -28,6 +29,12 @@ class ProductController extends Controller
         $data['slug'] = $slug;
         $data['page'] = 'produit liste';
         $data['setting'] = SettingGeneral::where('id', 1)->first();
+
+        $category = ProductCategory::where('slug', $slug)->first();
+        $products = MyProduct::where('category_id', $category->id)->paginate(8);
+
+        $data['products'] = $products;
+
         return view('pages.frontend.products.products-list', $data);
     }
 
