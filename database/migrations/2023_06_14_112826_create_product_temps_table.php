@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title')->nullable();
             $table->integer('type')->nullable();
+            $table->integer('kit_element')->nullable();
             $table->string('cover')->nullable();
             $table->string('slug')->nullable();
             $table->text('long_description')->nullable();

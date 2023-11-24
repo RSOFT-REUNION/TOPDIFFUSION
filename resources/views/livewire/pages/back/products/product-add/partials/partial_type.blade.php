@@ -7,7 +7,7 @@
         {{-- Il s'agit d'un produit variable --}}
         @include('livewire.pages.back.products.product-add.partials.partials_type_2')
     @elseif($temp_product->type === 3 || $type === 3)
-        {{-- Il s'agit d'un kit chaine --}}
+        {{-- Il s'agit d'un élément de kit chaine --}}
         @include('livewire.pages.back.products.product-add.partials.partials_type_3')
     @elseif($temp_product->type === 4 || $type === 4)
         {{-- Il s'agit d'un pneu --}}

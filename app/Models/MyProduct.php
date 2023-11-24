@@ -50,6 +50,17 @@ class MyProduct extends Model
         }
     }
 
+    // Récupérer les swatches
+    public function getSwatches()
+    {
+        $values = MyProductSwatch::where('product_id', $this->id)->get();
+        if($values->count() > 1) {
+            return $values;
+        } else {
+            return null;
+        }
+    }
+
     public function getUgs()
     {
         $values =  MyProductSwatch::where('product_id', $this->id)->pluck('ugs')->toArray();
