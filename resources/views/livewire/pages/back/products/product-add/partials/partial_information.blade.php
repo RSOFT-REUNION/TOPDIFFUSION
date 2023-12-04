@@ -6,12 +6,13 @@
 
             {{-- Sélection du type de produit --}}
             <div class="textfield">
+                <p class="field-required">Obligatoire</p>
                 <label for="type">Type de produit</label>
                 <select wire:model="type" id="type" class="@if($errors->has('type')) input-error @endif">
                     <option value="">-- Sélectionner un type --</option>
                     <option value="1">Produit simple</option>
                     <option value="2">Produit variable</option>
-                    <option value="3">Kit chaine</option>
+                    <option value="3">Eléments kit chaine</option>
                     <option value="4">Pneus</option>
                 </select>
                 @if($errors->has('type'))
@@ -19,9 +20,21 @@
                 @endif
             </div>
 
-            {{-- @php
-                dd($this->checkEtap1);
-            @endphp --}}
+            {{-- Si le type de produit est un élément de kit chaine --}}
+            @if($type == 3)
+                <div class="textfield mt-2">
+                    <label for="kit_type">Element concernée</label>
+                    <select wire:model="kit_type" id="kit_type" class="@if($errors->has('kit_type')) input-error @endif">
+                        <option value="">-- Sélectionner un élément --</option>
+                        <option value="1">Chaîne</option>
+                        <option value="2">Pignon</option>
+                        <option value="3">Couronne</option>
+                    </select>
+                    @if($errors->has('kit_type'))
+                        <p class="text-error">{{ $errors->first('kit_type') }}</p>
+                    @endif
+                </div>
+            @endif
 
             {{-- Image du produit --}}
             <div class="textfield mt-2">

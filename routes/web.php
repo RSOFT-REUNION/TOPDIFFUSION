@@ -34,6 +34,7 @@ Route::get('/déconnexion', [FrontController::class, 'logout'])->name('logout');
 Route::get('/produit-{slug}', [ProductController::class, 'showProduct'])->name('front.product');
 Route::get('/produit', [ProductController::class, 'showProductListAll'])->name('front.product-all');
 Route::get('/liste-produit/categories-{slug}', [ProductController::class, 'showProductList'])->name('front.product.list');
+Route::get('/filtres/{id}', [FrontController::class, 'filtres'])->name('front.product.filtres');
 
 Route::middleware(['App\Http\Middleware\RedirectIfMaintenanceModeActive'])->group(function () {
     Route::get('/maintenance', [ErrorController::class, 'showErrorMaintenance'])->name('maintenance');
@@ -132,4 +133,3 @@ Route::group([
 
 // Routes pour le paiement
 Route::get('/returnURL', [CartController::class, 'showPaymentReturn']);
-Route::get('/filtres', [FrontController::class, 'filtres']);

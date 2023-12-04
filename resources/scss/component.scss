@@ -435,7 +435,18 @@
 .textfield, .textfield-white {
     display: block;
     width: 100%;
+    position: relative;
 
+    .field-required {
+        position: absolute;
+        right: 0;
+        top: 0;
+        background-color: #ffd4d4;
+        padding: 3px 10px;
+        font-size: 11px;
+        color: red;
+        border-radius: 5px;
+    }
     label {
         margin-left: 10px;
     }

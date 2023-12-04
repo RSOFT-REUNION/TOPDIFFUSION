@@ -29,7 +29,9 @@ class AddCategory extends ModalComponent
     public function render()
     {
         $data = [];
-        $data['categories'] = ProductCategory::orderBy('id', 'asc')->get();
+        $data['categories_level_1'] = ProductCategory::where('level', 1)->orderBy('id', 'asc')->get();
+        $data['categories_level_2'] = ProductCategory::where('level', 2)->orderBy('id', 'asc')->get();
+        $data['categories_level_3'] = ProductCategory::where('level', 3)->orderBy('id', 'asc')->get();
         return view('livewire.popups.back.products.product-add.add-category',$data);
     }
 }
