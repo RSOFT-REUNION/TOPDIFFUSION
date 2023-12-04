@@ -13,7 +13,7 @@
                 <div class="btn-check-line flex items-center">
                     <div class="flex-1">
                         <label for="tarif_write">Paiement par carte</label>
-                        <p>Par défaut, les paiements par carte sont possible depuis le site {{ Config::get('app.name') }}</p>
+                        <p>Par défaut, les paiements par carte sont possibles depuis le site {{ Config::get('app.name') }}</p>
                     </div>
                     <div class="flex-none">
                         <label for="tarif_write" class="relative inline-flex items-center cursor-pointer">
@@ -32,7 +32,7 @@
                 <div class="btn-check-line flex items-center">
                     <div class="flex-1">
                         <label for="tarif_write">Paiement par carte</label>
-                        <p>Par défaut, les paiements par carte sont possible depuis le site {{ Config::get('app.name') }}</p>
+                        <p>Par défaut, les paiements par carte sont possibles depuis le site {{ Config::get('app.name') }}</p>
                     </div>
                     <div class="flex-none">
                         <a href="{{ Config::get('payment.admin') }}" target="_blank" class="bg-gray-100 py-2 px-3 border border-gray-200 rounded-md duration-300 hover:bg-secondary ">Accèder à l'espace d'administration</a>
@@ -77,8 +77,8 @@
             <div class="entry-content">
                 <div class="btn-check-line flex items-center">
                     <div class="flex-1">
-                        <label for="tarif_write">Tarif saisie avec la TVA</label>
-                        <p>Par défaut, tout les tarifs seront saisie en TTC (un calcul sera réalisé ensuite pour retrouver les tarifs HT)</p>
+                        <label for="tarif_write">Tarif saisi avec la TVA</label>
+                        <p>Par défaut, tout les tarifs seront saisis en TTC (un calcul sera réalisé ensuite pour retrouver les tarifs HT)</p>
                     </div>
                     <div class="flex-none">
                         <label for="tarif_write" class="relative inline-flex items-center cursor-pointer">
@@ -89,8 +89,8 @@
                 </div>
                 <div class="btn-check-line flex items-center mt-2">
                     <div class="flex-1">
-                        <label for="tarif_write">Affichage des tarif TTC</label>
-                        <p>Afficher tout les tarifs des produits en TTC pour tout les types de clients</p>
+                        <label for="tarif_write">Affichage des tarifs TTC</label>
+                        <p>Afficher tous les tarifs des produits en TTC pour tous les types de clients</p>
                     </div>
                     <div class="flex-none">
                         <label for="tarif_write" class="relative inline-flex items-center cursor-pointer">

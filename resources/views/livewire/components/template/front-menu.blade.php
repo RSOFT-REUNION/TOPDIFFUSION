@@ -71,9 +71,9 @@
 
     <div class="inline-flex relative items-center w-full">
         @foreach($menus as $menu)
-            <div class="group py-3" x-data="{ isOpen: false, subMenuOpenIndex: null }"
-                 @mouseenter="isOpen = true"
-                 @mouseleave="isOpen = false"
+            <div class="group py-3" x-data="{ isOpen: true, subMenuOpenIndex: null }"
+                 {{-- @mouseenter="isOpen = true"
+                 @mouseleave="isOpen = false" --}}
                  :class="{ 'bg-white text-black': isOpen }">
 
                 <a href="#" class="btn-menu-level-1">

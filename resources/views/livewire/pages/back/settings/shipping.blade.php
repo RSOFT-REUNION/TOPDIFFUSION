@@ -6,7 +6,7 @@
     </div>
     <div id="entry-content">
         <p class="bg-red-100 border border-red-200 text-red-500 px-5 py-2 rounded-md">
-            Vous devez noter que les frais de livraison ne sont pas applicable pour les professionnels
+            Vous devez noter que les frais de livraison ne sont pas applicables pour les professionnels
         </p>
         <div class="container-box-page mt-5">
             <div class="entry-header">
@@ -32,7 +32,7 @@
                 <div class="flex flex-row justify-between items-center border-b border-gray-200 pb-4 mt-4">
                     <div>
                         <h2>Montant maximum pour une livraison payante</h2>
-                        <p class="text-[13px] text-[#808080]">Vous pouvez définir un montant maximum pour qu'une commande ai le droit à la livraison gratuite</p>
+                        <p class="text-[13px] text-[#808080]">Vous pouvez définir un montant maximum pour qu'une commande ait le droit à la livraison gratuite</p>
                     </div>
                     <form wire:submit.prevent="updateShippingLimit" class="inline-flex items-center">
                         @csrf

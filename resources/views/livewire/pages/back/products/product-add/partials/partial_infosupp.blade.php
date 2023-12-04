@@ -3,7 +3,7 @@
     <div class="flex items-center bg-gray-100 px-5 py-3 rounded-md">
         <div class="flex-1">
             <h2 class="font-bold">Ajouter une nouvelle information</h2>
-            <p class="text-sm text-gray-500">Cela peut être utile afin d'ajouter des informations essentiels au produit</p>
+            <p class="text-sm text-gray-500">Cela peut être utile afin d'ajouter des informations essentielles au produit</p>
         </div>
         <div class="flex-none">
             <button wire:click="$emit('openModal', 'popups.back.products.product-add.info-supp', {{ json_encode(['product_temp_id' => $product->id]) }})" type="button" class="bg-secondary px-3 py-2 rounded-md">Ajouter une ligne</button>

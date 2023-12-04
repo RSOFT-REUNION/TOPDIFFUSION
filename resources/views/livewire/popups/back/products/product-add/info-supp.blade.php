@@ -2,7 +2,7 @@
     <div class="bg-gray-100 p-5">
         <div class="flex items-center">
             <div class="flex-1">
-                <h2 class="font-bold text-xl">Informations supplémentaire</h2>
+                <h2 class="font-bold text-xl">Information supplémentaire</h2>
             </div>
             <div class="flex-none">
                 <button wire:click.prevent="$emit('closeModal')" type="button" class="py-2 px-2.5 hover:text-red-500"><i class="fa-solid fa-xmark"></i></button>
@@ -12,7 +12,7 @@
     </div>
     <div class="border-b border-gray-100 p-5 text-gray-500">
         <p>
-            Ajouter des informations supplémentaire vous permet d'informer vos client différentes informations de manière plus rapides tel que
+            Ajouter des informations supplémentaires vous permet d'informer vos client différentes informations de manière plus rapides tel que
             pour les materiaux, leurs positions, des références supplémentaire...
         </p>
     </div>

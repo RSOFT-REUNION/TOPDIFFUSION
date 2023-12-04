@@ -44,7 +44,7 @@
                     </table>
                 </div>
             @else
-                <p class="empty-text mt-5">Vous n'avez pas encore ajouter de groupe d'option</p>
+                <p class="empty-text mt-5">Vous n'avez pas encore ajouté de groupe d'option</p>
             @endif
         </div>
 
@@ -53,7 +53,7 @@
         <div class="mt-5">
             <div class="flex items-center">
                 <div class="flex-1">
-                    <h2 class="subtitle">Kit chaines | <span class="text-secondary">Liste des pignons</span></h2>
+                    <h2 class="subtitle">Kit chaînes | <span class="text-secondary">Liste des pignons</span></h2>
                 </div>
                 <div class="flex-none inline-flex items-center">
                     <button wire:click="" aria-label="Importer" title="Importer" class="bg-gray-100 py-2.5 px-3.5 mr-2 rounded-lg border border-transparent hover:border-gray-200"><i class="fa-solid fa-file-import"></i></button>
@@ -93,15 +93,15 @@
             @endif
         </div>
 
-        {{-- Ajout de chaines --}}
+        {{-- Ajout de chaînes --}}
         <div class="mt-5">
             <div class="flex items-center">
                 <div class="flex-1">
-                    <h2 class="subtitle">Kit chaines | <span class="text-secondary">Liste des chaines</span></h2>
+                    <h2 class="subtitle">Kit chaînes | <span class="text-secondary">Liste des chaînes</span></h2>
                 </div>
                 <div class="flex-none inline-flex items-center">
                     <button wire:click="" aria-label="Importer" title="Importer" class="bg-gray-100 py-2.5 px-3.5 mr-2 rounded-lg border border-transparent hover:border-gray-200"><i class="fa-solid fa-file-import"></i></button>
-                    <a wire:click="$emit('openModal', 'popups.back.products.product-option.add-chain')" class="btn-secondary cursor-pointer block"><i class="fa-solid fa-plus mr-3"></i>Ajouter une chaine</a>
+                    <a wire:click="$emit('openModal', 'popups.back.products.product-option.add-chain')" class="btn-secondary cursor-pointer block"><i class="fa-solid fa-plus mr-3"></i>Ajouter une chaîne</a>
                     @if($chains->count() > 0)
                         <p class="ml-2 text-tag-count">{{ $chains->count() }}</p>
                     @endif
@@ -137,7 +137,7 @@
                     </table>
                 </div>
             @else
-                <p class="empty-text mt-5">Vous n'avez pas encore ajouter de chaines</p>
+                <p class="empty-text mt-5">Vous n'avez pas encore ajouté de chaînes</p>
             @endif
         </div>
 
@@ -145,7 +145,7 @@
         <div class="mt-5">
             <div class="flex items-center">
                 <div class="flex-1">
-                    <h2 class="subtitle">Kit chaines | <span class="text-secondary">Liste des couronnes</span></h2>
+                    <h2 class="subtitle">Kit chaînes | <span class="text-secondary">Liste des couronnes</span></h2>
                 </div>
                 <div class="flex-none inline-flex items-center">
                     <button wire:click="" aria-label="Importer" title="Importer" class="bg-gray-100 py-2.5 px-3.5 mr-2 rounded-lg border border-transparent hover:border-gray-200"><i class="fa-solid fa-file-import"></i></button>
@@ -181,7 +181,7 @@
                     </table>
                 </div>
             @else
-                <p class="empty-text mt-5">Vous n'avez pas encore ajouter de couronne</p>
+                <p class="empty-text mt-5">Vous n'avez pas encore ajouté de couronne</p>
             @endif
         </div>
     </div>

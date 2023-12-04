@@ -29,11 +29,13 @@ class AddProduct extends Component
     public $TVA_custom = 'default';
     public $list_tva_custom;
     public $price_HT, $price_TTC;
+    public $checkEtap1;
 
     public $characters = ["é", "è", "ê", "ë", "à", "'", " ", "_", "&", "ç", "ù", "\"", "î", "ï", "/", "(", ")"];
     public $correct_characters = ["e", "e", "e", "e", "a", "", "-", "-", "", "c", "u", "", "i", "i", "-", "-", "-"];
 
     protected $listeners = ['refreshLines' => '$refresh'];
+    protected $listenerss = ['triggerFirstStep' => 'firstStep'];
 
     public $active_tab = '1'; // Permet d'initié la première section active
 
@@ -42,7 +44,8 @@ class AddProduct extends Component
         $this->product = ProductTemp::where('id', $product_id)->first();
         $this->title = $this->product->title;
         $this->type = $this->product->type;
-        $this->slug = ($this->slug == $this->title) ? strtolower(str_replace($this->characters, $this->correct_characters, $this->title)) : strtolower(str_replace($this->characters, $this->correct_characters, $this->slug));
+        // $this->slug = ($this->slug == $this->title) ? strtolower(str_replace($this->characters, $this->correct_characters, $this->title)) : strtolower(str_replace($this->characters, $this->correct_characters, $this->slug));
+        $this->slug = $this->product->slug;
         $this->short_description = $this->product->short_description;
         $this->long_description = $this->product->long_description;
     }
@@ -240,6 +243,23 @@ class AddProduct extends Component
     // Initialisation du produit avec les informations principal
     public function firstStep()
     {
+        $this->validate([
+            'title' => 'required|min:3',
+            'short_description' => 'required|min:10',
+            'long_description' => 'required|min:15',
+            'type' => 'required',
+            'slug' => 'required',
+        ], [
+            'title.required' => 'Le titre est obligatoire.',
+            'title.min' => 'Le titre doit comporter au moins 3 caractères.',
+            'short_description.required' => 'La description courte est obligatoire',
+            'short_description.min' => 'La description courte doit comporter au moins 10 caractères.',
+            'long_description.required' => 'La description courte est obligatoire',
+            'long_description.min' => 'La description courte doit comporter au moins 15 caractères.',
+            'type.required' => 'Le choix du type de produit est obligatoire',
+            'slug' => 'Le slug est obligatoire',
+        ]);
+
         $temp = $this->product;
         $temp->title = $this->title;
         $temp->slug = $this->slug;
@@ -256,6 +276,11 @@ class AddProduct extends Component
                 return redirect()->route('back.product.show.create', ['id' => $this->product->id]);
             }
             $this->emit('refreshLines');
+        }
+        $this->changeTab('2');
+
+        if($temp->title && $temp->type  && $temp->short_description && $temp->long_description) {
+            $this->checkEtap1 = true;
         }
     }
 

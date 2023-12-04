@@ -22,7 +22,10 @@
                 <p class="text-error">{{ $errors->first('title') }}</p>
             @endif
         </div>
-        <p class="bg-gray-100 text-sm px-2 py-1 rounded-md mt-2 text-gray-500">Affichage dans l'url: @if($this->title) <b><input class="rounded border border-gray-600 pl-2" wire:model="slug" type="text"></b> @else Entrez le nom du produit.. @endif</p>
+        <p id="slug" class="bg-gray-100 text-sm px-2 py-1 rounded-md mt-2 text-gray-500">Affichage dans l'url: @if($this->title) <b><input class="rounded border border-gray-600 pl-2" wire:model="slug" type="text"></b> @else Entrez le nom du produit.. @endif</p>
+        {{-- @php
+            dd($temp_product->slug);
+        @endphp --}}
     </form>
 
     <div class="entry-content">
@@ -31,9 +34,13 @@
             {{-- Liste des menus --}}
             <ul class="inline-flex">
                 <li><a wire:click="changeTab('1')" class="@if($tab === '1') bg-primary border border-transparent text-white @else bg-gray-100 text-gray-600 border border-transparent hover:border-gray-200 @endif px-10 py-3 rounded-md font-bold cursor-pointer duration-300">Informations</a></li>
-                <li><a wire:click="changeTab('2')" class="ml-2 @if($type) @if($tab === '2') bg-primary border border-transparent text-white @else bg-gray-100 text-gray-600 border border-transparent hover:border-gray-200 @endif px-10 py-3 rounded-md font-bold cursor-pointer duration-300 @else border border-gray-200 text-gray-400 px-10 py-3 rounded-md italic @endif">@if(!$type) Type de produit @elseif($type == 1) Produit simple @elseif($type == 2) Produit variable @elseif($type == 3) Kit chaine @elseif($type == 4) Pneus @endif</a></li>
+                <span class="mx-2"><i class="fa-solid fa-angle-right"></i></span>
+                <li><a wire:click="@if($checkEtap1) changeTab('2') @else changeTab('1') @endif" class=" @if($type) @if($tab === '2') bg-primary border border-transparent text-white @else bg-gray-100 text-gray-600 border border-transparent hover:border-gray-200 @endif px-10 py-3 rounded-md font-bold cursor-pointer duration-300 @else border border-gray-200 text-gray-400 px-10 py-3 rounded-md italic @endif">@if(!$type) Type de produit @elseif($type == 1) Produit simple @elseif($type == 2) Produit variable @elseif($type == 3) Kit chaine @elseif($type == 4) Pneus @endif</a></li>
+                <span class="mx-2"><i class="fa-solid fa-angle-right"></i></span>
                 <li><a wire:click="changeTab('3')" class="ml-2 @if($tab === '3') bg-primary border border-transparent text-white @else bg-gray-100 text-gray-600 border border-transparent hover:border-gray-200 @endif px-10 py-3 rounded-md font-bold cursor-pointer duration-300">Informations supplémentaire</a></li>
+                <span class="mx-2"><i class="fa-solid fa-angle-right"></i></span>
                 <li><a wire:click="changeTab('4')" class="ml-2 @if($tab === '4') bg-primary border border-transparent text-white @else bg-gray-100 text-gray-600 border border-transparent hover:border-gray-200 @endif px-10 py-3 rounded-md font-bold cursor-pointer duration-300">Motos compatible</a></li>
+                <span class="mx-2"><i class="fa-solid fa-angle-right"></i></span>
                 <li><a wire:click="changeTab('5')" class="ml-2 @if($tab === '5') bg-primary border border-transparent text-white @else bg-gray-100 text-gray-600 border border-transparent hover:border-gray-200 @endif px-10 py-3 rounded-md font-bold cursor-pointer duration-300">Photos</a></li>
             </ul>
 

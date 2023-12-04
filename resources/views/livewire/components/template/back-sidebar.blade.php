@@ -63,8 +63,8 @@
                     <li><a href="{{ route('back.setting.shipping') }}" class="btn-sidebar mt-1 @if ($page == 'shipping') btn-sidebar-active @endif"><i class="fa-solid fa-shipping-fast mr-3"></i>Livraison</a></li>
                     <li><a href="{{ route('back.setting.info') }}" class="btn-sidebar mt-1 @if ($page == 'informations') btn-sidebar-active @endif"><i class="fa-solid fa-circle-info mr-3"></i>Informations</a></li>
                     <h2>Réglages avancés</h2>
-                    <li><a href="{{ route('back.setting.advanced') }}"
-                            class="btn-sidebar @if ($page == 'advanced') btn-sidebar-active @endif"><i class="fa-solid fa-gear mr-3"></i>Réglages généraux</a></li>
+                    {{-- <li><a href="{{ route('back.setting.advanced') }}"
+                            class="btn-sidebar @if ($page == 'advanced') btn-sidebar-active @endif"><i class="fa-solid fa-gear mr-3"></i>Réglages généraux</a></li> --}}
                     <li><a href="{{ route('back.setting.perform') }}" class="btn-sidebar @if ($page == 'perform') btn-sidebar-active @endif"><i class="fa-solid fa-gauge-simple-high mr-3"></i>Performances</a></li>
                 </ul>
             @elseif($group == 'aboutSite')

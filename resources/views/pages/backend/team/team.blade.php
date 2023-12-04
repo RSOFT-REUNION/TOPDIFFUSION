@@ -17,14 +17,14 @@
                     <div class="p-4 rounded-xl shadow-lg ring-black/5 border-solid border border-gray-950 bg-white hover:bg-slate-100 w-[33.1%]">
                         <div class="text-sm leading-6 text-slate-900 dark:text-white font-semibold select-none list-none">
                             <div class="flex items-center gap-x-6">
-                                <i class="fa-solid fa-circle-user text-7xl"></i>
+                                <i class="fa-solid fa-circle-user text-7xl text-black"></i>
                                 <div>
                                     <h3 class="text-base font-semibold leading-7 tracking-tight text-gray-900">{{ $users->firstname }} {{ $users->lastname }}</h3>
                                     <p class="text-sm font-semibold leading-6 text-secondary">Administrateur</p>
                                 </div>
                                 <div class="ml-auto">
-                                    <a class="px-2 text-lg hover:bg-gray-300 rounded-md"  onclick="Livewire.emit('openModal', 'popups.back.team.edit-team', {{ json_encode(['user' => $users->id]) }})"><i class="fa-solid fa-pen"></i></a>
-                                    <a class="px-2 text-lg hover:bg-gray-300 rounded-md"  onclick=""><i class="fa-solid fa-comment"></i></a>
+                                    <a class="px-2 text-lg hover:bg-gray-300 rounded-md"  onclick="Livewire.emit('openModal', 'popups.back.team.edit-team', {{ json_encode(['user' => $users->id]) }})"><i class="fa-solid fa-pen text-black"></i></a>
+                                    <a class="px-2 text-lg hover:bg-gray-300 rounded-md"  onclick=""><i class="fa-solid fa-comment text-black"></i></a>
                                 </div>
                             </div>
                         </div>

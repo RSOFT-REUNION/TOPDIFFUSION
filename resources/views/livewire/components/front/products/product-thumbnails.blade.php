@@ -33,7 +33,7 @@
         </div>
         <div class="flex-none">
             <div class="inline-flex">
-                <h4 class="marque-tag">{{ $product->getBrand()->title }}</h4>
+                {{-- <h4 class="marque-tag">{{ $product->getBrand()->title }}</h4> --}}
                 @if($product->type == 1)
                     <h4 class="ml-1 other-tag">UGS: {{ $product->getUgs() }}</h4>
                 @endif

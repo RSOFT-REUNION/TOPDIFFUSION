@@ -128,7 +128,7 @@
                                     <td>{{ $off->productSwatch()->ugs }}</td>
                                     <td>{{ $off->getUpdatedDate() }}</td>
                                     <td class="width-300">
-                                        <input type="number" wire:model="updatedQuantities.{{ $off->id }}" min="1" step="1" class="focus:outline-none border border-gray-200 px-2 py-1 rounded-lg" placeholder="Entrez une quantiter">
+                                        <input type="number" wire:model="updatedQuantities.{{ $off->id }}" min="1" step="1" class="focus:outline-none border border-gray-200 px-2 py-1 rounded-lg" placeholder="Entrez une quantité">
                                     </td>
                                 </tr>
                             @endforeach

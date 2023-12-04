@@ -39,7 +39,7 @@
             <div class="flex items-center">
                 <div class="flex-1">
                     <label for="prices_mode">Mode d'affichage des prix</label>
-                    <p class="text-sm text-gray-500">Définir le façon dont les prix public et les prix clients sont affichés</p>
+                    <p class="text-sm text-gray-500">Définir la façon dont les prix publics et les prix clients sont affichés</p>
                 </div>
                 <div class="flex-none inline-flex items-center">
                     <div class="textfield">
@@ -76,7 +76,7 @@
         <div class="btn-check-line flex items-center mt-2">
             <div class="flex-1">
                 <label for="bike_check">Vérifier la compatibilité des produits</label>
-                <p>Si le client à enregistré une moto, il peut facilement vérifier la compatibilité des pièces avec celui-ci</p>
+                <p>Si le client a enregistré une moto, il peut facilement vérifier la compatibilité des pièces avec celui-ci</p>
             </div>
             <div class="flex-none">
                 <label for="bike_check" class="relative inline-flex items-center cursor-pointer">
@@ -107,7 +107,7 @@
                         </div>
                     @endforeach
                 @else
-                    <p class="empty-text">Vous n'avez pas encore configurer votre carousel</p>
+                    <p class="empty-text">Vous n'avez pas encore configuré votre carrousel</p>
                 @endif
             </div>
         </div>

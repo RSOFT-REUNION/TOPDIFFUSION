@@ -8,7 +8,7 @@
         <div class="btn-check-line flex items-center">
             <div class="flex-1">
                 <label for="maintenance_mode">Mettre le site mode de maintenance</label>
-                <p>Cette fonction permet de bloquer l'accès au site pendant toutes opération visant à modifier son contenu</p>
+                <p>Cette fonction permet de bloquer l'accès au site pendant toute opération visant à modifier son contenu</p>
             </div>
             <div class="flex-none">
                 <label for="maintenance_mode" class="relative inline-flex items-center cursor-pointer">

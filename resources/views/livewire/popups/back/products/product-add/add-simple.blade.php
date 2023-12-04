@@ -65,7 +65,7 @@
             </div>
             <div class="flex-1">
                 <input type="radio" wire:model="TVA_custom" value="custom" id="TVA_custom">
-                <label for="TVA_custom">Utiliser une règle de taxe personnalisé</label>
+                <label for="TVA_custom">Utiliser une règle de taxe personnalisée</label>
             </div>
             <div class="flex-1">
                 <input type="radio" wire:model="TVA_custom" value="none" id="TVA_custom-none">

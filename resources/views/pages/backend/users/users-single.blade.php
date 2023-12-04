@@ -139,7 +139,7 @@
                                     </table>
                                 </div>
                             @else
-                                <p class="empty-text mt-2">Le client n'a pas encore renseigné d'adresse</p>
+                                <p class="empty-text mt-2">Le client n'a pas encore renseigné d'adresse.</p>
                             @endif
                         </div>
                     </div>

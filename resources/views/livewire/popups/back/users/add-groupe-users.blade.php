@@ -36,7 +36,7 @@
                         <span class="ml-2 mr-2">Groupe par défaut :</span>
                         <input class="form-checkbox h-5 w-5 text-blue-600" type="checkbox" wire:model="is_default" id="is_default"/>
                     </label>
-                    <p class="ml-2 mr-2">Si <span class="font-bold">"Groupe par défaut"</span> est coché tous les nouveaux utilisateurs seront attribué à ce groupe.</p>
+                    <p class="ml-2 mr-2">Si <span class="font-bold">"Groupe par défaut"</span> est coché, tous les nouveaux utilisateurs seront attribués à ce groupe.</p>
                 </div>
 
                 <div class="flex-1">
@@ -44,7 +44,7 @@
                         <span class="ml-3 mr-2">Remise par défaut :</span>
                         <input class="form-checkbox h-5 w-5 text-blue-600" type="checkbox" wire:model="discount_default" id="discount_default"/>
                     </label>
-                    <p class="ml-2 mr-2">Si <span class="font-bold">"Remise par défaut"</span> est coché toutes les catégories actuelles qui n'ont pas été configuré manuellement auront <span class="font-bold">{{ $discount_percentage }} %</span> de remise.</p>
+                    <p class="ml-2 mr-2">Si <span class="font-bold">"Remise par défaut"</span> est coché, toutes les catégories actuelles qui n'ont pas été configurées manuellement auront <span class="font-bold">{{ $discount_percentage }} %</span> de remise.</p>
                 </div>
             </div>
 
