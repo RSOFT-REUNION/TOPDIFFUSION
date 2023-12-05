@@ -52,7 +52,11 @@ class AddChain extends ModalComponent
 
         // Récupérer uniquement le code dans la couleur
         $code_color = explode('/', $this->color);
-        $title = $this->type.'-'.$code_color[1].' '.$this->length.'L';
+
+        // Vérifier si l'indice 1 existe dans le tableau $code_color
+        $color_part = isset($code_color[1]) ? $code_color[1] : '';
+
+        $title = $this->type . '-' . $color_part . ' ' . $this->length . 'L';
 
         $chain = new kitsChain;
         $chain->title = $title;
@@ -63,15 +67,13 @@ class AddChain extends ModalComponent
         if ($this->picture) {
             $chain->picture_url = strtolower(str_replace($this->characters, $this->correct_characters, $title)) . '.' . $this->picture->extension();
         }
-        if($chain->save())
-        {
+        if ($chain->save()) {
             // Insert picture in the folder
             if ($this->picture) {
                 $this->picture->storeAs('public/images/kit_parts', strtolower(str_replace($this->characters, $this->correct_characters, $title)) . '.' . $this->picture->extension());
             }
             return redirect()->route('back.product.options');
         }
-
     }
 
     public function render()
