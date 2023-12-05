@@ -96,7 +96,7 @@ class FrontFilters extends Component
         }
 
         // Sélectionnez les produits correspondants
-        $query->select('my_products.*');
+        $query->select('my_products.*')->distinct();
 
         $searchBikeInfo = $query->get();
 
