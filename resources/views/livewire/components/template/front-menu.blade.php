@@ -95,7 +95,7 @@
                             <div class="flex flex-col w-1/5 px-4 overflow-hidden outline-none menu-mega-categories group"
                             @mouseenter="subMenuOpenIndex = {{ $index }}"
                             @mouseleave="subMenuOpenIndex = null">
-                                <h2 class="my-5 font-bold hover:text-secondary"
+                                <h2 class="my-0 font-bold hover:text-secondary"
                                     @if ($index != $index)
                                         @mouseenter="{{'subMenuOpen'.$index}} = false"
                                     @endif
