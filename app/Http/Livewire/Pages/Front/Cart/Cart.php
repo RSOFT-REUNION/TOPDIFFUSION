@@ -21,6 +21,15 @@ use Payline\PaylineSDK;
 class Cart extends Component
 {
     public $quantity_line;
+    public $selectedRelay;
+
+    protected $listeners = ['relayChosen'];
+
+    // Ajoutez cette fonction pour mettre à jour la propriété lorsque l'événement est émis
+    public function relayChosen($relay)
+    {
+        $this->selectedRelay = $relay;
+    }
 
     // Ajouter une quantité au produit
     public function addQuantity($cart)
@@ -162,6 +171,7 @@ class Cart extends Component
         $order->document_number = $document_number;
         $order->total_product = $this->getQuantityTotal();
         $order->total_amount = $this->getPriceTotalBlank();
+        $order->relais_point_id = $this->selectedRelay;
         $order->total_ship = 0;
         if($order->save()) {
             // Enregistrez l'activité de création de commande

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('state')->default(1);
             $table->foreignId('user_id')->constrained('users', 'id');
+            $table->foreignId('relais_point_id')->nullable()->constrained('relais_points', 'id');
             $table->string('document_number');
             $table->integer('total_product')->default(1);
             $table->integer('payment_type')->default(1); // 1 = Paiement par carte; 2 = Paiement par chèque; 3 : Paiement par virement

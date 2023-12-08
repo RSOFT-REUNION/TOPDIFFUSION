@@ -6,7 +6,7 @@
                 <table class="w-full">
                     <thead>
                     <tr>
-                        <th class="text-left py-4">Produit</th>
+                        <th class="py-4 text-left">Produit</th>
                         <th>Prix unitaire (HT)</th>
                         <th>Quantité</th>
                         <th>Dispo.</th>
@@ -22,24 +22,24 @@
                                     <img src="{{ asset('storage/images/products/'. $cart->getProduct()->cover) }}" width="100px" class="rounded-lg">
                                     <div class="ml-3">
                                         <h3 class="text-xl font-bold">{{ $cart->getProduct()->title }}</h3>
-                                        <p class="text-gray-500 text-sm">UGS: {{ $cart->getSwatches()->ugs }}</p>
+                                        <p class="text-sm text-gray-500">UGS: {{ $cart->getSwatches()->ugs }}</p>
                                     </div>
                                 </div>
                             </td>
-                            <td class="text-center text-xl">{{ $cart->getUnitPrice() }} €</td>
+                            <td class="text-xl text-center">{{ $cart->getUnitPrice() }} €</td>
                             <td class="text-center">
                                 <div class="inline-flex items-center">
                                     @if($cart->quantity > 1)
-                                        <a wire:click="minusQuantity({{ $cart->id }})" class="text-gray-400 hover:text-amber-400 cursor-pointer"><i class="fa-solid fa-minus-circle"></i></a>
+                                        <a wire:click="minusQuantity({{ $cart->id }})" class="text-gray-400 cursor-pointer hover:text-amber-400"><i class="fa-solid fa-minus-circle"></i></a>
                                     @endif
-                                    <p class="px-4 font-bold text-xl">{{ $cart->quantity }}</p>
+                                    <p class="px-4 text-xl font-bold">{{ $cart->quantity }}</p>
                                     @if($cart->getProductStock()->quantity > $cart->quantity)
-                                        <a wire:click="addQuantity({{ $cart->id }})" class="text-gray-400 hover:text-amber-400 cursor-pointer"><i class="fa-solid fa-plus-circle"></i></a>
+                                        <a wire:click="addQuantity({{ $cart->id }})" class="text-gray-400 cursor-pointer hover:text-amber-400"><i class="fa-solid fa-plus-circle"></i></a>
                                     @endif
                                 </div>
                             </td>
                             <td class="text-center">{{ $cart->getProductStock()->quantity }} en stock</td>
-                            <td class="text-center text-xl font-bold">{{ $cart->getTotalPriceLine() }} €</td>
+                            <td class="text-xl font-bold text-center">{{ $cart->getTotalPriceLine() }} €</td>
                             <td><a wire:click="deleteProduct({{ $cart->id }})" class="cursor-pointer hover:text-amber-400"><i class="fa-solid fa-xmark"></i></a></td>
                         </tr>
                     @endforeach
@@ -47,11 +47,11 @@
                 </table>
             </div>
         </div>
-        <div class="flex-none width-300 ml-2">
-            <div class="bg-gray-100 rounded-lg px-3 py-2">
+        <div class="flex-none ml-2 width-300">
+            <div class="px-3 py-2 bg-gray-100 rounded-lg">
                 <h2 class="text-2xl font-bold">Résumé</h2>
             </div>
-            <div class="bg-gray-100 rounded-lg px-3 py-2 mt-2">
+            <div class="px-3 py-2 mt-2 bg-gray-100 rounded-lg">
                 <div class="">
                     <ul>
                         <li >
@@ -78,7 +78,7 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="border-t border-gray-300 mt-1 pt-1">
+                        <li class="pt-1 mt-1 border-t border-gray-300">
                             <div class="flex items-center">
                                 <div class="flex-1">
                                     <h3 class="text-sm">Total TTC</h3>
@@ -93,16 +93,17 @@
             </div>
             @if($user_address->count() > 0)
                 @if(auth()->user()->professionnal === 1 && auth()->user()->verified === 1)
-                    <button wire:click="initOrderCheck" class="bg-gray-100 mt-2 block w-full py-3 rounded-lg font-bold border border-transparent hover:bg-secondary/30 hover:border-secondary duration-300">Chèque à la livraison</button>
-                    <button wire:click="initOrderBilling" class="bg-gray-100 mt-2 block w-full py-3 rounded-lg font-bold border border-transparent hover:bg-secondary/30 hover:border-secondary duration-300">Virement à la livraison</button>
+                    <button wire:click="initOrderCheck" class="block w-full py-3 mt-2 font-bold duration-300 bg-gray-100 border border-transparent rounded-lg hover:bg-secondary/30 hover:border-secondary">Chèque à la livraison</button>
+                    <button wire:click="initOrderBilling" class="block w-full py-3 mt-2 font-bold duration-300 bg-gray-100 border border-transparent rounded-lg hover:bg-secondary/30 hover:border-secondary">Virement à la livraison</button>
                 @endif
                 <hr class="my-2 border-gray-100">
-                <button wire:click="initOrder" class="bg-primary text-white border border-transparent hover:bg-primary/30 hover:border-primary hover:text-primary duration-300 mt-2 block w-full py-3 rounded-lg font-bold">Payer directement par carte</button>
+                <button wire:click="$emit('openModal', 'popups.relay-point')" class="block w-full py-3 mt-2 font-bold text-black duration-300 border border-transparent rounded-lg bg-secondary hover:bg-secondary/30 hover:border-secondary hover:text-secondary">Choisir un point relais</button>
+                <button wire:click="initOrder" class="block w-full py-3 mt-2 font-bold text-white duration-300 border border-transparent rounded-lg bg-primary hover:bg-primary/30 hover:border-primary hover:text-primary">Payer directement par carte</button>
             @else
-                <p class="mt-2 bg-gray-100 border border-gray-200 rounded-md text-gray-500 text-sm px-3 py-1">
+                <p class="px-3 py-1 mt-2 text-sm text-gray-500 bg-gray-100 border border-gray-200 rounded-md">
                     Vous n'avez pas encore configuré d'adresse de livraison, afin de continuer, merci d'en renseigné une.
                 </p>
-                <button type="button" onclick="window.location.href='{{ route('front.profile') }}'" class="bg-secondary mt-2 block w-full py-3 rounded-lg font-bold">Renseigner une adresse</button>
+                <button type="button" onclick="window.location.href='{{ route('front.profile') }}'" class="block w-full py-3 mt-2 font-bold rounded-lg bg-secondary">Renseigner une adresse</button>
             @endif
         </div>
     </div>

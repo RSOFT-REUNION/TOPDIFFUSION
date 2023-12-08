@@ -48,4 +48,14 @@ class UserOrder extends Model
 
         return isset($state[$this->state]) ? $state[$this->state] : null;
     }
+
+    public function relaisPoint()
+    {
+        return $this->belongsTo(RelaisPoint::class, 'relais_point_id');
+    }
+
+    public function getRelaisPoint()
+    {
+        return RelaisPoint::find($this->relais_point_id);
+    }
 }
