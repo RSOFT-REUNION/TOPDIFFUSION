@@ -122,8 +122,7 @@ class FrontController extends Controller
     // Affichage d'une commande seule
     public function showSingleOrder($order)
     {
-        $my_order = UserOrder::where('document_number', $order)->first();
-
+        $my_order = UserOrder::with('relaisPoint')->where('document_number', $order)->first();
         $data = [];
         $data['me'] = auth()->user();
         $data['group'] = 'orders';
@@ -131,6 +130,7 @@ class FrontController extends Controller
         $data['account_page'] = 'commands';
         $data['order'] = $my_order;
         $data['order_items'] = UserOrderItem::where('order_id', $my_order->id)->get();
+        $data['formattedOpeningHours'] = $my_order->relaisPoint ? $my_order->relaisPoint->getFormattedOpeningHours() : null;
         $data['setting'] = SettingGeneral::where('id', 1)->first();
         return view('pages.frontend.orders.order-single', $data);
     }

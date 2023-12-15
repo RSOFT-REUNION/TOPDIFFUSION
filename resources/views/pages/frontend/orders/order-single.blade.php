@@ -118,56 +118,75 @@
                 </div>
             </div>
         </div>
-            <h2 class="text-xl font-bold">Point Relais Choisi</h2>
             @if ($order->relaisPoint)
-                <div
-                    class="flex flex-col {{ $order->relaisPoint->available ? 'bg-secondary border-primary text-primary' : 'bg-primary border-secondary text-secondary' }} w-full rounded-[8px] p-4 duration-500">
-                    <div class="flex items-center">
-                        <div class="flex flex-row items-center pr-4 my-3 border-r border-white">
-                            <i class="fa-solid fa-location-dot text-[20px]"></i>
-                        </div>
-                        <div class="flex flex-row items-center justify-between w-full ml-4">
-                            <div class="flex items-center gap-x-3">
-                                <label class="select-none">{{ $order->relaisPoint->name }},
-                                    {{ $order->relaisPoint->address }}</label>
-                            </div>
-                            <div
-                                class="text-{{ $order->relaisPoint->available ? 'green' : 'red' }}-700 flex flex-row items-center justify-center bg-white rounded-[5px] py-3 px-4">
-                                <h4>{{ $order->relaisPoint->available ? 'Disponible' : 'Pas disponible' }}</h4>
-                            </div>
+            <div class="flex flex-col {{ $order->relaisPoint->available ? 'bg-secondary border-primary text-primary' : 'bg-primary border-secondary text-secondary' }} w-full rounded-[8px] mt-4 p-2 duration-500">
+                <div class="flex flex-row items-center p-3 border-b border-white">
+                    <i class="fa-solid pr-3 fa-location-dot text-[20px]"></i>
+                    <h2 class="text-xl font-bold">Point Relais Choisi</h2>
+                    <div class="ml-auto text-{{ $order->relaisPoint->available ? 'green' : 'red' }}-700 flex flex-row items-center justify-end bg-white rounded-[5px] py-3 px-4">
+                        <h4>{{ $order->relaisPoint->available ? 'Disponible' : 'Pas disponible' }}</h4>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <!-- Horaires d'ouverture -->
+                    <div class="flex flex-row items-center w-full ml-3">
+                        <div class="flex items-center pt-3">
+                            <i class="fa-solid pr-2 fa-clock"></i>
+                            <h4 class="text-xl">Horaires d'ouverture</h4>
                         </div>
                     </div>
-                    <div class="flex flex-col ml-10 duration-500 opacity-100 gap-y-3 max-h-96" id="selected">
-                        <div class="flex">
-                            <div class="w-1/2 border-r border-primary">
-                                @foreach (['Lundi', 'Mardi', 'Mercredi'] as $day)
-                                    <div class="flex flex-row items-center gap-x-3">
-                                        <span>{{ $day }}</span>
-                                        <i class="fa-solid fa-arrow-right-long"></i>
-                                        @if (isset($formattedOpeningHours[$day]))
-                                            <span>{{ $formattedOpeningHours[$day] }}</span>
-                                        @else
-                                            <span>Aucune information</span>
-                                        @endif
-                                    </div>
-                                @endforeach
+                </div>
+                <div class="flex flex-col ml-10 duration-500 opacity-100 gap-y-3 max-h-96" id="selected">
+                    <div class="flex items-center">
+                        <div class="w-1/4 border-r border-primary">
+                            <!-- Horaires d'ouverture pour Lundi, Mardi, Mercredi -->
+                            @foreach (['Lundi', 'Mardi', 'Mercredi'] as $day)
+                                <div class="flex flex-row items-center gap-x-3">
+                                    <span>{{ $day }}</span>
+                                    <i class="fa-solid fa-arrow-right-long"></i>
+                                    @if (isset($formattedOpeningHours[$day]))
+                                        <span>{{ $formattedOpeningHours[$day] }}</span>
+                                    @else
+                                        <span>Aucune information</span>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="pl-5">
+                            <!-- Horaires d'ouverture pour Jeudi, Vendredi, Samedi -->
+                            @foreach (['Jeudi', 'Vendredi', 'Samedi'] as $day)
+                                <div class="flex flex-row items-center gap-x-3">
+                                    <span>{{ $day }}</span>
+                                    <i class="fa-solid fa-arrow-right-long"></i>
+                                    @if (isset($formattedOpeningHours[$day]))
+                                        <span>{{ $formattedOpeningHours[$day] }}</span>
+                                    @else
+                                        <span>Aucune information</span>
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                        <!-- Informations supplémentaires à droite des horaires -->
+                        <div class=" w-1/3 ml-auto">
+                            <!-- Adresse, numéro de téléphone et e-mail en ligne -->
+                            <div class="flex mt-2">
+                                <strong>Nom du point de relais :&nbsp;</strong> {{ $order->relaisPoint->name }}
                             </div>
-                            <div class="pl-5">
-                                @foreach (['Jeudi', 'Vendredi', 'Samedi'] as $day)
-                                    <div class="flex flex-row items-center gap-x-3">
-                                        <span>{{ $day }}</span>
-                                        <i class="fa-solid fa-arrow-right-long"></i>
-                                        @if (isset($formattedOpeningHours[$day]))
-                                            <span>{{ $formattedOpeningHours[$day] }}</span>
-                                        @else
-                                            <span>Aucune information</span>
-                                        @endif
-                                    </div>
-                                @endforeach
+                            <div class="flex mt-2">
+                                <strong>Adresse :&nbsp;</strong> {{ $order->relaisPoint->address }}
+                            </div>
+
+                            <div class="flex mt-2">
+                                <strong>Numéro de téléphone :&nbsp;</strong> {{ $order->relaisPoint->contact_phone }}
+                            </div>
+                            <div class="flex mt-2">
+                                <strong>E-mail :&nbsp;</strong> {{ $order->relaisPoint->contact_email }}
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+
             @else
                 <p>Aucun point relais choisi pour cette commande.</p>
             @endif

@@ -27,6 +27,7 @@ class BoOrderController extends Controller
         $data['page'] = 'orders';
         $data['order'] = $my_order;
         $data['order_items'] = UserOrderItem::where('order_id', $my_order->id)->get();
+        $data['formattedOpeningHours'] = $my_order->relaisPoint ? $my_order->relaisPoint->getFormattedOpeningHours() : null;
         return view('pages.backend.orders.order-single', $data);
     }
 
