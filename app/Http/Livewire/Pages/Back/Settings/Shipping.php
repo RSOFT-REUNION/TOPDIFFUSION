@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Pages\Back\Settings;
 
+use App\Models\RelaisPoint;
 use App\Models\SettingGeneral;
 use Livewire\Component;
 
@@ -9,6 +10,14 @@ class Shipping extends Component
 {
     public $setting;
     public $shipping_price, $shipping_limit;
+
+    // Varaible pour le point relais
+    public $nameRelayPoint;
+    public $adressRelayPoint;
+    public $openingHours = "Lundi : 09h00 - 10h00\nTardi : 09h00 - 17h00\nMercredi : 09h00 - 17h00\nJeudi : 09h00 - 17h00\nVendredi : 09h00 - 17h00\nSamedi : 09h00 - 12h00";
+    public $availableRelayPoint;
+    public $conctactPhone;
+    public $conctactEmail;
 
     protected $listeners = ['refreshLines' => '$refresh'];
 
@@ -24,7 +33,7 @@ class Shipping extends Component
     {
         $setting = $this->setting;
         $setting->shipping_price = $this->shipping_price;
-        if($setting->update()) {
+        if ($setting->update()) {
             $this->emit('refreshLines');
         }
     }
@@ -34,9 +43,31 @@ class Shipping extends Component
     {
         $setting = $this->setting;
         $setting->shipping_limit = $this->shipping_limit;
-        if($setting->update()) {
+        if ($setting->update()) {
             $this->emit('refreshLines');
         }
+    }
+
+    // Permet d'ajouter un point relais
+    public function addRelayPoint()
+    {
+        $newRelayPoint = new RelaisPoint;
+
+        // Définir les propriétés avec les valeurs des champs du formulaire
+        $newRelayPoint->name = $this->nameRelayPoint;
+        $newRelayPoint->address = $this->adressRelayPoint;
+        $newRelayPoint->opening_hours = $this->openingHours;
+        $newRelayPoint->available = $this->availableRelayPoint || 0;
+        $newRelayPoint->contact_phone = $this->conctactPhone;
+        $newRelayPoint->contact_email = $this->conctactEmail;
+
+        // Sauvegarder le nouveau point relais dans la base de données
+        if ($newRelayPoint->save()) {
+            // Réinitialiser uniquement les champs concernant l'ajout d'un point relais
+            $this->reset(['nameRelayPoint', 'adressRelayPoint', 'openingHours', 'availableRelayPoint', 'conctactPhone', 'conctactEmail']);
+            // Envoyer un message de confirmation dans la session
+            session()->flash('message', 'Le point relais a été ajouté avec succès.');
+        };
     }
 
     public function render()
