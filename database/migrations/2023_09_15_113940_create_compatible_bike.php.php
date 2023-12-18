@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('compatible_bikes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained('my_products', 'id');
+            $table->foreignId('product_id')->constrained('my_products', 'id')->onDelete('cascade');
             $table->foreignId('bike_id')->constrained('bikes', 'id');
             $table->timestamps();
         });

@@ -57,6 +57,15 @@ class ProductList extends Component
         $this->jobs = [];
     }
 
+    public function deleteProduct($productId)
+    {
+        // Supprimez le produit avec l'ID donné
+        MyProduct::findOrFail($productId)->delete();
+
+        // Rafraîchissez la liste des produits après la suppression
+        $this->render();
+    }
+
     public function render()
     {
         $data = [];

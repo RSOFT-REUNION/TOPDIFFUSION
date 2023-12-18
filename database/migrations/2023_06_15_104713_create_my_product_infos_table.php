@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('my_product_infos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained('my_products', 'id');
+            $table->foreignId('product_id')->constrained('my_products', 'id')->onDelete('cascade');
             $table->string('title');
             $table->string('value');
             $table->timestamps();

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('my_product_swatches', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained('my_products', 'id');
+            $table->foreignId('product_id')->constrained('my_products', 'id')->onDelete('cascade');
             $table->integer('type')->default(1);
             $table->string('ugs');
             $table->string('ugs_swatch')->nullable();

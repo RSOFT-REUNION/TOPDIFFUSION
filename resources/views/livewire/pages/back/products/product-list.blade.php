@@ -42,7 +42,7 @@
                                 <td>{!! $product->getTypeBadge() !!}</td>
                                 <td>{{ number_format($product->getPriceHT(), '2', ',', ' ') }} €</td>
                                 <td>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} €</td>
-                                <td></td>
+                                <td><button wire:click="deleteProduct({{ $product->id }})"><i class="fa-solid fa-trash"></i></button></td>
                             </tr>
                         @endforeach
                     </tbody>
