@@ -43,7 +43,7 @@
         @if ($suject != null)
             <div class="textfield">
                 <label for="massage">Message : </label>
-                <textarea wire:model="massage" id="massage" placeholder="Entrez votre message" rows="4"></textarea>
+                <textarea wire:model="message" id="massage" placeholder="Entrez votre message" rows="4"></textarea>
             </div>
         @endif
 

@@ -3,7 +3,7 @@
         <div class="flex items-center">
             <div class="flex-1">
                 <h1>Tableau de bord</h1>
-                <button wire:click="$emit('openModal', 'popups.relay-point')">Edit User</button>
+                {{-- <button wire:click="$emit('openModal', 'popups.relay-point')">Edit User</button> --}}
             </div>
             <div class="flex-none">
 
