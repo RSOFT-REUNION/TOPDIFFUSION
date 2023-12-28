@@ -56,65 +56,127 @@
         </div>
 
         {{-- Formulaire d'ajout de point relais --}}
-<div class="flex flex-col bg-secondary border-primary text-primary w-full rounded-[8px] mt-4 p-4 duration-500">
-    <h2 class="text-2xl font-bold mb-3">Ajout d'un Point Relais</h2>
-
-    <div class="flex items-center mb-3">
-        <label for="nameRelayPoint" class="mr-2">Nom du point relais</label>
-        <input wire:model="nameRelayPoint" type="text" id="nameRelayPoint" placeholder="La poste" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-    </div>
-
-    <div class="flex items-center mb-3">
-        <label for="adressRelayPoint" class="mr-2">Adresse du point relais</label>
-        <input wire:model="adressRelayPoint" type="text" id="adressRelayPoint" placeholder="108 Rue des Bons Enfants" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-    </div>
-
-    <div class="mb-3">
-        <label for="openingHours">Heures d'ouverture</label>
-        <textarea wire:model='openingHours' name="openingHours" id="openingHours" cols="30" rows="7" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-            Lundi : 09h00 - 10h00
-            Mardi : 09h00 - 17h00
-            Mercredi : 09h00 - 17h00
-            Jeudi : 09h00 - 17h00
-            Vendredi : 09h00 - 17h00
-            Samedi : 09h00 - 12h00
-        </textarea>
-    </div>
-
-    <div class="flex items-center mb-3">
-        <label for="availableRelayPoint">Point relais disponible</label>
-        <input wire:model='availableRelayPoint' type="checkbox" id="availableRelayPoint" class="w-6 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600 mr-2" required>
-    </div>
-
-    <div class="flex items-center mb-3">
-        <label for="conctactPhone" class="mr-2">Numéro de téléphone du Point relais</label>
-        <input wire:model="conctactPhone" type="text" id="conctactPhone" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0693 123 456" required>
-    </div>
-
-    <div class="flex items-center mb-3">
-        <label for="conctactEmail" class="mr-2">Email du Point relais</label>
-        <input wire:model="conctactEmail" type="email" id="conctactEmail" placeholder="adresse-email@gmail.com" class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required>
-    </div>
-
-    @if ($nameRelayPoint && $adressRelayPoint && $conctactPhone && $conctactEmail)
-        <button wire:click="addRelayPoint" class="bg-primary text-secondary rounded px-4 py-2 hover:bg-secondary hover:text-primary transition duration-300">Ajouter Point Relais</button>
-    @endif()
-</div>
-
-
-        @if (session()->has('message'))
-            <div class="alert alert-success" id="confirmation-message">
-                {{ session('message') }}
+        <div class="container-box-page mt-5">
+            <div class="entry-header">
+                <h2>Configuration des point relais</h2>
             </div>
-
-            <script>
-                $(document).ready(function() {
-                    setTimeout(function() {
-                        $('#confirmation-message').fadeOut();
-                    }, 2000);
-                });
-            </script>
-        @endif
-
+            <div class="mx-4 mt-7">
+                <div class="mt-2 flex items-center border-b border-gray-200 pb-4">
+                    <div class="flex-1">
+                        <h3 class="font-normal">Ajout d'un Point Relais</h3>
+                        <p class="text-gray-500 text-sm">Créer les différents point relais disponible.</p>
+                    </div>
+                    <div class="flex-none">
+                        <a wire:click="$emit('openModal', 'popups.back.setting.add-relay-point')" class="btn-secondary block cursor-pointer">Ajouter</a>
+                    </div>
+                </div>
+                @if ($relays_points->isNotEmpty())
+                    <div class="mt-4 flex items-center border-b border-gray-200 pb-4">
+                        <div class="flex-1">
+                            <h3 class="font-normal">Point Relais actuellement configuré</h3>
+                            <p class="text-gray-500 text-sm">Ici vous pouvez voir vos point relais les modifier et les supprimers.</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-row justify-center items-center bg-black bg-opacity-60">
+                        <div class="rounded-xl w-1/2 bg-white my-10">
+                            <div class="flex flex-row items-center justify-between border-b border-gray-200 px-[30px] py-6">
+                                <div class="flex flex-row items-center gap-x-4">
+                                    <i class="fa-solid fa-map-location-dot text-[20px]"></i>
+                                    <h2 class="text-[20px]">Point relais</h2>
+                                </div>
+                                <button><i class="fa-solid fa-xmark text-[20px]"></i></button>
+                            </div>
+                            {{-- Choix Point relais --}}
+                            <div class="flex flex-col transition-all duration-500 gap-y-3 m-[40px]">
+                                @foreach ($relays_points as $relay)
+                                    <div class="flex flex-col {{ $relay->available ? 'bg-secondary border-primary text-primary' : 'bg-primary border-secondary text-secondary' }} w-full rounded-[8px] p-4 duration-500">
+                                        <div class="flex items-center">
+                                            <div class="flex flex-row items-center pr-4 my-3 border-r border-white">
+                                                <input type="radio" wire:model="selectedRelay" value="{{ $relay->id }}"
+                                                    class="text-[20px]" name="choix" id="choix_{{ $relay->id }}">
+                                            </div>
+                                            <div class="flex flex-row items-center justify-between w-full ml-4">
+                                                <div class="flex items-center gap-x-3">
+                                                    <i class="fa-solid fa-location-dot text-[20px]"></i>
+                                                    <label for="choix_{{ $relay->id }}" class="select-none">{{ $relay->name }},
+                                                        {{ $relay->address }}
+                                                    </label>
+                                                </div>
+                                                <div class="flex flex-row items-center gap-x-5">
+                                                    <div class="text-{{ $relay->available ? 'green' : 'red' }}-700 flex flex-row items-center justify-center bg-white rounded-[5px] py-3 px-4">
+                                                        <h4>{{ $relay->available ? 'Disponible' : 'Pas disponible' }}</h4>
+                                                    </div>
+                                                    <div class="flex flex-row gap-x-5">
+                                                        <button wire:click="$emit('openModal', 'popups.back.setting.update-relay-point', {{ json_encode(['id' => $relay->id]) }})">
+                                                            <i class="fa-solid fa-pen"></i>
+                                                        </button>
+                                                        <button wire:click="deleteRelayPoint({{$relay->id}})">
+                                                            <i class="fa-solid fa-trash"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @if ($selectedRelay == $relay->id)
+                                            <div class="flex flex-col ml-10 duration-500 opacity-100 gap-y-3 max-h-96" id="selected">
+                                                <div class="flex flex-row items-center pt-4 mt-4 border-t gap-x-3 op border-primary">
+                                                    <i class="fa-solid fa-clock text-[20px]"></i>
+                                                    <h5>Horaire d'ouverture</h5>
+                                                </div>
+                                                <div class="flex">
+                                                    <div class="w-1/2 border-r border-primary">
+                                                        @foreach (['Lundi', 'Mardi', 'Mercredi'] as $day)
+                                                            <div class="flex flex-row items-center gap-x-3">
+                                                                <span>{{ $day }}</span>
+                                                                <i class="fa-solid fa-arrow-right-long"></i>
+                                                                @if (isset($formattedOpeningHours[$day]))
+                                                                    <span>{{ $formattedOpeningHours[$day] }}</span>
+                                                                @else
+                                                                    <span>Aucune information</span>
+                                                                @endif
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                    <div class="pl-5">
+                                                        @foreach (['Jeudi', 'Vendredi', 'Samedi'] as $day)
+                                                            <div class="flex flex-row items-center gap-x-3">
+                                                                <span>{{ $day }}</span>
+                                                                <i class="fa-solid fa-arrow-right-long"></i>
+                                                                @if (isset($formattedOpeningHours[$day]))
+                                                                    <span>{{ $formattedOpeningHours[$day] }}</span>
+                                                                @else
+                                                                    <span>Aucune information</span>
+                                                                @endif
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                            {{-- <div class="flex flex-row justify-end w-full my-9">
+                                <button wire:click="chooseRelay"
+                                    class="py-3 duration-500 rounded-md bg-secondary px-9 hover:bg-primary hover:text-white">Validé</button>
+                            </div> --}}
+                        </div>
+                    </div>
+                    @endif
+                </div>
+            </div>
+        </div>
     </div>
+    @if (session()->has('success'))
+        <div class="bg-green-500 py-5 fixed bottom-5 right-5 rounded-lg px-6" id="confirmation-success">
+            {{ session('success') }}
+        </div>
+        <script>
+            $(document).ready(function() {
+                setTimeout(function() {
+                    $('#confirmation-success').fadeOut();
+                }, 2000);
+            });
+        </script>
+    @endif
 </div>

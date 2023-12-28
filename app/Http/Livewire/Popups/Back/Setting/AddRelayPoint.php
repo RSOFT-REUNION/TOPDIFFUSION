@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Livewire\Pages\Back\Settings;
+namespace App\Http\Livewire\Popups\Back\Setting;
 
 use App\Models\RelaisPoint;
 use App\Models\SettingGeneral;
-use Livewire\Component;
+use LivewireUI\Modal\ModalComponent;
 
-class Shipping extends Component
+class AddRelayPoint extends ModalComponent
 {
     public $setting;
     public $shipping_price, $shipping_limit;
@@ -14,7 +14,7 @@ class Shipping extends Component
     // Varaible pour le point relais
     public $nameRelayPoint;
     public $adressRelayPoint;
-    public $openingHours = "Lundi : 09h00 - 10h00\nTardi : 09h00 - 17h00\nMercredi : 09h00 - 17h00\nJeudi : 09h00 - 17h00\nVendredi : 09h00 - 17h00\nSamedi : 09h00 - 12h00";
+    public $openingHours = "Lundi : 09h00 - 10h00\nMardi : 09h00 - 17h00\nMercredi : 09h00 - 17h00\nJeudi : 09h00 - 17h00\nVendredi : 09h00 - 17h00\nSamedi : 09h00 - 12h00";
     public $availableRelayPoint;
     public $conctactPhone;
     public $conctactEmail;
@@ -70,33 +70,11 @@ class Shipping extends Component
         };
     }
 
-    public function deleteRelayPoint($id) 
-    {
-        try {
-            $selectRelay = RelaisPoint::where('id', $id)->first();
-            if ($selectRelay) {
-                // dd($selectRelay);
-                $selectRelay->delete();
-                session()->flash('success', 'Relay point deleted successfully.');
-            } else {
-                session()->flash('error', 'Relay point not found.');
-            }
-        } catch (\Exception $e) {
-            session()->flash('error', 'Error occurred: ' . $e->getMessage());
-        }
-    }
-    
-
-    public $selectedRelay = null;
-
     public function render()
     {
         $data = [];
         $data['relays_points'] = RelaisPoint::all();
         $data['setting'] = $this->setting;
-        $data['formattedOpeningHours'] = $this->selectedRelay
-        ? RelaisPoint::find($this->selectedRelay)->getFormattedOpeningHours()
-        : null;
-        return view('livewire.pages.back.settings.shipping', $data);
+        return view('livewire.popups.back.setting.add-relay-point', $data);
     }
 }
