@@ -13,4 +13,9 @@ class MyProductPromotionItems extends Model
         return $this->belongsTo(MyProduct::class, 'product_id');
     }
 
+    public function promotion()
+    {
+        return $this->belongsTo(MyProductPromotion::class, 'group_id');
+    }
+
 }

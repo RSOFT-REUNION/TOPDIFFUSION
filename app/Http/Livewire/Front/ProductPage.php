@@ -8,6 +8,7 @@ use App\Models\MyFavorite;
 use App\Models\MyProduct;
 use App\Models\MyProductInfo;
 use App\Models\MyProductPicture;
+use App\Models\MyProductPromotion;
 use App\Models\MyProductStock;
 use App\Models\MyProductSwatch;
 use App\Models\ProductCategory;
@@ -21,7 +22,7 @@ class ProductPage extends Component
 {
     protected $listeners = ['refreshLines' => '$refresh'];
     public $active_tab = '1';
-    public $product_id, $quantity, $category_id, $favoriteLike, $config_swatch;
+    public $product_id, $product, $quantity, $category_id, $favoriteLike, $config_swatch, $promotion_id, $promotion;
     public $userBikeCompatible = false;
     // public $allCompatibleBike = [];
 
@@ -53,6 +54,11 @@ class ProductPage extends Component
         }
 
         $picture = MyProductPicture::where('product_id', $product_id)->get();
+
+        $this->product = MyProduct::where('id', $this->product_id)->first();
+
+        $this->promotion_id = $this->product->promotion->first() ? $this->product->promotion->first() : null;
+        $this->promotion = $this->promotion_id ? (!$this->promotion_id->code ? ($this->promotion_id->active ? MyProductPromotion::where('id', $this->promotion_id->id)->first() : null) : null): null;
 
         /*$this->images = [
             $picture->picture_url,
@@ -190,6 +196,7 @@ class ProductPage extends Component
     {
         $data = [];
         $data['tab'] = $this->active_tab;
+        $data['promotion'] = $this->promotion;
         $data['product'] = MyProduct::where('id', $this->product_id)->first();
         $data['product_infos'] = MyProductInfo::where('product_id', $this->product_id)->get();
         $data['product_pictures'] = MyProductPicture::where('product_id', $this->product_id)->get();

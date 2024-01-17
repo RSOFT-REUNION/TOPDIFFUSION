@@ -11,13 +11,13 @@
                                 @elseif($product_stock < 3 && $product_stock > 0)
                                     <p class="tags bg-orange-500 text-white">Plus que {{ $product_stock }}</p>
                                 @endif
-                                {{--@if ($category)
-                                    <p class="tags bg-[#fbbc34] text-black">{{ $category->delivery }} %</p>
-                                @endif--}}
+                                @if ($promotion)
+                                    <p class="tags bg-[#fbbc34] text-black">{{ $this->promotion->discount }} %</p>
+                                @endif
                             </div>
                         </div>
-                        <div class="flex-grow"></div>
-                        <div class="flex-none">
+                        {{-- <div class="flex-grow"></div> --}}
+                        <div class="flex-none absolute right-0 top-3">
                             @if($isFavorite)
                                 <a class="py-[14px] px-[16px] rounded-full duration-300 bg-[#ff253a20] hover:bg-gray-200 hover:text-black text-red-500" wire:click.stop="deleteFavorite({{ $product->id }})  "><i class="fa-solid fa-heart"></i></a>
                             @else
@@ -27,8 +27,8 @@
                     </div>
                 </div>
             </div>
-            <div class="force-center mb-5">
-                <img src="{{ asset('storage/images/products/'. $product->cover) }}">
+            <div class="force-center mb-5 w-full">
+                <img class="rounded-lg w-full" src="{{ asset('storage/images/products/'. $product->cover) }}">
             </div>
         </div>
         <div class="flex-none">
@@ -44,8 +44,21 @@
                     <h3>{{ number_format($product->getPriceWithDiscount(), '2', ',', ' ') }} €</h3>
                     <p class="text-sm text-gray-400">HT (-{{ number_format($product->getCustomerDiscount(), '0', ',', ' ') }} %)</p>
                 @else
-                    <h3>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} €</h3>
-                    <p class="text-sm text-gray-400">TTC</p>
+                    @if($promotion)
+                        @php
+                            $discountAmount = $product->getPriceTTC() * ($promotion->discount / 100);
+                            $newPrice = $product->getPriceTTC() - $discountAmount;
+                        @endphp
+                    
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-[30px] font-semibold text-red-500">{{ number_format($newPrice, 2, ',', ' ') }} €</h3>
+                            <p class="text-sm text-gray-400 line-through">{{ number_format($product->getPriceTTC(), 2, ',', ' ') }} €</p>
+                        </div>
+                        <p class="text-sm text-gray-400">TTC</p>
+                    @else
+                        <h3>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} €</h3>
+                        <p class="text-sm text-gray-400">TTC</p>
+                    @endif
                 @endif
             </div>
             @if(!auth()->guest() && auth()->user()->professionnal === 1 && auth()->user()->verified === 1 && $setting->prices_type === 1 && $my_setting->professionnal_prices === 1)

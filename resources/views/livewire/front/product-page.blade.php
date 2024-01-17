@@ -22,8 +22,11 @@
                                     @elseif($product_stock < 3 && $product_stock > 0)
                                         <p class="inline-block bg-orange-500 stock-tag-on text-white">Plus que {{ $product_stock }}</p>
                                     @endif
+                                    @if ($promotion)
+                                        <p class="inline-block bg-[#fbbc34] font-[700] py-[5px] px-[7px] rounded-[5px] text-[14px] text-black">{{ $this->promotion->discount }} %</p>
+                                    @endif
                                 </div>
-                                <img src="{{ asset('storage/images/products/'. $product->cover) }}" alt="image du produit">
+                                <img class="w-full rounded-lg" src="{{ asset('storage/images/products/'. $product->cover) }}" alt="image du produit">
                             </div>
                         </figure>
                     </li>
@@ -72,7 +75,7 @@
 
         {{-- fin crousel --}}
         <div class="flex-1 ml-2">
-            <form wire:submit.prevent="createCart">
+            <form wire:submit.prevent="createCart" class="flex flex-col">
                 @csrf
                 <div class="inline-flex items-center gap-x-3">
                     <p class="marque-tag">{{ $product->getBrand()->title }}</p>
@@ -86,71 +89,36 @@
                         {{ $product->short_description }}
                     </p>
                 </div>
-                @if($product->type != 1)
-                    <div class="product-swatch mt-5 border-2 border-gray-100 rounded-lg">
-                        <ul>
-                            <li>
-                                @if($product->type != 1) {{-- Si il s'agit d'un kit chaine --}}
-                                    <div class="inline-flex items-center justify-between w-full px-5 py-3">
-                                        <label class="text-gray-500 text-sm" for="config_swatch">Sélectionner une configuration:</label>
-                                        <select id="config_swatch" name="config_swatch" wire:model="config_swatch" class="width-300 pr-2 outline-none text-right">
-                                            <option value="">Liste des configurations</option>
-                                            @foreach($product_swatches as $index => $swatch)
-                                                <option value="{{ $swatch->id }}">Configuration {{ $index + 1 }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    @if($config_swatch != null)
-                                        @if($product->type === 3 )
-                                            <div class="inline-flex items-center justify-between w-full border-t-2 border-gray-100 px-5 py-3">
-                                                <label for="" class="text-gray-500 text-sm">CHAINE sélectionnée :</label>
-                                                <p class="font-bold">{{ $swatch_info->chain }}</p>
-                                            </div>
-                                            <div class="inline-flex items-center justify-between w-full border-t-2 border-gray-100 px-5 py-3">
-                                                <label for="" class="text-gray-500 text-sm">PAS sélectionnée :</label>
-                                                <p class="font-bold">{{ $swatch_info->pas }}</p>
-                                            </div>
-                                            <div class="inline-flex items-center justify-between w-full border-t-2 border-gray-100 px-5 py-3">
-                                                <label for="" class="text-gray-500 text-sm">LONGUEUR sélectionnée :</label>
-                                                <p class="font-bold">{{ $swatch_info->width }}</p>
-                                            </div>
-                                            <div class="inline-flex items-center justify-between w-full border-t-2 border-gray-100 px-5 py-3">
-                                                <label for="" class="text-gray-500 text-sm">PIGNON sélectionné :</label>
-                                                <p class="font-bold">{{ $swatch_info->pignon }}</p>
-                                            </div>
-                                            <div class="inline-flex items-center justify-between w-full border-t-2 border-gray-100 px-5 py-3">
-                                                <label for="" class="text-gray-500 text-sm">COURONNE sélectionnée :</label>
-                                                <p class="font-bold">{{ $swatch_info->crown }}</p>
-                                            </div>
-                                        @elseif($product->type === 2)
-                                            <div class="inline-flex items-center justify-between w-full border-t-2 border-gray-100 px-5 py-3">
-                                                <label for="" class="text-gray-500 text-sm">{{ $swatch_info->getVariablesGroup()->title }} sélectionnée:</label>
-                                                <p class="font-bold">{{ $swatch_info->getVariablesItem()->title }}</p>
-                                            </div>
-                                        @endif
-                                    @endif
-                                @endif
-                            </li>
-                        </ul>
-
-                    </div>
-                @endif
-                <div class="product-prices">
-                    @if($product->type == 1)
+                <div class="inline-flex prices mt-2 border-b-2 border-dashed border-gray-500">
+                    @if($product->type == 1 || $product->type == 3)
                         @if(!auth()->guest() && auth()->user()->professionnal === 1 && auth()->user()->verified === 1 && $my_setting->professionnal_prices === 1)
                             <h2>{{ number_format($product->getPriceWithDiscount(), '2', ',', ' ') }} € <span class="text-sm text-gray-400">HT</span></h2>
                         @else
-                            <h2>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} € <span class="text-sm text-gray-400">TTC</span></h2>
+                            @if($promotion)
+                                @php
+                                    $discountAmount = $product->getPriceTTC() * ($promotion->discount / 100);
+                                    $newPrice = $product->getPriceTTC() - $discountAmount;
+                                @endphp
+                            
+                                <div class="flex items-center gap-2">
+                                    <h3 class="text-[40px] font-bold text-red-500">{{ number_format($newPrice, 2, ',', ' ') }} €</h3>
+                                    <p class="text-sm text-gray-400 line-through">{{ number_format($product->getPriceTTC(), 2, ',', ' ') }} €</p>
+                                </div>
+                                <p class="text-sm text-gray-400">TTC</p>
+                            @else
+                                <h3 class="text-[40px] font-bold">{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} €</h3>
+                                <p class="text-sm text-gray-400">TTC</p>
+                            @endif
                         @endif
                         @if(!auth()->guest() && auth()->user()->professionnal === 1 && auth()->user()->verified === 1 && $settings->prices_type === 1 && $my_setting->professionnal_prices === 1)
                             <p>Prix public conseillé (TTC): <b>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} €</b> (-{{ number_format($product->getCustomerDiscount(), '0', ',', ' ') }} %)</p>
                         @endif
                     @else
-                        @if($config_swatch)
+                        {{-- @if($config_swatch)
                             @if(!auth()->guest() && auth()->user()->professionnal === 1 && auth()->user()->verified === 1 && $my_setting->professionnal_prices === 1)
                                 <h2>{{ number_format($product->getPriceWithDiscount(), '2', ',', ' ') }} € <span class="text-sm text-gray-400">HT</span></h2>
                             @else
-                                <h2>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} € <span class="text-sm text-gray-400">TTC</span></h2>
+                                <h2>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} € <span class="text-sm text-gray-400">TTCa</span></h2>
                             @endif
                             @if(!auth()->guest() && auth()->user()->professionnal === 1 && auth()->user()->verified === 1 && $settings->prices_type === 1 && $my_setting->professionnal_prices === 1)
                                 <p>Prix public conseillé: <b>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} €</b> (-{{ number_format($product->getCustomerDiscount(), '0', ',', ' ') }} %)</p>
@@ -159,34 +127,33 @@
                             @if(!auth()->guest() && auth()->user()->professionnal === 1 && auth()->user()->verified === 1 && $my_setting->professionnal_prices === 1)
                                 <h2>{{ number_format($product->getPriceWithDiscount(), '2', ',', ' ') }} € <span class="text-sm text-gray-400">HT</span></h2>
                             @else
-                                <h2>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} € <span class="text-sm text-gray-400">TTC</span></h2>
+                                <h2>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} € <span class="text-sm text-gray-400">TTCb</span></h2>
                             @endif
-                        @endif
+                        @endif --}}
                     @endif
                 </div>
-                <div class="product-buttons inline-flex items-center mt-3">
+                <div class="product-buttons inline-flex items-center mt-3 ">
                     @if(!auth()->guest())
-                        @if($product->type != 1 && $config_swatch)
+                        @if($product_stock == 0)
+                            <div class="py-[10px] px-[15px] border border-solid border-gray-700 bg-gray-500 text-white rounded-[10px] duration-300 font-[600] cursor-not-allowed">Rupture de stock</div>
+                        @else 
                             <div class="border border-gray-100 rounded-lg mr-3">
                                 <button wire:click="minusQuantity" type="button" class="pr-1 pl-2 hover:text-secondary"><i class="fa-solid fa-minus"></i></button>
                                 <input type="number" min="1" max="" value="{{ $quantity }}" wire:model="quantity" class="p-2 w-[50px] text-center font-bold text-xl appearance-none outline-none">
                                 <button wire:click="addQuantity" type="button" class="pl-1 pr-2 hover:text-secondary"><i class="fa-solid fa-plus"></i></button>
                             </div>
-
                             <input type="submit" class="btn-secondary" value="Ajouter au panier">
-                            <a href="" class="py-[12px] px-[16px] rounded-full duration-300 ml-2 @if($favoriteLike) bg-[#ff253a20] hover:bg-gray-200 hover:text-black text-red-500 @else bg-gray-200 hover:text-red-500 hover:bg-[#ff253a20] @endif" wire:click="@if($favoriteLike) deleteFavorite({{ $product->id }}) @else addProductToFavorite({{ $product->id }}) @endif "><i class="fa-solid fa-heart"></i></a>
-                        @elseif($product->type == 1)
-                            <div class="border border-gray-100 rounded-lg mr-3">
-                                <button wire:click="minusQuantity" type="button" class="pr-1 pl-2 hover:text-secondary"><i class="fa-solid fa-minus"></i></button>
-                                <input type="number" min="1" max="" value="{{ $quantity }}" wire:model="quantity" class="p-2 w-[50px] text-center font-bold text-xl appearance-none outline-none">
-                                <button wire:click="addQuantity" type="button" class="pl-1 pr-2 hover:text-secondary"><i class="fa-solid fa-plus"></i></button>
-                            </div>
-
-                            <input type="submit" class="btn-secondary" value="Ajouter au panier">
-                            <a href="" class="py-[12px] px-[16px] rounded-full duration-300 ml-2 @if($favoriteLike) bg-[#ff253a20] hover:bg-gray-200 hover:text-black text-red-500 @else bg-gray-200 hover:text-red-500 hover:bg-[#ff253a20] @endif" wire:click="@if($favoriteLike) deleteFavorite({{ $product->id }}) @else addProductToFavorite({{ $product->id }}) @endif "><i class="fa-solid fa-heart"></i></a>
-                        @else
-                            <p class="empty-text">Vous devez sélectionner une configuration pour continuer</p>
                         @endif
+                        <a href="" class="py-[12px] px-[16px] rounded-full duration-300 ml-2 @if($favoriteLike) bg-[#ff253a20] hover:bg-gray-200 hover:text-black text-red-500 @else bg-gray-200 hover:text-red-500 hover:bg-[#ff253a20] @endif" wire:click="@if($favoriteLike) deleteFavorite({{ $product->id }}) @else addProductToFavorite({{ $product->id }}) @endif "><i class="fa-solid fa-heart"></i></a>
+                    @elseif($product->type == 1)
+                        <div class="border border-gray-100 rounded-lg mr-3">
+                            <button wire:click="minusQuantity" type="button" class="pr-1 pl-2 hover:text-secondary"><i class="fa-solid fa-minus"></i></button>
+                            <input type="number" min="1" max="" value="{{ $quantity }}" wire:model="quantity" class="p-2 w-[50px] text-center font-bold text-xl appearance-none outline-none">
+                            <button wire:click="addQuantity" type="button" class="pl-1 pr-2 hover:text-secondary"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+
+                        <input type="submit" class="btn-secondary" value="Ajouter au panier">
+                        <a href="" class="py-[12px] px-[16px] rounded-full duration-300 ml-2 @if($favoriteLike) bg-[#ff253a20] hover:bg-gray-200 hover:text-black text-red-500 @else bg-gray-200 hover:text-red-500 hover:bg-[#ff253a20] @endif" wire:click="@if($favoriteLike) deleteFavorite({{ $product->id }}) @else addProductToFavorite({{ $product->id }}) @endif "><i class="fa-solid fa-heart"></i></a>
                     @else
                         <a href="{{ route('front.login') }}" class="btn-secondary">Se connecter</a>
                     @endif

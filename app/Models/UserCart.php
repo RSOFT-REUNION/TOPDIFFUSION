@@ -24,6 +24,11 @@ class UserCart extends Model
     public function getUnitPrice()
     {
         return number_format($this->getSwatches()->getPriceWithDiscount(), '2', ',', ' ');
+        // if(auth()->user()->professionnal == 1 && auth()->user()->verified == 1) {
+        //     return number_format($this->getSwatches()->getPriceWithDiscount(), '2', ',', ' ');
+        // } else {
+        //     return number_format($this->getSwatches()->getPriceTTC(), '2', ',', ' ');
+        // }
     }
 
     // Récupérer la quantité en stock de l'article
@@ -57,9 +62,44 @@ class UserCart extends Model
         }
     }
 
+    public function getLinePriceHT()
+    {
+        $productSwatch = $this->getSwatches();
+        return $productSwatch->price_ht * $this->quantity;
+    }
+
+    // Cette méthode calcule le montant total des taxes pour une ligne de panier
+    public function getLineTaxAmount()
+    {
+        $productSwatch = $this->getSwatches();
+        $taxRate = $productSwatch->tax_rate; // Assurez-vous que cette valeur est définie dans votre modèle
+        return $this->getLinePriceHT() * ($taxRate / 100);
+    }
+
+    // Cette méthode calcule le prix TTC pour une ligne de panier
+    public function getLinePriceTTC()
+    {
+        return $this->getLinePriceHT() + $this->getLineTaxAmount();
+    }
+
     public function product()
     {
         return $this->belongsTo(MyProduct::class, 'product_id');
     }
+
+    public function getTaxAmount()
+    {
+        $priceHT = $this->getLinePriceHT(); // Assurez-vous que ceci est un nombre décimal.
+    
+        // Convertissez la chaîne formatée en nombre décimal.
+        // Remplacez les virgules par des points et convertissez la chaîne en float.
+        $priceTTC = floatval(str_replace(',', '.', $this->getTotalPriceLine()));
+    
+        // Calculez le montant de la taxe en soustrayant HT de TTC.
+        $taxAmount = $priceTTC - $priceHT;
+    
+        return $taxAmount;
+    }
+    
 
 }

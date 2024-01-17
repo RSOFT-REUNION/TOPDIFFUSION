@@ -78,7 +78,30 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="pt-1 mt-1 border-t border-gray-300">
+                        @foreach ($my_cart as $items_cart)
+                            <li class="mt-3 border-t border-b border-gray-300">
+                                <div class="flex lfex-row items-center justify-between">
+                                    <div>
+                                        <h3>Produit</h3>
+                                    </div>
+                                    <div>
+                                        <p>10.20 €</p> 
+                                    </div>
+                                </div>
+                            </li>
+                        @endforeach
+                        <li class="mt-3">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h3 class="text-sm">Total des taxes</h3>
+                                </div>
+                                <div>
+                                    <p class="text-xl font-bold text-red-500">{{ number_format($total_tax, 2, ',', ' ') }} €</p>
+                                </div>
+                                {{-- Ajoutez ici d'autres détails du résumé si nécessaire --}}
+                            </div>
+                        </li>
+                        <li class="pt-1 mt-3 border-t border-dashed border-gray-300">
                             <div class="flex items-center">
                                 <div class="flex-1">
                                     <h3 class="text-sm">Total TTC</h3>

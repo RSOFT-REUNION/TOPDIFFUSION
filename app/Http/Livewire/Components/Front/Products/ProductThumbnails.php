@@ -6,6 +6,7 @@ use App\Models\Product;
 use Livewire\Component;
 use App\Models\MyProduct;
 use App\Models\MyFavorite;
+use App\Models\MyProductPromotion;
 use App\Models\UserSetting;
 use App\Models\MyProductStock;
 use App\Models\SettingGeneral;
@@ -13,7 +14,7 @@ use App\Models\ProductCategory;
 
 class ProductThumbnails extends Component
 {
-    public $product, $category_id;
+    public $product, $category_id, $promotion_id, $promotion;
 
     public $isFavorite = false;
 
@@ -27,6 +28,9 @@ class ProductThumbnails extends Component
         if (auth()->check()) {
             $this->isFavorite = MyFavorite::where('product_id', $product_id)->where('user_id', auth()->user()->id)->exists();
         }
+
+        $this->promotion_id = $this->product->promotion->first() ? $this->product->promotion->first() : null;
+        $this->promotion = $this->promotion_id ? (!$this->promotion_id->code ? ($this->promotion_id->active ? MyProductPromotion::where('id', $this->promotion_id->id)->first() : null) : null): null;
     }
 
     public function addProductToFavorite($id)
@@ -67,6 +71,7 @@ class ProductThumbnails extends Component
     {
         $data = [];
         $data['product'] = $this->product;
+        $data['promotion'] = $this->promotion;
         $data['product_stock'] = MyProductStock::where('product_id', $this->product->id)->get()->sum('quantity');
         $data['category'] = $this->category_id;
         $data['setting'] = SettingGeneral::where('id', 1)->first();

@@ -21,12 +21,16 @@ class CheckExpiredPromotions
         $allPromotions = MyProductPromotion::all();
 
         foreach ($allPromotions as $promotion) {
-            if ($promotion->start_date <= $today && $promotion->end_date >= $today && !$promotion->active) {
-                $promotion->active = 1;
-                $promotion->save();
-            } elseif ($promotion->end_date < $today && $promotion->active) {
-                $promotion->active = 0;
-                $promotion->save();
+            if (!$promotion->is_manually_activated) {
+                if (!is_null($promotion->start_date) && !is_null($promotion->end_date)) {
+                    if ($promotion->start_date <= $today && $promotion->end_date >= $today && !$promotion->active) {
+                        $promotion->active = 1;
+                        $promotion->save();
+                    } elseif ($promotion->end_date < $today && $promotion->active) {
+                        $promotion->active = 0;
+                        $promotion->save();
+                    }
+                }
             }
         }
 

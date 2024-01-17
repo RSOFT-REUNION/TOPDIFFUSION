@@ -4,6 +4,8 @@ namespace App\Http\Livewire\Pages\Front\Cart;
 
 use App\Models\ActivityLog;
 use App\Models\MyProduct;
+use App\Models\MyProductPromotion;
+use App\Models\MyProductPromotionItems;
 use App\Models\MyProductSwatch;
 use App\Models\SettingGeneral;
 use App\Models\User;
@@ -32,19 +34,22 @@ class Cart extends Component
     }
 
     // Ajouter une quantité au produit
-    public function addQuantity($cart)
+    public function addQuantity($cartId)
     {
-        $cart = UserCart::where('id', $cart)->first();
-        $cart->quantity += 1;
-        $cart->update();
+        $cartItem = UserCart::find($cartId);
+        if ($cartItem && $cartItem->quantity < $cartItem->getProductStock()->quantity) {
+            $cartItem->quantity++;
+            $cartItem->save();
+        }
     }
-
-    // Supprimer une quantité au produit
-    public function minusQuantity($cart)
+    
+    public function minusQuantity($cartId)
     {
-        $cart = UserCart::where('id', $cart)->first();
-        $cart->quantity -= 1;
-        $cart->update();
+        $cartItem = UserCart::find($cartId);
+        if ($cartItem && $cartItem->quantity > 1) {
+            $cartItem->quantity--;
+            $cartItem->save();
+        }
     }
 
     // Supprimer le produit du panier
@@ -211,6 +216,7 @@ class Cart extends Component
 //            $price = $this->getPriceTotalBlank();
             $price = floatval($this->getPriceTotalBlank());
             $convert_price = number_format($price, '2', '', '');
+            $priceCents = $this->getTotalPriceBlank();
 //            dd($convert_price);
 
             $paylineSDK = new PaylineSDK($merchant_id, $access_key, $proxy_host, $proxy_port, $proxy_login, $proxy_password, $environment);
@@ -221,7 +227,7 @@ class Cart extends Component
             $doWebPaymentRequest['notificationURL'] = 'http://localhost:8000/notificationURL';
 
             // Le paiement
-            $doWebPaymentRequest['payment']['amount'] = $convert_price; // this value has to be an integer amount is sent in cents
+            $doWebPaymentRequest['payment']['amount'] = $priceCents; // this value has to be an integer amount is sent in cents
             $doWebPaymentRequest['payment']['currency'] = 978; // ISO 4217 code for euro
             $doWebPaymentRequest['payment']['action'] = 101; // 101 stand for "authorization+capture"
             $doWebPaymentRequest['payment']['mode'] = 'CPT'; // one shot payment
@@ -262,12 +268,90 @@ class Cart extends Component
         }
     }
 
+    public $applicablePromotions = [];
+    
+    public function getApplicablePromotions()
+{
+    // Supposons que la méthode active() dans le modèle MyProductPromotion retourne toutes les promotions actives
+    // qui ne sont pas expirées et qui sont applicables maintenant.
+    return MyProductPromotion::active()->get();
+}
+
+public function findPromotionForProduct($product)
+{
+    // Ici, vous pouvez soit faire une requête pour chercher une correspondance directe
+    // dans la table de liaison, soit parcourir les promotions chargées et vérifier
+    // si l'une d'elles est associée au produit.
+    $promotionItem = MyProductPromotionItems::where('product_id', $product->id)
+        ->whereHas('promotion', function ($query) {
+            $query->where('active', true)
+                  ->where('is_manually_activated', false)
+                  ->where(function ($query) {
+                      $query->where('start_date', '<=', now())
+                            ->where('end_date', '>=', now());
+                  });
+        })->first();
+
+    return $promotionItem ? $promotionItem->promotion : null;
+}
+
+public function applyPromotion($price, $promotion)
+{
+    // Exemple avec une promotion en pourcentage
+    if ($promotion->type === 1) {
+        $discount = ($price * $promotion->discount) / 100;
+        $newPrice = $price - $discount;
+        // Log le nouveau prix
+        return $newPrice;
+    }
+    // Autres types de promotions...
+    return $price;
+}
+
+
+public function getTotalPriceBlank()
+{
+    $cartItems = UserCart::where('user_id', auth()->user()->id)->get();
+    $price = 0.0;
+
+    foreach ($cartItems as $item) {
+        $product = $item->product;
+        $originalPrice = $item->getTotalPriceLineBlank(); // Assurez-vous que cette méthode renvoie le prix total sans réduction
+        $promotion = $this->findPromotionForProduct($product);
+        
+        if ($promotion) {
+            $price += $this->applyPromotion($originalPrice, $promotion);
+        } else {
+            $price += $originalPrice;
+        }
+    }
+
+    // Ajoutez ici le prix de la livraison si nécessaire
+    // ...
+
+    // Convertir le prix total en centimes pour Paybox
+    return intval(round($price * 100));
+}
+
+    public function getTotalTax()
+    {
+        $cartItems = UserCart::where('user_id', auth()->user()->id)->get();
+        $totalTax = 0.0;
+
+        foreach ($cartItems as $item) {
+            $totalTax += $item->getTaxAmount();
+        }
+
+        return $totalTax;
+    }
+
     public function render()
     {
         $data = [];
         $data['my_cart'] = UserCart::where('user_id', auth()->user()->id)->get();
         $data['total_quantity'] = $this->getQuantityTotal();
         $data['total_price'] = $this->getPriceTotalBlank();
+        $data['total_tax'] = $this->getTotalTax();
         $data['user_address'] = UserAddress::where('user_id', auth()->user()->id)->get();
         $data['shipping'] = $this->getShippingPriceFormat();
         return view('livewire.pages.front.cart.cart', $data);

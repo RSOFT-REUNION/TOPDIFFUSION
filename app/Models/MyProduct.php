@@ -94,6 +94,12 @@ class MyProduct extends Model
         }
     }
 
+    // Récupérer la promotion
+    public function promotion()
+    {
+        return $this->belongsToMany(MyProductPromotion::class, 'my_product_promotion_items', 'product_id', 'group_id');
+    }
+
     // Récupérer le prix Pro avec les remises
     public function getPriceWithDiscount()
     {

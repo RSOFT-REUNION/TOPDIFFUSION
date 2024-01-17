@@ -35,10 +35,11 @@ class PromotionsList extends Component
     {
         $groupPromotion = MyProductPromotion::where('id', $id)->first();
         $groupPromotion->active = !$groupPromotion->active;
+        $groupPromotion->is_manually_activated = !$groupPromotion->active;
         $groupPromotion->save();
 
         // Demander à Livewire de rafraîchir le composant
-        $this->render();
+        // $this->render();
     }
 
     // public function items($id)

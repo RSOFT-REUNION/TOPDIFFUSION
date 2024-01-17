@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('my_product_promotions', function (Blueprint $table) {
             $table->id();
             $table->boolean('active');
+            $table->boolean('is_manually_activated')->default(0);
             $table->integer('type')->default(1);
             $table->string('title');
             $table->double('discount');
