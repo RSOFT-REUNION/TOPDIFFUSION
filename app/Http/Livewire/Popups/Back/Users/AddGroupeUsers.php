@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Popups\Back\Users;
 
+use App\Models\GroupUser;
+use App\Models\ProductCategoriesDiscount;
 use App\Models\ProductCategory;
 use LivewireUI\Modal\ModalComponent;
 use App\Models\CustomerGroup;
@@ -9,7 +11,7 @@ use App\Models\User;
 
 class AddGroupeUsers extends ModalComponent
 {
-    public $name, $discount_percentage, $is_default, $discount_default;
+    public $name, $description, $discount_percentage;
     public $selectedUsers = [];
     public $checkedUsers = [];
 
@@ -18,13 +20,15 @@ class AddGroupeUsers extends ModalComponent
     public $user;
 
     protected $rules = [
-        'name' => 'required|unique:product_group_tags,title',
-        'discount_percentage' => 'required|min:1|max:95'
+        'name' => 'required|unique:group_users,title',
+        'description' => 'nullable|min:5',
+        'discount_percentage' => 'required|min:1|max:100'
     ];
 
     protected $messages = [
-        'name.required' => "Le titre du group est obligatoire.",
-        'name.unique' => "Ce groupe existe déjà.",
+        'name.required' => "Le titre du groupe est obligatoire.",
+        'name.unique' => "Un groupe existe déjà avec ce nom.",
+        'description.min' => 'Votre description doit comporter au moins :min caractères.',
         'discount_percentage.required' => 'Le pourcentage est requis',
         'discount_percentage.min' => 'Le pourcentage est de min:',
         'discount_percentage.max' => 'Le pourcentage est de max:'
@@ -33,62 +37,45 @@ class AddGroupeUsers extends ModalComponent
     public function createGroupUser()
     {
 
-        $this->validate($this->rules, $this->messages);
-        // Vérifiez si la case à cocher isDefault est cochée pour le nouveau groupe
-        $isNewGroupDefault = $this->is_default;
-
-        // Récupérez le groupe actuellement défini comme "par défaut" s'il existe
-        $defaultGroup = CustomerGroup::where('is_default', 1)->first();
-
-        // Si la case est cochée et qu'il y a un groupe par défaut existant, désactivez-le
-        if ($isNewGroupDefault && $defaultGroup) {
-            $defaultGroup->is_default = !$defaultGroup->is_default;
-            if($defaultGroup->save()){
-                session()->flash('success', $defaultGroup->name . ' n\'est plus le groupe par défaut');
-            } else {
-                session()->flash('error', $defaultGroup->name . ' est toujours le groupe par défaut');
-            }
-        }
+        $this->validate();
 
         // Créez d'abord le groupe de clients
-        $groupUser = new CustomerGroup();
-        $groupUser->name = $this->name;
-        $groupUser->discount_percentage = $this->discount_percentage;
-        $groupUser->is_default = $isNewGroupDefault ? 1 : 0; // Définissez le nouveau groupe comme par défaut si la case est cochée
-        $groupUser->discount_default = $this->discount_default ? 1 : 0; // Définissez la remise par défaut si la case est cochée
-
+        $groupUser = new GroupUser();
+        $groupUser->title = $this->name;
+        $groupUser->description = $this->description;
+        $groupUser->discount = $this->discount_percentage;
         if ($groupUser->save()) {
             // Récupère l'id du dernier groupe créé
             $lastInsertedGroupId = $groupUser->id;
 
             // Une fois que le groupe est créé, attribuez les utilisateurs sélectionnés
-            $groupUser->users()->sync($this->selectedUsers);
+            //$groupUser->users()->sync($this->selectedUsers);
 
             // Récupérez l'ID du groupe nouvellement créé
-            $groupId = $groupUser->id;
+            //$groupId = $groupUser->id;
 
             // Initialisez $this->user à null en dehors de la boucle
-            $this->user = null;
-            if ($this->selectedUsers) {
-                foreach ($this->selectedUsers as $userId) {
-                    $this->user = User::find($userId);
-                    if ($this->user) {
-                        $this->user->customer_group_id = $groupId;
-                        $this->user->save();
-                    }
-                }
-            }
+//            $this->user = null;
+//            if ($this->selectedUsers) {
+//                foreach ($this->selectedUsers as $userId) {
+//                    $this->user = User::find($userId);
+//                    if ($this->user) {
+//                        $this->user->customer_group_id = $groupId;
+//                        $this->user->save();
+//                    }
+//                }
+//            }
 
             $categories = ProductCategory::all();
-            // Parcourez toutes les catégories et créez des relations avec le nouveau groupe
-            foreach ($categories as $category) {
-                // Vérifiez si $this->user est défini avant d'accéder à sa propriété customer_group_id
-                $customerGroupId = $this->user ? $this->user->customer_group_id : $lastInsertedGroupId;
-                $category->customerGroups()->attach($groupId, [
-                    'product_category_id' => $category->id,
-                    'customer_group_id' => $customerGroupId,
-                    'discount_percentage' => $this->discount_percentage,
-                ]);
+            if($categories->count() > 0) {
+                // Parcourez toutes les catégories et ajouter leurs ids dans la table de liaison "ProductCategoriesDiscount"
+                foreach ($categories as $category) {
+                    $discountCategorie = new ProductCategoriesDiscount;
+                    $discountCategorie->category_id = $category->id;
+                    $discountCategorie->group_id = $lastInsertedGroupId;
+                    $discountCategorie->discount = $this->discount_percentage;
+                    $discountCategorie->save();
+                }
             }
 
             // Redirigez l'utilisateur vers la liste des groupes
@@ -111,17 +98,12 @@ class AddGroupeUsers extends ModalComponent
         }
     }
 
-    public function updateGroupUserFromSingleClient()
-    {
-        dd('ok');
-    }
-
 
     public function render()
     {
         $data = [];
 
-        if ($this->updatedSearch() != null) {
+        /*if ($this->updatedSearch() != null) {
             $data['usersList'] = $this->updatedSearch()
                 ->whereIn('team', ['0', '1'])
                 ->whereDoesntHave('customerGroups')
@@ -132,7 +114,7 @@ class AddGroupeUsers extends ModalComponent
             ->orderBy('firstname', 'asc')
             ->paginate(8);
 
-        }
+        }*/
         return view('livewire.popups.back.users.add-groupe-users', $data);
     }
 }

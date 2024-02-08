@@ -938,6 +938,24 @@
         }
     }
 }
+/* ------------- PROGRESS BAR -------------*/
+.HI_TW_progress-light {
+    display: block;
+    width: 100%;
+    -webkit-appearance: none;
+
+    &::-webkit-progress-bar {
+        background-color: white;
+        border: 1px solid theme.$gray-1;
+        padding: 2px;
+        border-radius: 30px;
+        overflow: hidden;
+    }
+    &::-webkit-progress-value {
+        border-radius: 30px;
+        background-color: theme.$secondary;
+    }
+}
 
 /* ------------- SLIDERS -------------- */
 .hero-banner {
