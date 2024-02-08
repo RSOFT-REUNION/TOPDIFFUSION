@@ -82,6 +82,8 @@
             </div>
         </div>
     </div>
+        <p class="bg-slate-100 text-sm px-3 py-1 rounded-md">Votre numéro de TVA doit contenir uniquement des chiffres.</p>
+        <p class="bg-slate-100 text-sm px-3 py-1 rounded-md mt-1">Votre profil professionnel sera soumis à une vérification.</p>
     @endif
     <!-- END PROFESSIONNAL -->
     <div class="textfield-checkbox mt-3 mx-5">
