@@ -105,14 +105,8 @@ class MyProduct extends Model
     {
         $price = $this->getPriceHT();
         $user = auth()->user();
-        $user_group = CustomerGroup::where('id', auth()->user()->customer_group_id)->first();
-        $product_category = ProductCategory::where('id', $this->category_id)->first();
-        $product_category_discount = $product_category->customerGroups()->where('customer_group_id', $user_group->id)->first()->pivot->discount_percentage;
-        if($product_category_discount != null) {
-            $discount_amount = $price * ($product_category_discount / 100);
-            $discount = $price - $discount_amount;
-            return $discount;
-        }
+        $discountCategory = ProductCategoriesDiscount::where('group_id', $user->group_user)->where('category_id', $this->category_id)->first()->discount;
+        return $price*(1-$discountCategory/100);
     }
 
     // Récupérer le % de remise du client
@@ -120,14 +114,8 @@ class MyProduct extends Model
     {
         $price = $this->getPriceHT();
         $user = auth()->user();
-        $user_group = CustomerGroup::where('id', auth()->user()->customer_group_id)->first();
-        $product_category = ProductCategory::where('id', $this->category_id)->first();
-        $product_category_discount = $product_category->customerGroups()->where('customer_group_id', $user_group->id)->first()->pivot->discount_percentage;
-        if($product_category_discount != null) {
-            return $product_category_discount;
-        } else {
-            dd("PAS OK");
-        }
+        $discountCategory = ProductCategoriesDiscount::where('group_id', $user->group_user)->where('category_id', $this->category_id)->first()->discount;
+        return $discountCategory;
     }
 
     public function promotions()
