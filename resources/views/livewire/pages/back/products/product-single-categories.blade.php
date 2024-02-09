@@ -6,48 +6,40 @@
                     <i class="fa-solid fa-arrow-left-long"></i>
                 </a>
             </div>
-            <h1>Catégories {{ $findCategory->title }}</h1>
+            <h1>Catégories {{ $category->title }}</h1>
         </div>
-
-        @if(count($groups) > 0)
-            @foreach ($groups as $group)
-                <div class="flex flex-row justify-between items-center border-b border-b-gray-200 pb-4 mt-4">
-                    <div>
-                        <h2 class="font-medium mb-1">Groupe {{ $group->name }}</h2>
-                        <p class="text-[13px] text-[#808080]">Configurer le pourcentage de remise pour ce groupe</p>
-                    </div>
-                    <form wire:submit.prevent="updateDiscountPercentage({{ $group->id }})" class="inline-flex items-center">
-                        @csrf
-                        <div>
-                            <label>
-                                <input id="percentage" type="text" wire:model="discountPercentages.{{ $group->id }}" placeholder="Entrez le pourcentage de remise..." class="focus:outline-none p-3 rounded-lg w-80 bg-gray-200 border border-gray-300 text-sm">
-                            </label>
+    </div>
+    <div id="entry-content">
+        @if($groups->count() > 0)
+            <ul>
+                @foreach($groups as $group)
+                    <li class="border-b border-slate-100">
+                        <div class="flex items-center py-3">
+                            <div class="flex-1">
+                                <p class="text-xl font-medium">{{ $group->getInfos()->title }}</p>
+                                <p class="text-sm text-slate-400">{{ $group->getInfos()->description }}</p>
+                            </div>
+                            <div class="flex-none w-1/4">
+                                <form wire:submit.prevent="updateDiscountPercentage({{ $group->getInfos()->id }})" class="flex items-center">
+                                    <div class="textfield-line w-[200px] flex-1">
+                                        <input type="range" min="0" max="100" wire:model="discountPercentages.{{ $group->id }}" value="{{ $group->discount }}">
+                                        <p class="ml-3 w-1/4 text-center">{{ $discountPercentages[$group->id] }} %</p>
+                                    </div>
+                                    <div class="flex-none ml-2">
+                                        @if($discountPercentages[$group->id] != $group->discount)
+                                            <button class="aspect-square p-2 bg-slate-100 rounded-md duration-300 hover:bg-secondary"><i class="fa-solid fa-floppy-disk"></i></button>
+                                        @endif
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        {{-- Utilisez une variable de drapeau pour déterminer si le bouton "save" doit être affiché --}}
-{{--                        @php--}}
-{{--                            $showSaveButton = false;--}}
-{{--                        @endphp--}}
-{{--                        @foreach ($group->productCategories as $category)--}}
-{{--                            @if ($category->pivot->discount_percentage != $discountPercentages[$group->id])--}}
-{{--                                --}}{{-- Si au moins une catégorie nécessite un enregistrement, activez le drapeau --}}
-{{--                                @php--}}
-{{--                                    $showSaveButton = true;--}}
-{{--                                @endphp--}}
-{{--                            @endif--}}
-{{--                        @endforeach--}}
-                        {{-- Affichez le bouton "save" uniquement si le drapeau est activé --}}
-{{--                        @if ($showSaveButton)--}}
-                            <button id="save" type="submit" class="ml-2 bg-[#FBBC34] px-4 py-2.5 rounded-lg"><i class="fa-solid fa-floppy-disk"></i></button>
-{{--                        @endif--}}
-                    </form>
-                </div>
-            @endforeach
+                    </li>
+                @endforeach
+            </ul>
         @else
-                <div class="flex flex-row justify-between items-center border-b border-b-gray-200 pb-4 mt-4">
-                    <p>Pas de groupes créés pour le moment</p>
-                    <a href="{{ route('back.user.userGroup') }}" class="btn-secondary px-1.5">Créer un groupe</a>
-                </div>
+            <p class="bg-slate-100 py-3 text-center rounded-md text-slate-400">
+                Vous n'avez pas encore configuré de groupe de client, <a href="" class="underline">configurez-en un dès maintenant</a> !
+            </p>
         @endif
-
     </div>
 </div>

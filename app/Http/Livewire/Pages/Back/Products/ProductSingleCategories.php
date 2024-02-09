@@ -2,17 +2,19 @@
 
 namespace App\Http\Livewire\Pages\Back\Products;
 
+
+use App\Models\GroupUser;
+use App\Models\ProductCategoriesDiscount;
 use Livewire\Component;
-use App\Models\CustomerGroup;
 use App\Models\ProductCategory;
 
 class ProductSingleCategories extends Component
 {
     protected $listeners = ['refreshLines' => '$refresh'];
-    public $categoryId;
 
     public $groups;
     public $discountPercentages = [];
+    public $discount = [];
 
     public $category;
     public $findCategory;
@@ -20,59 +22,34 @@ class ProductSingleCategories extends Component
 
     public function mount($categoryId)
     {
-        $this->findCategory = ProductCategory::where('id', $categoryId)->first();
-        $this->categoryId = $categoryId;
-
         // Récupérez la catégorie actuelle
         $this->category = ProductCategory::findOrFail($categoryId);
 
         // Récupérez la liste des groupes depuis la base de données avec sa relation
-        $this->groups = CustomerGroup::with('productCategories')->get();
+        $this->groups = ProductCategoriesDiscount::where('category_id', $categoryId)->get();
 
         // Initialisez $discountPercentages avec les pourcentages de remise actuels pour chaque groupe
         foreach ($this->groups as $group) {
-            // Utilisez la relation pivot pour obtenir le pourcentage de remise pour ce groupe et cette catégorie
-            $this->discountPercentages[$group->id] = $this->category->customerGroups
-                ->where('id', $group->id)
-                ->first();
-
-            if ($this->discountPercentages[$group->id]) {
-                $this->discountPercentages[$group->id] = $this->discountPercentages[$group->id]->pivot->discount_percentage;
-            } else {
-                // Traitez le cas où la relation n'existe pas
-                $this->discountPercentages[$group->id] = 0;
-            }
+            $this->discountPercentages[$group->id] = $group->discount;
         }
     }
 
     public function updateDiscountPercentage($groupId)
     {
         // Vérifiez si le groupe avec l'ID $groupId existe
-        $group = CustomerGroup::find($groupId);
+        $group = ProductCategoriesDiscount::where('group_id', $groupId)->where('category_id', $this->category->id)->first();
 
         if ($group) {
-            // Mettez à jour le pourcentage de remise pour la catégorie actuelle et le groupe spécifié
-            $category = $this->findCategory;
-            if ($category) {
-                $category->customerGroups()->syncWithoutDetaching([
-                    $groupId => [
-                        'discount_percentage' => $this->discountPercentages[$groupId],
-                        'product_category_id' => $this->categoryId
-                    ]
-                ]);
-
+            $group->discount = $this->discountPercentages[$group->id];
+            if($group->update()) {
                 session()->flash('success', 'Le pourcentage de remise a été mis à jour avec succès.');
                 $this->emit('refreshLines');
-
-            // return back()->with('success', 'Le pourcentage de remise a été mis à jour avec succès.')
-            } else {
-                session()->flash('error', 'La catégorie n\'existe pas.');
             }
         } else {
             session()->flash('error', 'Le groupe de clients n\'existe pas.');
         }
 
-       // Rechargez les données après la mise à jour
+        // Rechargez les données après la mise à jour
         $this->emit('refreshLines');
     }
 

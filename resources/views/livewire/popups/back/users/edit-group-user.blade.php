@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="entry-content">
-        <form>
+        <form wire:submit.prevent="editGroup">
             @csrf
             <div class="textfield">
                 <label for="description">Description du groupe</label>
@@ -35,15 +35,39 @@
                     <p class="aspect-square p-2 text-sm font-bold bg-slate-100 rounded-md">{{ $discount }}</p>
                 </div>
             </div>
+            @if($discount != $group->discount || $description != $group->$description)
+                <div class="mt-2">
+                    <button class="btn-secondary block w-full">Enregistrer les modifications</button>
+                </div>
+            @endif
         </form>
         <div class="mt-5">
-            <div class="table-box-outline">
-                <table>
-                    <thead>
-                    
-                    </thead>
-                </table>
-            </div>
+            @if($users->count() > 0)
+                <div class="table-box-outline">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Code client</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Adresse e-mail</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($users as $user)
+                            <tr role="button" wire:click="Window.location.href='{{ route('back.user.single', ['user' => $user->customer_code]) }}'" class="group hover:text-blue-500 hover:cursor-pointer">
+                                <td>{{ $user->customer_code }}</td>
+                                <td>{{ $user->lastname }}</td>
+                                <td>{{ $user->firstname }}</td>
+                                <td>{{ $user->email }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @else
+                <p class="bg-slate-100 rounded-md py-2 px-3">Aucun utilisateur ne fait partie de ce groupe</p>
+            @endif
         </div>
     </div>
 </div>

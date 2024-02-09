@@ -42,18 +42,14 @@
                             @endif
                         </div>
                         <div class="block w-full inline-flex mt-3 justify-end">
-                            <div class="p-3 aspect-square bg-slate-200 rounded-full border-2 border-slate-100">
-                                BH
-                            </div>
-                            <div class="p-3 aspect-square bg-slate-200 rounded-full border-2 border-slate-100 -ml-5">
-                                JD
-                            </div>
-                            <div class="p-3 aspect-square bg-slate-200 rounded-full border-2 border-slate-100 -ml-5">
-                                JD
-                            </div>
-                            <div class="p-3 aspect-square bg-slate-200 rounded-full border-2 border-slate-100 -ml-5">
-                                +6
-                            </div>
+                            @if(count($group->getUserList()) > 0)
+                                <div class="p-3 aspect-square bg-slate-200 rounded-full border-2 border-slate-100">
+                                    <i class="fa-solid fa-user"></i>
+                                </div>
+                                <div class="p-3 aspect-square bg-slate-200 rounded-full border-2 border-slate-100 -ml-5">
+                                    +{{ count($group->getUserList()) }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

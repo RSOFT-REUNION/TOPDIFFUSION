@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
 use App\Models\CustomerGroup;
+use App\Models\GroupUser;
 use App\Models\User;
 use App\Models\UserAddress;
 use App\Models\UserBike;
@@ -29,13 +30,12 @@ class BoUserController extends Controller
         $data = [];
         $data['group'] = 'users';
         $data['page'] = 'list';
-        $data['groupUser'] = CustomerGroup::all();
-        $data['user'] = User::with('customerGroupId')->find($selectedUser->id);
-        $data['availableGroups'] = CustomerGroup::where('id', '!=', $data['user']->customerGroupId->id)->get();
-        // dd($data['availableGroups'] );
+        $data['user'] = $selectedUser;
+        $data['groupUser'] = GroupUser::where('id', $selectedUser->group_user)->first();
         $data['userData'] = UserData::where('user_id', $selectedUser->id)->first();
         $data['userAddress'] = UserAddress::where('user_id', $selectedUser->id)->get();
         $data['userBikes'] = UserBike::where('user_id', $selectedUser->id)->get();
+        $data['allGroups'] = GroupUser::all();
         return view('pages.backend.users.users-single', $data);
     }
 
@@ -46,7 +46,7 @@ class BoUserController extends Controller
 
         // Assurez-vous que l'utilisateur existe et que le nouveau groupe existe
         $foundUser = User::find($user);
-        $newGroup = CustomerGroup::find($newGroupId);
+        $newGroup = GroupUser::find($newGroupId);
 
         if (!$foundUser || !$newGroup) {
             // Gérez les erreurs si l'utilisateur ou le groupe n'existe pas
@@ -58,7 +58,7 @@ class BoUserController extends Controller
 
         // Détachez l'utilisateur de l'ancien groupe s'il était déjà associé
         if ($oldGroupId) {
-            $oldGroup = CustomerGroup::find($oldGroupId);
+            $oldGroup = GroupUser::find($oldGroupId);
             if ($oldGroup) {
                 $oldGroup->users()->detach($foundUser->id);
             }

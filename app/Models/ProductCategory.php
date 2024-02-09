@@ -82,6 +82,13 @@ class ProductCategory extends Model
         });
     }
 
+    // Récupérer l'information de si une ligne existe déjà dans la liste des product categories discount
+    public function getDiscountLine()
+    {
+        $allDiscount = ProductCategoriesDiscount::all();
+
+    }
+
 
 
 }

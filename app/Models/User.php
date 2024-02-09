@@ -71,27 +71,20 @@ class User extends Authenticatable
         }
     }
 
-    public function customerGroups()
-    {
-        return $this->belongsToMany(CustomerGroup::class, 'customer_group_user', 'user_id', 'customer_group_id');
-    }
+//    public function customerGroups()
+//    {
+//        return $this->belongsToMany(CustomerGroup::class, 'customer_group_user', 'user_id', 'customer_group_id');
+//    }
 
-    public function customerGroupId()
-    {
-        return $this->belongsTo(CustomerGroup::class, 'customer_group_id');
-    }
+//    public function customerGroupId()
+//    {
+//        return $this->belongsTo(CustomerGroup::class, 'customer_group_id');
+//    }
 
-    public function addToDefaultGroup()
+    public function getSignatureUser()
     {
-        // Trouvez le groupe par défaut
-        $defaultGroup = CustomerGroup::where('is_default', 1)->first();
-
-        if ($defaultGroup) {
-            // Créez une entrée dans la table customer_group_user
-            CustomerGroupUser::create([
-                'user_id' => $this->id,
-                'customer_group_id' => $defaultGroup->id,
-            ]);
-        }
+        $firstname = strtoupper(substr(Auth()->user()->firstname, 0, 1));
+        $lastname = strtoupper(substr(Auth()->user()->lastname, 0, 1));
+        return $firstname.''.$lastname;
     }
 }

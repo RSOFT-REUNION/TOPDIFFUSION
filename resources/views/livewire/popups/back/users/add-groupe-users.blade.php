@@ -40,7 +40,7 @@
             </div>
 
             <div class="mt-4">
-                <label>Sélectionnez les utilisateurs à ajouter au groupe :</label>
+                {{--<label>Sélectionnez les utilisateurs à ajouter au groupe :</label>
                 <div class="btn-check-line flex items-center mt-2">
                     <p>Les utilisateurs mis dans un groupe ne pourront pas être ajoutés à un autre groupe sans être supprimé au préalable depuis le groupe.</p>
                 </div>
@@ -49,39 +49,39 @@
                     <input id="search" type="text" wire:model="search" placeholder="Rechercher un nom, un prénom, un email..." class="focus:outline-none">
                 </div>
                 <div class="space-y-2 mt-2"><div class="table-box-outline mt-2">
-{{--                        <table>--}}
-{{--                            <thead>--}}
-{{--                            <tr class="text-center">--}}
-{{--                                <th>Sélection</th>--}}
-{{--                                <th>Nom</th>--}}
-{{--                                <th>Prénom</th>--}}
-{{--                                <th>Email</th>--}}
-{{--                            </tr>--}}
-{{--                            </thead>--}}
-{{--                            <tbody>--}}
-{{--                            @foreach ($usersList as $user)--}}
-{{--                                <tr>--}}
-{{--                                    <td>--}}
-{{--                                        <label for="userSelect">--}}
-{{--                                            <input id="userSelect" class="form-checkbox h-5 w-5 text-blue-600" type="checkbox" wire:model="selectedUsers" value="{{ $user->id }}" {{ $checkedUsers ? 'checked' : '' }}>--}}
-{{--                                        </label>--}}
-{{--                                    </td>--}}
-{{--                                    <td>{{ $user->lastname }}</td>--}}
-{{--                                    <td>{{ $user->firstname }}</td>--}}
-{{--                                    <td>{{ $user->email }}</td>--}}
-{{--                                </tr>--}}
-{{--                            @endforeach--}}
+                    <table>
+                        <thead>
+                        <tr class="text-center">
+                            <th>Sélection</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Email</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($usersList as $user)
+                            <tr>
+                                <td>
+                                    <label for="userSelect">
+                                        <input id="userSelect" class="form-checkbox h-5 w-5 text-blue-600" type="checkbox" wire:model="selectedUsers" value="{{ $user->id }}" {{ $checkedUsers ? 'checked' : '' }}>
+                                    </label>
+                                </td>
+                                <td>{{ $user->lastname }}</td>
+                                <td>{{ $user->firstname }}</td>
+                                <td>{{ $user->email }}</td>
+                            </tr>
+                        @endforeach
 
-{{--                            @if($usersList->isEmpty())--}}
-{{--                                <tr>--}}
-{{--                                    <td colspan="4">Pas de résultat correspondant à <span class="text-red-500 font-bold">"{{ $search }}"</span></td>--}}
-{{--                                </tr>--}}
-{{--                            @endif--}}
+                        @if($usersList->isEmpty())
+                            <tr>
+                                <td colspan="4">Pas de résultat correspondant à <span class="text-red-500 font-bold">"{{ $search }}"</span></td>
+                            </tr>
+                        @endif
 
-{{--                            </tbody>--}}
-{{--                        </table>--}}
+                        </tbody>
+                    </table>
                 </div>
-            </div>
+            </div>--}}
             <div class="mt-10">
                 <button type="submit" class="btn-secondary block w-full">Ajouter</button>
             </div>

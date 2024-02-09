@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Pages\Back\Products;
 
+use App\Models\GroupUser;
+use App\Models\ProductCategoriesDiscount;
 use App\Models\ProductCategory;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -80,6 +82,22 @@ class PopupAddCategory extends ModalComponent
             if ($this->image) {
                 $this->image->storeAs('public/images/categories', $image_name);
             }
+
+            // Ajout de la catégorie dans la table des remises
+            $allGroups = GroupUser::all();
+            $allDiscountCategories = ProductCategoriesDiscount::where('category_id', $cat->id)->get();
+            // Vérification de si la variable $allDiscountCategories n'est pas vide
+            if($allDiscountCategories) {
+                foreach ($allGroups as $group) {
+                    $addDiscount = new ProductCategoriesDiscount;
+                    $addDiscount->group_id = $group->id;
+                    $addDiscount->category_id = $cat->id;
+                    $addDiscount->discount = $group->discount;
+                    $addDiscount->save();
+                }
+            }
+
+
             // Store Image in Public Folder
             // $this->image->move(public_path('images/categories'), $image_name);
             return redirect()->route('back.product.categories');
