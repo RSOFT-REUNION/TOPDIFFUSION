@@ -84,34 +84,28 @@
                     <h1>{{ $product->title }}</h1>
                     <h3>Référence (UGS) : {{ $product->getUgs() }}</h3>
                 </div>
-                <div class="product-desc mt-5">
+                <div class="mt-5">
                     <p>
                         {{ $product->short_description }}
                     </p>
                 </div>
-                <div class="inline-flex prices mt-2 border-b-2 border-dashed border-gray-500">
+                <div class="mt-7 border-b-2 border-dashed border-gray-500">
                     @if($product->type == 1 || $product->type == 3)
                         @if(!auth()->guest() && auth()->user()->professionnal === 1 && auth()->user()->verified === 1 && $my_setting->professionnal_prices === 1)
-                            <h2>{{ number_format($product->getPriceWithDiscount(), '2', ',', ' ') }} € <span class="text-sm text-gray-400">HT</span></h2>
+                            <h2 class="text-5xl font-bold block w-full text-secondary">{{ number_format($product->getPriceWithDiscount(), '2', ',', ' ') }} € <span class="text-sm text-gray-400">HT</span></h2>
                         @else
                             @if($promotion)
-                                @php
-                                    $discountAmount = $product->getPriceTTC() * ($promotion->discount / 100);
-                                    $newPrice = $product->getPriceTTC() - $discountAmount;
-                                @endphp
-                            
                                 <div class="flex items-center gap-2">
                                     <h3 class="text-[40px] font-bold text-red-500">{{ number_format($newPrice, 2, ',', ' ') }} €</h3>
                                     <p class="text-sm text-gray-400 line-through">{{ number_format($product->getPriceTTC(), 2, ',', ' ') }} €</p>
                                 </div>
                                 <p class="text-sm text-gray-400">TTC</p>
                             @else
-                                <h3 class="text-[40px] font-bold">{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} €</h3>
-                                <p class="text-sm text-gray-400">TTC</p>
+                                <h2 class="text-5xl font-bold block w-full text-secondary mb-2">{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} € <span class="text-sm text-gray-400">TTC</span></h2>
                             @endif
                         @endif
                         @if(!auth()->guest() && auth()->user()->professionnal === 1 && auth()->user()->verified === 1 && $settings->prices_type === 1 && $my_setting->professionnal_prices === 1)
-                            <p>Prix public conseillé (TTC): <b>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} €</b> (-{{ number_format($product->getCustomerDiscount(), '0', ',', ' ') }} %)</p>
+                            <p class="text-slate-400 mt-2">Prix public conseillé (TTC): <b>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} €</b> (-{{ number_format($product->getCustomerDiscount(), '0', ',', ' ') }} %)</p>
                         @endif
                     @else
                         {{-- @if($config_swatch)
@@ -136,7 +130,7 @@
                     @if(!auth()->guest())
                         @if($product_stock == 0)
                             <div class="py-[10px] px-[15px] border border-solid border-gray-700 bg-gray-500 text-white rounded-[10px] duration-300 font-[600] cursor-not-allowed">Rupture de stock</div>
-                        @else 
+                        @else
                             <div class="border border-gray-100 rounded-lg mr-3">
                                 <button wire:click="minusQuantity" type="button" class="pr-1 pl-2 hover:text-secondary"><i class="fa-solid fa-minus"></i></button>
                                 <input type="number" min="1" max="" value="{{ $quantity }}" wire:model="quantity" class="p-2 w-[50px] text-center font-bold text-xl appearance-none outline-none">

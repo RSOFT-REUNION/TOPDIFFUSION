@@ -26,14 +26,14 @@ class ProductCategory extends Model
         return MyProduct::where('category_id', $this->id)->get()->count();
     }
 
-    public function customerGroups()
+    /*public function customerGroups()
     {
         // Déclare une relation many to many avec le modèle CustomerGroup.
         // Utilise la table pivot 'category_customer_group' pour les associations.
         // Inclut le champ 'discount_percentage' de la table pivot.
         return $this->belongsToMany(CustomerGroup::class, 'category_customer_group')
             ->withPivot('discount_percentage');
-    }
+    }*/
     public static function getAllDiscountPercentages()
     {
         // Récupère toutes les catégories de produits avec leurs groupes de clients associés et les pourcentages de remise.
@@ -80,6 +80,13 @@ class ProductCategory extends Model
                 ];
             });
         });
+    }
+
+    // Récupérer l'information de si une ligne existe déjà dans la liste des product categories discount
+    public function getDiscountLine()
+    {
+        $allDiscount = ProductCategoriesDiscount::all();
+
     }
 
 

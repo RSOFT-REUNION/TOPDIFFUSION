@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('grade')->default(1);
             $table->boolean('team')->default(0);
             $table->integer('team_grade')->default(0);
+            $table->integer('group_user')->default(1);
             $table->boolean('rsoft_team')->default(0);
             $table->rememberToken();
             $table->timestamps();

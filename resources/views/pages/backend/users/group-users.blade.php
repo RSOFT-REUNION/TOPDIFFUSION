@@ -2,6 +2,6 @@
 
 @section('content-template')
     <div id="back_page_content">
-        @livewire('pages.back.users.groupe-user')
+        @livewire('pages.back.users.user-groups')
     </div>
 @endsection

@@ -144,10 +144,10 @@
                         </div>
                     </div>
                     <div class="flex-none ml-2">
-                        <div class="container-sidebar-options bg-gray-100">
+                        <div class="container-sidebar-options bg-slate-100">
                             @if ($user->professionnal == 1 && $user->verified == 0)
                                 <a href="{{ route('back.user.verified', ['user' => $user->customer_code]) }}"
-                                    class="text-amber-500 bg-amber-100 border border-amber-200 rounded-lg"><i
+                                    class="text-amber-500 bg-amber-100 border border-amber-200 rounded-lg mb-2"><i
                                         class="fa-solid fa-circle-check mr-3"></i>Valider le profil</a>
                             @endif
                             <div class="flex-none">
@@ -156,26 +156,14 @@
                                         class="fa-solid fa-pen-to-square mr-3"></i>Modifier les informations</a>
                             </div>
                         </div>
-                        <div class="bg-gray-100 mt-5 rounded-lg p-6 flex flex-col gap-y-5">
+
+                        {{-- GROUPE DU CLIENT --}}
+                        <div class="bg-slate-100 mt-5 rounded-lg p-6 flex flex-col gap-y-5">
                             <h2 class="subtitle">Groupe du client</h2>
-                            <span class="font-medium text-xl text-secondary">{{ $user->customerGroupId->name }}</span>
+                            <span class="bg-slate-200 py-2 px-3 rounded-md text-xl">{{ $groupUser->title }}</span>
                             <div class="">
-                                <form method="POST" action="{{ route('updateGroupUser', ['user' => $user->id]) }}">
-                                    @csrf
-                                    <div class="flex flex-col">
-                                        <label for="newGroup">Sélectionnez le nouveau groupe :</label>
-                                        <select name="newGroup" id="newGroup"
-                                            class=" outline-none border-none rounded-md py-2 pl-4 mt-2">
-                                            @foreach ($availableGroups as $groupe)
-                                                <option value="{{ $groupe->id }}">{{ $groupe->name }}</option>
-                                            @endforeach
-                                        </select>
-                                        <input type="hidden" name="user_id" value="{{ $user->id }}">
-                                    </div>
-                                    <div>
-                                        <button type="submit" class="btn-secondary mt-5">Déplacer dans ce groupe</button>
-                                    </div>
-                                </form>
+                                @livewire('components.back.users.group-user-in-profile', ['group' => $groupUser, 'user' => $user])
+
                             </div>
                         </div>
                     </div>

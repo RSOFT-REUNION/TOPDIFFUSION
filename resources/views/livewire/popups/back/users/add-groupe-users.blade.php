@@ -2,7 +2,7 @@
     <div class="entry-header">
         <div class="flex items-center">
             <div class="flex-1">
-                <h2><i class="fa-solid fa-plus mr-3"></i>Ajouter un groupe</h2>
+                <h2><i class="fa-solid fa-plus mr-3"></i>Ajouter d'un groupe</h2>
             </div>
             <div class="flex-none">
                 <a wire:click="$emit('closeModal')" class="btn-icon block cursor-pointer"><i class="fa-solid fa-xmark"></i></a>
@@ -10,13 +10,22 @@
         </div>
     </div>
     <div class="entry-content">
-        <!-- Vue pour la création d'un groupe de clients -->
 
         <form wire:submit.prevent="createGroupUser">
             @csrf
             <div class="textfield">
-                <label for="name">Nom du groupe d'utilisateur <span class="text-red-500">*</span></label>
+                <label for="name">Nom du groupe<span class="text-red-500">*</span></label>
                 <input type="text" id="name" wire:model="name" placeholder="Entrez un nom de groupe" class="@if ($errors->has('name')) input-error @endif" value="{{ old('name') }}">
+                @if($errors->has('name'))
+                    <p class="text-red-500 text-sm ml-2 mt-1">{{ $errors->first('name') }}</p>
+                @endif
+            </div>
+            <div class="textfield mt-2">
+                <label for="description">Description du groupe</label>
+                <textarea id="description" wire:model="description" placeholder="Entrez une description du groupe" class="@if ($errors->has('name')) input-error @endif">{{ old('description') }}</textarea>
+                @if($errors->has('description'))
+                    <p class="text-red-500 text-sm ml-2 mt-1">{{ $errors->first('description') }}</p>
+                @endif
             </div>
 
             <div class="textfield mt-2">
@@ -30,26 +39,8 @@
                 @enderror
             </div>
 
-            <div class="btn-check-line flex items-center mt-2">
-                <div class="flex-1">
-                    <label class="flex items-center">
-                        <span class="ml-2 mr-2">Groupe par défaut :</span>
-                        <input class="form-checkbox h-5 w-5 text-blue-600" type="checkbox" wire:model="is_default" id="is_default"/>
-                    </label>
-                    <p class="ml-2 mr-2">Si <span class="font-bold">"Groupe par défaut"</span> est coché, tous les nouveaux utilisateurs seront attribués à ce groupe.</p>
-                </div>
-
-                <div class="flex-1">
-                    <label class="flex items-center">
-                        <span class="ml-3 mr-2">Remise par défaut :</span>
-                        <input class="form-checkbox h-5 w-5 text-blue-600" type="checkbox" wire:model="discount_default" id="discount_default"/>
-                    </label>
-                    <p class="ml-2 mr-2">Si <span class="font-bold">"Remise par défaut"</span> est coché, toutes les catégories actuelles qui n'ont pas été configurées manuellement auront <span class="font-bold">{{ $discount_percentage }} %</span> de remise.</p>
-                </div>
-            </div>
-
             <div class="mt-4">
-                <label>Sélectionnez les utilisateurs à ajouter au groupe :</label>
+                {{--<label>Sélectionnez les utilisateurs à ajouter au groupe :</label>
                 <div class="btn-check-line flex items-center mt-2">
                     <p>Les utilisateurs mis dans un groupe ne pourront pas être ajoutés à un autre groupe sans être supprimé au préalable depuis le groupe.</p>
                 </div>
@@ -58,39 +49,39 @@
                     <input id="search" type="text" wire:model="search" placeholder="Rechercher un nom, un prénom, un email..." class="focus:outline-none">
                 </div>
                 <div class="space-y-2 mt-2"><div class="table-box-outline mt-2">
-                        <table>
-                            <thead>
-                            <tr class="text-center">
-                                <th>Sélection</th>
-                                <th>Nom</th>
-                                <th>Prénom</th>
-                                <th>Email</th>
+                    <table>
+                        <thead>
+                        <tr class="text-center">
+                            <th>Sélection</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Email</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($usersList as $user)
+                            <tr>
+                                <td>
+                                    <label for="userSelect">
+                                        <input id="userSelect" class="form-checkbox h-5 w-5 text-blue-600" type="checkbox" wire:model="selectedUsers" value="{{ $user->id }}" {{ $checkedUsers ? 'checked' : '' }}>
+                                    </label>
+                                </td>
+                                <td>{{ $user->lastname }}</td>
+                                <td>{{ $user->firstname }}</td>
+                                <td>{{ $user->email }}</td>
                             </tr>
-                            </thead>
-                            <tbody>
-                            @foreach ($usersList as $user)
-                                <tr>
-                                    <td>
-                                        <label for="userSelect">
-                                            <input id="userSelect" class="form-checkbox h-5 w-5 text-blue-600" type="checkbox" wire:model="selectedUsers" value="{{ $user->id }}" {{ $checkedUsers ? 'checked' : '' }}>
-                                        </label>
-                                    </td>
-                                    <td>{{ $user->lastname }}</td>
-                                    <td>{{ $user->firstname }}</td>
-                                    <td>{{ $user->email }}</td>
-                                </tr>
-                            @endforeach
+                        @endforeach
 
-                            @if($usersList->isEmpty())
-                                <tr>
-                                    <td colspan="4">Pas de résultat correspondant à <span class="text-red-500 font-bold">"{{ $search }}"</span></td>
-                                </tr>
-                            @endif
+                        @if($usersList->isEmpty())
+                            <tr>
+                                <td colspan="4">Pas de résultat correspondant à <span class="text-red-500 font-bold">"{{ $search }}"</span></td>
+                            </tr>
+                        @endif
 
-                            </tbody>
-                        </table>
+                        </tbody>
+                    </table>
                 </div>
-            </div>
+            </div>--}}
             <div class="mt-10">
                 <button type="submit" class="btn-secondary block w-full">Ajouter</button>
             </div>
