@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Mail\Users\AccountVerified;
 use App\Models\CustomerGroup;
 use App\Models\GroupUser;
 use App\Models\User;
@@ -11,6 +12,7 @@ use App\Models\UserBike;
 use App\Models\UserData;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use view;
 
 class BoUserController extends Controller
@@ -97,6 +99,9 @@ class BoUserController extends Controller
         $selectedUser->verified = 1;
         $selectedUser->verified_at = Carbon::now();
         if ($selectedUser->update()) {
+            // Envoi d'un email au client
+            Mail::to($selectedUser->email)->send(new AccountVerified($selectedUser));
+
             return redirect()->route('back.user.single', ['user' => $selectedUser->customer_code]);
         }
     }
