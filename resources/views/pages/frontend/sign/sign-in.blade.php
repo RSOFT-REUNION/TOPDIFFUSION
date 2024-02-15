@@ -36,7 +36,7 @@
                                 </div>
                             </div>
                             <div class="flex-none">
-                                <a href="" class="">Mot de passe oublié ?</a>
+                                <a onclick="Livewire.emit('openModal', 'popups.front.profile.forgot-password')" class="hover:underline cursor-pointer">Mot de passe oublié ?</a>
                             </div>
                         </div>
 

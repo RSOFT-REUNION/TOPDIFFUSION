@@ -92,6 +92,19 @@ class FrontController extends Controller
         return redirect()->route('front.home');
     }
 
+    // Mot de passe oublié (page)
+    public function forgotPassword()
+    {
+        $data = [];
+        $data['page'] = 'register';
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
+        return view('pages.frontend.sign.forgot-password', $data);
+    }
+    public function postForgotPassword()
+    {
+
+    }
+
     /*----------- PROFILE ------------*/
     public function showProfile()
     {

@@ -30,6 +30,8 @@ Route::get('/connexion', [FrontController::class, 'showLogin'])->name('front.log
 Route::post('/connexion', [FrontController::class, 'postLogin']);
 Route::get('/inscription', [FrontController::class, 'showRegister'])->name('front.register');
 Route::get('/déconnexion', [FrontController::class, 'logout'])->name('logout');
+Route::get('/mot-de-passe-oublie/{token}', [FrontController::class, 'forgotPassword'])->name('fo.forgotPassword');
+Route::post('/mot-de-passe-oublie/{token}', [FrontController::class, 'postForgotPassword']);
 
 Route::get('/produit-{slug}', [ProductController::class, 'showProduct'])->name('front.product');
 Route::get('/produit', [ProductController::class, 'showProductListAll'])->name('front.product-all');
