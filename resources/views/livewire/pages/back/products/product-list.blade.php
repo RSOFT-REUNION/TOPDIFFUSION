@@ -5,15 +5,17 @@
 {{--            <h1><a href="">Produits</a></h1>--}}
         </div>
         <div class="flex-none inline-flex items-center">
-            <a href="" class="btn-icon mr-2"><i class="fa-solid fa-magnifying-glass"></i></a>
-            <input wire:model.debounce.100ms="search" type="text" placeholder="Rechercher un produit..." class="bg-transparent px-2 py-3 focus:outline-none border-none focus:border-none duration-300 hover:tracking-wider dark:border-none">
-            @if ($search)
-                <button wire:click="clear" class="px-3">
-                    <i class="fa-solid fa-times"></i>
-                </button>
-            @endif
+            <div class="bg-slate-100 mr-3 rounded-md pl-5">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input wire:model.debounce.100ms="search" type="text" placeholder="Rechercher un produit..." class="bg-transparent px-2 py-3 focus:outline-none border-none focus:border-none duration-300 hover:tracking-wider dark:border-none w-[300px]">
+                @if ($search)
+                    <button wire:click="clear" class="px-3">
+                        <i class="fa-solid fa-times"></i>
+                    </button>
+                @endif
+            </div>
             {{-- * Import CSV à gérer plus tard --}}
-            {{-- <a href="" class="btn-icon mr-2"><i class="fa-solid fa-file-import"></i></a> --}}
+            <a href="" class="btn-icon mr-2"><i class="fa-solid fa-file-import"></i></a>
             <a href="{{ route('back.product.create') }}" class="btn-secondary cursor-pointer"><i class="fa-solid fa-plus mr-3"></i>Ajouter un produit</a>
         </div>
     </div>
@@ -35,7 +37,7 @@
                     </thead>
                     <tbody>
                         @foreach ($products as $product)
-                            <tr>
+                            <tr role="button" data-href="{{ route('back.product.single', ['product' => $product->id]) }}" class="hover:text-blue-500">
                                 <td class="w-[70px]"><img src="{{ asset('storage/images/products/'. $product->cover) }}" width="50px"></td>
                                 <td>{{ $product->getUgs() }}</td>
                                 <td>{{ $product->title }}</td>

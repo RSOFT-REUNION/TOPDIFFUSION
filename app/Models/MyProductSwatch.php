@@ -24,9 +24,9 @@ class MyProductSwatch extends Model
         return number_format($price, '2', ',', ' ');
     }
 
-    // Récupérer le prix Pro avec les remises
+     //Récupérer le prix Pro avec les remises
     public function getPriceWithDiscount()
-{
+    {
     $price = $this->price_ht;
     $product = MyProduct::find($this->product_id);
 
@@ -35,12 +35,12 @@ class MyProductSwatch extends Model
         return $price;
     }
 
-    $user_group = CustomerGroup::find(auth()->user()->customer_group_id);
-
-    if (!$user_group) {
-        // Handle the case where the user group is not found
-        return $price;
-    }
+//    $user_group = CustomerGroup::find(auth()->user()->customer_group_id);
+//
+//    if (!$user_group) {
+//        // Handle the case where the user group is not found
+//        return $price;
+//    }
 
     $product_category = ProductCategory::find($product->category_id);
 

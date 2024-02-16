@@ -26,7 +26,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="text-xl text-center">{{ $cart->getUnitPrice() }} €</td>
+                            <td class="text-xl text-center">{{ number_format($cart->getTotalPriceSpend(), '2', ',', '') }} €</td>
                             <td class="text-center">
                                 <div class="inline-flex items-center">
                                     @if($cart->quantity > 1)
@@ -78,27 +78,14 @@
                                 </div>
                             </div>
                         </li>
-                        @foreach ($my_cart as $items_cart)
-                            <li class="mt-3 border-t border-b border-gray-300">
-                                <div class="flex lfex-row items-center justify-between">
-                                    <div>
-                                        <h3>Produit</h3>
-                                    </div>
-                                    <div>
-                                        <p>10.20 €</p> 
-                                    </div>
-                                </div>
-                            </li>
-                        @endforeach
                         <li class="mt-3">
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <h3 class="text-sm">Total des taxes</h3>
+                                    <h3 class="text-sm">Montant économisé</h3>
                                 </div>
                                 <div>
-                                    <p class="text-xl font-bold text-red-500">{{ number_format($total_tax, 2, ',', ' ') }} €</p>
+                                    <p class="text-xl font-bold text-green-500">{{ number_format($total_tax, 2, ',', ' ') }} €</p>
                                 </div>
-                                {{-- Ajoutez ici d'autres détails du résumé si nécessaire --}}
                             </div>
                         </li>
                         <li class="pt-1 mt-3 border-t border-dashed border-gray-300">

@@ -42,7 +42,7 @@ class Cart extends Component
             $cartItem->save();
         }
     }
-    
+
     public function minusQuantity($cartId)
     {
         $cartItem = UserCart::find($cartId);
@@ -269,7 +269,7 @@ class Cart extends Component
     }
 
     public $applicablePromotions = [];
-    
+
     public function getApplicablePromotions()
 {
     // Supposons que la méthode active() dans le modèle MyProductPromotion retourne toutes les promotions actives
@@ -318,7 +318,7 @@ public function getTotalPriceBlank()
         $product = $item->product;
         $originalPrice = $item->getTotalPriceLineBlank(); // Assurez-vous que cette méthode renvoie le prix total sans réduction
         $promotion = $this->findPromotionForProduct($product);
-        
+
         if ($promotion) {
             $price += $this->applyPromotion($originalPrice, $promotion);
         } else {
@@ -345,6 +345,22 @@ public function getTotalPriceBlank()
         return $totalTax;
     }
 
+    public function getTotalDiscount()
+    {
+        $cartItems = UserCart::where('user_id', auth()->user()->id)->get();
+        $price = 0.0;
+
+        foreach ($cartItems as $item) {
+            $product = $item->product;
+            $originalPrice = $item->getTotalPriceSpend(); // Assurez-vous que cette méthode renvoie le prix total sans réduction
+
+            if ($originalPrice) {
+                $price += $originalPrice;
+            }
+        }
+
+    }
+
     public function render()
     {
         $data = [];
@@ -354,6 +370,7 @@ public function getTotalPriceBlank()
         $data['total_tax'] = $this->getTotalTax();
         $data['user_address'] = UserAddress::where('user_id', auth()->user()->id)->get();
         $data['shipping'] = $this->getShippingPriceFormat();
+        $data['total_discount'] = $this->getTotalDiscount();
         return view('livewire.pages.front.cart.cart', $data);
     }
 }

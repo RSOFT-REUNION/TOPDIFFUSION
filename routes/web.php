@@ -76,6 +76,7 @@ Route::group([
         Route::prefix('/produits')->group(function () {
             Route::get('/liste', [BoProductController::class, 'showProductList'])->name('back.product.list');
             Route::get('/creation', [BoProductController::class, 'createProduct'])->name('back.product.create');
+            Route::get('/produit/{product}', [BoProductController::class, 'showSingleProduct'])->name('back.product.single');
             Route::get('/créer-un-produit-{id}', [BoProductController::class, 'showCreateProduct'])->name('back.product.show.create');
             Route::get('/ajout-{id}-{product}', [BoProductController::class, 'showAddProduct'])->name('back.product.add');
             Route::get('/categories', [BoProductController::class, 'showProductCategories'])->name('back.product.categories');
