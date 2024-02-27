@@ -137,21 +137,18 @@ class Cart extends Component
             $cart = UserCart::where('user_id', auth()->user()->id)->get();
             foreach ($cart as $ca)
             {
-                // Récupérer les informations du produit
-                $swatch = MyProductSwatch::where('id', $ca->swatch_id)->first();
+                // met à jour le statut du panier au statut "en attente de paiement"
+                $ca->state = 1;
+                $ca->update();
 
-                // Ajoutes les données en base de données
-                $orderItems = new UserOrderItem;
-                $orderItems->order_id = $order->id;
-                $orderItems->product_id = $ca->product_id;
-                $orderItems->quantity = $ca->quantity;
-                $orderItems->product_swatch_id = $swatch->id;
-                if(auth()->user()->professionnal === 1 && auth()->user()->verified === 1) {
-                    $orderItems->product_price = $swatch->getPriceWithDiscount();
-                } else {
-                    $orderItems->product_price = $swatch->price_ht;
-                }
-                $orderItems->save();
+                // Ajout les informations du panier dans la commande
+                $orderLine = new UserOrderItem;
+                $orderLine->order_id = $order->id;
+                $orderLine->product_id = $ca->product_id;
+                $orderLine->product_swatch_id = $ca->swatch_id;
+                $orderLine->quantity = $ca->quantity;
+                $orderLine->product_price = $ca->getUnitPrice();
+                $orderLine->save();
             }
         }
 

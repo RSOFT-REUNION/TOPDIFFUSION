@@ -29,57 +29,35 @@
                                 {{ $order->Address()->city }} - {{ $order->Address()->country }}</p>
                         </div>
                     </div>
-                    <div class="flex flex-row w-full gap-x-4">
-                        <div class="flex justify-center w-full py-3 duration-300 rounded-lg cursor-pointer bg-secondary hover:bg-primary hover:text-white" onclick="Livewire.emit('openModal', 'pages.front.sav.open-ticket-sav', {{ json_encode(['user' => $order->User()->id, 'command' => $order->document_number])}})">
-                            <h2>Demande SAV</h2>
-                        </div>
-                        <div class="flex justify-center w-full py-3 bg-gray-100 rounded-lg cursor-pointer hover:bg-primary hover:text-white">
-                            <h2>Voir la facture</h2>
-                        </div>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button class="bg-red-400 text-white py-3 rounded-md">Régler ma facture (par carte)</button>
+                        <button class="bg-secondary py-3 rounded-md">Télécharger la commande</button>
+                        <button class="bg-secondary py-3 rounded-md">Demande de SAV</button>
                     </div>
-                    <div class="w-full bg-gray-100 rounded-lg">
-                        <div class="flex flex-row items-center p-4 border-b border-white">
-                            <i class="mr-2 fa-solid fa-cart-flatbed"></i>
-                            <h2 class="text-xl font-bold">Produits dans la commande</h2>
-                        </div>
-                        <div class="flex flex-col items-center h-full gap-y-4">
-                            @foreach ($order_items as $item)
-                                <div role="button"
-                                    data-href="{{ route('front.product', ['slug' => $item->ProductItem->slug]) }}"
-                                    class="px-3 py-2 duration-300 bg-gray-100 border border-transparent rounded-md cursor-pointer hover:border-gray-200 hover:scale-105 hover:drop-shadow-xl">
-                                    <div class="flex items-center">
-                                        <div class="flex-none">
-                                            <img src="{{ asset('storage/images/products/' . $item->Product()->cover) }}"
-                                                width="100px" class="rounded-sm">
-                                        </div>
-                                        <div class="flex-1 ml-4">
-                                            <div class="grid items-center grid-cols-4 gap-4">
-                                                <div class="border-r border-gray-300">
-                                                    <p class="text-xl font-bold truncate">
-                                                        {{ $item->Product()->title }}</p>
-                                                    <p class="text-sm text-gray-500">{{ $item->Swatch()->ugs }}</p>
-                                                </div>
-                                                <div class="border-r border-gray-300">
-                                                    <p class="text-sm text-gray-500">Prix unit.</p>
-                                                    <p class="text-xl font-bold">
-                                                        {{ number_format($item->product_price, '2', ',', ' ') }} €
-                                                    </p>
-                                                </div>
-                                                <div class="border-r border-gray-300 ">
-                                                    <p class="text-sm text-gray-500">Qte.</p>
-                                                    <p class="text-xl font-bold">{{ $item->quantity }}</p>
-                                                </div>
-                                                <div>
-                                                    <p class="text-sm text-gray-500">Total</p>
-                                                    <p class="text-xl font-bold">{{ $item->getTotalLinePrice() }} €
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                    <h2 class="text-xl font-bold">Produits dans la commande</h2>
+                    <div class="table-box-outline mt-2">
+                        <table>
+                            <thead class="font-bold">
+                            <tr>
+                                <td><i class="fa-solid fa-image"></i></td>
+                                <td>Nom du produit</td>
+                                <td>Prix unitaire</td>
+                                <td>Quantité</td>
+                                <td>Prix total</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($order_items as $oi)
+                                <tr role="button" data-href="{{ route('front.product', ['slug' => $oi->Product()->slug]) }}" class="hover:text-blue-500">
+                                    <td class="w-[70px]"><img src="{{ asset('storage/images/products/'. $oi->Product()->cover) }}" width="50px"></td>
+                                    <td>{{ $oi->Product()->title }}</td>
+                                    <td>{{ $oi->product_price }} €</td>
+                                    <td>{{ $oi->quantity }}</td>
+                                    <td class="font-bold">{{ $oi->getTotalLinePrice() }} €</td>
+                                </tr>
                             @endforeach
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -97,11 +75,20 @@
                             </div>
                         </div>
                     </div>
+                    <div class="w-full bg-gray-100 rounded-lg">
+                        <div class="flex flex-row items-center pl-12 h-28">
+                            <i class="fa-solid fa-money-check fa-2x"></i>
+                            <div class="flex-1 ml-10">
+                                <h3 class="text-2xl font-bold">{{ $order->getPaymentMethod() }}</h3>
+                                <p>Mode de paiement</p>
+                            </div>
+                        </div>
+                    </div>
                     <div class="w-full text-green-600 bg-gray-100 rounded-lg">
                         <div class="flex flex-row items-center pl-12 h-28">
                             <i class="fa-solid fa-money-check fa-2x"></i>
                             <div class="flex-1 ml-10">
-                                <h3 class="text-2xl font-bold">{{ $order->total_amount }} €</h3>
+                                <h3 class="text-2xl font-bold">{{ number_format($order->total_amount, '2', ',', ' ') }} €</h3>
                                 <p>Total</p>
                             </div>
                         </div>

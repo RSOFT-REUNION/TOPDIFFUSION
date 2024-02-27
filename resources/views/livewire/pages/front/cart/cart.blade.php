@@ -8,6 +8,7 @@
                     <tr>
                         <th class="py-4 text-left">Produit</th>
                         <th>Prix unitaire (HT)</th>
+                        <th>Prix remisé (HT)</th>
                         <th>Quantité</th>
                         <th>Dispo.</th>
                         <th>Prix total (TTC)</th>
@@ -27,6 +28,7 @@
                                 </div>
                             </td>
                             <td class="text-xl text-center">{{ number_format($cart->getTotalPriceSpend(), '2', ',', '') }} €</td>
+                            <td class="text-xl text-center">{{ $cart->getUnitPrice() }} €</td>
                             <td class="text-center">
                                 <div class="inline-flex items-center">
                                     @if($cart->quantity > 1)
@@ -91,7 +93,11 @@
                         <li class="pt-1 mt-3 border-t border-dashed border-gray-300">
                             <div class="flex items-center">
                                 <div class="flex-1">
-                                    <h3 class="text-sm">Total TTC</h3>
+                                    @if(auth()->user()->professionnal == 1 && auth()->user()->verified == 1)
+                                        <h3 class="text-sm">Total HT</h3>
+                                    @else
+                                        <h3 class="text-sm">Total TTC</h3>
+                                    @endif
                                 </div>
                                 <div class="flex-none">
                                     <p class="text-xl font-bold">{{ number_format($total_price, '2', ',', ' ') }} €</p>
@@ -107,6 +113,7 @@
                     <button wire:click="initOrderBilling" class="block w-full py-3 mt-2 font-bold duration-300 bg-gray-100 border border-transparent rounded-lg hover:bg-secondary/30 hover:border-secondary">Virement à la livraison</button>
                 @endif
                 <hr class="my-2 border-gray-100">
+                <p class="text-slate-400 text-center">Vous pouvez choisir de vous faire livrer dans un point relais le plus proche.</p>
                 <button wire:click="$emit('openModal', 'popups.relay-point')" class="block w-full py-3 mt-2 font-bold text-black duration-300 border border-transparent rounded-lg bg-secondary hover:bg-secondary/30 hover:border-secondary hover:text-secondary">Choisir un point relais</button>
                 <button wire:click="initOrder" class="block w-full py-3 mt-2 font-bold text-white duration-300 border border-transparent rounded-lg bg-primary hover:bg-primary/30 hover:border-primary hover:text-primary">Payer directement par carte</button>
             @else

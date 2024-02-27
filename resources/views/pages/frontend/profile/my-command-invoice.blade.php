@@ -18,7 +18,6 @@
                     <tr>
                         <th>N° de commande</th>
                         <th>Statut</th>
-                        {{-- <th>Client</th> --}}
                         <th>Nb. produits</th>
                         <th>Montant total (TTC)</th>
                         <th>Date</th>
@@ -30,7 +29,6 @@
                             <tr role="button" class="cursor-pointer hover:bg-blue-100" data-href="{{ route('front.orders.single', ['order' => $order->document_number]) }}">
                                 <td>{{ $order->document_number }}</td>
                                 <td>{!! $order->getStateBadgeGestion() !!}</td>
-                                {{-- <td><a href="{{ route('back.user.single', ['user' => $order->User()->customer_code]) }}" class="font-bold hover:text-blue-500">{{ $order->User()->customer_code }}</a></td> --}}
                                 <td>{{ $order->total_product }}</td>
                                 <td>{{ $order->total_amount }} €</td>
                                 <td>{{ $order->getCreatedDate() }}</td>

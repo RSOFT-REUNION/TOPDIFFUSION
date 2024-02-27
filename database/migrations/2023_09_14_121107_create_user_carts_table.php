@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained('my_products', 'id')->onDelete('cascade');
             $table->foreignId('swatch_id')->constrained('my_product_swatches', 'id');
             $table->integer('quantity')->default(1);
-            $table->integer('state')->default(0);
+            $table->integer('state')->default(0); // 0 = En cours, 1 = En attente de paiement
             $table->timestamps();
         });
     }

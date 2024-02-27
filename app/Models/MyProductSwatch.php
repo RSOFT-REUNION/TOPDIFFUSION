@@ -27,45 +27,16 @@ class MyProductSwatch extends Model
      //Récupérer le prix Pro avec les remises
     public function getPriceWithDiscount()
     {
-    $price = $this->price_ht;
-    $product = MyProduct::find($this->product_id);
+        $price = $this->price_ht;
+        $product = MyProduct::where('product_id', $this->product_id)->first();
+        $discountCategory = ProductCategoriesDiscount::where('group_id', auth()->user()->group_user)->where('category_id', $product->category_id)->first()->discount;
 
-    if (!$product) {
-        // Handle the case where the product is not found
-        return $price;
+        // Si l'utilisateur est un professionnel
+        if(auth()->user()->professionnal == 1 && auth()->user()->verified == 1) {
+            return $discountCategory;
+        }
+
     }
-
-//    $user_group = CustomerGroup::find(auth()->user()->customer_group_id);
-//
-//    if (!$user_group) {
-//        // Handle the case where the user group is not found
-//        return $price;
-//    }
-
-    $product_category = ProductCategory::find($product->category_id);
-
-    if (!$product_category) {
-        // Handle the case where the product category is not found
-        return $price;
-    }
-
-    $category_customer_group = $product_category->customerGroups()->where('customer_group_id', $user_group->id)->first();
-
-    if (!$category_customer_group) {
-        // Handle the case where the category customer group is not found
-        return $price;
-    }
-
-    $product_category_discount = $category_customer_group->pivot->discount_percentage;
-
-    if ($product_category_discount != null) {
-        $discount_amount = $price * ($product_category_discount / 100);
-        $discount = $price - $discount_amount;
-        return $discount;
-    }
-
-    return $price;
-}
 
 
     public function getPriceProfessionnal()

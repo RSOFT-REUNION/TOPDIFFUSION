@@ -24,7 +24,7 @@ class UserOrderItem extends Model
     // Avoir le prix total de la ligne
     public function getTotalLinePrice()
     {
-        $unit_price = $this->product_price;
+        $unit_price = intval($this->product_price);
         $quantity = $this->quantity;
         $result = $unit_price * $quantity;
         return number_format($result, '2', ',', ' ');

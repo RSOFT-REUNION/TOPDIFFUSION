@@ -23,12 +23,12 @@ class UserCart extends Model
     // Avoir le prix unitaire de chaque article
     public function getUnitPrice()
     {
-        return number_format($this->getSwatches()->getPriceWithDiscount(), '2', ',', ' ');
-        // if(auth()->user()->professionnal == 1 && auth()->user()->verified == 1) {
-        //     return number_format($this->getSwatches()->getPriceWithDiscount(), '2', ',', ' ');
-        // } else {
-        //     return number_format($this->getSwatches()->getPriceTTC(), '2', ',', ' ');
-        // }
+        $product = MyProduct::where('id', $this->product_id)->first();
+         if(auth()->user()->professionnal == 1 && auth()->user()->verified == 1) {
+             return number_format($product->getPriceWithDiscount(), '2', ',', ' ');
+         } else {
+             return number_format($product->getPriceWithDiscount(), '2', ',', ' ');
+         }
     }
 
     // Récupérer la quantité en stock de l'article
