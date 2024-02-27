@@ -6,6 +6,7 @@ use App\Models\ActivityLog;
 use App\Models\MyProduct;
 use App\Models\MyProductPromotion;
 use App\Models\MyProductPromotionItems;
+use App\Models\MyProductStock;
 use App\Models\MyProductSwatch;
 use App\Models\SettingGeneral;
 use App\Models\User;
@@ -149,6 +150,11 @@ class Cart extends Component
                 $orderLine->quantity = $ca->quantity;
                 $orderLine->product_price = $ca->getUnitPrice();
                 $orderLine->save();
+
+                // Modification des stocks
+                $product_stock = MyProductStock::where('product_id', $ca->product_id)->first();
+                $product_stock->quantity -= $ca->quantity;
+                $product_stock->update();
             }
         }
 

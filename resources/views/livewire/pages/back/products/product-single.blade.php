@@ -79,11 +79,27 @@
                 </div>
             </div>
             <div class="flex-none w-[300px]">
-                <div class="bg-slate-100 rounded-xl p-3">
-                    TEST
+                <div class="bg-secondary rounded-xl p-3">
+                    <div class="flex items-baseline">
+                        <div class="flex-1">
+                            <p class="">Tarif (HT)</p>
+                        </div>
+                        <div class="flex-none">
+                            <h2 class="text-3xl font-bold">{{ number_format($product->getPriceHT(), '2', ',', ' ') }} €</h2>
+                        </div>
+                    </div>
+                    <div class="bg-white py-2 px-3 text-slate-400 rounded-md mt-3">
+                        <div class="flex items-baseline">
+                            <div class="flex-1">
+                                <p class="">Quantité en stock</p>
+                            </div>
+                            <div class="flex-none">
+                                <h2 class="text-3xl font-bold">{{ $product_stock->quantity }}</h2>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <button class="block w-full bg-slate-100 mt-2 py-2 rounded-md duration-300 hover:bg-secondary">Modifier mon produit</button>
-                <button class="block w-full bg-slate-100 mt-2 py-2 rounded-md duration-300 hover:bg-secondary">Désactiver mon produit</button>
+                <button class="block w-full bg-red-100 text-red-500 mt-2 py-2 rounded-md duration-300 hover:bg-red-500 hover:text-white">Désactiver mon produit</button>
             </div>
         </div>
     </div>
