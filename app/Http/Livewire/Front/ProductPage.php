@@ -12,6 +12,8 @@ use App\Models\MyProductPromotion;
 use App\Models\MyProductStock;
 use App\Models\MyProductSwatch;
 use App\Models\ProductCategory;
+use App\Models\ProductGroupTag;
+use App\Models\ProductTag;
 use App\Models\SettingGeneral;
 use App\Models\UserCart;
 use App\Models\UserBike;
@@ -194,6 +196,8 @@ class ProductPage extends Component
 
     public function render()
     {
+        $goodProduct = MyProduct::where('id', $this->product_id)->first();
+
         $data = [];
         $data['tab'] = $this->active_tab;
         $data['promotion'] = $this->promotion;
@@ -201,6 +205,10 @@ class ProductPage extends Component
         $data['product_infos'] = MyProductInfo::where('product_id', $this->product_id)->get();
         $data['product_pictures'] = MyProductPicture::where('product_id', $this->product_id)->get();
         $data['product_swatches'] = MyProductSwatch::where('product_id', $this->product_id)->get();
+        if($goodProduct->type == 2) {
+            $data['product_group_tag'] = ProductGroupTag::all();
+            $data['product_tag'] = ProductTag::all();
+        }
         $data['settings'] = SettingGeneral::where('id', 1)->first();
         $data['product_stock'] = MyProductStock::where('product_id', $this->product_id)->get()->sum('quantity');
         $data['category'] = $this->category_id;

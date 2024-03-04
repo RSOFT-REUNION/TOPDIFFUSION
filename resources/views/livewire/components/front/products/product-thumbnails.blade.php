@@ -41,9 +41,21 @@
             <h2 class="mt-2">{{ $product->title }}</h2>
             <div class="inline-flex prices">
                 @if(!auth()->guest() && auth()->user()->professionnal === 1 && auth()->user()->verified === 1 && $my_setting->professionnal_prices === 1)
-                    <h3>{{ number_format($product->getPriceWithDiscount(), '2', ',', ' ') }} €</h3>
-                    @if(number_format($product->getCustomerDiscount(), '0', ',', ' ') != 0)
-                        <p class="text-sm text-gray-400">HT (-{{ number_format($product->getCustomerDiscount(), '0', ',', ' ') }} %)</p>
+                    {{-- Si le produit est en promotion et que l'option mes tarifs est activée --}}
+                    @if($promotion)
+                        @php
+                            $discountAmountPro = $product->getPriceWithDiscount() * ($promotion->discount / 100);
+                            $newPricePro = $product->getPriceWithDiscount() - $discountAmountPro;
+                        @endphp
+                        <div class="flex items-center gap-2">
+                            <h3 class="text-[30px] font-semibold text-red-500">{{ number_format($newPricePro, 2, ',', ' ') }} €</h3>
+                            <p class="text-sm text-gray-400 line-through">{{ number_format($product->getPriceWithDiscount(), 2, ',', ' ') }} €</p>
+                        </div>
+                    @else
+                        <h3>{{ number_format($product->getPriceWithDiscount(), '2', ',', ' ') }} €</h3>
+                        @if(number_format($product->getCustomerDiscount(), '0', ',', ' ') != 0)
+                            <p class="text-sm text-gray-400">HT (-{{ number_format($product->getCustomerDiscount(), '0', ',', ' ') }} %)</p>
+                        @endif
                     @endif
                 @else
                     @if($promotion)

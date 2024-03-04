@@ -90,11 +90,32 @@
                     </p>
                 </div>
                 <div class="mt-7 border-b-2 border-dashed border-gray-500">
-                    @if($product->type == 1 || $product->type == 3)
+                    @if($product->type == 1)
+                        {{-- S'il s'agit d'un produit simple --}}
                         @if(!auth()->guest() && auth()->user()->professionnal === 1 && auth()->user()->verified === 1 && $my_setting->professionnal_prices === 1)
-                            <h2 class="text-5xl font-bold block w-full text-secondary">{{ number_format($product->getPriceWithDiscount(), '2', ',', ' ') }} € <span class="text-sm text-gray-400">HT</span></h2>
-                        @else
+                            {{-- Il s'agit d'un membre professionnel --}}
                             @if($promotion)
+                                @php
+                                    $discountAmountPro = $product->getPriceWithDiscount() * ($promotion->discount / 100);
+                                    $newPricePro = $product->getPriceWithDiscount() - $discountAmountPro;
+                                @endphp
+
+                                <div class="flex items-center gap-2">
+                                    <h3 class="text-[40px] font-bold text-red-500">{{ number_format($newPricePro, 2, ',', ' ') }} €</h3>
+                                    <p class="text-sm text-gray-400 line-through">{{ number_format($product->getPriceWithDiscount(), 2, ',', ' ') }} €</p>
+                                </div>
+                                <p class="text-sm text-gray-400">HT</p>
+                            @else
+                                <h2 class="text-5xl font-bold block w-full text-secondary">{{ number_format($product->getPriceWithDiscount(), '2', ',', ' ') }} € <span class="text-sm text-gray-400">HT</span></h2>
+                            @endif
+                        @else
+                            {{-- Il s'agit d'un membre particulier --}}
+                            @if($promotion)
+                                @php
+                                    $discountAmount = $product->getPriceTTC() * ($promotion->discount / 100);
+                                    $newPrice = $product->getPriceTTC() - $discountAmount;
+                                @endphp
+
                                 <div class="flex items-center gap-2">
                                     <h3 class="text-[40px] font-bold text-red-500">{{ number_format($newPrice, 2, ',', ' ') }} €</h3>
                                     <p class="text-sm text-gray-400 line-through">{{ number_format($product->getPriceTTC(), 2, ',', ' ') }} €</p>
@@ -107,23 +128,8 @@
                         @if(!auth()->guest() && auth()->user()->professionnal === 1 && auth()->user()->verified === 1 && $settings->prices_type === 1 && $my_setting->professionnal_prices === 1)
                             <p class="text-slate-400 mt-2">Prix public conseillé (TTC): <b>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} €</b> (-{{ number_format($product->getCustomerDiscount(), '0', ',', ' ') }} %)</p>
                         @endif
-                    @else
-                        {{-- @if($config_swatch)
-                            @if(!auth()->guest() && auth()->user()->professionnal === 1 && auth()->user()->verified === 1 && $my_setting->professionnal_prices === 1)
-                                <h2>{{ number_format($product->getPriceWithDiscount(), '2', ',', ' ') }} € <span class="text-sm text-gray-400">HT</span></h2>
-                            @else
-                                <h2>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} € <span class="text-sm text-gray-400">TTCa</span></h2>
-                            @endif
-                            @if(!auth()->guest() && auth()->user()->professionnal === 1 && auth()->user()->verified === 1 && $settings->prices_type === 1 && $my_setting->professionnal_prices === 1)
-                                <p>Prix public conseillé: <b>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} €</b> (-{{ number_format($product->getCustomerDiscount(), '0', ',', ' ') }} %)</p>
-                            @endif
-                        @else
-                            @if(!auth()->guest() && auth()->user()->professionnal === 1 && auth()->user()->verified === 1 && $my_setting->professionnal_prices === 1)
-                                <h2>{{ number_format($product->getPriceWithDiscount(), '2', ',', ' ') }} € <span class="text-sm text-gray-400">HT</span></h2>
-                            @else
-                                <h2>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} € <span class="text-sm text-gray-400">TTCb</span></h2>
-                            @endif
-                        @endif --}}
+                    @elseif($product->type == 2)
+                        TEST
                     @endif
                 </div>
                 <div class="product-buttons inline-flex items-center mt-3 ">
