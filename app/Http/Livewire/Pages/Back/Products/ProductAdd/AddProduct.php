@@ -56,30 +56,6 @@ class AddProduct extends Component
         $this->slug = strtolower(str_replace($this->characters, $this->correct_characters, $this->title));
     }
 
-    public function updated()
-    {
-        /*if($this->TVA_custom == 'default') {
-            // Si nous utilisons la règle de TVA par défaut
-            $tva = ProductTaxes::where('default', 1)->first();
-            $tva_rate = $tva->rate / 100;
-            if($this->price_HT) {
-                $calc = $this->price_HT * $tva_rate;
-                $this->price_TTC = round($this->price_HT + $calc, 2);
-            }
-        } elseif($this->TVA_custom == "custom") {
-            $tva = ProductTaxes::where('id', $this->list_tva_custom)->first();
-            if($tva) {
-                $tva_rate = $tva->rate / 100;
-                if($this->price_HT) {
-                    $calc = round($this->price_HT * $tva_rate, 2);
-                    $this->price_TTC = $this->price_HT + $calc;
-                }
-            }
-        } else {
-            $this->price_TTC = $this->price_HT;
-        }*/
-    }
-
     // Fonction permettant la création de l'article
     public function createProduct()
     {
@@ -150,6 +126,7 @@ class AddProduct extends Component
                         // Remplissage des stocks
                         $stock = new MyProductStock;
                         $stock->product_id = $product->id;
+                        $stock->swatch_id = $swatch->id;
                         $stock->ugs = $swatch->ugs;
                         $stock->quantity = 0;
                         $stock->save();
@@ -171,6 +148,7 @@ class AddProduct extends Component
                         // Remplissage des stocks
                         $stock = new MyProductStock;
                         $stock->product_id = $product->id;
+                        $stock->swatch_id = $swatch->id;
                         $stock->is_swatch = 1;
                         $stock->ugs = $swatch->ugs.'-'.$swatch->ugs_swatch;
                         $stock->quantity = 0;
@@ -195,6 +173,7 @@ class AddProduct extends Component
                         // Remplissage des stocks
                         $stock = new MyProductStock;
                         $stock->product_id = $product->id;
+                        $stock->swatch_id = $swatch->id;
                         $stock->is_swatch = 1;
                         $stock->ugs = $swatch->ugs.'-'.$swatch->ugs_swatch;
                         $stock->quantity = 0;
@@ -217,6 +196,7 @@ class AddProduct extends Component
                             // Remplissage des stocks
                             $stock = new MyProductStock;
                             $stock->product_id = $product->id;
+                            $stock->swatch_id = $swatch->id;
                             $stock->is_swatch = 1;
                             $stock->ugs = $swatch->ugs.'-'.$swatch->ugs_swatch;
                             $stock->quantity = 0;
@@ -238,6 +218,7 @@ class AddProduct extends Component
                             // Remplissage des stocks
                             $stock = new MyProductStock;
                             $stock->product_id = $product->id;
+                            $stock->swatch_id = $swatch->id;
                             $stock->is_swatch = 1;
                             $stock->ugs = $swatch->ugs.'-'.$swatch->ugs_swatch;
                             $stock->quantity = 0;
@@ -259,6 +240,7 @@ class AddProduct extends Component
                             // Remplissage des stocks
                             $stock = new MyProductStock;
                             $stock->product_id = $product->id;
+                            $stock->swatch_id = $swatch->id;
                             $stock->is_swatch = 1;
                             $stock->ugs = $swatch->ugs.'-'.$swatch->ugs_swatch;
                             $stock->quantity = 0;

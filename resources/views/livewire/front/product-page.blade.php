@@ -129,7 +129,34 @@
                             <p class="text-slate-400 mt-2">Prix public conseillé (TTC): <b>{{ number_format($product->getPriceTTC(), '2', ',', ' ') }} €</b> (-{{ number_format($product->getCustomerDiscount(), '0', ',', ' ') }} %)</p>
                         @endif
                     @elseif($product->type == 2)
-                        TEST
+                        {{-- S'il s'agit d'un produit variable --}}
+                        <h2 class="mb-1 font-bold">Configurer votre produit</h2>
+                        @foreach($product_group_tag as $group)
+                            <div class="flex items-center bg-slate-100 rounded-md my-1">
+                                <div class="flex-none w-[150px] border-r border-slate-200 py-2 px-3">
+                                    <p class="font-bold text-xl text-slate-400">{{ $group->title }}</p>
+                                </div>
+                                <div class="flex-1 py-2 px-3">
+                                    <div class="flex-inline items-center">
+                                        @foreach($product_tag as $tag)
+                                            @if($tag->group_id === $group->id)
+                                                @if($group->type == 2)
+                                                        <label class="color-choice mr-2 duration-300 outline-none hover:outline-1 hover:outline-offset-2" style="background-color: {{ $tag->key }}" for="color_choice-{{ $tag->id }}">
+                                                            <input type="radio" name="color_choice" id="color_choice-{{ $tag->id }}">
+                                                            <span class="@if($tag->key == '#000000') text-white @else text-black @endif">{{ $tag->title }}</span>
+                                                        </label>
+                                                    @elseif($group->type == 1)
+                                                        <label class="text-choice mr-2 duration-300 bg-slate-200 outline-1 outline-slate-200 outline-offset-0 hover:outline-offset-2" style="background-color: {{ $tag->key }}" for="color_choice-{{ $tag->id }}">
+                                                            <input type="radio" name="color_choice" id="color_choice-{{ $tag->id }}">
+                                                            <span class="@if($tag->key == '#000000') text-white @else text-black @endif">{{ $tag->title }}</span>
+                                                        </label>
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     @endif
                 </div>
                 <div class="product-buttons inline-flex items-center mt-3 ">
@@ -161,6 +188,8 @@
             </form>
         </div>
     </div>
+
+    {{-- Tableau d'informations --}}
     <div class="product-infos mb-10">
         <div class="entry-nav inline-flex items-center">
             <a wire:click="changeTab('1')" class="@if($tab === '1') tab-active @else tab-desactive @endif">Description</a>

@@ -57,6 +57,12 @@ class MyProductSwatch extends Model
         return $percent;
     }
 
+    // Récuperer la quantité en stock pour la déclinaison
+    public function getSwatchStockQuantity()
+    {
+        return MyProductStock::where('swatch_id', $this->id)->first()->quantity;
+    }
+
     // Récupération des groupes pour les produits variables
     public function getVariablesGroup()
     {
@@ -67,5 +73,11 @@ class MyProductSwatch extends Model
     public function getVariablesItem()
     {
         return ProductTag::where('id', $this->swatch_tags_id)->first();
+    }
+
+    // Récupérer le type de groupe
+    public function getSwatchGroupType()
+    {
+        return $this->getVariablesGroup()->type;
     }
 }

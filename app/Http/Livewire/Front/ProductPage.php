@@ -208,6 +208,9 @@ class ProductPage extends Component
         if($goodProduct->type == 2) {
             $data['product_group_tag'] = ProductGroupTag::all();
             $data['product_tag'] = ProductTag::all();
+        } else {
+            $data['product_group_tag'] = null;
+            $data['product_tag'] = null;
         }
         $data['settings'] = SettingGeneral::where('id', 1)->first();
         $data['product_stock'] = MyProductStock::where('product_id', $this->product_id)->get()->sum('quantity');
