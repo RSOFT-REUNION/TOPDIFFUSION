@@ -16,7 +16,7 @@ class AddFaq extends ModalComponent
         $newFaq->response = $this->response;
 
         if ($newFaq->save()) {
-            return back()->with('success', 'Nouvelle question réponse ajouté.');
+            return back()->with('success', 'Nouveau question-réponse ajoutée.');
         } else {
             session()->flash('error', 'Erreur lors de l\'ajout. Veuillez réessayer');
         }

@@ -40,7 +40,7 @@ class Payment extends Component
         File::put($this->config_path, $config);
 
         if(Artisan::call('optimize')) {
-            Session::flash('success', "Votre numéro de commerçant c'est bien mis à jour");
+            Session::flash('success', "Votre numéro de commerçant s'est bien mis à jour");
             return redirect()->route('back.setting.payment');
         }
 
@@ -65,7 +65,7 @@ class Payment extends Component
 
         Artisan::call('optimize');
         sleep(5);
-        Session::flash('success', "Votre clé d'accèes c'est bien mis à jour");
+        Session::flash('success', "Votre clé d'accès s'est bien mise à jour");
         return redirect()->route('back.setting.payment');
     }
 

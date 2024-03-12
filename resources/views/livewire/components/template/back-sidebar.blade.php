@@ -24,8 +24,8 @@
                 <!--modif pages menu -->
                 <ul>
                     <li><a href="{{ route('back.dashboard') }}" class="btn-sidebar border-b border-gray-300 mb-3"><i class="fa-solid fa-arrow-left mr-3"></i>Retour</a></li>
-                    <li><a href="{{ route('about') }}" class="btn-sidebar @if ($page == 'about') btn-sidebar-active @endif">A-Propos</a></li>
-                    <li><a href="{{ route('legal') }}" class="btn-sidebar @if ($page == 'legal') btn-sidebar-active @endif">Mentions Legals</a></li>
+                    <li><a href="{{ route('about') }}" class="btn-sidebar @if ($page == 'about') btn-sidebar-active @endif">À Propos</a></li>
+                    <li><a href="{{ route('legal') }}" class="btn-sidebar @if ($page == 'legal') btn-sidebar-active @endif">Mentions Legales</a></li>
                     <li><a href="{{ route('confidential') }}" class="btn-sidebar @if ($page == 'confidential') btn-sidebar-active @endif">Politique De Confidentialité</a></li>
                     <li><a href="{{ route('faq') }}" class="btn-sidebar @if ($page == 'faq') btn-sidebar-active @endif">Faq</a></li>
                 </ul>

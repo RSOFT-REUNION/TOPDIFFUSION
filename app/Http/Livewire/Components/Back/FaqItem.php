@@ -74,7 +74,7 @@ class FaqItem extends Component
         $faq = Faq::where('id', $faqId)->first(); // Recherchez le modèle Faq par ID
         if ($faq) {
             $faq->delete();
-            session()->flash('success', 'La FAQ a été supprimé avec succès');
+            session()->flash('success', 'La FAQ a été supprimée avec succès');
         } else {
             // Gérez le cas où le modèle Faq n'a pas été trouvé
             session()->flash('error', 'La FAQ avec l\'ID ' . $faqId . ' n\'a pas été trouvée.');

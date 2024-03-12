@@ -29,7 +29,7 @@
             </div>
         @else
             <div class="w-full flex flex-col bg-gray-100 rounded-lg justify-center items-center py-4">
-                <h2>Pas de demande de SAV pour l'instant</h2>
+                <h2>Pas de demandes de SAV pour l'instant</h2>
             </div>
         @endif
     </div>

@@ -38,7 +38,7 @@
             </ul>
         @else
             <p class="bg-slate-100 py-3 text-center rounded-md text-slate-400">
-                Vous n'avez pas encore configuré de groupe de client, <a href="" class="underline">configurez-en un dès maintenant</a> !
+                Vous n'avez pas encore configuré de groupe de clients, <a href="" class="underline">configurez-en un dès maintenant</a> !
             </p>
         @endif
     </div>

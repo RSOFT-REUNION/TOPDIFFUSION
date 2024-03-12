@@ -28,7 +28,7 @@ class BtnCloture extends Component
             session()->flash('success', 'Ticket Réouvert');
             return redirect()->route('back.sav');
         } else {
-            session()->flash('error', 'Erreur. Veuillez réessayé');
+            session()->flash('error', 'Erreur. Veuillez réessayer');
             return redirect()->route('back.sav');
         };
     }
@@ -42,7 +42,7 @@ class BtnCloture extends Component
             session()->flash('success', 'Ticket Réouvert');
             return redirect()->route('back.sav');
         } else {
-            session()->flash('error', 'Erreur. Veuillez réessayé');
+            session()->flash('error', 'Erreur. Veuillez réessayer');
             return redirect()->route('back.sav');
         };
     }
@@ -53,10 +53,10 @@ class BtnCloture extends Component
         $cloture->closed = true;
         $cloture->state = 4;
         if ($cloture->save()) {
-            session()->flash('success', 'Ticket Cloturé');
+            session()->flash('success', 'Ticket Clôturé');
             return redirect()->route('back.sav');
         } else {
-            session()->flash('error', 'Erreur. Veuillez réessayé');
+            session()->flash('error', 'Erreur. Veuillez réessayer');
             return redirect()->route('back.sav');
         };
     }
@@ -67,10 +67,10 @@ class BtnCloture extends Component
         $cloture->closed = true;
         $cloture->state = 4;
         if ($cloture->save()) {
-            session()->flash('success', 'Ticket Cloturé');
+            session()->flash('success', 'Ticket Clôturé');
             return redirect()->route('back.sav');
         } else {
-            session()->flash('error', 'Erreur. Veuillez réessayé');
+            session()->flash('error', 'Erreur. Veuillez réessayer');
             return redirect()->route('back.sav');
         };
     }
@@ -83,7 +83,7 @@ class BtnCloture extends Component
             session()->flash('success', 'Ticket mis en progression');
             return redirect()->route('back.sav');
         } else {
-            session()->flash('error', 'Erreur. Veuillez réessayé');
+            session()->flash('error', 'Erreur. Veuillez réessayer');
             return redirect()->route('back.sav');
         };
     }
@@ -96,7 +96,7 @@ class BtnCloture extends Component
             session()->flash('success', 'Ticket mis en progression');
             return redirect()->route('back.sav');
         } else {
-            session()->flash('error', 'Erreur. Veuillez réessayé');
+            session()->flash('error', 'Erreur. Veuillez réessayer');
             return redirect()->route('back.sav');
         };
     }

@@ -124,7 +124,7 @@
                 <button wire:click="initOrder" class="block w-full py-3 mt-2 font-bold text-white duration-300 border border-transparent rounded-lg bg-primary hover:bg-primary/30 hover:border-primary hover:text-primary">Payer directement par carte</button>
             @else
                 <p class="px-3 py-1 mt-2 text-sm text-gray-500 bg-gray-100 border border-gray-200 rounded-md">
-                    Vous n'avez pas encore configuré d'adresse de livraison, afin de continuer, merci d'en renseigné une.
+                    Vous n'avez pas encore configuré d'adresse de livraison. Afin de continuer, merci d'en renseigner une.
                 </p>
                 <button type="button" onclick="window.location.href='{{ route('front.profile') }}'" class="block w-full py-3 mt-2 font-bold rounded-lg bg-secondary">Renseigner une adresse</button>
             @endif

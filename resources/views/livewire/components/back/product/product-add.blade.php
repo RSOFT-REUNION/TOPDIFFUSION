@@ -16,7 +16,7 @@
                     <tr>
                         <th>ID Catégorie</th>
                         <th>Nom</th>
-                        <th>Catégorie principal</th>
+                        <th>Catégorie principale</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -38,7 +38,7 @@
         <hr class="my-3">
         <div class="flex items-center">
             <div class="flex-1">
-                <h2 class="subtitle">Photos supplémentaire</h2>
+                <h2 class="subtitle">Photos supplémentaires</h2>
             </div>
             <div class="flex-none">
                 <a wire:click="$emit('openModal', 'pages.back.products.popup-add-product-picture', {{ json_encode(['product_id' => $product->id]) }})" class="cursor-pointer btn-outline block text-center">Ajouter une photo</a>
@@ -58,7 +58,7 @@
         <hr class="my-3">
         <div class="flex items-center">
             <div class="flex-1">
-                <h2 class="subtitle">Informations supplémentaire</h2>
+                <h2 class="subtitle">Informations supplémentaires</h2>
             </div>
             <div class="flex-none">
                 <a wire:click="$emit('openModal', 'pages.back.products.popup-add-product-informations', {{ json_encode(['product_id' => $product->id]) }})" class="cursor-pointer btn-outline block text-center">Ajouter une information</a>

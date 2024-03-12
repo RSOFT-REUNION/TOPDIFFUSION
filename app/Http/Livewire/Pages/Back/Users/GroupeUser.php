@@ -61,9 +61,9 @@ class GroupeUser extends Component
             $group->update();
 
             $this->editing = false;
-            session()->flash('success', 'Le groupe a été mise à jour avec succès');
+            session()->flash('success', 'Le groupe a été mis à jour avec succès');
         } else {
-            session()->flash('error', 'Le groupe avec l\'ID ' . $groupId . ' n\'a pas été trouvée.');
+            session()->flash('error', 'Le groupe avec l\'ID ' . $groupId . ' n\'a pas été trouvé.');
         }
     }
 

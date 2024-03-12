@@ -24,7 +24,7 @@
                 <div class="flex items-center h-full">
                     <div class="flex-1 text-white w-1/2 pl-20 pr-10 py-10 h-full bg-gradient-to-r from-black">
                         <h2 class="font-bold text-3xl drop-shadow">Configurer votre kit chaine</h2>
-                        <p class="drop-shadow">Vous pouvez configurer votre propre kit chaine pour la moto ({{ $bike->marque }} {{ $bike->cylindree }} {{ $bike->modele }} {{ $bike->annee }}) directement depuis notre configurateur.</p>
+                        <p class="drop-shadow">Vous pouvez configurer votre propre kit chaîne pour la moto ({{ $bike->marque }} {{ $bike->cylindree }} {{ $bike->modele }} {{ $bike->annee }}) directement depuis notre configurateur.</p>
                     </div>
                     <div class="flex-1"></div>
                     <div class="absolute bottom-5 right-5">

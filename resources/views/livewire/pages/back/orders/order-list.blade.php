@@ -18,7 +18,7 @@
                         </div>
                         <div class="flex-1 ml-4">
                             <h3>123</h3>
-                            <p>Commandes à traité</p>
+                            <p>Commandes à traiter</p>
                         </div>
                     </div>
                 </div>

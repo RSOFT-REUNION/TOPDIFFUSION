@@ -66,7 +66,7 @@ class Cart extends Component
                 ' a supprimé ' . $productName . ' de son panier'
             );
         } else {
-            session()->flash('error', 'Error lors de la suppression.');
+            session()->flash('error', 'Erreur lors de la suppression.');
         }
 
     }
@@ -257,7 +257,7 @@ class Cart extends Component
                 return redirect($doWebPaymentResponse['redirectURL']);
             } else {
                 // TODO: Traiter la réponse
-                dd("pas de reponse");
+                dd("pas de réponse");
             }
 
             Session::flash('success', "Nous avons bien pris en compte votre commande.");

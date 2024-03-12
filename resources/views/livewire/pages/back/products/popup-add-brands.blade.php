@@ -27,7 +27,7 @@
                 @endif
             </div>
             <div class="textfield mt-2">
-                <label for="url">Adresse URL officiel</label>
+                <label for="url">Adresse URL officielle</label>
                 <input type="text" id="url" wire:model="url" placeholder="Entrez l'adresse URL de la marque" class="@if($errors->has('url')) input-error @endif" value="{{ old('url') }}">
                 @if($errors->has('url'))
                     <p class="text-error">{{ $errors->first('url') }}</p>

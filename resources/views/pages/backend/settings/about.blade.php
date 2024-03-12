@@ -6,7 +6,7 @@
             @csrf
             <div id="entry-header" class="flex items-center mb-10">
                 <div class="flex-1">
-                    <h1>A-PROPOS</h1>
+                    <h1>À PROPOS</h1>
                 </div>
                 <div class="flex-none inline-flex items-center">
                         <button type="submit" class="btn-secondary cursor-pointer"><i

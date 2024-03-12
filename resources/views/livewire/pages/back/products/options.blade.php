@@ -11,7 +11,7 @@
         <div>
             <div class="flex items-center">
                 <div class="flex-1">
-                    <h2 class="subtitle">Group d'options</h2>
+                    <h2 class="subtitle">Groupe d'options</h2>
                 </div>
                 <div class="flex-none inline-flex items-center">
                     <a wire:click="$emit('openModal', 'pages.back.products.popup-add-group-tag')" class="btn-secondary cursor-pointer block"><i class="fa-solid fa-plus mr-3"></i>Ajouter un groupe</a>
@@ -44,7 +44,7 @@
                     </table>
                 </div>
             @else
-                <p class="empty-text mt-5">Vous n'avez pas encore ajouté de groupe d'option</p>
+                <p class="empty-text mt-5">Vous n'avez pas encore ajouté de groupe d'options</p>
             @endif
         </div>
 

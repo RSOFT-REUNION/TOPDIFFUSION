@@ -56,7 +56,7 @@
                     @endif
                 @endforeach
             @else
-                <p class="empty-text mt-2">Vous n'avez pas encore de promotion</p>
+                <p class="empty-text mt-2">Vous n'avez pas encore de promotions</p>
             @endif
         </div>
     </div>

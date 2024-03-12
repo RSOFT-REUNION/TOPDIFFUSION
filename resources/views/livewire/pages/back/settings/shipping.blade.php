@@ -74,7 +74,7 @@
                     <div class="mt-4 flex items-center border-b border-gray-200 pb-4">
                         <div class="flex-1">
                             <h3 class="font-normal">Point Relais actuellement configuré</h3>
-                            <p class="text-gray-500 text-sm">Ici vous pouvez voir vos point relais les modifier et les supprimers.</p>
+                            <p class="text-gray-500 text-sm">Ici vous pouvez voir vos point relais, les modifier et les supprimer.</p>
                         </div>
                     </div>
                     <div class="flex flex-row justify-center items-center bg-black bg-opacity-60">

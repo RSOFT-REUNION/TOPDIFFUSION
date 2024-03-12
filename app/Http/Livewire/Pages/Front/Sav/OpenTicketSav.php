@@ -46,10 +46,10 @@ class OpenTicketSav extends ModalComponent
         $ticket->closed = 0;
         if ($ticket->save()) {
             // FIXME : Les Sessions flash ne fonctionnent pas sur les pages LIVEWIRE
-            return back()->with('message', 'Demande envoyé au SAV.');
+            return back()->with('message', 'Demande envoyée au SAV.');
 
         } else {
-            return back()->with('error', 'Soucis lors de l\'envoie.');
+            return back()->with('error', 'Soucis lors de l\'envoi.');
         }
     }
     public function render()

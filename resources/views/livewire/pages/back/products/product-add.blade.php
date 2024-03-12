@@ -30,7 +30,7 @@
                 <div class="flex-1 mr-2">
                     {{-- Image du produit --}}
                     <div class="textfield">
-                        <label for="cover">Image principal du produit</label>
+                        <label for="cover">Image principale du produit</label>
                         <input type="file" id="cover" wire:model="cover" placeholder="Entrez le nom du produit" class="@if($errors->has('cover')) input-error @endif" value="{{ old('cover') }}">
                         @if($errors->has('cover'))
                             <p class="text-error">{{ $errors->first('cover') }}</p>
@@ -38,7 +38,7 @@
                     </div>
                     {{-- Sélection de la catégorie --}}
                     <div class="textfield mt-2">
-                        <label for="parent_category">Catégorie principal<span class="text-red-500">*</span></label>
+                        <label for="parent_category">Catégorie principale<span class="text-red-500">*</span></label>
                         <select wire:model="parent_category" id="parent_category" wire:change="changeDelivery">
                             <option value="">-- Sélectionner une catégorie --</option>
                             @foreach($categories as $category)
@@ -181,12 +181,12 @@
                     @if(!$TVA_None && !$TVA_Custom)
                         <div class="mt-2 px-3">
                             <input type="checkbox" wire:model="TVA_Custom" id="TVA_Custom">
-                            <label for="TVA_Custom">Classe de TVA personnalisé</label>
+                            <label for="TVA_Custom">Classe de TVA personnalisée</label>
                         </div>
                     @endif
                     <div class="mt-2 px-3">
                         <input type="checkbox" wire:model="TVA_None" id="TVA_None">
-                        <label for="TVA_None">Aucune TVA pour cette article</label>
+                        <label for="TVA_None">Aucune TVA pour cet article</label>
                     </div>
                 @elseif($type == 2)
                     {{-- Produit variante --}}
@@ -365,7 +365,7 @@
                     </div>
                     @if($showAddKit)
                         <div class="rounded-lg bg-blue-100 px-3 py-2 block mt-2">
-                            <p class="bg-blue-200 px-2 py-1 rounded-lg">Vous êtes sur le point d'ajouter de créer un kit chaine</p>
+                            <p class="bg-blue-200 px-2 py-1 rounded-lg">Vous êtes sur le point de créer un kit chaine</p>
                             <div class="flex mt-2">
                                 <div class="flex-1 mr-2">
                                     <div class="textfield-white">
@@ -717,7 +717,7 @@
             </div>
             @if($showAddTag)
                 <div class="rounded-lg bg-blue-100 px-3 py-2 block mt-2">
-                <p class="bg-blue-200 px-2 py-1 rounded-lg">Vous êtes sur le point d'ajouter des informations personnalisé</p>
+                <p class="bg-blue-200 px-2 py-1 rounded-lg">Vous êtes sur le point d'ajouter des informations personnalisées</p>
                 <div class="flex mt-2">
                     <div class="flex-1 mr-2">
                         <div class="textfield-white">
@@ -765,7 +765,7 @@
                 </table>
             </div>
             @else
-                <p class="empty-text mt-2">Aucune informations supplémentaire de renseigné</p>
+                <p class="empty-text mt-2">Aucune information supplémentaire de renseigné</p>
             @endif
         </form>
 
@@ -812,7 +812,7 @@
                     @endforeach
                 </div>
             @else
-                <p class="empty-text mt-2">Aucune informations supplémentaire de renseigné</p>
+                <p class="empty-text mt-2">Aucune information supplémentaire de renseigné</p>
             @endif
         </form>
 

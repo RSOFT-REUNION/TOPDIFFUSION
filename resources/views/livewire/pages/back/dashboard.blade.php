@@ -24,7 +24,7 @@
 {{--                </div>--}}
             </div>
             <div class="bg-white p-5 flex flex-col justify-center gap-y-5 rounded-lg">
-                <h2 class="text-gray-500">Nombre de produits créé</h2>
+                <h2 class="text-gray-500">Nombre de produits créés</h2>
                 <div class="flex flex-row items-end">
                     <h3 class="font-bold mr-2 text-2xl">{{ $productCreated['total_productCreated'] }}</h3>
                     <span class="pb-0.5">Ce mois-ci</span>

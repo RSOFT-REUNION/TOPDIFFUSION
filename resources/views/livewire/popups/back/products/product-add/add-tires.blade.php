@@ -12,7 +12,7 @@
     </div>
     <div class="border-b border-gray-100 p-5 text-gray-500">
         <p>
-            Pour une référence principale, vous pouvez ajouter plusieurs type de pneu ou bien en créer uniquement un.
+            Pour une référence principale, vous pouvez ajouter plusieurs type de pneus ou bien en créer uniquement un.
         </p>
     </div>
     <form wire:submit.prevent="addVariant" class="p-5">

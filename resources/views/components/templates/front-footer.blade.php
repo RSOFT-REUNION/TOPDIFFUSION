@@ -5,13 +5,13 @@
                 <div>
                     <h2>TOP DIFFUSION</h2>
                     <ul class="mt-7">
-                        <li><a href="{{ route('front.about') }}">A propos de nous</a></li>
+                        <li><a href="{{ route('front.about') }}">À propos de nous</a></li>
                         <li><a href="{{ route('front.legal') }}">Informations légales</a></li>
                         <li><a href="{{ route('front.confidential') }}">Politique de confidentialité des données</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h2>Liens rapide</h2>
+                    <h2>Liens rapides</h2>
                     <ul class="mt-7">
                         <li>Liste des produits</li>
                         @if (auth()->guest())
@@ -65,7 +65,7 @@
     <div class="entry-bottom">
         <div class="flex items-center">
             <div class="flex-1">
-                <p>TOP DIFFUSION - 2023 | Créer par RSOFT REUNION. Tous droits sont réservés.</p>
+                <p>TOP DIFFUSION - 2024 | Crée par RSOFT REUNION. Tous droits réservés.</p>
             </div>
             <div class="flex-none inline-flex items-center">
                 <!-- PAYMENT METHOD -->

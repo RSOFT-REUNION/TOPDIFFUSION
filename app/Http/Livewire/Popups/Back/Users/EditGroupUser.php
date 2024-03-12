@@ -53,7 +53,7 @@ class EditGroupUser extends ModalComponent
             $group->discount = $discount;
         }
         if($group->update()) {
-            return redirect()->route('back.user.userGroup')->with('success', 'Les informations de votre groupe a bien été prise en charge');
+            return redirect()->route('back.user.userGroup')->with('success', 'Les informations de votre groupe ont bien été prises en charge');
         }
 
     }

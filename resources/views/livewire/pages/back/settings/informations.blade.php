@@ -7,7 +7,7 @@
     <div>
         <div class="flex flex-row justify-between items-center border-b border-b-gray-200 pb-4">
             <div>
-                <h2 class="font-medium mb-1">Adresse e-mail principal</h2>
+                <h2 class="font-medium mb-1">Adresse e-mail principale</h2>
                 <p class="text-[13px] text-[#808080]">Cette adresse e-mail sera visible sur votre site pour tout les utilisateurs</p>
             </div>
             <form wire:submit.prevent="updateMainEmail" class="inline-flex items-center">
@@ -23,7 +23,7 @@
         <div class="flex flex-row justify-between items-center border-b border-b-gray-200 pb-4 mt-4">
             <div>
                 <h2 class="font-medium  mb-1">Numéro de téléphone principal</h2>
-                <p class="text-[13px] text-[#808080]">Ce numéro sera visible sur votre site pour tout les utilisateurs</p>
+                <p class="text-[13px] text-[#808080]">Ce numéro sera visible sur votre site pour tous les utilisateurs</p>
             </div>
             <form wire:submit.prevent="updateMainPhone" class="inline-flex items-center">
                 @csrf
@@ -82,8 +82,8 @@
         </div>
         <div class="flex flex-row justify-between items-center border-b border-b-gray-200 pb-4 mt-4">
             <div>
-                <h2 class="font-medium  mb-1">Votre Linkedin</h2>
-                <p class="text-[13px] text-[#808080]">Les utilisateurs pourront accèder à votre linkedin directement depuis votre site.</p>
+                <h2 class="font-medium  mb-1">Votre LinkedIn</h2>
+                <p class="text-[13px] text-[#808080]">Les utilisateurs pourront accèder à votre linkedIn directement depuis votre site.</p>
             </div>
             <form wire:submit.prevent="updateSocialLinkedin" class="inline-flex items-center">
                 @csrf

@@ -35,7 +35,7 @@ class RegisterInputs extends Component
         'lastname.string' => "Il ne s'agit pas d'un nom de famille.",
         'email.required' => "L'adresse e-mail est obligatoire.",
         'email.email' => "Il ne s'agit pas d'une adresse e-mail.",
-        'email.unique' => "Cette adresse e-mail est déjà utilisé.",
+        'email.unique' => "Cette adresse e-mail est déjà utilisée.",
         'password.required' => "Le mot de passe est obligatoire.",
         'password.min' => "Le mot de passe doit comporter au moins :min caractères.",
         'password.regex' => "Le mot de passe doit comporter au moins une majuscule, une minuscule et un chiffre.",

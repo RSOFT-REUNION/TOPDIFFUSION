@@ -2,7 +2,7 @@
     <div class="bg-gray-100 p-5">
         <div class="flex items-center">
             <div class="flex-1">
-                <h2 class="font-bold text-xl">Ajouter une chaine</h2>
+                <h2 class="font-bold text-xl">Ajouter une chaîne</h2>
             </div>
             <div class="flex-none">
                 <button wire:click.prevent="$emit('closeModal')" type="button" class="py-2 px-2.5 hover:text-red-500"><i class="fa-solid fa-xmark"></i></button>
@@ -14,7 +14,7 @@
         <form wire:submit.prevent="addChain" enctype="multipart/form-data">
             @csrf
             <div class="textfield">
-                <label for="type">Type de chaine<span class="text-red-500">*</span></label>
+                <label for="type">Type de chaînes<span class="text-red-500">*</span></label>
                 <input type="text" id="type" wire:model="type" placeholder="Entrez le type de chaine" class="@if($errors->has('type')) input-error @endif" value="{{ old('type') }}">
                 @if($errors->has('type'))
                     <p class="text-error">{{ $errors->first('type') }}</p>

@@ -7,7 +7,7 @@
                 <div class="p-24 flex flex-row justify-between items-center">
                     <div class="text-white gap-y-2 flex flex-col">
                         @if ($formattedDate)
-                            <p class="text-xl">Mis à jours : {{ $formattedDate }} </p>
+                            <p class="text-xl">Mise à jour : {{ $formattedDate }} </p>
                         @endif
                         <h1 class="text-4xl font-bold">FAQ</h1>
                     </div>

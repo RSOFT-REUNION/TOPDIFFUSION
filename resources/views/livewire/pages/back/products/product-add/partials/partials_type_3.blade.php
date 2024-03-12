@@ -3,7 +3,7 @@
     <form wire:submit.prevent="addChains">
         @csrf
         <div class="textfield mb-2">
-            <label for="chains_reference">Référence de la chaine</label>
+            <label for="chains_reference">Référence de la chaîne</label>
             <input type="text" id="chains_reference" wire:model.live="chains_reference" placeholder="Entrez la référence de votre chaine" class="">
             @error('chains_reference')
                 <p class="text-error">{{ $message }}</p>
@@ -20,7 +20,7 @@
     <div class="flex items-center bg-gray-100 px-5 py-3 rounded-md">
         <div class="flex-1 pr-5">
             <h2 class="font-bold">Ajouter une longueur</h2>
-            <p class="text-sm text-gray-500">Lors de l'achat d'une chaîne, que ça soit pour un achat unique ou en tant que composant d'un kit, la longueur de celle-ci doit s'adapter au pignon et à la couronne.</p>
+            <p class="text-sm text-gray-500">Lors de l'achat d'une chaîne, que ce soit pour un achat unique ou en tant que composant d'un kit, la longueur de celle-ci doit s'adapter au pignon et à la couronne.</p>
         </div>
         <div class="flex-none">
             @if($chains_reference && $chains_ugs)

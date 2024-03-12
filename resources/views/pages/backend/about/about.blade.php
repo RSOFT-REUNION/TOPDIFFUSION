@@ -4,7 +4,7 @@
     <div class="pl-[330px] pr-[30px]">
         <div class="flex items-center mb-7 py-[20px] px-[30px]">
             <div class="flex-1">
-                <h1 class="font-bold text-[28px]">A Propos</h1>
+                <h1 class="font-bold text-[28px]">À Propos</h1>
             </div>
         </div>
 

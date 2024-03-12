@@ -11,8 +11,8 @@
     </div>
     <div class="p-5 border-b border-gray-100">
         <p class="text-gray-500">
-            Lors de l'ajout d'un kit de chaine, plusieurs étapes est requis. Nous devons dans un premier temps configurer le kit, avec
-            son nom, sa référence, sa règle de taxe et sa description. Ensuite, nous devons configurer le pignon, la chaine et la couronne. Cette
+            Lors de l'ajout d'un kit de chaîne, plusieurs étapes sont requises. Nous devons dans un premier temps configurer le kit, avec
+            son nom, sa référence, sa règle de taxe et sa description. Ensuite, nous devons configurer le pignon, la chaîne et la couronne. Cette
             deuxième étape se passe une fois votre kit enregistré.
         </p>
     </div>
@@ -63,7 +63,7 @@
                 </div>
                 <div class="flex-1">
                     <input type="radio" wire:model="TVA_custom" value="custom" id="TVA_custom">
-                    <label for="TVA_custom">Utiliser une règle de taxe personnalisé</label>
+                    <label for="TVA_custom">Utiliser une règle de taxe personnalisée</label>
                 </div>
                 <div class="flex-1">
                     <input type="radio" wire:model="TVA_custom" value="none" id="TVA_custom-none">

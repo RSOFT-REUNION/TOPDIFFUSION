@@ -13,7 +13,7 @@
         <p class="text-orange-400 bg-orange-100 py-3 rounded-lg text-center">Attention ! Vous devez noter que tous vos utilisateurs seront automatiquement attribué à votre premier groupe créé !</p>
         <div class="py-4 border-dashed border-2 border-slate-200 flex rounded-lg mt-2">
             <div class="m-auto">
-                <p class="text-center text-lg text-slate-400">Vous n'avez pas encore créé de groupe de client</p>
+                <p class="text-center text-lg text-slate-400">Vous n'avez pas encore créé de groupe de clients</p>
             </div>
         </div>
     @else

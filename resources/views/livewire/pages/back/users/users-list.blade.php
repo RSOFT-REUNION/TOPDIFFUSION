@@ -81,7 +81,7 @@
                 </table>
             </div>
         @else
-            <p class="empty-text">Vous n'avez pas encore de client inscrit</p>
+            <p class="empty-text">Vous n'avez pas encore de clients inscrits</p>
         @endif
     </div>
 </div>

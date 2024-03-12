@@ -2,7 +2,7 @@
     <div class="bg-gray-100 p-5">
         <div class="flex items-center">
             <div class="flex-1">
-                <h2 class="font-bold text-xl">Ajouter une chaine</h2>
+                <h2 class="font-bold text-xl">Ajouter une chaîne</h2>
             </div>
             <div class="flex-none">
                 <button wire:click.prevent="$emit('closeModal')" type="button" class="py-2 px-2.5 hover:text-red-500"><i class="fa-solid fa-xmark"></i></button>

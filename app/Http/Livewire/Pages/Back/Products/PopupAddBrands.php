@@ -20,7 +20,7 @@ class PopupAddBrands extends ModalComponent
 
     protected $messages = [
         'title.required' => "Le nom de la marque est obligatoire.",
-        'title.unique' => "Cette marque existe a déjà été ajouté.",
+        'title.unique' => "Cette marque a déjà été ajoutée.",
         'image.image' => "Il ne s'agit pas d'une image.",
         'image.mimes' => "Il ne s'agit pas d'une image au format PNG.",
     ];

@@ -12,7 +12,7 @@
     <div class="entry-content">
         <p class="mb-5 bg-gray-100 p-2 rounded-lg">
             Les groupes d'options vous permettent de gérer les différentes variantes possible pour les articles. Vous pouvez
-            créer différent groupes d'options afin de correspondre au mieux à votre besoin. Une fois un groupe créer vous devez créer les variantes possible pour chacun des groupes.
+            créer différents groupes d'options afin de correspondre au mieux à votre besoin. Une fois un groupe créer vous devez créer les variantes possible pour chacun des groupes.
         </p>
         <form wire:submit.prevent="create" enctype="multipart/form-data">
             @csrf

@@ -19,7 +19,7 @@
                     <tr>
                         <th>Logo</th>
                         <th>Nom</th>
-                        <th>URL Officiel</th>
+                        <th>URL Officielle</th>
                         <th></th>
                     </tr>
                     </thead>

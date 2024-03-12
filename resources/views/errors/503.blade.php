@@ -12,7 +12,7 @@
         </div>
         <div class="flex flex-col justify-center items-center h-full col-span-2">
             <img src="{{ asset('img/logos/Blue.svg') }}" width="650px">
-            <p class="mb-5">Désolés, nous sommes actuellement en cours de maintenance revenez plus tard.</p>
+            <p class="mb-5">Nous sommes actuellement en cours de maintenance, veuillez revenir plus tard.</p>
             <div class="flex flex-row items-center">
                 <div class="mr-5">
                     <button class="btn-secondary" >Connexion</button>

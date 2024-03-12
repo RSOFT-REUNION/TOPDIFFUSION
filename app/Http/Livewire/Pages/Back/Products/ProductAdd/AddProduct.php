@@ -410,7 +410,7 @@ class AddProduct extends Component
     {
         $bike = CompatibleTempBike::where('id', $id)->first();
         $bike->delete();
-        Session::flash('success', 'Moto supprimé');
+        Session::flash('success', 'Moto supprimée');
         $this->emit('refreshLines');
     }
 
@@ -419,7 +419,7 @@ class AddProduct extends Component
     {
         $variant = ProductTempSwatches::where('id', $id)->first();
         $variant->delete();
-        Session::flash('success', 'Variante supprimé');
+        Session::flash('success', 'Variante supprimée');
         $this->emit('refreshLines');
     }
 
@@ -428,7 +428,7 @@ class AddProduct extends Component
     {
         $picture = ProductTempPictures::where('id', $id)->first();
         $picture->delete();
-        Session::flash('success', 'Photo supprimé');
+        Session::flash('success', 'Photo supprimée');
         $this->emit('refreshLines');
     }
 

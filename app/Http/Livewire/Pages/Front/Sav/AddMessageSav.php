@@ -52,9 +52,9 @@ class AddMessageSav extends Component
         $mess->closed = 0;
 
         if ($mess->save()) {
-            return session()->flash('success', 'Demande de SAV envoyé.');
+            return session()->flash('success', 'Demande de SAV envoyée.');
         } else {
-            return session()->flash('error', 'Soucis lors de l\'envoie. Veuillez réesayé');
+            return session()->flash('error', 'Soucis lors de l\'envoi. Veuillez réessayer');
         }
     }
 

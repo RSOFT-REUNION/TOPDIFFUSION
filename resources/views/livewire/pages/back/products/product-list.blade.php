@@ -49,7 +49,7 @@
                 </table>
             </div>
         @else
-            <p class="empty-text mt-2">Vous n'avez pas encore ajouté d'article</p>
+            <p class="empty-text mt-2">Vous n'avez pas encore ajouté d'articles</p>
         @endif
     </div>
 </div>

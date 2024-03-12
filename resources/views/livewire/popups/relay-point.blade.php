@@ -13,7 +13,7 @@
         {{-- Message de description --}}
         <div
             class="flex flex-row items-center justify-center bg-secondary bg-opacity-20 border border-secondary rounded-lg text-[16px] py-3 w-full my-9">
-            <h3>Choisissez votre point de relais pour venir récupéré votre commande.</h3>
+            <h3>Choisissez votre point relais pour venir récupérer votre commande.</h3>
         </div>
         {{-- Choix Point relais --}}
         <div class="flex flex-col transition-all duration-500 gap-y-3">
