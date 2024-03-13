@@ -116,6 +116,7 @@ class Cart extends Component
         }
     }
 
+    // Fonction permettant les chèques à la livraison
     public function initOrderCheck()
     {
         // Format du numéro de document (ex: CM_HOARAU-VAPQR_2023-09-19_FHO87)
@@ -164,6 +165,57 @@ class Cart extends Component
         return redirect()->route('front.home');
 
     }
+
+    // Fonction permettant les virements à la livraison
+    public function initOrderBilling()
+    {
+        // Format du numéro de document (ex: CM_HOARAU-VAPQR_2023-09-19_FHO87)
+        $document_number = 'CM_'. auth()->user()->customer_code .'_'. strtoupper(Str::random(5));
+
+        // Création de la commande
+        $order = new UserOrder;
+        $order->user_id = auth()->user()->id;
+        $order->document_number = $document_number;
+        $order->total_product = $this->getQuantityTotal();
+        $order->total_amount = $this->getPriceTotalBlank();
+        $order->payment_type = 3;
+        $order->total_ship = 0; // TODO: Changer afin de rendre cette valeur dynamique
+        if($order->save())
+        {
+            // Enregistrez l'activité de création de commande
+            ActivityLog::logActivity(auth()->user()->id, 'Commande créée', ' vient de passer une commande de ' . $this->getPriceTotalBlank() . ' € via un virement à la livraison');
+
+            // Ajout en base des articles du panier
+            $cart = UserCart::where('user_id', auth()->user()->id)->get();
+            foreach ($cart as $ca)
+            {
+                // met à jour le statut du panier au statut "en attente de paiement"
+                $ca->state = 1;
+                $ca->update();
+
+                // Ajout les informations du panier dans la commande
+                $orderLine = new UserOrderItem;
+                $orderLine->order_id = $order->id;
+                $orderLine->product_id = $ca->product_id;
+                $orderLine->product_swatch_id = $ca->swatch_id;
+                $orderLine->quantity = $ca->quantity;
+                $orderLine->product_price = $ca->getUnitPrice();
+                $orderLine->save();
+
+                // Modification des stocks
+                $product_stock = MyProductStock::where('product_id', $ca->product_id)->first();
+                $product_stock->quantity -= $ca->quantity;
+                $product_stock->update();
+            }
+        }
+
+        $my_cart = UserCart::where('user_id', auth()->user()->id)->first();
+        $my_cart->delete();
+
+        return redirect()->route('front.home');
+
+    }
+
 
     // Initialise la commande par rapport au panier
     public function initOrder()

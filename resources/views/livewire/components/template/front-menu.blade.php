@@ -1,9 +1,9 @@
 <div>
-    {{-- <div class="inline-flex items-center" x-data="{ open: @entangle('active_tab') }" x-on:click.away="open = ''">
+     {{--<div class="inline-flex items-center" x-data="{ open: @entangle('active_tab') }" x-on:click.away="open = ''">
         @foreach($menus as $menu)
             <a wire:click="@if($tab != $menu->id) changeTab({{ $menu->id }}) @else changeTab('') @endif" class="btn-menu-level-1 @if($tab == $menu->id) btn-menu-level-1_active @endif">{{ $menu->title }}@if($menu->hasSubCategory()->count() > 0 ) @if($tab == $menu->id) <i class="ml-2 fa-solid fa-chevron-up"></i> @else <i class="ml-2 fa-solid fa-chevron-down"></i> @endif @endif</a>
         @endforeach
-    </div>
+    </div>--}}
     @if($tab && $menus_level_2->count() > 0)
         <div class="menu-mega">
             <div class="menu-mega-container">
@@ -25,9 +25,9 @@
                 </div>
             </div>
         </div>
-    @endif --}}
+    @endif
 
-    {{-- <div class="relative inline-flex items-center w-full">
+     <div class="relative inline-flex items-center w-full">
         @foreach($menus as $menu)
             <div class="py-3 group" x-data="{ isOpen: false }"
                  @mouseenter="isOpen = true"
@@ -67,9 +67,9 @@
                 </div>
             </div>
         @endforeach
-    </div> --}}
+    </div>
 
-    <div class="relative inline-flex items-center w-full">
+    {{--<div class="relative inline-flex items-center w-full">
         @foreach($menus as $menu)
             <div class="py-3 group" x-data="{ isOpen: false, subMenuOpenIndex: null }"
                  @mouseenter="isOpen = true"
@@ -101,7 +101,7 @@
                                     @endif
                                     @mouseenter="{{'subMenuOpen'.$index}} = true"
                                     >
-                                    {{-- @mouseleave="subMenuOpen = false"> --}}
+                                    --}}{{-- @mouseleave="subMenuOpen = false"> --}}{{--
                                     <a href="{{ route('front.product.list', ['slug' => $mem->slug]) }}">{{ $mem->title }}</a>
                                 </h2>
 
@@ -135,7 +135,7 @@
                 </div>
             </div>
         @endforeach
-    </div>
+    </div>--}}
 
 
 </div>

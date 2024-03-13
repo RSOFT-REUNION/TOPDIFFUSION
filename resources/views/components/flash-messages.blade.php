@@ -8,15 +8,15 @@
     </div>
 @endif
 
-{{--@if (session()->has('error'))--}}
-{{--    <div class="alert" id="errorAlert">--}}
-{{--        <div class="alert-error inline-flex items-center">--}}
-{{--            <p><i class="fa-solid fa-thumbs-down mr-3"></i>{{ session('error') }}</p>--}}
-{{--            <button type="button" class="bg-opacity-50 bg-white px-3 py-1 rounded-full ml-10 block"--}}
-{{--                    data-dismiss="alert" wire:click="$set('showErrorAlert', false)"><i class="fa-solid fa-xmark"></i></button>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--@endif--}}
+@if (session()->has('error'))
+    <div class="alert" id="errorAlert">
+        <div class="alert-error inline-flex items-center">
+            <p><i class="fa-solid fa-thumbs-down mr-3"></i>{{ session('error') }}</p>
+            <button type="button" class="bg-opacity-50 bg-white px-3 py-1 rounded-full ml-10 block"
+                    data-dismiss="alert" wire:click="$set('showErrorAlert', false)"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+    </div>
+@endif
 
 <script>
     function timeoutAlert(alertId) {

@@ -155,10 +155,11 @@ class AddProduct extends Component
                         $stock->save();
                     }
                 } elseif($product->type == 4) {
+                    // Pneus
                     $swatch = new MyProductSwatch;
                     $swatch->ugs = $ts->ugs;
                     $swatch->ugs_swatch = $ts->ugs_swatch;
-                    $swatch->product_id = $ts->product->id;
+                    $swatch->product_id = $product->id;
                     $swatch->type = '4';
                     $swatch->tire_position = $ts->position;
                     $swatch->tire_width = $ts->width;
