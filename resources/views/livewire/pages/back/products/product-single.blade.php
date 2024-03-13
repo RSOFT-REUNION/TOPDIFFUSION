@@ -79,36 +79,75 @@
                     </div>
 
                     {{-- Affichage des déclinaison --}}
-                    @if($product->type != 1)
+                    @if($product->type == 2)
                         <div class="mt-5">
-                        <h2 class="text-3xl font-bold">Liste des déclinaisons</h2>
-                        <div class="grid grid-cols-4 gap-10 mt-5">
-                            @foreach($product_swatches as $swatch)
-                                <div class="bg-slate-100 p-5 rounded-xl">
-                                    @if($swatch->getSwatchGroupType() == 2)
-                                        <div class="flex items-center bg-slate-200 p-3 rounded-md">
+                            <h2 class="text-3xl font-bold">Liste des déclinaisons</h2>
+                            <div class="grid grid-cols-4 gap-10 mt-5">
+                                @foreach($product_swatches as $swatch)
+                                    <div class="bg-slate-100 p-5 rounded-xl">
+                                        @if($swatch->getSwatchGroupType() == 2)
+                                            <div class="flex items-center bg-slate-200 p-3 rounded-md">
+                                                <div class="flex-1">
+                                                    <h2>{{ $swatch->getVariablesItem()->title }}</h2>
+                                                </div>
+                                            </div>
+                                        @else
+                                            TEST
+                                        @endif
+                                        <p class="mt-3"><b>Référence :</b> {{ $swatch->ugs }}-{{ $swatch->ugs_swatch }}</p>
+                                        <p class="mt-2"><b>Type :</b> {!! $swatch->getVariablesGroup()->getTypeText() !!}</p>
+                                        <p class="mt-2"><b>Quantité en stock :</b> {{ $swatch->getSwatchStockQuantity() }}</p>
+                                        <div class="flex items-center mt-3">
                                             <div class="flex-1">
-                                                <h2>{{ $swatch->getVariablesItem()->title }}</h2>
+                                                <p class="font-bold">Montant :</p>
+                                            </div>
+                                            <div class="flex-none">
+                                                <p class="text-xl font-bold">{{ number_format($swatch->price_ht, '2', ',', ' ') }} €</p>
                                             </div>
                                         </div>
-                                    @else
-                                        TEST
-                                    @endif
-                                    <p class="mt-3"><b>Référence :</b> {{ $swatch->ugs }}-{{ $swatch->ugs_swatch }}</p>
-                                    <p class="mt-2"><b>Type :</b> {!! $swatch->getVariablesGroup()->getTypeText() !!}</p>
-                                    <p class="mt-2"><b>Quantité en stock :</b> {{ $swatch->getSwatchStockQuantity() }}</p>
-                                    <div class="flex items-center mt-3">
-                                        <div class="flex-1">
-                                            <p class="font-bold">Montant :</p>
-                                        </div>
-                                        <div class="flex-none">
-                                            <p class="text-xl font-bold">{{ number_format($swatch->price_ht, '2', ',', ' ') }} €</p>
-                                        </div>
                                     </div>
-                                </div>
-                            @endforeach
+                                @endforeach
+                            </div>
                         </div>
-                    </div>
+                    @elseif($product->type == 4)
+                        <div class="mt-5">
+                            <div class="flex items-center">
+                                <div class="flex-1">
+                                    <h2 class="text-3xl font-bold">Information sur le pneu</h2>
+                                </div>
+                                <div class="flex-none">
+                                    <button class="bg-secondary py-2 px-3 rounded-md duration-300 hover:bg-primary hover:text-white">Modifier</button>
+                                </div>
+                            </div>
+                            <div class="table-box-outline mt-4">
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Position</th>
+                                        <th>Largeur</th>
+                                        <th>Hauteur</th>
+                                        <th>Diamètre</th>
+                                        <th>Charge</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($product_swatches as $swatch)
+                                        <tr>
+                                            <td>{{ $swatch->id }}</td>
+                                            <td class="uppercase">{{ $swatch->tire_position }}</td>
+                                            <td>{{ $swatch->tire_width }}</td>
+                                            <td>{{ $swatch->tire_height }}</td>
+                                            <td>{{ $swatch->tire_diameter }}</td>
+                                            <td>{{ $swatch->tire_charge }}</td>
+                                            <td><button class="text-slate-400 hover:text-red-400"><i class="fa-solid fa-trash"></i></button></td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     @endif
                 </div>
             </div>

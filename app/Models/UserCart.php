@@ -20,6 +20,20 @@ class UserCart extends Model
         return MyProductSwatch::where('id', $this->swatch_id)->first();
     }
 
+    // Récupération du groupe de la déclinaison
+    public function getGroupSwatch()
+    {
+        $swatch = $this->getSwatches();
+        return ProductGroupTag::where('id', $swatch->swatch_group_id)->first();
+    }
+
+    // Récupération de la déclinaison
+    public function getTagSwatch()
+    {
+        $swatch = $this->getSwatches();
+        return ProductTag::where('id', $swatch->swatch_tags_id)->first();
+    }
+
     // Avoir le prix unitaire de chaque article
     public function getUnitPrice()
     {

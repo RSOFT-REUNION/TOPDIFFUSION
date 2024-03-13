@@ -94,59 +94,6 @@ class ProductPage extends Component
         }
     }
 
-    public function createCart()
-    {
-        // Récupération des swatches du produit
-        $swatches = MyProductSwatch::where('product_id', $this->product_id)->get();
-
-        // Récupération du panier du client
-        $myCart = UserCart::where('user_id', auth()->user()->id)->where('product_id', $this->product_id)->first();
-        $product = MyProduct::where('id', $this->product_id)->first();
-        if($product->type == 1) {
-            $swatch = MyProductSwatch::where('product_id', $product->id)->first();
-        }
-
-        $productName = $product->title;
-
-        // Vérification si la ligne existe déjà
-        if($myCart) {
-            // Ajout des nouvelles quantités dans la ligne du panier
-            $myCart->quantity += $this->quantity;
-            $myCart->update();
-
-            // Enregistrez l'activité de mise à jour du panier
-            ActivityLog::logActivity(
-                auth()->user()->id,
-                'Mise à jour du panier',
-                ' a ajouté ' . $this->quantity . " " . $productName . ' au panier'
-            );
-        } else {
-            // Création de l'article dans le panier
-            $cart = new UserCart;
-            $cart->product_id = $this->product_id;
-            $cart->user_id = auth()->user()->id;
-            if($product->type == 1){
-                $cart->swatch_id = $swatch->id;
-            } else {
-                $cart->swatch_id = $this->config_swatch;
-            }
-            $cart->quantity = $this->quantity;
-            $cart->save();
-
-            // Récupération du nom de l'article
-            // Enregistrez l'activité d'ajout d'article au panier avec le nom de l'article
-            ActivityLog::logActivity(
-                auth()->user()->id,
-                'Article ajouté au panier',
-                ' a ajouté ' . $productName . ' au panier'
-            );
-
-        }
-
-        // Recharge en temps reel le compteur
-        $this->emit('refreshLines');
-    }
-
     public function getProductIsInFavoritesProperty()
     {
         $user = auth()->user();
@@ -227,6 +174,59 @@ class ProductPage extends Component
 
     }
 
+    public function createCart()
+    {
+
+
+
+        // Récupération du panier du client
+        $myCart = UserCart::where('user_id', auth()->user()->id)->where('product_id', $this->product_id)->first();
+        $product = MyProduct::where('id', $this->product_id)->first();
+
+        // Récupération des swatches du produit
+        if($product->type == 1) {
+            $swatch = MyProductSwatch::where('product_id', $this->product_id)->get();
+        } else {
+            $swatch = $this->getGoodSwatches();
+        }
+
+        $productName = $product->title;
+
+        // Vérification si la ligne existe déjà
+        if($myCart) {
+            // Ajout des nouvelles quantités dans la ligne du panier
+            $myCart->quantity += $this->quantity;
+            $myCart->update();
+
+            // Enregistrez l'activité de mise à jour du panier
+            ActivityLog::logActivity(
+                auth()->user()->id,
+                'Mise à jour du panier',
+                ' a ajouté ' . $this->quantity . " " . $productName . ' au panier'
+            );
+        } else {
+            // Création de l'article dans le panier
+            $cart = new UserCart;
+            $cart->product_id = $this->product_id;
+            $cart->user_id = auth()->user()->id;
+            $cart->swatch_id = $swatch->id;
+            $cart->quantity = $this->quantity;
+            $cart->save();
+
+            // Récupération du nom de l'article
+            // Enregistrez l'activité d'ajout d'article au panier avec le nom de l'article
+            ActivityLog::logActivity(
+                auth()->user()->id,
+                'Article ajouté au panier',
+                ' a ajouté ' . $productName . ' au panier'
+            );
+
+        }
+
+        // Recharge en temps reel le compteur
+        $this->emit('refreshLines');
+    }
+
     public function render()
     {
         $goodProduct = MyProduct::where('id', $this->product_id)->first();
@@ -237,7 +237,7 @@ class ProductPage extends Component
         $data['product'] = MyProduct::where('id', $this->product_id)->first();
         $data['product_infos'] = MyProductInfo::where('product_id', $this->product_id)->get();
         $data['product_pictures'] = MyProductPicture::where('product_id', $this->product_id)->get();
-
+        $data['product_swatches'] = MyProductSwatch::where('product_id', $this->product_id)->get();
         if($this->getGoodSwatches() != null) {
             // Si une déclinaison est bien sélectionnée
             $data['product_swatch'] = $this->getGoodSwatches();
