@@ -54,7 +54,7 @@
                                 <td>{!! $order->getStateBadgeGestion() !!}</td>
                                 <td><a href="{{ route('back.user.single', ['user' => $order->User()->customer_code]) }}" class="font-bold hover:text-blue-500">{{ $order->User()->customer_code }}</a></td>
                                 <td>{{ $order->total_product }}</td>
-                                <td>{{ $order->total_amount }} €</td>
+                                <td class="font-bold">{{ number_format($order->total_amount, '2', ',', ' ') }} €</td>
                                 <td>{{ $order->getCreatedDate() }}</td>
                                 <td></td>
                             </tr>

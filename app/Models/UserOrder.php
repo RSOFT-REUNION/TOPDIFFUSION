@@ -32,10 +32,23 @@ class UserOrder extends Model
     {
         $state = [
             '',
-            '<span class="bg-green-200 text-green-700 border border-green-400 rounded-md px-2 py-0.5">Payé</span>'
+            '<span class="bg-orange-200 text-orange-700 border border-orange-400 rounded-md px-2 py-0.5">En attente de paiement</span>'
         ];
 
         return isset($state[$this->state]) ? $state[$this->state] : null;
+    }
+
+    // Liste des modes de paiement
+    public function getPaymentMethod()
+    {
+        $state = [
+            '',
+            'Paiement par carte',
+            'Paiement par chèque',
+            'Paiement par virement',
+        ];
+
+        return isset($state[$this->payment_type]) ? $state[$this->payment_type] : null;
     }
 
     // Liste des status pour les clients dans le format complet

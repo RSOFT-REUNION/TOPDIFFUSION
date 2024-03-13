@@ -30,6 +30,8 @@ Route::get('/connexion', [FrontController::class, 'showLogin'])->name('front.log
 Route::post('/connexion', [FrontController::class, 'postLogin']);
 Route::get('/inscription', [FrontController::class, 'showRegister'])->name('front.register');
 Route::get('/déconnexion', [FrontController::class, 'logout'])->name('logout');
+Route::get('/mot-de-passe-oublie/{token}', [FrontController::class, 'forgotPassword'])->name('fo.forgotPassword');
+Route::post('/mot-de-passe-oublie/{token}', [FrontController::class, 'postForgotPassword']);
 
 Route::get('/produit-{slug}', [ProductController::class, 'showProduct'])->name('front.product');
 Route::get('/produit', [ProductController::class, 'showProductListAll'])->name('front.product-all');
@@ -74,6 +76,7 @@ Route::group([
         Route::prefix('/produits')->group(function () {
             Route::get('/liste', [BoProductController::class, 'showProductList'])->name('back.product.list');
             Route::get('/creation', [BoProductController::class, 'createProduct'])->name('back.product.create');
+            Route::get('/produit/{product}', [BoProductController::class, 'showSingleProduct'])->name('back.product.single');
             Route::get('/créer-un-produit-{id}', [BoProductController::class, 'showCreateProduct'])->name('back.product.show.create');
             Route::get('/ajout-{id}-{product}', [BoProductController::class, 'showAddProduct'])->name('back.product.add');
             Route::get('/categories', [BoProductController::class, 'showProductCategories'])->name('back.product.categories');

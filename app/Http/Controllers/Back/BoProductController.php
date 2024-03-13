@@ -84,6 +84,15 @@ class BoProductController extends Controller
         return view('pages.backend.products.product-add', $data);
     }
 
+    public function showSingleProduct($product)
+    {
+        $data = [];
+        $data['group'] = 'products';
+        $data['page'] = 'list';
+        $data['product'] = MyProduct::where('id', $product)->first();
+        return view('pages.backend.products.product-single', $data);
+    }
+
     public function showProductCategories()
     {
         $data = [];

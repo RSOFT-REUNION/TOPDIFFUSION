@@ -501,16 +501,40 @@
         border-radius: 10px;
     }
 }
+.textfield-line_select {
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    background-color: theme.$gray-2;
+    padding: 10px;
+    border-radius: 10px;
+    label {
+        font-weight: bold;
+    }
+    input, select {
+        background-color: transparent;
+        width: 100%;
+        text-align: right;
+        padding: 5px 7px;
+        &:focus {
+            outline: none;
+        }
+    }
+}
 .textfield-line {
     display: inline-flex;
+    align-items: center;
     width: 100%;
     background-color: theme.$gray-2;
     padding: 5px;
     border-radius: 10px;
-    input {
+    input, select {
         background-color: transparent;
         width: 100%;
         padding: 5px 7px;
+        &:focus {
+            outline: none;
+        }
     }
     button {
         padding-right: 7px;
@@ -1302,3 +1326,19 @@ input[type="number"]::-webkit-outer-spin-button {
         opacity: 0.4;
     }
 }
+
+.color-choice, .text-choice {
+    padding: 5px 7px;
+    border-radius: 10px;
+    &:hover {
+        cursor: pointer;
+    }
+
+    input {
+        appearance: none;
+        &:checked {
+            background-color: theme.$primary;
+        }
+    }
+}
+

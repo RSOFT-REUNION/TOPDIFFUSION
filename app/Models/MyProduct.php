@@ -40,6 +40,20 @@ class MyProduct extends Model
         return isset($type[$this->type]) ? $type[$this->type] : null;
     }
 
+    // Avoir le type du produit sous forme de texte
+    public function getType()
+    {
+        $type = [
+            '',
+            'Produit simple',
+            'Produit décliné',
+            'Kit chaine',
+            'Pneus',
+        ];
+
+        return isset($type[$this->type]) ? $type[$this->type] : null;
+    }
+
     public function multipleSwatch()
     {
         $values = MyProductSwatch::where('product_id', $this->id)->get();

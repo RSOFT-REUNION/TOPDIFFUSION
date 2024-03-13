@@ -6,6 +6,7 @@ use App\Models\bike;
 use App\Models\CompatibleBike;
 use App\Models\Faq;
 use App\Models\Pages;
+use App\Models\User;
 use App\Models\UserBike;
 use App\Models\UserData;
 use App\Models\MyProduct;
@@ -90,6 +91,37 @@ class FrontController extends Controller
         auth()->logout();
 
         return redirect()->route('front.home');
+    }
+
+    // Mot de passe oublié (page)
+    public function forgotPassword($token)
+    {
+        $data = [];
+        $data['page'] = 'register';
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
+        $data['user'] = User::where('remember_token', $token)->first();
+        return view('pages.frontend.sign.forgot-password', $data);
+    }
+    public function postForgotPassword(Request $request)
+    {
+        $request->validate([
+            'password' => 'required|min:5|regex:/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{5,}$/i|confirmed',
+        ], [
+            'password.required' => "Le mot de passe est obligatoire.",
+            'password.min' => "Le mot de passe doit comporter au moins :min caractères.",
+            'password.regex' => "Le mot de passe doit comporter au moins une majuscule, une minuscule et un chiffre.",
+            'password.confirmed' => "Les mots de passe ne correspondent pas."
+        ]);
+
+        $user = User::where('id', $request->user)->first();
+        $user->password = bcrypt($request->password);
+        $user->remember_token = null;
+        if($user->update())
+        {
+            return redirect()->route('front.login')->with(
+                'success', 'Votre mot de passe a bien été modifié'
+            );
+        }
     }
 
     /*----------- PROFILE ------------*/

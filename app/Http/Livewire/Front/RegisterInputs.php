@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire\Front;
 
+use App\Mail\Users\AccountCreate;
 use App\Models\ActivityLog;
 use App\Models\CustomerGroup;
 use App\Models\User;
 use App\Models\UserData;
 use App\Models\UserSetting;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Livewire\Component;
 
@@ -88,6 +90,9 @@ class RegisterInputs extends Component
                 $settings = new UserSetting;
                 $settings->user_id = $user->id;
                 if($settings->save()) {
+                    // Envoi d'un email de confirmation au client
+                    Mail::to($user->email)->send(new AccountCreate($user));
+
                     // Enregistrez l'activité de création d'un nouveau compte
                     ActivityLog::logActivity($user->id, 'Inscription', ' vient de s\'inscrire');
                     // Send email to support & customer

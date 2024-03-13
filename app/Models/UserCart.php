@@ -23,12 +23,12 @@ class UserCart extends Model
     // Avoir le prix unitaire de chaque article
     public function getUnitPrice()
     {
-        return number_format($this->getSwatches()->getPriceWithDiscount(), '2', ',', ' ');
-        // if(auth()->user()->professionnal == 1 && auth()->user()->verified == 1) {
-        //     return number_format($this->getSwatches()->getPriceWithDiscount(), '2', ',', ' ');
-        // } else {
-        //     return number_format($this->getSwatches()->getPriceTTC(), '2', ',', ' ');
-        // }
+        $product = MyProduct::where('id', $this->product_id)->first();
+         if(auth()->user()->professionnal == 1 && auth()->user()->verified == 1) {
+             return number_format($product->getPriceWithDiscount(), '2', ',', ' ');
+         } else {
+             return number_format($product->getPriceWithDiscount(), '2', ',', ' ');
+         }
     }
 
     // Récupérer la quantité en stock de l'article
@@ -40,21 +40,35 @@ class UserCart extends Model
     // Avoir le prix total de chaque article à la ligne
     public function getTotalPriceLine()
     {
+        $product = MyProduct::where('id', $this->product_id)->first();
         if(auth()->user()->professionnal == 1 && auth()->user()->verified == 1) {
-            $amount = $this->getSwatches()->getPriceWithDiscount() * $this->quantity;
+            // Avoir le tarif unitaire
+            $amount = $product->getPriceWithDiscount() * $this->quantity;
             return number_format($amount, '2', ',', ' ');
         } else {
-            $amount = $this->getSwatches()->getPriceTTC() * $this->quantity;
+            // Avoir le tarif unitaire
+            $amount = $product->getPriceWithDiscount() * $this->quantity;
             return number_format($amount, '2', ',', ' ');
         }
 
     }
 
+    // Avoir le montant économisé
+    public function getTotalPriceSpend()
+    {
+        $product = MyProduct::where('id', $this->product_id)->first();
+        if(auth()->user()->professionnal == 1 && auth()->user()->verified == 1) {
+            $amount = $product->getPriceHT();
+            return $amount;
+        }
+    }
+
     // Avoir le prix total de chaque article à la ligne sans la mise en forme
     public function getTotalPriceLineBlank()
     {
+        $product = MyProduct::where('id', $this->product_id)->first();
         if(auth()->user()->professionnal == 1 && auth()->user()->verified == 1) {
-            $amount = $this->getSwatches()->getPriceWithDiscount() * $this->quantity;
+            $amount = $product->getPriceWithDiscount() * $this->quantity;
             return $amount;
         } else {
             $amount = $this->getSwatches()->getPriceTTC() * $this->quantity;
@@ -90,16 +104,16 @@ class UserCart extends Model
     public function getTaxAmount()
     {
         $priceHT = $this->getLinePriceHT(); // Assurez-vous que ceci est un nombre décimal.
-    
+
         // Convertissez la chaîne formatée en nombre décimal.
         // Remplacez les virgules par des points et convertissez la chaîne en float.
         $priceTTC = floatval(str_replace(',', '.', $this->getTotalPriceLine()));
-    
+
         // Calculez le montant de la taxe en soustrayant HT de TTC.
         $taxAmount = $priceTTC - $priceHT;
-    
+
         return $taxAmount;
     }
-    
+
 
 }

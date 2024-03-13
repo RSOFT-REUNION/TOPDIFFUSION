@@ -2,7 +2,13 @@
 
 namespace App\Http\Livewire\Pages\Back\Products;
 
+use App\Models\CompatibleBike;
+use App\Models\MyProductInfo;
+use App\Models\MyProductPicture;
 use App\Models\Product;
+use App\Models\UserCart;
+use App\Models\UserOrderItem;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use App\Models\MyProduct;
 use App\Models\MyProductPromotion;
@@ -55,15 +61,6 @@ class ProductList extends Component
         $this->search = '';
         $this->is_search = false;
         $this->jobs = [];
-    }
-
-    public function deleteProduct($productId)
-    {
-        // Supprimez le produit avec l'ID donné
-        MyProduct::findOrFail($productId)->delete();
-
-        // Rafraîchissez la liste des produits après la suppression
-        $this->render();
     }
 
     public function render()

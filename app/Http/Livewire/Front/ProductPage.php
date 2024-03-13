@@ -12,6 +12,8 @@ use App\Models\MyProductPromotion;
 use App\Models\MyProductStock;
 use App\Models\MyProductSwatch;
 use App\Models\ProductCategory;
+use App\Models\ProductGroupTag;
+use App\Models\ProductTag;
 use App\Models\SettingGeneral;
 use App\Models\UserCart;
 use App\Models\UserBike;
@@ -22,7 +24,7 @@ class ProductPage extends Component
 {
     protected $listeners = ['refreshLines' => '$refresh'];
     public $active_tab = '1';
-    public $product_id, $product, $quantity, $category_id, $favoriteLike, $config_swatch, $promotion_id, $promotion;
+    public $product_id, $product, $quantity, $category_id, $favoriteLike, $config_swatch, $promotion_id, $promotion, $declinaison_2;
     public $userBikeCompatible = false;
     // public $allCompatibleBike = [];
 
@@ -41,6 +43,9 @@ class ProductPage extends Component
         $this->product_id = $product_id;
         $category_id_product = MyProduct::where('id', $this->product_id)->first();
         $this->category_id = ProductCategory::find($category_id_product->category_id);
+        $this->product = MyProduct::where('id', $this->product_id)->first();
+
+
         if($this->quantity == null) {
             $this->quantity = 1;
         }
@@ -55,16 +60,8 @@ class ProductPage extends Component
 
         $picture = MyProductPicture::where('product_id', $product_id)->get();
 
-        $this->product = MyProduct::where('id', $this->product_id)->first();
-
         $this->promotion_id = $this->product->promotion->first() ? $this->product->promotion->first() : null;
         $this->promotion = $this->promotion_id ? (!$this->promotion_id->code ? ($this->promotion_id->active ? MyProductPromotion::where('id', $this->promotion_id->id)->first() : null) : null): null;
-
-        /*$this->images = [
-            $picture->picture_url,
-            MyProduct::where('product_id', $product_id)->get()
-        ];
-        dd($this->images);*/
     }
 
     public function changeTab($tab)
@@ -192,15 +189,70 @@ class ProductPage extends Component
         }
     }
 
+    // Récupérer les bons groupes de tags
+    public function getGroupTag()
+    {
+        $swatches = MyProductSwatch::where('product_id', $this->product_id)->get();
+        $groupTagIds = $swatches->pluck('swatch_group_id')->toArray();
+        $groupTags = ProductGroupTag::whereIn('id', $groupTagIds)->get();
+
+        return $groupTags;
+    }
+
+    // Récupérer les bons tags
+    public function getTag()
+    {
+        $swatches = MyProductSwatch::where('product_id', $this->product_id)->get();
+        $tagIds = $swatches->pluck('swatch_tags_id')->toArray();
+        $tags = ProductTag::whereIn('id', $tagIds)->get();
+
+        return $tags;
+    }
+
+    // Récupérer la bonne déclinaison sélectionnée
+    public function getGoodSwatches()
+    {
+        if($this->declinaison_2 != null) {
+            $value = $this->declinaison_2;
+            preg_match('/^(\d+)\/(\d+)$/', $value, $matches);
+            $group_tag = $matches[1];
+            $tag = $matches[2];
+
+            $mySwatch = MyProductSwatch::where('product_id', $this->product_id)
+                ->where('swatch_group_id', $group_tag)
+                ->where('swatch_tags_id', $tag)
+                ->first();
+            return $mySwatch;
+        }
+
+    }
+
     public function render()
     {
+        $goodProduct = MyProduct::where('id', $this->product_id)->first();
+
         $data = [];
         $data['tab'] = $this->active_tab;
         $data['promotion'] = $this->promotion;
         $data['product'] = MyProduct::where('id', $this->product_id)->first();
         $data['product_infos'] = MyProductInfo::where('product_id', $this->product_id)->get();
         $data['product_pictures'] = MyProductPicture::where('product_id', $this->product_id)->get();
-        $data['product_swatches'] = MyProductSwatch::where('product_id', $this->product_id)->get();
+
+        if($this->getGoodSwatches() != null) {
+            // Si une déclinaison est bien sélectionnée
+            $data['product_swatch'] = $this->getGoodSwatches();
+        } else {
+            $data['product_swatch'] = "";
+        }
+
+        if($goodProduct->type == 2) {
+            // Récuperer les informations sur les déclinaisons
+            $data['product_group_tag'] = $this->getGroupTag();
+            $data['product_tag'] = $this->getTag();
+        } else {
+            $data['product_group_tag'] = null;
+            $data['product_tag'] = null;
+        }
         $data['settings'] = SettingGeneral::where('id', 1)->first();
         $data['product_stock'] = MyProductStock::where('product_id', $this->product_id)->get()->sum('quantity');
         $data['category'] = $this->category_id;

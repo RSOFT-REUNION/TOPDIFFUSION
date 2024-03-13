@@ -27,6 +27,17 @@
                         </div>
                     </div>
                 </div>
+                <div class="grid-item-button">
+                    <div class="flex items-center">
+                        <div class="flex-none mr-4">
+                            <i class="fa-solid fa-money-check fa-2x"></i>
+                        </div>
+                        <div class="flex-1 ml-4">
+                            <h3>{{ $order->getPaymentMethod() }}</h3>
+                            <p>Mode de paiement</p>
+                        </div>
+                    </div>
+                </div>
                 <div class="text-green-500 grid-item-button">
                     <div class="flex items-center">
                         <div class="flex-none mr-4">
@@ -55,59 +66,37 @@
                 <div class="flex-1 mr-2">
                     <div class="">
                         <h2 class="text-xl font-bold">Information de la commande</h2>
-                        <div class="grid grid-cols-2 gap-4 mt-3">
-                            <div
-                                class="py-2 text-center duration-300 bg-gray-100 rounded-md cursor-pointer hover:bg-secondary">
-                                <p>Changer le status</p>
-                            </div>
-                            <div
-                                class="py-2 text-center duration-300 bg-gray-100 rounded-md cursor-pointer hover:bg-secondary">
-                                <p>Voir la facture</p>
-                            </div>
+                        <div class="grid grid-cols-3 gap-2 mt-3">
+                            <button class="bg-secondary py-3 rounded-md duration-300 border border-transparent hover:border-secondary hover:bg-transparent">Changer le statut de la commande</button>
+                            <button class="bg-slate-100 py-3 rounded-md duration-300 border border-transparent hover:border-secondary hover:bg-transparent">Ajouter une facture</button>
+                            <button class="bg-slate-100 py-3 rounded-md duration-300 border border-transparent hover:border-secondary hover:bg-transparent">Envoyer un message</button>
                         </div>
                     </div>
                     <div class="mt-5">
                         <h2 class="text-xl font-bold">Produits dans la commande</h2>
-                        <div class="mt-3">
-                            <ul>
-                                @foreach ($order_items as $item)
-                                    <li>
-                                        <div role="button" data-href="{{ route('back.product.list') }}"
-                                            class="px-3 py-2 duration-300 bg-gray-100 border border-transparent rounded-md cursor-pointer hover:border-gray-200 hover:scale-105 hover:drop-shadow-xl">
-                                            <div class="flex items-center">
-                                                <div class="flex-none">
-                                                    <img src="{{ asset('storage/images/products/' . $item->Product()->cover) }}"
-                                                        width="100px" class="rounded-sm">
-                                                </div>
-                                                <div class="flex-1 ml-4">
-                                                    <div class="grid items-center grid-cols-4 gap-4">
-                                                        <div class="border-r border-gray-300">
-                                                            <p class="text-xl font-bold truncate">
-                                                                {{ $item->Product()->title }}</p>
-                                                            <p class="text-sm text-gray-500">{{ $item->Swatch()->ugs }}</p>
-                                                        </div>
-                                                        <div class="border-r border-gray-300">
-                                                            <p class="text-sm text-gray-500">Prix unit.</p>
-                                                            <p class="text-xl font-bold">
-                                                                {{ number_format($item->product_price, '2', ',', ' ') }} €
-                                                            </p>
-                                                        </div>
-                                                        <div class="border-r border-gray-300 ">
-                                                            <p class="text-sm text-gray-500">Qte.</p>
-                                                            <p class="text-xl font-bold">{{ $item->quantity }}</p>
-                                                        </div>
-                                                        <div>
-                                                            <p class="text-sm text-gray-500">Total</p>
-                                                            <p class="text-xl font-bold">{{ $item->getTotalLinePrice() }} €
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
+                        <div class="table-box-outline mt-2">
+                            <table>
+                                <thead class="font-bold">
+                                <tr>
+                                    <td><i class="fa-solid fa-image"></i></td>
+                                    <td>Nom du produit</td>
+                                    <td>Prix unitaire</td>
+                                    <td>Quantité</td>
+                                    <td>Prix total</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($order_items as $oi)
+                                    <tr role="button" data-href="{{ route('front.product', ['slug' => $oi->Product()->slug]) }}" class="hover:text-blue-500">
+                                        <td class="w-[70px]"><img src="{{ asset('storage/images/products/'. $oi->Product()->cover) }}" width="50px"></td>
+                                        <td>{{ $oi->Product()->title }}</td>
+                                        <td>{{ $oi->product_price }} €</td>
+                                        <td>{{ $oi->quantity }}</td>
+                                        <td class="font-bold">{{ $oi->getTotalLinePrice() }} €</td>
+                                    </tr>
                                 @endforeach
-                            </ul>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

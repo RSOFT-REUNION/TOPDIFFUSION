@@ -8,6 +8,7 @@ use Livewire\Component;
 class FrontMenu extends Component
 {
     public $active_tab = '';
+    public $tab;
 
     public function changeTab($tab)
     {

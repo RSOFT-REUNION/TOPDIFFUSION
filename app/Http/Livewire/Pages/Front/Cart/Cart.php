@@ -6,6 +6,7 @@ use App\Models\ActivityLog;
 use App\Models\MyProduct;
 use App\Models\MyProductPromotion;
 use App\Models\MyProductPromotionItems;
+use App\Models\MyProductStock;
 use App\Models\MyProductSwatch;
 use App\Models\SettingGeneral;
 use App\Models\User;
@@ -42,7 +43,7 @@ class Cart extends Component
             $cartItem->save();
         }
     }
-    
+
     public function minusQuantity($cartId)
     {
         $cartItem = UserCart::find($cartId);
@@ -115,6 +116,7 @@ class Cart extends Component
         }
     }
 
+    // Fonction permettant les chèques à la livraison
     public function initOrderCheck()
     {
         // Format du numéro de document (ex: CM_HOARAU-VAPQR_2023-09-19_FHO87)
@@ -137,21 +139,23 @@ class Cart extends Component
             $cart = UserCart::where('user_id', auth()->user()->id)->get();
             foreach ($cart as $ca)
             {
-                // Récupérer les informations du produit
-                $swatch = MyProductSwatch::where('id', $ca->swatch_id)->first();
+                // met à jour le statut du panier au statut "en attente de paiement"
+                $ca->state = 1;
+                $ca->update();
 
-                // Ajoutes les données en base de données
-                $orderItems = new UserOrderItem;
-                $orderItems->order_id = $order->id;
-                $orderItems->product_id = $ca->product_id;
-                $orderItems->quantity = $ca->quantity;
-                $orderItems->product_swatch_id = $swatch->id;
-                if(auth()->user()->professionnal === 1 && auth()->user()->verified === 1) {
-                    $orderItems->product_price = $swatch->getPriceWithDiscount();
-                } else {
-                    $orderItems->product_price = $swatch->price_ht;
-                }
-                $orderItems->save();
+                // Ajout les informations du panier dans la commande
+                $orderLine = new UserOrderItem;
+                $orderLine->order_id = $order->id;
+                $orderLine->product_id = $ca->product_id;
+                $orderLine->product_swatch_id = $ca->swatch_id;
+                $orderLine->quantity = $ca->quantity;
+                $orderLine->product_price = $ca->getUnitPrice();
+                $orderLine->save();
+
+                // Modification des stocks
+                $product_stock = MyProductStock::where('product_id', $ca->product_id)->first();
+                $product_stock->quantity -= $ca->quantity;
+                $product_stock->update();
             }
         }
 
@@ -161,6 +165,57 @@ class Cart extends Component
         return redirect()->route('front.home');
 
     }
+
+    // Fonction permettant les virements à la livraison
+    public function initOrderBilling()
+    {
+        // Format du numéro de document (ex: CM_HOARAU-VAPQR_2023-09-19_FHO87)
+        $document_number = 'CM_'. auth()->user()->customer_code .'_'. strtoupper(Str::random(5));
+
+        // Création de la commande
+        $order = new UserOrder;
+        $order->user_id = auth()->user()->id;
+        $order->document_number = $document_number;
+        $order->total_product = $this->getQuantityTotal();
+        $order->total_amount = $this->getPriceTotalBlank();
+        $order->payment_type = 3;
+        $order->total_ship = 0; // TODO: Changer afin de rendre cette valeur dynamique
+        if($order->save())
+        {
+            // Enregistrez l'activité de création de commande
+            ActivityLog::logActivity(auth()->user()->id, 'Commande créée', ' vient de passer une commande de ' . $this->getPriceTotalBlank() . ' € via un virement à la livraison');
+
+            // Ajout en base des articles du panier
+            $cart = UserCart::where('user_id', auth()->user()->id)->get();
+            foreach ($cart as $ca)
+            {
+                // met à jour le statut du panier au statut "en attente de paiement"
+                $ca->state = 1;
+                $ca->update();
+
+                // Ajout les informations du panier dans la commande
+                $orderLine = new UserOrderItem;
+                $orderLine->order_id = $order->id;
+                $orderLine->product_id = $ca->product_id;
+                $orderLine->product_swatch_id = $ca->swatch_id;
+                $orderLine->quantity = $ca->quantity;
+                $orderLine->product_price = $ca->getUnitPrice();
+                $orderLine->save();
+
+                // Modification des stocks
+                $product_stock = MyProductStock::where('product_id', $ca->product_id)->first();
+                $product_stock->quantity -= $ca->quantity;
+                $product_stock->update();
+            }
+        }
+
+        $my_cart = UserCart::where('user_id', auth()->user()->id)->first();
+        $my_cart->delete();
+
+        return redirect()->route('front.home');
+
+    }
+
 
     // Initialise la commande par rapport au panier
     public function initOrder()
@@ -269,7 +324,7 @@ class Cart extends Component
     }
 
     public $applicablePromotions = [];
-    
+
     public function getApplicablePromotions()
 {
     // Supposons que la méthode active() dans le modèle MyProductPromotion retourne toutes les promotions actives
@@ -318,7 +373,7 @@ public function getTotalPriceBlank()
         $product = $item->product;
         $originalPrice = $item->getTotalPriceLineBlank(); // Assurez-vous que cette méthode renvoie le prix total sans réduction
         $promotion = $this->findPromotionForProduct($product);
-        
+
         if ($promotion) {
             $price += $this->applyPromotion($originalPrice, $promotion);
         } else {
@@ -345,6 +400,22 @@ public function getTotalPriceBlank()
         return $totalTax;
     }
 
+    public function getTotalDiscount()
+    {
+        $cartItems = UserCart::where('user_id', auth()->user()->id)->get();
+        $price = 0.0;
+
+        foreach ($cartItems as $item) {
+            $product = $item->product;
+            $originalPrice = $item->getTotalPriceSpend(); // Assurez-vous que cette méthode renvoie le prix total sans réduction
+
+            if ($originalPrice) {
+                $price += $originalPrice;
+            }
+        }
+
+    }
+
     public function render()
     {
         $data = [];
@@ -354,6 +425,7 @@ public function getTotalPriceBlank()
         $data['total_tax'] = $this->getTotalTax();
         $data['user_address'] = UserAddress::where('user_id', auth()->user()->id)->get();
         $data['shipping'] = $this->getShippingPriceFormat();
+        $data['total_discount'] = $this->getTotalDiscount();
         return view('livewire.pages.front.cart.cart', $data);
     }
 }
