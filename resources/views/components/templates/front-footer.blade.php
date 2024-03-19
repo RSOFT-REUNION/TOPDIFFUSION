@@ -65,7 +65,7 @@
     <div class="entry-bottom">
         <div class="flex items-center">
             <div class="flex-1">
-                <p>TOP DIFFUSION - 2024 | Crée par RSOFT REUNION. Tous droits réservés.</p>
+                <p>TOP DIFFUSION - 2024 | Créé par RSOFT REUNION. Tous droits réservés.</p>
             </div>
             <div class="flex-none inline-flex items-center">
                 <!-- PAYMENT METHOD -->
