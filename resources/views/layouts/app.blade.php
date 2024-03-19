@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
     <title>Top diffusion</title>
+    <link rel="icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon"/>
     <!-- METAS -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
