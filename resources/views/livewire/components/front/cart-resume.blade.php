@@ -9,7 +9,10 @@
                                 <img src="{{ asset('storage/images/products/'. $cart->getProduct()->cover) }}" width="100px">
                                 <div class="ml-2">
                                     <h2 class="font-bold">{{ $cart->getProduct()->title }}</h2>
-                                    <p class="text-sm text-gray-500">Référence: {{ $cart->getSwatches()->ugs }}</p>
+                                    <p class="text-sm text-gray-500">Référence: @if($cart->getProduct()->type == 1) {{ $cart->getSwatches()->ugs }} @else {{ $cart->getSwatches()->ugs.'-'.$cart->getSwatches()->ugs_swatch }} @endif</p>
+                                    @if($cart->getProduct()->type != 1)
+                                        <p class="text-sm">{{ $cart->getGroupSwatch()->title }} : {{ $cart->getTagSwatch()->title }}</p>
+                                    @endif
                                 </div>
                             </div>
                             <div class="flex-none inline-flex items-center">

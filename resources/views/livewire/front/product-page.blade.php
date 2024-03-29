@@ -183,6 +183,35 @@
                                 @endif
                             @endif
                         @endif
+                    @elseif($product->type == 4)
+
+                        {{-- S'il s'agit d'un pneu --}}
+                        {{-- TODO: Pour le moment sous forme de tableau, il va falloir faire en sorte de pouvoir les sélectionner lorsqu'il y en a plusieurs --}}
+                        <h2 class="mb-1 font-bold">Information sur le pneu</h2>
+                        <div class="table-box-outline my-2">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>Position</th>
+                                    <th>Largeur</th>
+                                    <th>Hauteur</th>
+                                    <th>Diamètre</th>
+                                    <th>Charge</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($product_swatches as $swatch)
+                                        <tr>
+                                            <td class="uppercase">{{ $swatch->tire_position }}</td>
+                                            <td>{{ $swatch->tire_width }}</td>
+                                            <td>{{ $swatch->tire_height }}</td>
+                                            <td>{{ $swatch->tire_diameter }}</td>
+                                            <td>{{ $swatch->tire_charge }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
 
                     @endif
                 </div>
@@ -212,7 +241,9 @@
                                 <div class="border border-gray-100 rounded-lg mr-3">
                                     <button wire:click="minusQuantity" type="button" class="pr-1 pl-2 hover:text-secondary"><i class="fa-solid fa-minus"></i></button>
                                     <input type="number" min="1" max="" value="{{ $quantity }}" wire:model="quantity" class="p-2 w-[50px] text-center font-bold text-xl appearance-none outline-none">
-                                    <button wire:click="addQuantity" type="button" class="pl-1 pr-2 hover:text-secondary"><i class="fa-solid fa-plus"></i></button>
+                                    @if($quantity < $product_stock)
+                                        <button wire:click="addQuantity" type="button" class="pl-1 pr-2 hover:text-secondary"><i class="fa-solid fa-plus"></i></button>
+                                    @endif
                                 </div>
                                 <input type="submit" class="btn-secondary" value="Ajouter au panier">
                             @endif

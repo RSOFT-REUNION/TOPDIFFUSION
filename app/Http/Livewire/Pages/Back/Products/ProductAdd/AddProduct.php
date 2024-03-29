@@ -161,11 +161,11 @@ class AddProduct extends Component
                     $swatch->ugs_swatch = $ts->ugs_swatch;
                     $swatch->product_id = $product->id;
                     $swatch->type = '4';
-                    $swatch->tire_position = $ts->position;
-                    $swatch->tire_width = $ts->width;
-                    $swatch->tire_height = $ts->height;
-                    $swatch->tire_diameter = $ts->diameter;
-                    $swatch->tire_charge = $ts->indice;
+                    $swatch->tire_position = $ts->tire_position;
+                    $swatch->tire_width = $ts->tire_width;
+                    $swatch->tire_height = $ts->tire_height;
+                    $swatch->tire_diameter = $ts->tire_diameter;
+                    $swatch->tire_charge = $ts->tire_charge;
                     $swatch->price_ht = $ts->price_ht;
                     $swatch->price_ttc = $ts->price_ttc;
                     $swatch->have_tva = $ts->have_tva;

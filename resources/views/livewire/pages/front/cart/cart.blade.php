@@ -23,7 +23,10 @@
                                     <img src="{{ asset('storage/images/products/'. $cart->getProduct()->cover) }}" width="100px" class="rounded-lg">
                                     <div class="ml-3">
                                         <h3 class="text-xl font-bold">{{ $cart->getProduct()->title }}</h3>
-                                        <p class="text-sm text-gray-500">UGS: {{ $cart->getSwatches()->ugs }}</p>
+                                        <p class="text-sm text-gray-500">UGS: @if($cart->getProduct()->type == 1) {{ $cart->getSwatches()->ugs }} @else {{ $cart->getSwatches()->ugs.'-'.$cart->getSwatches()->ugs_swatch }} @endif</p>
+                                        @if($cart->getProduct()->type != 1)
+                                            <p class="">{{ $cart->getGroupSwatch()->title }} : {{ $cart->getTagSwatch()->title }}</p>
+                                        @endif
                                     </div>
                                 </div>
                             </td>
