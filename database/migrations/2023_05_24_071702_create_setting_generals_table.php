@@ -29,6 +29,8 @@ return new class extends Migration
             $table->string('social_twitter')->nullable();
             $table->string('social_youtube')->nullable();
             $table->string('social_linkedin')->nullable();
+            $table->double('shipping_price')->nullable();
+            $table->double('shipping_limit')->nullable();
             $table->timestamps();
         });
     }
