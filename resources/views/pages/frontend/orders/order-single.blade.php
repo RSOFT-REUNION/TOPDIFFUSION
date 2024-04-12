@@ -29,10 +29,9 @@
                                 {{ $order->Address()->city }} - {{ $order->Address()->country }}</p>
                         </div>
                     </div>
-                    <div class="grid grid-cols-3 gap-2">
-                        <button class="bg-red-400 text-white py-3 rounded-md">Régler ma facture (par carte)</button>
-                        <button class="bg-secondary py-3 rounded-md">Télécharger la commande</button>
-                        <button class="bg-secondary py-3 rounded-md">Demande de SAV</button>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button class="bg-secondary py-3 rounded-md duration-300 hover:bg-primary hover:text-white">Télécharger la commande</button>
+                        <button class="bg-secondary py-3 rounded-md duration-300 hover:bg-primary hover:text-white">Demande de SAV</button>
                     </div>
                     <h2 class="text-xl font-bold">Produits dans la commande</h2>
                     <div class="table-box-outline mt-2">
