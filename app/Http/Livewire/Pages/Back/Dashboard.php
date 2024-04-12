@@ -33,7 +33,7 @@ class Dashboard extends Component
     {
         // Obtenez les ventes pour la semaine actuelle
         $currentWeekData = UserOrderItem::selectRaw('COUNT(*) as total_sales')
-            ->whereRaw('strftime("%Y-%W", created_at) = strftime("%Y-%W", date("now"))')
+            ->whereRaw('DATE_FORMAT(created_at, "%Y-%U") = DATE_FORMAT(NOW(), "%Y-%U")')
             ->first();
 
         return $currentWeekData;
@@ -43,7 +43,7 @@ class Dashboard extends Component
     {
         // Obtenir le nombre de produits créés ce mois-ci
         $currentMonthData = MyProduct::selectRaw('COUNT(*) as total_productCreated')
-            ->whereRaw('strftime("%Y-%m", created_at) = strftime("%Y-%m", date("now"))')
+            ->whereRaw('DATE_FORMAT(created_at, "%Y-%m") = DATE_FORMAT(NOW(), "%Y-%m")')
             ->first();
 
         return $currentMonthData;
@@ -53,7 +53,7 @@ class Dashboard extends Component
     {
         // Obtenir le nombre de nouveaux comptes créer ce mois-ci
         $newAccount = User::selectRaw('COUNT(*) as total_new_account')
-            ->whereRaw('strftime("%Y-%m", created_at) = strftime("%Y-%m", date("now"))')
+            ->whereRaw('DATE_FORMAT(created_at, "%Y-%m") = DATE_FORMAT(NOW(), "%Y-%m")')
             ->first();
 
         return $newAccount;
@@ -64,7 +64,7 @@ class Dashboard extends Component
         // Obtenir le produit le plus vendu ce mois-ci
         $productMoreSold = UserOrderItem::selectRaw('my_products.title as product_name, COUNT(*) as total_sales')
             ->join('my_products', 'user_order_items.product_id', '=', 'my_products.id')
-            ->whereRaw('strftime("%Y-%m", user_order_items.created_at) = strftime("%Y-%m", date("now"))')
+            ->whereRaw('DATE_FORMAT(user_order_items.created_at, "%Y-%m") = DATE_FORMAT(NOW(), "%Y-%m")')
             ->groupBy('user_order_items.product_id')
             ->orderByDesc('total_sales')
             ->first();
