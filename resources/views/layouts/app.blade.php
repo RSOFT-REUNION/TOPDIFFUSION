@@ -51,21 +51,14 @@
         </div>
     </div>
     <div class="ordinateur">
-        @if($settingGlobal->development_mode == 1)
+        {{-- @if($settingGlobal->development_mode == 1)
             <div id="development_box">
                 <p><i class="fa-brands fa-dev mr-3"></i>Mode développement</p>
             </div>
-        @endif
+        @endif --}}
         @include('components.flash-messages')
         @yield('content-app')
     </div>
-    {{-- @if($settingGlobal->development_mode == 1)
-        <div id="development_box">
-            <p><i class="fa-brands fa-dev mr-3"></i>Mode développement</p>
-        </div>
-    @endif
-    @include('components.flash-messages')
-    @yield('content-app') --}}
     <!-- SCRIPTS -->
     @vite('resources/js/functions.js')
     @vite('resources/js/clickable.js')
