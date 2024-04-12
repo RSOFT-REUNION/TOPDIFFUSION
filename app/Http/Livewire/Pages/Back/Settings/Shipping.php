@@ -19,6 +19,8 @@ class Shipping extends Component
     public $conctactPhone;
     public $conctactEmail;
 
+
+
     protected $listeners = ['refreshLines' => '$refresh'];
 
     public function mount()
@@ -70,7 +72,7 @@ class Shipping extends Component
         };
     }
 
-    public function deleteRelayPoint($id) 
+    public function deleteRelayPoint($id)
     {
         try {
             $selectRelay = RelaisPoint::where('id', $id)->first();
@@ -85,7 +87,7 @@ class Shipping extends Component
             session()->flash('error', 'Error occurred: ' . $e->getMessage());
         }
     }
-    
+
 
     public $selectedRelay = null;
 
