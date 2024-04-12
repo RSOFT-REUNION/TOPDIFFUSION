@@ -8,7 +8,7 @@
         <div class="flex flex-row justify-between items-center border-b border-b-gray-200 pb-4">
             <div>
                 <h2 class="font-medium mb-1">Adresse e-mail principale</h2>
-                <p class="text-[13px] text-[#808080]">Cette adresse e-mail sera visible sur votre site pour tout les utilisateurs</p>
+                <p class="text-[13px] text-[#808080]">Cette adresse e-mail sera visible sur votre site pour tous les utilisateurs</p>
             </div>
             <form wire:submit.prevent="updateMainEmail" class="inline-flex items-center">
                 @csrf
