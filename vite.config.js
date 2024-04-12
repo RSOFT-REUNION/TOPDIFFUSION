@@ -11,7 +11,8 @@ export default defineConfig({
                 'resources/scss/responsive.scss',
                 'resources/js/app.js',
                 'resources/js/clickable.js',
-                'resources/js/functions.js'
+                'resources/js/functions.js',
+                'resources/js/tinyMCE.js',
             ],
             refresh: true,
         }),
