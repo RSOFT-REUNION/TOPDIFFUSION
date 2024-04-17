@@ -32,8 +32,8 @@ class Dashboard extends Component
     public function salesPerWeek()
     {
         // Obtenez les ventes pour la semaine actuelle
-        $currentWeekData = UserOrderItem::selectRaw('COUNT(*) as total_sales')
-            ->whereRaw('DATE_FORMAT(created_at, "%Y-%U") = DATE_FORMAT(NOW(), "%Y-%U")')
+        $currentWeekData = UserOrderItem::count('total_sales')
+        ->whereMonth('created_at', now()->month)
             ->first();
 
         return $currentWeekData;
@@ -42,8 +42,8 @@ class Dashboard extends Component
     public function productCreateThisMonth()
     {
         // Obtenir le nombre de produits créés ce mois-ci
-        $currentMonthData = MyProduct::selectRaw('COUNT(*) as total_productCreated')
-            ->whereRaw('DATE_FORMAT(created_at, "%Y-%m") = DATE_FORMAT(NOW(), "%Y-%m")')
+        $currentMonthData = MyProduct::count('total_productCreated')
+        ->whereMonth('created_at', now()->month)
             ->first();
 
         return $currentMonthData;
@@ -52,8 +52,8 @@ class Dashboard extends Component
     public function newAccountCreatedThisMonth ()
     {
         // Obtenir le nombre de nouveaux comptes créer ce mois-ci
-        $newAccount = User::selectRaw('COUNT(*) as total_new_account')
-            ->whereRaw('DATE_FORMAT(created_at, "%Y-%m") = DATE_FORMAT(NOW(), "%Y-%m")')
+        $newAccount = User::count('total_new_account')
+            ->whereMonth('created_at', now()->month)
             ->first();
 
         return $newAccount;
@@ -62,15 +62,23 @@ class Dashboard extends Component
     public function productMoreSold()
     {
         // Obtenir le produit le plus vendu ce mois-ci
-        $productMoreSold = UserOrderItem::selectRaw('my_products.title as product_name, COUNT(*) as total_sales')
+        //     $productMoreSold = UserOrderItem::selectRaw('my_products.title as product_name, COUNT(*) as total_sales')
+        //     ->join('my_products', 'user_order_items.product_id', '=', 'my_products.id')
+        //     ->whereRaw('DATE_FORMAT(user_order_items.created_at, "%Y-%m") = DATE_FORMAT(NOW(), "%Y-%m")')
+        //     ->groupBy('user_order_items.product_id')
+        //     ->orderByDesc('total_sales')
+        //     ->first();
+
+
+            return UserOrderItem::query()
             ->join('my_products', 'user_order_items.product_id', '=', 'my_products.id')
-            ->whereRaw('DATE_FORMAT(user_order_items.created_at, "%Y-%m") = DATE_FORMAT(NOW(), "%Y-%m")')
-            ->groupBy('user_order_items.product_id')
+            ->select('my_products.title as product_name')
+            ->count('total_sales')
+            ->whereYear('user_order_items.created_at', now()->year)
+            ->whereMonth('user_order_items.created_at', now()->month)
             ->orderByDesc('total_sales')
             ->first();
 
-//        dd($productMoreSold);
-        return $productMoreSold;
     }
 
     public function averagePurchase()

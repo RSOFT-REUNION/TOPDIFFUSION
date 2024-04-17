@@ -204,7 +204,7 @@ class GroupeUser extends Component
             ->whereNotExists(function ($query) {
                 $query->select(DB::raw(1))
                     ->from('customer_group_user')
-                    ->whereRaw('customer_group_user.user_id = users.id');
+                    ->where('customer_group_user.user_id', 'users.id');
             })
             ->get();
         // Récupérez les utilisateurs ayant une relation avec le groupe actuel
