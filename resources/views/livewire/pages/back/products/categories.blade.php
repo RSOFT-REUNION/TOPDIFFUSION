@@ -5,11 +5,11 @@
         </div>
         <div class="flex-none inline-flex items-center">
             <a wire:click="$emit('openModal', 'popups.back.products.import-categories')" class="btn-icon mr-2 cursor-pointer"><i class="fa-solid fa-file-import"></i></a>
-            @if($userSetting->product_categories_show == 1)
+            {{-- @if($userSetting->product_categories_show == 1) --}}
                 <a wire:click="changeShow" class="btn-icon mr-2 cursor-pointer" title="Affichage sous forme de tableaux"><i class="fa-solid fa-table"></i></a>
-            @else
+            {{-- @else --}}
                 <a wire:click="changeShow" class="btn-icon mr-2 cursor-pointer" title="Affichage sous forme de liste"><i class="fa-solid fa-list"></i></a>
-            @endif
+            {{-- @endif --}}
             <a wire:click="$emit('openModal', 'pages.back.products.popup-add-category')" class="btn-secondary cursor-pointer"><i class="fa-solid fa-plus mr-3"></i>Ajouter une catégorie</a>
             @if($categories->count() > 0)
                 <p class="ml-2 text-tag-count">{{ $categories->count() }}</p>
@@ -18,7 +18,7 @@
     </div>
     <div id="entry-content">
         @if($categories->count() > 0)
-            @if($userSetting->product_categories_show == 1)
+            {{-- @if($userSetting->product_categories_show == 1) --}}
                 <ul>
                     @foreach($categories_1 as $cat1)
                     <li class="@if($cat1->level === 2) ml-5 border-l-2 border-amber-400 pl-3 @elseif($cat1->level === 3) ml-10 border-l-2 border-gray-400 pl-3 @endif">
@@ -107,8 +107,8 @@
                     {{ $categories_table->links() }}
                 </div>
             @endif
-        @else
-            <p class="empty-text">Vous n'avez pas encore ajouté de catégories</p>
-        @endif
+        {{-- @else --}}
+            {{-- <p class="empty-text">Vous n'avez pas encore ajouté de catégories</p> --}}
+        {{-- @endif --}}
     </div>
 </div>

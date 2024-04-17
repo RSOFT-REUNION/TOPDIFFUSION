@@ -12,7 +12,7 @@
                     <option value="">-- Sélectionner un type --</option>
                     <option value="1">Produit simple</option>
                     <option value="2">Produit variable</option>
-                    <option value="3">Eléments kit chaine</option>
+                    {{-- <option value="3">Eléments kit chaine</option> --}}
                     <option value="4">Pneus</option>
                 </select>
                 @if($errors->has('type'))
@@ -21,7 +21,7 @@
             </div>
 
             {{-- Si le type de produit est un élément de kit chaine --}}
-            @if($type == 3)
+            {{-- @if($type == 3)
                 <div class="textfield mt-2">
                     <label for="kit_type">Element concernée</label>
                     <select wire:model="kit_type" id="kit_type" class="@if($errors->has('kit_type')) input-error @endif">
@@ -34,7 +34,7 @@
                         <p class="text-error">{{ $errors->first('kit_type') }}</p>
                     @endif
                 </div>
-            @endif
+            @endif --}}
 
             {{-- Image du produit --}}
             <div class="textfield mt-2">
@@ -44,14 +44,14 @@
                     <p class="text-error">{{ $errors->first('cover') }}</p>
                 @endif
             </div>
-            <div class="flex items-center mt-2">
+            {{-- <div class="flex items-center mt-2">
                 <div class="flex-1 bg-blue-100 rounded-l-md px-2 py-0.5 border border-blue-200">
                     <p class="text-sm">Il est conseillé de recharger votre page.</p>
                 </div>
                 <div class="flex-none">
                     <button wire:click="refresh" class="bg-blue-100 text-sm rounded-r-md px-5 py-0.5 border border-blue-200 hover:bg-blue-400 hover:text-white duration-300">Recharger</button>
                 </div>
-            </div>
+            </div> --}}
 
             <hr class="my-3 border-gray-200">
             <div class="textfield">

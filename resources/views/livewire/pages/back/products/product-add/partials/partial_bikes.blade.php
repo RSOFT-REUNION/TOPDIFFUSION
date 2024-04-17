@@ -2,8 +2,8 @@
     {{-- Ajout de motos --}}
     <div class="flex items-center bg-gray-100 px-5 py-3 rounded-md">
         <div class="flex-1">
-            <h2 class="font-bold">Ajouter de nouvelles motos</h2>
-            <p class="text-sm text-gray-500">Sélectionnez parmi la liste des motos les motos qui sont compatibles avec votre produit</p>
+            <h2 class="font-bold">Ajouter des motos compatibles</h2>
+            <p class="text-sm text-gray-500">Sélectionnez parmis la liste des motos celles qui sont compatibles avec votre produit</p>
         </div>
         <div class="flex-none">
             <button wire:click="$emit('openModal', 'popups.back.products.product-add.add-bikes', {{ json_encode(['product_temp_id' => $product->id]) }})" type="button" class="bg-secondary px-3 py-2 rounded-md">Ajouter des motos</button>
