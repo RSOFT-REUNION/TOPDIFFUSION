@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -19,7 +20,7 @@ class UserSeeder extends Seeder
             'customer_code' => 'admin',
             'firstname' => 'admin',
             'lastname' => 'admin',
-            'email' => 'admin@rsoft.re',
+            'email' => 'dev@rsoft.re',
             'password' => Hash::make('password'),
             'verified' => 1,
             'rsoft_team' => 1,
