@@ -12,7 +12,7 @@
 
     <div class="container mx-auto">
         {{-- Ajout du block pour la création d'un Kit Chaine --}}
-        <div class="mt-2 h-[300px] relative rounded-xl bg-no-repeat bg-cover overflow-hidden" style="background-image: url('{{ asset('img/background/Pignons Motorbikes.jpg') }}')">
+        {{-- <div class="mt-2 h-[300px] relative rounded-xl bg-no-repeat bg-cover overflow-hidden" style="background-image: url('{{ asset('img/background/Pignons Motorbikes.jpg') }}')">
             <div class="flex items-center h-full">
                 <div class="flex-1 text-white w-1/2 pl-20 pr-10 py-10 h-full bg-gradient-to-r from-black">
                     <h2 class="font-bold text-3xl drop-shadow">Configurer votre kit chaine</h2>
@@ -22,7 +22,7 @@
             </div>
 
         </div>
-    </div>
+    </div> --}}
 
     {{-- <div class="hero-banner" style="background-image: url({{ asset('img/medias/slide-1-hero.jpg') }})">
         <div class="container m-auto">
