@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Http\Livewire\Pages\Back\Products\Brands;
 use Illuminate\Database\Seeder;
 
 use Illuminate\Support\Facades\Hash;
@@ -16,6 +18,10 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             UserSeeder::class,
+            ProductCategorySeeder::class,
+            BikesSeeder::class,
+            BrandsSeeder::class,
+            ProductSeeder::class,
         ]);
 
 
