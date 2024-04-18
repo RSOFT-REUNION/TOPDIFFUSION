@@ -46,9 +46,9 @@
             @livewire('components.template.front-menu')
         </div>
     </div>
-    <div class="entry-bottom">
+    {{-- <div class="entry-bottom">
         <div class="container mx-auto flex flex-row justify-center items-center">
             @livewire('components.template.front-filters', ['page' => $page])
         </div>
-    </div>
+    </div> --}}
 </div>
