@@ -16,7 +16,7 @@
             <div class="bg-white p-5 flex flex-col justify-center gap-y-5 rounded-lg">
                 <h2 class="text-gray-500">Nombre de vente</h2>
                 <div class="flex flex-row items-end">
-                    <h3 class="font-bold mr-2 text-2xl">{{ $sales['total_sales'] }}</h3>
+                    {{-- <h3 class="font-bold mr-2 text-2xl">{{ $sales['total_sales'] }}</h3> --}}
                     <span class="pb-0.5">Cette semaine</span>
                 </div>
 {{--                <div class="text-green-500">--}}
@@ -26,7 +26,7 @@
             <div class="bg-white p-5 flex flex-col justify-center gap-y-5 rounded-lg">
                 <h2 class="text-gray-500">Nombre de produits créés</h2>
                 <div class="flex flex-row items-end">
-                    <h3 class="font-bold mr-2 text-2xl">{{ $productCreated['total_productCreated'] }}</h3>
+                    {{-- <h3 class="font-bold mr-2 text-2xl">{{ $productCreated['total_productCreated'] }}</h3> --}}
                     <span class="pb-0.5">Ce mois-ci</span>
                 </div>
 {{--                <div class="text-green-500">--}}
@@ -355,7 +355,7 @@
             <div class="bg-white p-5 flex flex-col justify-center gap-y-5 rounded-lg">
                 <h2 class="text-gray-500">Nombre de nouveau compte</h2>
                 <div class="flex flex-row items-end">
-                    <h3 class="font-bold mr-2 text-2xl">{{ $newAccountCreated['total_new_account'] }}</h3>
+                    {{-- <h3 class="font-bold mr-2 text-2xl">{{ $newAccountCreated['total_new_account'] }}</h3> --}}
                     <span class="pb-0.5">Ce mois-ci</span>
                 </div>
 {{--                <div class="text-red-500">--}}
@@ -366,11 +366,11 @@
                 <h2 class="text-gray-500">Meilleure vente</h2>
                 <div class="flex flex-row items-end">
                     <h3 class="font-bold mr-2 text-2xl">
-                        @if(isset($productMoreSold['product_name']))
+                        {{-- @if(isset($productMoreSold['product_name']))
                             {{ strlen($productMoreSold['product_name']) > 7 ? substr($productMoreSold['product_name'], 0, 7) . '...' : $productMoreSold['product_name'] }}
                         @else
                             Pas de produit
-                        @endif
+                        @endif --}}
                     </h3>
 
                     <span class="pb-0.5">Ce mois-ci</span>
@@ -399,7 +399,7 @@
                 </div>
             </div>
             @foreach($activityLog as $log)
-                <div class="{{ $log->getActivityColor() }} flex flex-row justify-center items-center rounded-lg">
+                {{-- <div class="{{ $log->getActivityColor() }} flex flex-row justify-center items-center rounded-lg">
                     <h3 class="py-5">
                         @if ($log->user)
                             {{ $log->user->firstname }} {{ $log->user->lastname }}
@@ -407,7 +407,7 @@
                         <span class="font-bold">{{ $log->activity_description }}</span>
                         <span>{{ $log->created_at->diffForHumans() }}</span>
                     </h3>
-                </div>
+                </div> --}}
             @endforeach
         </div>
     </div>
