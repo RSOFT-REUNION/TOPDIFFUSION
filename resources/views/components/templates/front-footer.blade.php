@@ -13,7 +13,7 @@
                 <div>
                     <h2>Liens rapides</h2>
                     <ul class="mt-7">
-                        <li>Liste des produits</li>
+                        <li><a href="{{ route('front.product-all') }}">Liste des produits</a></li>
                         @if (auth()->guest())
                             <li>Connexion à mon compte</li>
                             <li>Inscription</li>
