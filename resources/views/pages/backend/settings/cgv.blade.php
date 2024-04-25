@@ -6,7 +6,7 @@
             @csrf
             <div id="entry-header" class="flex items-center mb-10">
                 <div class="flex-1">
-                    <h1>À Propos</h1>
+                    <h1>Conditions Générales de Vente</h1>
                 </div>
                 <div class="flex-none inline-flex items-center">
                         <button type="submit" class="btn-secondary cursor-pointer"><i

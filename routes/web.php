@@ -58,6 +58,7 @@ Route::group([
     Route::get('/favoris/{sort?}', [FrontController::class, 'showFavorite'])->name('front.favorite');
     Route::get('/a-propos', [FrontController::class, 'showAbout'])->name('front.about');
     Route::get('/politique-de-confidentialite', [FrontController::class, 'showConfidential'])->name('front.confidential');
+    Route::get('/conditions-generales-de-vente', [FrontController::class, 'showCGV'])->name('front.cgv');
     Route::get('/informations-legals', [FrontController::class, 'showLegal'])->name('front.legal');
     Route::get('/faq', [FrontController::class, 'showFaq'])->name('front.faq');
     Route::get('/mon-panier', [CartController::class, 'showCart'])->name('front.cart');
@@ -103,6 +104,8 @@ Route::group([
             Route::post('/informations-legales', [LegalController::class, 'postLegal'])->name('post.legal');
             Route::get('/politique-de-confidentialite', [LegalController::class, 'showConfidential'])->name('confidential');
             Route::post('/politique-de-confidentialite', [LegalController::class, 'postConfidential'])->name('post.confidential');
+            Route::get('/conditions-generales-de-vente', [LegalController::class, 'showCGV'])->name('cgv');
+            Route::post('/conditions-generales-de-vente', [LegalController::class, 'postCGV'])->name('post.cgv');
             Route::get('/faq', [LegalController::class, 'showFaq'])->name('faq');
             Route::post('/faq', [LegalController::class, 'postFaq']);
         });

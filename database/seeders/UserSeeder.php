@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
             'customer_code' => 'RSOFT',
             'firstname' => 'admin',
             'lastname' => 'admin',
-            'email' => 'dev@rsoft.re',
+            'email' => 'admin@rsoft.re',
             'password' => Hash::make('password'),
             'verified' => 1,
             'rsoft_team' => 1,

@@ -102,6 +102,33 @@ class LegalController extends Controller
         }
     }
 
+    public function showCGV()
+    {
+        $data = [];
+        $data['group'] = 'legal';
+        $data['page'] = 'cgv';
+        $data['pageContent'] = Pages::where('key', 'cgv')->first();
+        return view('pages.backend.settings.cgv', $data);
+    }
+
+    public function postCGV(Request $request)
+    {
+        $page = Pages::where('key', 'cgv')->first();
+        if ($page) {
+            $page->content = $request->page_content;
+            if ($page->update()) {
+                return redirect()->route('cgv');
+            }
+        } else {
+            $p = new Pages;
+            $p->key = 'cgv';
+            $p->content = $request->page_content;
+            if ($p->save()) {
+                return redirect()->route('cgv');
+            }
+        }
+    }
+
     public function showFaq()
     {
         $data = [];

@@ -1,4 +1,4 @@
-@if ($page !== 'about' && $page !== 'faq' && $page !== 'confidential' && $page !== 'legal' && $page !== 'produit')
+@if ($page !== 'about' && $page !== 'faq' && $page !== 'confidential' && $page !== 'cgv' && $page !== 'legal' && $page !== 'produit')
     <div class="front-filters inline-flex items-center">
         <object data="{{ asset('img/icons/motorcycle-of-big-size-black-silhouette.svg') }}" width="40px" class="mr-5"></object>
 

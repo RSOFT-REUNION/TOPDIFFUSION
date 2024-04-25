@@ -310,6 +310,26 @@ class FrontController extends Controller
         return view('pages.frontend.legal.confidential', $data);
     }
 
+
+    public function showCGV()
+    {
+        $page_date = Pages::where('key', 'cgv')->first();
+        $data = [];
+        if ($page_date) {
+            Carbon::setLocale('fr');
+            $date = Carbon::parse($page_date->created_at);
+            $month = ucfirst($date->isoFormat('MMMM'));
+            $year = $date->isoFormat('YYYY');
+            $formattedDate = "$month $year";
+            $data['formattedDate'] = $formattedDate;
+        }
+        $data['group'] = 'legal';
+        $data['page'] = 'cgv';
+        $data['setting'] = SettingGeneral::where('id', 1)->first();
+        $data['pageContent'] = Pages::where('key', 'cgv')->first();
+        return view('pages.frontend.legal.cgv', $data);
+    }
+
     public function showFaq()
     {
         $data = [];
