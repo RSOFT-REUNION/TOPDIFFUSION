@@ -28,7 +28,7 @@
                     <li><a href="{{ route('legal') }}" class="btn-sidebar @if ($page == 'legal') btn-sidebar-active @endif">Mentions Légales</a></li>
                     <li><a href="{{ route('confidential') }}" class="btn-sidebar @if ($page == 'confidential') btn-sidebar-active @endif">Politique De Confidentialité</a></li>
                     <li><a href="{{ route('cgv') }}" class="btn-sidebar @if ($page == 'cgv') btn-sidebar-active @endif">Conditions Générales de Vente</a></li>
-                    <li><a href="{{ route('faq') }}" class="btn-sidebar @if ($page == 'faq') btn-sidebar-active @endif">FAQ</a></li>
+                    {{-- <li><a href="{{ route('faq') }}" class="btn-sidebar @if ($page == 'faq') btn-sidebar-active @endif">FAQ</a></li> --}}
                 </ul>
             @elseif($group == 'products')
                 <!-- Products menus -->

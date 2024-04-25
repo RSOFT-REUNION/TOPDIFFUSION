@@ -4,8 +4,8 @@
             <h1>Réglages généraux</h1>
         </div>
         <div class="flex-none inline-flex items-center">
-            <p class="mr-2 {{$maintenanceState == 1 ? "text-green-700 bg-green-100" : "text-red-700 bg-red-100"}} px-2 py-1 rounded-lg">{{$maintenanceState == 1 ? "Site actif" : "Site inactif"}}</p>
-            <a wire:click="$emit('openModal', 'pages.back.products.popup-add-product')" class="btn-secondary cursor-pointer">Envoyer des commentaires</a>
+            <p class="mr-2 {{$maintenanceState == 1 ? "text-red-700 bg-red-100" : "text-green-700 bg-green-100" }} px-2 py-1 rounded-lg">{{$maintenanceState == 1 ? "Site inactif" : "Site actif"}}</p>
+            {{-- <a wire:click="$emit('openModal', 'pages.back.products.popup-add-product')" class="btn-secondary cursor-pointer">Envoyer des commentaires</a> --}}
         </div>
     </div>
     <div id="entry-content">

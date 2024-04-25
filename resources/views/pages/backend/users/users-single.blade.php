@@ -29,7 +29,7 @@
                 <div class="flex">
                     <div class="flex-1 mt-3 mr-2">
                         <div>
-                            <h2 class="subtitle">Information sur le client</h2>
+                            <h2 class="subtitle">Informations sur le client</h2>
                             <div class="flex mt-3">
                                 <div class="flex-1 mr-2">
                                     <div class="text-input">
@@ -69,7 +69,7 @@
                         </div>
                         @if ($user->professionnal)
                             <div class="mt-4 border-t border-gray-100 pt-2">
-                                <h2 class="subtitle">Information sur l'entreprise</h2>
+                                <h2 class="subtitle">Informations sur l'entreprise</h2>
                                 <div class="flex mt-3">
                                     <div class="flex-1 mr-2">
                                         <div class="text-input">
@@ -139,7 +139,7 @@
                                     </table>
                                 </div>
                             @else
-                                <p class="empty-text mt-2">Le client n'a pas encore renseigné d'adresse.</p>
+                                <p class="empty-text mt-2">Le client n'a pas encore renseigné d'adresse</p>
                             @endif
                         </div>
                     </div>
