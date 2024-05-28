@@ -1,0 +1,1 @@
+<button class="btn-primary {{$class}}" wire:loading.attr="disabled" wire:loading.class="btn-submit-disabled"><i wire:loading.delay.shorter class="fa-duotone fa-spinner-third mr-3 fa-spin"></i>{{ $label }} @if($icon)<i class="ml-3 fa-solid fa-{{ $icon }}"></i>@endif</button>
