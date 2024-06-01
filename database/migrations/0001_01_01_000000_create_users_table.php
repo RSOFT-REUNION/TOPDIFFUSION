@@ -51,6 +51,17 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::create('user_addresses', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('address');
+            $table->string('address_bis')->nullable();
+            $table->string('zip_code');
+            $table->string('city');
+            $table->boolean('is_default')->default(0);
+            $table->timestamps();
+        });
+
         Schema::create('user_settings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
@@ -77,7 +88,7 @@ return new class extends Migration
         UserGroup::create(['key' => Str::slug('Particulier'), 'name' => 'Particulier', 'description' => 'Il s\'agit du groupe par défaut', 'discount' => 0.0]);
         User::create([
             'admin' => 1,
-            'type' => 0,
+            'type' => 2,
             'group_id' => 1,
             'code' => 'ADMIN',
             'lastname' => 'Admin',
@@ -98,6 +109,7 @@ return new class extends Migration
         Schema::dropIfExists('user_groups');
         Schema::dropIfExists('user_companies');
         Schema::dropIfExists('user_settings');
+        Schema::dropIfExists('user_addresses');
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');

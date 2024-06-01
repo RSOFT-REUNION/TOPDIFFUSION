@@ -23,4 +23,15 @@ class Bikes extends Model
             return '--';
         }
     }
+
+    // Récupérer le nombre d'utilisateur associé à une moto
+    public function getUserCount()
+    {
+        $count = UserBike::where('bike_id', $this->id)->count();
+        if($count > 0) {
+            return $count;
+        } else {
+            return '--';
+        }
+    }
 }

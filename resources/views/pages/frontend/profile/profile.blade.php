@@ -1,5 +1,5 @@
-@extends('layouts.frontend')
+@extends('pages.frontend.profile.profile-template')
 
-@section('content')
-    TEST
+@section('profile-content')
+    @livewire('frontend.pages.profile.profile')
 @endsection

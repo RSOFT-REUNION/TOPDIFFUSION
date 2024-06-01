@@ -17,7 +17,7 @@
         </div>
         <div class="mt-10 grid grid-cols-4 gap-5">
             @foreach($groups as $group)
-                <div class="bg-slate-100 border rounded-xl flex flex-col group cursor-pointer duration-300 hover:scale-105 hover:bg-white hover:drop-shadow-2xl">
+                <div onclick="Livewire.dispatch('openModal', {component: 'backend.popups.users.edit-group', arguments: { group_id: {{ $group->id }} }} )" class="bg-slate-100 border rounded-xl flex flex-col group cursor-pointer duration-300 hover:scale-105 hover:bg-white hover:drop-shadow-2xl">
                     <div class="p-5 flex-1">
                         <h2 class="font-title font-bold text-xl">{{ $group->name }}</h2>
                         <p class="text-sm text-slate-400">{{ $group->description }}</p>
@@ -34,10 +34,6 @@
                     </div>
                 </div>
             @endforeach
-        </div>
-        <div class="mt-10">
-            <h2 class="font-title font-bold text-xl">Configuration des groupes</h2>
-            @livewire('backend.pages.customers.partials.form-customers-group-otions')
         </div>
     </div>
 @endsection

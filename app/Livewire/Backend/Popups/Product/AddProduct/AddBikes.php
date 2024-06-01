@@ -9,75 +9,106 @@ use LivewireUI\Modal\ModalComponent;
 class AddBikes extends ModalComponent
 {
     use WithPagination;
-    public $search;
+
+    public $kit_brand, $kit_model, $kit_cylinder, $kit_year;
+    public $brands;
+    public $models;
+    public $cylinders;
+    public $years;
+
     public $bike_selected = [];
-    public $checkedBikes = [];
-    public $currentPage = 1;
+
+    protected $listeners = ['addBike'];
 
     public static function modalMaxWidth(): string
     {
         return '6xl';
     }
 
-    public function updatedSearch()
+    public function mount()
     {
-        $query = '%'.$this->search.'%';
-        $brandSearch = [];
-        if(strlen($this->search) > 1) {
-            return Bikes::where('brand', 'like', $query)
-                ->orWhere('model', 'like', $query)
-                ->orWhere('year', 'like', $query)
-                ->orWhere('cylinder', 'like', $query)
-                ->orderBy('brand');
-        }
+        $this->brands = Bikes::groupBy('brand')->pluck('brand');
     }
 
-    public function setNextPage()
+    public function updatedKitBrand($value)
     {
-        $this->currentPage++;
+        $this->cylinders = Bikes::where('brand', $value)
+            ->groupBy('cylinder')
+            ->pluck('cylinder');
+        $this->models = null;
+        $this->years = null;
+        $this->kit_model = null;
+        $this->kit_year = null;
+        $this->kit_cylinder = null;
     }
 
-    public function setPreviousPage()
+    public function updatedKitCylinder($value)
     {
-        $this->currentPage--;
+        $this->models = Bikes::where('brand', $this->kit_brand)
+            ->where('cylinder', $value)
+            ->groupBy('model')
+            ->pluck('model');
+        $this->years = null;
+        $this->kit_model = null;
+        $this->kit_year = null;
     }
 
-    public function selectBikes($value)
+    public function updatedKitModel($value)
     {
-        if (!in_array($value, $this->selectedBikes)) {
-            $this->selectedBikes[] = $value;
-        }
+        $this->years = Bikes::where('brand', $this->kit_brand)
+            ->where('cylinder', $this->kit_cylinder)
+            ->where('model', $value)
+            ->groupBy('year')
+            ->pluck('year');
+        $this->kit_year = null;
     }
 
-    public function saveSelectedBikes()
+    public function submit()
     {
-        dd($this->selectedBikes);
+        $this->validate([
+            'kit_brand' => 'required',
+            'kit_model' => 'required',
+            'kit_cylinder' => 'required',
+            'kit_year' => 'required',
+        ]);
+
+        $good_bike = Bikes::where('brand', $this->kit_brand)
+            ->where('cylinder', $this->kit_cylinder)
+            ->where('model', $this->kit_model)
+            ->where('year', $this->kit_year)
+            ->first();
+
+        $this->bike_selected[] = [
+            'id' => $good_bike->id,
+            'brand' => $good_bike->brand,
+            'model' => $good_bike->model,
+            'cylinder' => $good_bike->cylinder,
+            'year' => $good_bike->year,
+        ];
+
+        $this->kit_brand = null;
+        $this->kit_model = null;
+        $this->kit_cylinder = null;
+        $this->kit_year = null;
+
+        $this->dispatch('addBike', $this->bike_selected);
+
     }
 
-    public function addBike()
+    public function addBikes()
     {
-        // Récupérer la liste des motos sélectionnées dans un tableau
-        $selectedBikes = collect($this->bike_selected)->map(function ($bikeId) {
-            return Bikes::find($bikeId);
-        });
-        $this->dispatch('bikesAdded', $selectedBikes);
-        $this->dispatch('closeModal');
-
+        $this->dispatch('bikesAdded', $this->bike_selected);
+        $this->closeModal();
     }
 
-    public function getBikes()
+    public function deleteBike($index)
     {
-        if(strlen($this->search) > 1) {
-            return $this->updatedSearch()->paginate(30, ['*'], 'page', $this->currentPage);
-        } else {
-            return Bikes::orderBy('brand', 'asc')->paginate(30, ['*'], 'page', $this->currentPage);
-        }
+        unset($this->bike_selected[$index]);
     }
 
     public function render()
     {
         $data = [];
-        $data['bikes'] = $this->getBikes();
         return view('livewire.backend.popups.product.add-product.add-bikes', $data);
     }
 }

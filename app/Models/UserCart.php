@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\ConfigHelper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,6 +25,14 @@ class UserCart extends Model
             $total += $item->productData()->price_unit * $item->quantity;
         }
         return $total;
+    }
+
+    // Avoir le montant des frais de livraison
+    public function getShippingTax()
+    {
+        $total = $this->getCartTotalHT();
+        $taxes = ShippingTaxe::where('max_price', '<=', $total)->latest('max_price')->first()->amount;
+        return $taxes;
     }
 
     // Avoir le montant de la TVA
@@ -52,11 +61,27 @@ class UserCart extends Model
     // Avoir le montant total du produit
     public function getTotalPrice()
     {
+        if(ConfigHelper::getSettings()['shipping']) {
+            // Frais de livraison actif
+            $taxes = 1;
+            $amount = $this->getShippingTax();
+        } else {
+            // Frais de livraison pas actif
+            $taxes = 0;
+        }
         if($this->getGroupDiscount() > 0) {
-            $total = $this->getCartTotalHT() - $this->getGroupDiscount() + $this->getTVA();
+            if($taxes == 1) {
+                $total = $this->getCartTotalHT() - $this->getGroupDiscount() + $this->getTVA() + $amount;
+            } else {
+                $total = $this->getCartTotalHT() - $this->getGroupDiscount() + $this->getTVA();
+            }
             return $total;
         } else {
-            $total = $this->getCartTotalHT() + $this->getTVA();
+            if($taxes == 1) {
+                $total = $this->getCartTotalHT() + $this->getTVA() + $amount;
+            } else {
+                $total = $this->getCartTotalHT() + $this->getTVA();
+            }
             return $total;
         }
     }

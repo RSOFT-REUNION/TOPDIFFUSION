@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Frontend\Components\Templates;
 
+use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\UserCart;
 use Livewire\Component;
@@ -12,6 +13,9 @@ class Header extends Component
     public $prices;
     public $child_categories;
 
+    public $search;
+    public $search_results = [];
+
     protected $listeners = ['cartUpdated'];
 
     public function mount()
@@ -19,6 +23,19 @@ class Header extends Component
         if(auth()->check())
             $this->prices = auth()->user()->settings()->public_price;
     }
+
+    // Système de recherche
+    public function updatedSearch()
+    {
+        $query = '%' . $this->search . '%';
+        if(strlen($this->search) > 2) {
+            $this->search_results = Product::where('name', 'like', $query)
+                ->orWhere('keywords', 'like', $query)
+                ->get()
+                ->take(5);
+        }
+    }
+
     public function categorySelected($id)
     {
         // Recherche les catégories enfant lié et les affiches dans une variable

@@ -87,6 +87,14 @@
                             <p class="font-title">{{ number_format($cart->getTVA(), '2', ',', '') }} €</p>
                         </div>
                     </li>
+                    @if(\App\Helpers\ConfigHelper::getSettings()['shipping'])
+                        <li>
+                            <div class="inline-flex items-center w-full justify-between my-2">
+                                <p class="text-slate-400">Frais de livraison</p>
+                                <p class="font-title">{{ number_format($cart->getShippingTax(), 2, ',', ' ') }} €</p>
+                            </div>
+                        </li>
+                    @endif
                     <li>
                         <div class="inline-flex items-center w-full justify-between my-2">
                             <p class="text-slate-400">Montant totale TTC</p>
@@ -95,8 +103,27 @@
                     </li>
                 </ul>
                 <div class="mt-5">
-                    <button class="btn-primary w-full">Procéder au paiement</button>
-                    <button class="btn-slate w-full mt-2">Livraison en point relais</button>
+                    @if(\App\Helpers\ConfigHelper::getSettings()['payment'] == 1)
+                        <button wire:click="proceedToPayment('card')"  class="btn-primary w-full">Procéder au paiement</button>
+                    @else
+                        <p class="text-red-500 text-center">Le paiement par carte est temporairement désactivé</p>
+                    @endif
+                    @if(auth()->user()->type == 1)
+                        <div class="bg-slate-100 mt-2 rounded-lg p-3">
+                            <h2 class="font-title font-bold">Payer plus tard</h2>
+                            <button wire:click="proceedToPayment('later')" class="btn-primary w-full mt-2">Paiement en espèces</button>
+                            <button wire:click="proceedToPayment('virement')" class="btn-primary w-full mt-2">Paiement par virement ou chèque</button>
+                        </div>
+                    @endif
+                    @if(\App\Models\ShippingPoint::all()->count() > 0)
+                        <button wire:click="$dispatch('openModal', {component: 'frontend.popups.products.add-shipping-point'})" class="btn-slate w-full mt-2">
+                            @if($shipping_address)
+                                {{ \App\Models\ShippingPoint::find($shipping_address)->name }}
+                            @else
+                                Livraison en point relais
+                            @endif
+                        </button>
+                    @endif
                 </div>
             </div>
         </div>

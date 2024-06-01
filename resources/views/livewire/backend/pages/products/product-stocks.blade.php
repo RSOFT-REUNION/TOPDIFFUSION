@@ -28,4 +28,30 @@
             </div>
         </div>
     </div>
+    <div class="mt-5">
+        <div class="mt-5 table-box">
+            <table>
+                <thead>
+                <tr>
+                    <th>Produit</th>
+                    <th>Quantité</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($stocks as $stock)
+                    <tr>
+                        <td><div>
+                                <p class="font-bold">{{ $stock->getProduct()->name }}</p>
+                                <p class="text-sm text-slate-400">{{ $stock->getProductVariant()->color_name }} - {{ $stock->getProductVariant()->size_name }}</p>
+                            </div></td>
+                        <td class="font-title">{{ $stock->quantity }}</td>
+                        <td><button wire:click="$dispatch('openModal', {component: 'backend.popups.product.edit-single-stock', arguments: { product_id: {{ $stock->product_id }}, product_data: {{ $stock->variant_id }} }})" class="hover:underline hover:text-blue-500">Modifier la quantité</button></td>
+                    </tr>
+
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

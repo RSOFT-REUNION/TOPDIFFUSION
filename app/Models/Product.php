@@ -28,6 +28,16 @@ class Product extends Model
         }
     }
 
+    public function setUnitPrice($product, $price)
+    {
+        $data = ProductData::where('product_id', $product->id)->get();
+        foreach ($data as $d)
+        {
+            $d->price_unit = $price;
+            $d->update();
+        }
+    }
+
     // Avoir le tarif unitaire TTC/HT par rapport aux paramètres
     public function getUnitPriceTVA()
     {
@@ -195,5 +205,17 @@ class Product extends Model
                 }
             }
         }
+    }
+
+    // Fonction afin de savoir si le produit est en favoris pour l'utilisateur
+    public function isFavorite()
+    {
+        if(auth()->check()) {
+            $favorite = UserFavoriteProduct::where('user_id', auth()->user()->id)->where('product_id', $this->id)->first();
+            return $favorite ? true : false;
+        } else {
+            return false;
+        }
+
     }
 }

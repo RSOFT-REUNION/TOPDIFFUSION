@@ -9,7 +9,6 @@
         <div class="grow border-t p-2">
             <ul>
                 <li><x-elements.buttons.btn-sidebar1 route="{{ route('bo.dashboard') }}" page="{{ $page }}" my-page="dashboard" class="" icon="grid-2" label="Tableau de bord" count=""/></li>
-                <li><x-elements.buttons.btn-sidebar1 route="{{ route('bo.messages') }}" page="{{ $page }}" my-page="messages" class="" icon="messages" label="Messages" count=""/></li>
             </ul>
             <h2 class="my-3 ml-3 text-slate-400 text-sm">Activité</h2>
             <ul>
@@ -23,7 +22,7 @@
                 <li><x-elements.buttons.btn-sidebar1 route="{{ route('bo.setting.team') }}" page="{{ $page }}" my-page="teams" class="" icon="users" label="Équipes" count=""/></li>
                 <li><x-elements.buttons.btn-sidebar1 route="{{ route('bo.setting.shipping') }}" page="{{ $page }}" my-page="shipping" class="" icon="truck-fast" label="Livraison" count=""/></li>
                 <li><x-elements.buttons.btn-sidebar1 route="{{ route('bo.setting.payment') }}" page="{{ $page }}" my-page="payment" class="" icon="euro-sign" label="Paiement" count=""/></li>
-                <li><x-elements.buttons.btn-sidebar1 route="{{ route('bo.setting') }}" page="{{ $page }}" my-page="settings" class="" icon="sliders" label="Réglages" count=""/></li>
+{{--                <li><x-elements.buttons.btn-sidebar1 route="{{ route('bo.setting') }}" page="{{ $page }}" my-page="settings" class="" icon="sliders" label="Réglages" count=""/></li>--}}
             </ul>
         </div>
     @elseif($group_page == 'customers')
@@ -53,9 +52,9 @@
             </ul>
         </div>
     @endif
-    <div class="flex-none border-t p-3">
+    {{--<div class="flex-none border-t p-3">
         <x-elements.buttons.btn-sidebar2 label="Contacter le support" :route="route('fo.home')" class="" icon="headset" />
-    </div>
+    </div>--}}
     <div class="flex-none border-t p-3">
         <x-elements.buttons.btn-sidebar2 label="Retourner au site" :route="route('fo.home')" class="" icon="arrow-left" />
     </div>

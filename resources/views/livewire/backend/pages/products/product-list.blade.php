@@ -2,7 +2,6 @@
     <div class="inline-flex items-center justify-between w-full">
         <h1 class="font-title font-bold text-2xl">Liste des produits</h1>
         <div>
-            <button wire:click="$dispatch('openModal', {component: 'backend.popups.categories.add-categories-import'})" class="btn-slate-icon mr-2" title="Importer une liste de catégories"><i class="fa-regular fa-arrow-up-from-line"></i></button>
             <button wire:click="$dispatch('openModal', {component: 'backend.popups.product.add-product'})" class="btn-primary"><i class="fa-solid fa-plus mr-3"></i>Ajouter une nouveau produit</button>
         </div>
     </div>

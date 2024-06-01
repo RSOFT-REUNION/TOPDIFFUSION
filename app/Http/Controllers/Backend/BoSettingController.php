@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class BoSettingController extends Controller
@@ -43,7 +44,15 @@ class BoSettingController extends Controller
         $data = [
             'group_page' => 'backend',
             'page' => 'teams',
+            'teams' => User::where('admin', 1)->orderBy('lastname', 'asc')->get()
         ];
         return view('pages.backend.settings.setting_teams', $data);
+    }
+
+    public function deleteTeamUser($id)
+    {
+        $user = User::find($id);
+        $user->delete();
+        return redirect()->route('bo.setting.team')->with('success', 'L\'utilisateur a bien été supprimé');
     }
 }

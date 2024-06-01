@@ -14,7 +14,7 @@
                         <h2>
                             <div class="font-bold inline-flex items-center justify-between w-full border-b pb-3">
                                 {{ $parent->name }}
-                                <span class="text-sm font-thin border py-1 px-2 rounded-full">123</span>
+                                <span class="text-sm font-thin border py-1 px-2 rounded-full">{{ $parent->getCountProducts() }}</span>
                             </div>
                         </h2>
                         <ul class="mt-3">
@@ -23,7 +23,7 @@
                                     <li>
                                         <a wire:click="$dispatch('openModal', {component: 'backend.popups.categories.edit-categories', arguments: { category_id: {{ $child->id }} }})" class="block cursor-pointer py-1 text-sm rounded-lg text-slate-400 hover:text-blue-500 inline-flex items-center justify-between w-full">
                                             {{ $child->name }}
-                                            <span class="text-xs font-thin border py-1 px-2 rounded-full">123</span>
+                                            <span class="text-xs font-thin border py-1 px-2 rounded-full">{{ $child->getCountProducts() }}</span>
                                         </a>
                                     </li>
                                     <ul>
@@ -35,7 +35,7 @@
                                                             <i class="fa-light fa-arrow-turn-down-right mr-3"></i>
                                                             {{ $sub_child->name }}
                                                         </div>
-                                                        <span class="text-xs font-thin border py-1 px-2 rounded-full">123</span>
+                                                        <span class="text-xs font-thin border py-1 px-2 rounded-full">{{ $sub_child->getCountProducts() }}</span>
                                                     </a>
                                                 </li>
                                             @endif

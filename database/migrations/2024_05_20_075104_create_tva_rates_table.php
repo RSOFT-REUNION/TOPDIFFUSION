@@ -20,6 +20,14 @@ return new class extends Migration
             $table->string('state');
             $table->timestamps();
         });
+
+        \App\Models\TvaRate::create([
+           'default' => true,
+            'name' => 'TVA 8,5%',
+            'rate' => '8.5',
+            'country' => 'RE',
+            'state' => '974',
+        ]);
     }
 
     /**

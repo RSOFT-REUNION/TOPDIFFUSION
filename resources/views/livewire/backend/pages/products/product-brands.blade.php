@@ -2,7 +2,6 @@
     <div class="inline-flex items-center justify-between w-full">
         <h1 class="font-title font-bold text-2xl">Marques produits</h1>
         <div>
-            <button wire:click="$dispatch('openModal', {component: 'backend.popups.categories.add-categories-import'})" class="btn-slate-icon mr-2" title="Importer une liste de catégories"><i class="fa-regular fa-arrow-up-from-line"></i></button>
             <button wire:click="$dispatch('openModal', {component: 'backend.popups.brands.add-brand'})" class="btn-primary"><i class="fa-solid fa-plus mr-3"></i>Ajouter une nouvelle marque</button>
         </div>
     </div>
@@ -13,7 +12,9 @@
                     <div class="bg-slate-100 rounded-xl border p-5 relative cursor-pointer flex flex-col h-full duration-300 hover:bg-white hover:scale-105">
                         <div class="m-auto">
                             <div class="force-center">
-                                <img src="{{ asset('storage/products/brands/'. $brand->logo) }}" width="150px">
+                                @if($brand->logo)
+                                    <img src="{{ asset('storage/products/brands/'. $brand->logo) }}" width="150px">
+                                @endif
                             </div>
                             <p class="text-center mt-3">{{ $brand->name }}</p>
                         </div>

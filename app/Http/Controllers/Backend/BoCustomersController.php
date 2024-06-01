@@ -28,4 +28,5 @@ class BoCustomersController extends Controller
         $data['groups'] = UserGroup::all();
         return view('pages.backend.customers.customer-group', $data);
     }
+
 }

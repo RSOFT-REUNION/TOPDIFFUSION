@@ -10,12 +10,12 @@
             </div>
             <!-- Toggle Button -->
             <label class="inline-flex items-center cursor-pointer">
-                <input type="checkbox" value="" class="sr-only peer">
+                <input type="checkbox" wire:click="changePaymentActive" value="" @if($payment_active) checked @endif class="sr-only peer">
                 <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
             </label>
         </div>
         <div class="border-t pt-5">
-            <h2 class="font-title font-bold text-lg">Gestion des tarifs</h2>
+            {{--<h2 class="font-title font-bold text-lg">Gestion des tarifs</h2>
             <div class="divide-y mt-2">
                 <div class="inline-flex items-center w-full justify-between py-3">
                     <div>
@@ -24,7 +24,7 @@
                     </div>
                     <!-- Toggle Button -->
                     <label class="inline-flex items-center cursor-pointer">
-                        <input type="checkbox" value="" class="sr-only peer">
+                        <input type="checkbox" wire:click="changePaymentTTC" value="" @if($payment_TTC) checked @endif class="sr-only peer">
                         <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                     </label>
                 </div>
@@ -35,12 +35,12 @@
                     </div>
                     <!-- Toggle Button -->
                     <label class="inline-flex items-center cursor-pointer">
-                        <input type="checkbox" value="" class="sr-only peer">
+                        <input type="checkbox" wire:click="changeShowTTC" value="" @if($TTC_show) checked @endif class="sr-only peer">
                         <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                     </label>
                 </div>
-            </div>
-            <div class="mt-3 inline-flex w-full items-center justify-between border-t pt-5">
+            </div>--}}
+            <div class="mt-3 inline-flex w-full items-center justify-between pt-5">
                 <h2 class="font-title font-bold text-lg">Règles des TVA</h2>
                 <button type="button" wire:click="$dispatch('openModal', {component: 'backend.popups.settings.add-tva'})" class="btn-slate">Ajouter une nouvelle règle</button>
             </div>

@@ -70,6 +70,97 @@
                         </table>
                     </div>
                 </div>
+            @elseif($product->type == 'variable')
+                @if($variants->count() > 0)
+                    <div class="mt-5">
+                        <h2 class="font-title font-bold text-xl">Informations sur les variantes</h2>
+                        <div class="table-box-outline mt-5">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>UGS</th>
+                                    <th>Couleur</th>
+                                    <th>Taille</th>
+                                    <th>Quantité en stock</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($variants as $variant)
+                                    <tr class="group">
+                                        <td class="border-r">{{ $variant->ugs_code}}/{{ $variant->ugs_code_variant }}</td>
+                                        <td>
+                                            <div class="inline-flex items-center gap-5">
+                                                <div class="w-5 h-5 rounded-full ring-1" style="background-color: {{ $variant->color }}"></div>
+                                                <p class="">{{ $variant->color_name }}</p>
+                                            </div>
+                                        </td>
+                                        <td>{{ $variant->size }}</td>
+                                        <td>{{ $variant->getStock() }}</td>
+                                        <td><button wire:click="$dispatch('openModal', {component: 'backend.popups.product.edit-single-stock', arguments: { product_id: {{ $product->id }}, product_data: {{ $variant->id }} }})" class="hover:underline hover:text-blue-500">Modifier les stocks</button></td>
+                                        <td><button wire:click="deleteVariant({{ $variant->id }})" class="text-red-500 group-hover:visible invisible cursor-pointer"><i class="fa-regular fa-delete-left"></i></button></td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                @endif
+            @endif
+            @if($informations->count() > 0)
+                <div class="mt-5">
+                    <h2 class="font-title font-bold text-xl">Informations sur le produit</h2>
+                    <div class="table-box-outline mt-5">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Clé</th>
+                                <th>Valeur</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($informations as $info)
+                                <tr class="group">
+                                    <td class="border-r">{{ $info->key}}</td>
+                                    <td>{{ $info->value }}</td>
+                                    <td><button wire:click="deleteInfo({{ $info->id }})" class="text-red-500 group-hover:visible invisible cursor-pointer"><i class="fa-regular fa-delete-left"></i></button></td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            @endif
+            @if($bikes->count() > 0)
+                <div class="mt-5">
+                    <h2 class="font-title font-bold text-xl">Liste des motos compatible</h2>
+                    <div class="table-box-outline mt-5">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Marque</th>
+                                <th>Modèle</th>
+                                <th>Cylindrée</th>
+                                <th>Année</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($bikes as $bike)
+                                <tr class="group">
+                                    <td>{{ $bike->getBike()->brand }}</td>
+                                    <td>{{ $bike->getBike()->model }}</td>
+                                    <td>{{ $bike->getBike()->cylinder }}</td>
+                                    <td>{{ $bike->getBike()->year }}</td>
+                                    <td><button wire:click="deleteBike({{ $bike->id }})" class="text-red-500 group-hover:visible invisible cursor-pointer"><i class="fa-regular fa-delete-left"></i></button></td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             @endif
         </div>
         <div class="flex-none w-[300px] border-l pl-5">
@@ -85,9 +176,15 @@
                 <h2 class="font-title font-bold text-2xl">{{ number_format($product->getUnitPriceTVABack(), 2, ',', ' ') }} €</h2>
             </div>
             <div class="border-t pt-5 mt-5">
-                <button class="btn-slate w-full"><i class="fa-regular fa-pen-to-square mr-3"></i>Modifier le produit</button>
-                <button wire:click="$dispatch('openModal', {component: 'backend.popups.product.edit-single-stock', arguments: { product_id: {{ $product->id }} }})" class="btn-slate w-full mt-2"><i class="fa-regular fa-boxes-packing mr-3"></i>Modifier les stocks</button>
-                <button class="btn-slate w-full mt-2"><i class="fa-regular fa-trash mr-3"></i>Supprimer le produit</button>
+                <button wire:click="$dispatch('openModal', {component: 'backend.popups.product.edit-product', arguments: { product_id: {{ $product->id }} }})" class="btn-slate w-full"><i class="fa-regular fa-pen-to-square mr-3"></i>Modifier le produit</button>
+                {{--<button class="btn-slate w-full mt-2">Ajouter une moto compatible</button>
+                <button class="btn-slate w-full mt-2">Ajouter une informations</button>
+                <button class="btn-slate w-full mt-2">Modifier la catégorie</button>
+                <button class="btn-slate w-full mt-2">Modifier la marque</button>--}}
+                @if($product->type != 'variable')
+                    <button wire:click="$dispatch('openModal', {component: 'backend.popups.product.edit-single-stock', arguments: { product_id: {{ $product->id }}, product_data: {{ $product_data->id }} }})" class="btn-slate w-full mt-2"><i class="fa-regular fa-boxes-packing mr-3"></i>Modifier les stocks</button>
+                @endif
+                <button wire:click="deleteProduct" class="btn-danger w-full mt-2"><i class="fa-regular fa-trash mr-3"></i>Supprimer le produit</button>
             </div>
         </div>
     </div>

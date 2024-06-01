@@ -7,6 +7,10 @@ use App\Models\Bikes;
 use App\Models\Product;
 use App\Models\ProductBrand;
 use App\Models\ProductCategory;
+use App\Models\ShippingPoint;
+use App\Models\UserFavoriteProduct;
+use App\Models\UserOrder;
+use App\Models\UserOrderItem;
 use Illuminate\Http\Request;
 use Livewire\Livewire;
 
@@ -16,7 +20,7 @@ class FrontendController extends Controller
     public function showHomePage()
     {
         $data = [];
-        $data['products'] = Product::orderBy('created_at', 'desc')->get()->take('8');
+        $data['products'] = Product::orderBy('created_at', 'desc')->get()->where('active', 1)->take('8');
         $data['brands'] = ProductBrand::orderBy('created_at', 'desc')->get()->take('4');
         return view('pages.frontend.home', $data);
     }
@@ -40,7 +44,7 @@ class FrontendController extends Controller
     public function showSingleProduct($slug)
     {
         $data = [];
-        $data['product'] = Product::where('slug', $slug)->first();
+        $data['product'] = Product::where('slug', $slug)->where('active', 1)->first();
         return view('pages.frontend.products.product_single', $data);
     }
 
@@ -65,7 +69,7 @@ class FrontendController extends Controller
         $category = ProductCategory::where('slug', $slug)->first();
         $data = [];
         $data['category'] = $category;
-        $data['products'] = Product::where('category_id', $category->id)->get();
+        $data['products'] = Product::where('category_id', $category->id)->where('active', 1)->get();
         return view('pages.frontend.products.product_category', $data);
     }
 
@@ -79,5 +83,61 @@ class FrontendController extends Controller
     {
         $data = [];
         return view('pages.frontend.profile.profile');
+    }
+
+    // Affichage de la page des favoris
+    public function showProfileFavorite()
+    {
+        $data = [];
+        $data['favorites'] = UserFavoriteProduct::where('user_id', auth()->user()->id)->get();
+        return view('pages.frontend.profile.profile-favorite', $data);
+    }
+
+    // Affichage de la page des commandes
+    public function showProfileOrders()
+    {
+        $data = [];
+        $data['orders'] = UserOrder::where('user_id', auth()->user()->id)->get();
+        return view('pages.frontend.profile.profile-orders', $data);
+    }
+    public function showProfileOrderSingle($id)
+    {
+        $data = [];
+        $data['order'] = UserOrder::where('id', $id)->first();
+        $data['orderItems'] = UserOrderItem::where('user_order_id', $id)->get();
+        $data['shipping_point'] = ShippingPoint::where('id', $data['order']->shipping_point_id)->first();
+        return view('pages.frontend.profile.order-single', $data);
+    }
+
+    // Affichage de la page des commandes
+    public function showProfileEdit()
+    {
+        $data = [];
+        return view('pages.frontend.profile.profile-edit', $data);
+    }
+
+    /*
+     * Gestion des pages de mentions
+     */
+    // Toutes les pages ci-dessous doivent être rempli par RSOFT
+    public function showAboutPage()
+    {
+        $data = [];
+        return view('pages.frontend.mentions.about', $data);
+    }
+    public function showMentionsPage()
+    {
+        $data = [];
+        return view('pages.frontend.mentions.mention-legal', $data);
+    }
+    public function showCGVPage()
+    {
+        $data = [];
+        return view('pages.frontend.mentions.CGV', $data);
+    }
+    public function showCGUPage()
+    {
+        $data = [];
+        return view('pages.frontend.mentions.CGU', $data);
     }
 }

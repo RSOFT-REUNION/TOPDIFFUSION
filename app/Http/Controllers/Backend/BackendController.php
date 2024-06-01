@@ -49,10 +49,10 @@ class BackendController extends Controller
             'group_page' => 'backend',
             'page' => 'dashboard',
         ];
-        $data['products_cart'] = UserCartItem::all()->count();
+        $data['products_cart'] = UserCartItem::all();
         $data['cart_amount'] = $this->getAmountPrice();
-        $data['stock_rupture'] = ProductStock::where('quantity', 0)->count();
-        $data['stock_low'] = ProductStock::where('quantity', '<=',3)->where('quantity', '>', 0)->count();
+        $data['stock_rupture'] = ProductStock::where('quantity', 0)->get();
+        $data['stock_low'] = ProductStock::where('quantity', '<=',3)->where('quantity', '>', 0)->get();
         return view('pages.backend.dashboard', $data);
     }
 

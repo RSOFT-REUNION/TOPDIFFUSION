@@ -30,6 +30,8 @@
         @else
             <p class="font-title font-bold text-2xl text-primary">{{ number_format($product->getUnitPrice(), 2, ',', ' ') }} €</p>
         @endif
-        <button type="button" class="absolute top-0 bottom-0 right-3" title="Ajouter aux favoris" aria-label="Ajouter aux favoris"><i class="fa-regular fa-heart"></i></button>
+        @if(auth()->check())
+            <button type="button" class="absolute top-0 bottom-0 right-3" title="Ajouter aux favoris" aria-label="Ajouter aux favoris"><i class="@if($product->isFavorite()) fa-solid text-red-500 @else fa-regular @endif fa-heart"></i></button>
+        @endif
     </div>
 </div>

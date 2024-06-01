@@ -7,9 +7,33 @@
                 <a href="{{ route('fo.home') }}"><img src="{{ asset('img/logos/Blue.svg') }}" width="200px"></a>
 
                 {{-- Barre de recherche --}}
-                <div class="textfield-search">
-                    <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
-                    <input type="text" id="search" wire:model.live="search" placeholder="Rechercher un produit...">
+                <div class="relative">
+                    <div class="textfield-search">
+                        <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
+                        <input type="text" id="search" wire:model.live="search" placeholder="Rechercher un produit...">
+                    </div>
+                    @if(str($search)->length() > 2 && $search_results->count() > 0)
+                        <div class="absolute mt-2 bg-white border drop-shadow-2xl p-3 w-full z-20 rounded-xl">
+                            <ul>
+                                @foreach($search_results as $result)
+                                    <li>
+                                        <a href="{{ route('fo.product.single', ['slug' => $result->slug]) }}">
+                                            <div class="inline-flex items-center justify-between w-full hover:bg-slate-100 p-2 rounded-lg cursor-pointer">
+                                                <div class="inline-flex items-center gap-5">
+                                                    <img src="{{ asset('storage/products/covers/'. $result->cover) }}" width="50px" class="rounded-md"/>
+                                                    <div>
+                                                        <p class="font-bold">{{ $result->name }}</p>
+                                                        <p class="text-sm text-slate-400">{{ $result->getBrand()->name }}</p>
+                                                    </div>
+                                                </div>
+                                                <p class="font-title font-bold text-lg">{{ number_format($result->getUnitPrice(), 2, ',', ' ') }} €</p>
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
 
                 {{-- Partie Droite --}}
@@ -43,22 +67,21 @@
                                 <a href="{{ route('fo.cart') }}" class="bg-slate-200 rounded-full py-2 hover:ring-1 ring-offset-2 px-4"><i class="fa-regular fa-cart-shopping"></i><span class="ml-3 font-title text-blue-500 font-bold">{{ $cart_count->getCartQuantityCount() }}</span></a>
                             @endif
                         </div>
-                        <label class="inline-flex items-center cursor-pointer border-x px-2">
-                            <input type="checkbox" value="" wire:click="selectPrices" @if($prices == 1) checked @endif class="sr-only peer">
-                            <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                            <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Mes tarifs</span>
-                        </label>
+                        @if(auth()->user()->type == 1)
+                            <label class="inline-flex items-center cursor-pointer border-x px-2">
+                                <input type="checkbox" value="" wire:click="selectPrices" @if($prices == 1) checked @endif class="sr-only peer">
+                                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                                <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Mes tarifs</span>
+                            </label>
+                        @endif
                         <div class="relative" x-data="{accountMenu: false}" x-cloak @click.away="accountMenu = false">
                             <button @click="accountMenu = !accountMenu" class="btn-primary"><i class="fa-regular fa-user mr-3"></i>Mon compte</button>
                             <div x-show="accountMenu" x-transition class="absolute bg-white z-20 border right-0 mt-2 w-[300px] rounded-xl drop-shadow-2xl">
-                                {{--<ul class="p-5">
+                                <ul class="p-5">
                                     <li><a href="{{ route('fo.profile') }}" class="btn-sidebar"><div><i class="fa-regular fa-user text-slate-400 mr-3"></i>Mes informations</div></a></li>
-                                    <li><a href="" class="btn-sidebar"><div><i class="fa-regular fa-heart text-slate-400 mr-3"></i>Mes favoris</div></a></li>
+                                    <li><a href="{{ route('fo.profile.favorite') }}" class="btn-sidebar"><div><i class="fa-regular fa-heart text-slate-400 mr-3"></i>Mes favoris</div></a></li>
                                 </ul>
                                 <ul class="p-5 border-t">
-                                    <li><a wire:click="logout" class="btn-sidebar"><div><i class="fa-regular fa-arrow-right-from-bracket text-slate-400 mr-3"></i>Me déconnecter</div></a></li>
-                                </ul>--}}
-                                <ul class="p-5">
                                     <li><a wire:click="logout" class="btn-sidebar"><div><i class="fa-regular fa-arrow-right-from-bracket text-slate-400 mr-3"></i>Me déconnecter</div></a></li>
                                 </ul>
                             </div>

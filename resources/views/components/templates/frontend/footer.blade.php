@@ -5,10 +5,10 @@
                 <div class="">
                     <h2 class="font-title font-bold text-secondary text-lg">TOP DIFFUSION</h2>
                     <ul class="mt-5">
-                        <li><a href="" class="btn-footer-link">À propos de nous</a></li>
-                        <li><a href="" class="btn-footer-link">Mentions légales</a></li>
-                        <li><a href="" class="btn-footer-link">Conditions générale de vente</a></li>
-                        <li><a href="" class="btn-footer-link">Conditions générale d'utilisation</a></li>
+                        <li><a href="{{ route('fo.legal.about') }}" class="btn-footer-link">À propos de nous</a></li>
+                        <li><a href="{{ route('fo.legal') }}" class="btn-footer-link">Mentions légales</a></li>
+                        <li><a href="{{ route('fo.legal.cgv') }}" class="btn-footer-link">Conditions générale de vente</a></li>
+                        <li><a href="{{ route('fo.legal.cgu') }}" class="btn-footer-link">Conditions générale d'utilisation</a></li>
                     </ul>
                 </div>
             </div>

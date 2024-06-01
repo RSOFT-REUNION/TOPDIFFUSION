@@ -10,6 +10,12 @@ class ProductBikes extends Component
 {
     use WithPagination;
 
+    public function deleteBike($id)
+    {
+        $bike = Bikes::find($id);
+        $bike->delete();
+    }
+
     public function render()
     {
         $data = [];

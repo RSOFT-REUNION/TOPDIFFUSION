@@ -8,6 +8,11 @@ use App\Http\Controllers\Backend\BoSettingController;
 use App\Http\Controllers\Frontend\FrontendController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/mentions-legales', [FrontendController::class, 'showMentionsPage'])->name('fo.legal');
+Route::get('/cgv', [FrontendController::class, 'showCGVPage'])->name('fo.legal.cgv');
+Route::get('/cgu', [FrontendController::class, 'showCGUPage'])->name('fo.legal.cgu');
+Route::get('/a-propos-de-nous', [FrontendController::class, 'showAboutPage'])->name('fo.legal.about');
+
 Route::get('/',[FrontendController::class, 'showHomePage'])->name('fo.home');
 Route::get('/inscription', [FrontendController::class, 'showRegisterPage'])->name('fo.register');
 
@@ -17,7 +22,11 @@ Route::get('/produits/categorie-{slug}', [FrontendController::class, 'showProduc
 
 Route::prefix('profil')->middleware('user')->group(function () {
     Route::get('/', [FrontendController::class, 'showProfile'])->name('fo.profile');
+    Route::get('/favoris', [FrontendController::class, 'showProfileFavorite'])->name('fo.profile.favorite');
     Route::get('/panier', [FrontendController::class, 'showCart'])->name('fo.cart');
+    Route::get('/commandes', [FrontendController::class, 'showProfileOrders'])->name('fo.profile.orders');
+    Route::get('/commandes/{id}', [FrontendController::class, 'showProfileOrderSingle'])->name('fo.profile.orders.single');
+    Route::get('/mes-informations', [FrontendController::class, 'showProfileEdit'])->name('fo.profile.edit');
 });
 
 Route::get('/back-login', [BackendController::class, 'showLoginBackend'])->name('bo.login');
@@ -35,6 +44,7 @@ Route::prefix('admin')->middleware('team')->group(function () {
 
     Route::prefix('/commandes')->group(function () {
         Route::get('/', [BoOrdersController::class, 'showOrders'])->name('bo.orders');
+        Route::get('/commande-{id}', [BoOrdersController::class, 'showOrder'])->name('bo.orders.single');
     });
 
     Route::prefix('/produits')->group(function () {
@@ -53,5 +63,6 @@ Route::prefix('admin')->middleware('team')->group(function () {
         Route::get('/paiement', [BoSettingController::class, 'showPaymentSetting'])->name('bo.setting.payment');
         Route::get('/livraison', [BoSettingController::class, 'showShippingSetting'])->name('bo.setting.shipping');
         Route::get('/equipe', [BoSettingController::class, 'showTeamSetting'])->name('bo.setting.team');
+        Route::get('/equipe/delete-{id}', [BoSettingController::class, 'deleteTeamUser'])->name('bo.setting.team.delete');
     });
 });

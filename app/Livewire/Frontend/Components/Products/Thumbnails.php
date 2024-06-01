@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Frontend\Components\Products;
 
+use App\Models\UserFavoriteProduct;
 use Livewire\Component;
 
 class Thumbnails extends Component

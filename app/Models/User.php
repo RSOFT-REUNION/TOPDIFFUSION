@@ -57,6 +57,14 @@ class User extends Authenticatable
         return UserGroup::where('id', $this->group_id)->first();
     }
 
+    // Avoir l'adresse complète de l'utilisateur
+    public function getFullAddress()
+    {
+        // TODO: Ajouter l'adresse bis
+        $address = UserAddress::where('user_id', $this->id)->where('is_default', true)->first();
+        return $address->address . ', ' . $address->zip_code . ' - ' . $address->city;
+    }
+
     // Avoir les informations sur l'entreprise de l'utilisateur
     public function company()
     {
@@ -67,5 +75,25 @@ class User extends Authenticatable
     public function settings()
     {
         return UserSetting::where('user_id', $this->id)->first();
+    }
+
+    // Récupérer les informations sur la remise du client
+    public function getDiscount()
+    {
+        return UserGroup::where('id', $this->group_id)->first()->discount;
+    }
+
+    // Récuperer les informations sur le type de client
+    public function getTypeBadge()
+    {
+        $data = [
+            '0' => '',
+            '1' => '',
+            '2' => '<span class="text-yellow-500">Administrateur</span>',
+            '3' => '<span class="text-red-500">Support Rsoft</span>',
+            '4' => '<span class="text-orange-500">Support Hivedrops</span>',
+        ];
+
+        return isset($data[$this->type]) ? $data[$this->type] : '';
     }
 }

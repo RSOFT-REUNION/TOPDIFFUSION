@@ -44,40 +44,49 @@
             <div class="mt-5 justify-end inline-flex items-center gap-5 w-full">
                 @if($kit_price > 0)
                     <p class="font-title font-bold text-lg">{{ number_format($kit_price, 2, ',', ' ') }} €</p>
+                    @if(auth()->check())
+                        <x-elements.buttons.btn-submit label="Ajouter au panier" class="" icon=""/>
+                    @else
+                        <p class="text-slate-400">Vous devez être connecté pour pouvoir ajouter au panier</p>
+                    @endif
                 @endif
-                <x-elements.buttons.btn-submit label="Ajouter au panier" class="" icon=""/>
             </div>
         </form>
         <div class="mt-5">
             <h2 class="font-title font-bold text-xl text-primary">Chaînes possible</h2>
-            <div class="table-box mt-4">
-                <table>
-                    <thead>
-                    <tr>
-                        <th>UGS</th>
-                        <th>Pas</th>
-                        <th>Longueur</th>
-                        <th>Dénomination</th>
-                        <th>Couleur</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($chains as $chain)
-                        <tr class="@if($chain_type == $chain->id) bg-primary @endif">
-                            <td>{{ $chain->getChainInformations()['ugs'] }}</td>
-                            <td>{{ $chain->getChainInformations()['pas'] }}</td>
-                            <td>{{ $chain->getChainInformations()['longueur'] }}</td>
-                            <td>{{ $chain->name }}</td>
-                            <td>{{ $chain->getChainInformations()['couleur'] }}</td>
+            @if(count($chains) > 0)
+                <div class="table-box mt-4">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>UGS</th>
+                            <th>Pas</th>
+                            <th>Longueur</th>
+                            <th>Dénomination</th>
+                            <th>Couleur</th>
                         </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody>
+                        @foreach($chains as $chain)
+                            <tr class="@if($chain_type == $chain->id) bg-primary @endif">
+                                <td>{{ $chain->getChainInformations()['ugs'] }}</td>
+                                <td>{{ $chain->getChainInformations()['pas'] }}</td>
+                                <td>{{ $chain->getChainInformations()['longueur'] }}</td>
+                                <td>{{ $chain->name }}</td>
+                                <td>{{ $chain->getChainInformations()['couleur'] }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @else
+                <p class="mt-3">Aucune chaîne de disponible</p>
+            @endif
         </div>
         <div class="mt-5 border-t pt-5">
             <h2 class="font-title font-bold text-xl text-primary">Pignons possible</h2>
-            <div class="table-box mt-4">
+            @if(count($pignons) > 0)
+                <div class="table-box mt-4">
                 <table>
                     <thead>
                     <tr>
@@ -101,10 +110,14 @@
                     </tbody>
                 </table>
             </div>
+            @else
+                <p class="mt-3">Aucun pignons de disponible</p>
+            @endif
         </div>
         <div class="mt-5 border-t pt-5">
             <h2 class="font-title font-bold text-xl text-primary">Couronnes possible</h2>
-            <div class="table-box mt-4">
+            @if(count($crowns) > 0)
+                <div class="table-box mt-4">
                 <table>
                     <thead>
                     <tr>
@@ -128,6 +141,9 @@
                     </tbody>
                 </table>
             </div>
+            @else
+                <p class="mt-3">Aucune couronnes de disponible</p>
+            @endif
         </div>
     </div>
 </div>

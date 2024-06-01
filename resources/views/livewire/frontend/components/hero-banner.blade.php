@@ -21,9 +21,10 @@
         @csrf
         <div class="absolute bottom-10 w-full">
             <div class="container mx-auto">
+                <p class="text-white text-lg font-bold">Configurer votre kit chaine ou rechercher des produits par moto</p>
                 <div class="bg-white rounded-xl p-3">
                     <div class="inline-flex items-center w-full">
-                        <p class="font-bold mr-5">Filtrer par moto</p>
+                        <p class="font-bold mx-5 inline-flex items-center"><img src="{{ asset('img/icons/chain.svg') }}" width="24px"/></p>
                         <div class="textfield-kit">
                             {{-- Marques --}}
                             <select wire:model.live="kit_brand">

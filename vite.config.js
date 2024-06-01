@@ -9,6 +9,7 @@ export default defineConfig({
                 'resources/css/theme.scss',
                 'resources/js/app.js',
                 'resources/js/functions.js',
+                'resources/js/tinyMCE.js',
             ],
             refresh: true,
         }),

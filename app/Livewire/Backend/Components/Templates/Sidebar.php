@@ -26,7 +26,7 @@ class Sidebar extends Component
     public function render()
     {
         $data = [];
-        $data['customers'] = User::all()->count();
+        $data['customers'] = User::where('admin', 0)->get()->count();
         $data['groups'] = UserGroup::all()->count();
         $data['product_categories'] = ProductCategory::all()->count();
         $data['product_brands'] = ProductBrand::all()->count();

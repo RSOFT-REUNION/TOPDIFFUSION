@@ -1,5 +1,5 @@
 @extends('layouts.backend')
 
 @section('content')
-    @include('components.need_verified')
+    @livewire('backend.pages.orders.order-list')
 @endsection

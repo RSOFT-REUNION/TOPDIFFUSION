@@ -18,7 +18,7 @@
                     </thead>
                     <tbody>
                     @foreach($customers as $customer)
-                        <tr class="group cursor-pointer">
+                        <tr class="group cursor-pointer" wire:click="$dispatch('openModal', { component: 'backend.popups.users.show-user', arguments: { user_id: {{ $customer->id }} } })">
                             <td class="text-sm text-slate-400">{{ $customer->id }}</td>
                             <td>
                                 <div>
@@ -41,7 +41,7 @@
                                 @endif
                             </td>
                             <td>--</td>
-                            <td><a href="" class="text-blue-500 duration-300 invisible group-hover:visible">Voir<i class="fa-regular fa-arrow-right ml-3"></i></a></td>
+                            <td><p class="text-blue-500 duration-300 invisible group-hover:visible">Modifier le groupe</p></td>
                         </tr>
                     @endforeach
                     </tbody>

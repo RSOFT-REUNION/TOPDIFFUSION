@@ -2,15 +2,20 @@
 
 namespace App\Livewire\Frontend\Pages\Products;
 
+use App\Livewire\Backend\Pages\Products\ProductBikes;
+use App\Models\ProductBike;
 use App\Models\ProductData;
 use App\Models\ProductStock;
+use App\Models\UserBike;
 use App\Models\UserCart;
 use App\Models\UserCartItem;
+use App\Models\UserFavoriteProduct;
 use Livewire\Component;
 
 class ProductSingle extends Component
 {
     public $product;
+    public $bikes;
     public $product_data;
     public $selectedColor;
     public $selectedSize;
@@ -24,6 +29,7 @@ class ProductSingle extends Component
     {
         $this->product = $product;
         $this->product_data = ProductData::where('product_id', $this->product->id)->get();
+        $this->bikes = ProductBike::where('product_id', $this->product->id)->get();
         $this->selectedColor = null;
         $this->selectedSize = null;
         $this->selectedVariantId = null;
@@ -133,11 +139,44 @@ class ProductSingle extends Component
         }
 
         $this->dispatch('cartUpdated');
+    }
+
+    // Fonction afin de mettre le produit en favoris
+    public function favorite()
+    {
+        $userFavorite = UserFavoriteProduct::where('user_id', auth()->user()->id)->where('product_id', $this->product->id)->first();
+        if($userFavorite) {
+            $userFavorite->delete();
+        } else {
+            $userFavorite = new UserFavoriteProduct;
+            $userFavorite->user_id = auth()->user()->id;
+            $userFavorite->product_id = $this->product->id;
+            $userFavorite->save();
+        }
+    }
+
+    // Fonction afin de déterminer si le produit est compatible ou non
+    private function isCompatible()
+    {
+        if(auth()->check()) {
+            $userBike = UserBike::where('user_id', auth()->user()->id)->get();
+            foreach ($userBike as $bike) {
+                foreach ($this->bikes as $productBike) {
+                    if($bike->bike_id == $productBike->bike_id) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        }
 
     }
 
     public function render()
     {
-        return view('livewire.frontend.pages.products.product-single');
+        $data = [];
+        $data['isCompatible'] = $this->isCompatible();
+        return view('livewire.frontend.pages.products.product-single', $data);
     }
 }
