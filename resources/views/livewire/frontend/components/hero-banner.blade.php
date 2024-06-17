@@ -4,7 +4,7 @@
     {{-- Contenu --}}
     <div class="absolute top-20 w-full">
         <div class="container mx-auto">
-            <h1 class="font-bold text-white text-5xl drop-shadow">Bienvenue sur <span class="text-secondary">Topdiffusion</span></h1>
+            <h1 class="font-bold text-white text-5xl drop-shadow">Bienvenue sur <span class="text-secondary">TOP DIFFUSION</span></h1>
             <p class="w-[900px] mt-5 drop-shadow text-white">
                 Découvrez notre sélection d'accessoires et de pièces détachées conçus spécialement pour les passionnés
                 de moto. Nous vous proposons une gamme diversifiée de produits de qualité pour répondre à tous vos besoins
