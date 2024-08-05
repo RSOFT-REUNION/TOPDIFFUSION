@@ -9,11 +9,10 @@ class UserBike extends Model
 {
     use HasFactory;
 
-    /*
-     * Retrieve good bike
-     */
-    public function getBike()
+    // Récupérer les informations de la moto
+    public function name()
     {
-        return bike::where('id', $this->bike_id)->first();
+        $bike = Bikes::where('id', $this->bike_id)->first();
+        return $bike->brand . ' ' . $bike->model . ' (' . $bike->cylinder . ') - ' . $bike->year;
     }
 }

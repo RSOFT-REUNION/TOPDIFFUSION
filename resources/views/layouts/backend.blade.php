@@ -1,12 +1,19 @@
 @extends('layouts.app')
 
+@section('title')
+    | Administration
+@endsection
+
 @section('content-app')
-    <div class="flex h-screen">
+    @include('components.elements.popup-alerts_backend')
+    <div class="flex">
         <div class="flex-none">
-            @livewire('components.template.back-sidebar', ['group' => $group, 'page' => $page])
+            {{-- Sidebar --}}
+            @livewire('backend.components.templates.sidebar', ['group_page' => $group_page, 'page' => $page])
         </div>
-        <div class="flex-1 pl-backend">
-            @yield('content-template')
+        <div class="flex-1 p-5 ml-[300px]">
+            {{-- Content --}}
+            @yield('content')
         </div>
     </div>
 @endsection

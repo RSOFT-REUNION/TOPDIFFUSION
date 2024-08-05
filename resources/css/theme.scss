@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    * {
+        @apply font-body;
+    }
+}
+
+@layer components {
+    .force-center {
+        @apply flex justify-center items-center;
+    }
+
+    /* ---------------------- Buttons ------------------------ */
+    .btn-primary {
+        @apply bg-primary py-2.5 px-4 rounded-xl cursor-pointer duration-300 hover:bg-secondary hover:text-white;
+    }
+    .btn-submit {
+        @apply bg-primary py-2.5 px-4 rounded-lg cursor-pointer duration-300 hover:bg-secondary hover:text-white;
+    }
+    .btn-slate {
+        @apply bg-slate-100 border rounded-lg py-2 px-4 cursor-pointer duration-300 hover:bg-primary;
+    }
+    .btn-slate-icon {
+        @apply bg-transparent rounded-lg py-2 px-4 cursor-pointer duration-300 hover:bg-slate-100;
+    }
+    .btn-submit-disabled {
+        @apply bg-slate-300 cursor-not-allowed py-2.5 px-4 rounded-lg duration-300 text-slate-600;
+    }
+    .btn-sidebar {
+        @apply w-full font-medium py-2 px-3 rounded-md duration-300 hover:bg-slate-200 hover:tracking-wider cursor-pointer inline-flex items-center justify-between;
+    }
+    .btn-sidebar-active {
+        @apply w-full bg-primary font-medium py-2 px-3 rounded-md duration-300 hover:bg-slate-200 hover:tracking-wider cursor-pointer inline-flex items-center justify-between;
+    }
+    .btn-sidebar-1 {
+        @apply border block w-full text-center py-2 rounded-md duration-300 hover:bg-slate-200 hover:tracking-wider cursor-pointer;
+    }
+    .btn-footer-link {
+        @apply hover:underline underline-offset-4 hover:text-secondary text-slate-400;
+    }
+    .btn-danger {
+        @apply bg-red-500 py-2.5 px-4 rounded-xl border border-transparent text-white cursor-pointer duration-300 hover:bg-red-200 hover:border-red-500 hover:text-red-500;
+    }
+    .btn-list_category {
+        @apply cursor-pointer py-3 px-5 inline-flex items-center justify-between w-full font-bold duration-300 hover:bg-slate-100;
+    }
+
+    /* ---------------------- Inputs ------------------------ */
+    .textfield-search {
+        @apply bg-white border rounded-xl px-4 py-2.5  focus:ring-2 focus:ring-primary focus:border-transparent w-[300px] lg:w-[500px] inline-flex items-center;
+
+        input {
+            @apply focus:outline-none w-full ml-3;
+        }
+    }
+    .textfield, .textfield-light {
+        @apply rounded-lg overflow-hidden border w-full;
+
+        label {
+            @apply text-sm ml-3 text-slate-400;
+        }
+
+        input, textarea, select {
+            @apply bg-transparent py-2 px-3 block w-full placeholder:text-sm placeholder:font-light font-semibold focus:outline-none;
+        }
+        input[type="color"] {
+            @apply h-10;
+        }
+
+        p {
+            @apply text-sm text-red-500 bg-red-100 border-t border-red-200 px-2 py-1;
+        }
+    }
+    .textfield {
+        @apply bg-slate-100
+    }
+    .textfield-light {
+        @apply bg-white
+    }
+
+    .textfield-kit {
+        @apply bg-slate-100 border rounded-lg overflow-hidden grid grid-cols-5 w-full;
+
+        select {
+            @apply bg-transparent text-sm font-semibold px-4 py-2.5 duration-300 cursor-pointer hover:tracking-wider;
+        }
+        button {
+            @apply bg-primary px-4 py-2.5 cursor-pointer duration-300 hover:bg-secondary hover:text-white;
+        }
+    }
+
+    /* ---------------------- Tables ------------------------ */
+    .table-box {
+        @apply bg-white rounded-lg overflow-hidden;
+
+        table {
+            @apply w-full;
+
+            thead {
+                @apply border-b border-slate-200;
+
+                th {
+                    @apply text-left font-semibold font-title py-2 px-3;
+                }
+            }
+
+            tbody {
+                tr {
+                    @apply divide-y hover:bg-blue-50;
+
+                    td {
+                        @apply text-left py-2 px-3;
+                    }
+
+                }
+            }
+        }
+    }
+    .table-box-outline {
+        @apply bg-white rounded-lg overflow-hidden border;
+
+        table {
+            @apply w-full;
+
+            thead {
+                @apply border-b border-slate-200;
+
+                th {
+                    @apply font-semibold font-title py-2 px-3 bg-slate-100 text-slate-400;
+                }
+            }
+
+            tbody {
+                tr {
+                    @apply divide-y hover:bg-blue-50;
+
+                    td {
+                        @apply text-center py-2 px-3;
+                    }
+
+                }
+            }
+        }
+    }
+
+    /* ---------------------- Texts ------------------------ */
+    .title-section {
+        @apply text-secondary uppercase font-bold text-3xl inline-flex items-center
+    }
+}

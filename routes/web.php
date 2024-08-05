@@ -1,138 +1,70 @@
 <?php
 
-use App\Http\Controllers\Back\BoOrderController;
-use App\Http\Controllers\Front\CartController;
+use App\Http\Controllers\Backend\BackendController;
+use App\Http\Controllers\Backend\BoCustomersController;
+use App\Http\Controllers\Backend\BoOrdersController;
+use App\Http\Controllers\Backend\BoProductController;
+use App\Http\Controllers\Backend\BoSettingController;
+use App\Http\Controllers\Frontend\FrontendController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ErrorController;
-use App\Http\Controllers\Back\BackController;
-use App\Http\Controllers\Back\LegalController;
-use App\Http\Controllers\Back\BoUserController;
-use App\Http\Controllers\Front\FrontController;
-use App\Http\Controllers\Front\ProductController;
-use App\Http\Controllers\Back\BoProductController;
-use App\Http\Controllers\Back\BoSettingController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+Route::get('/paiement', [FrontendController::class, 'paymentRedirectPage'])->name('fo.payment.redirect');
 
-// Route::get('/test', [FrontController::class, 'testFlash'])->name('test-flash');
+Route::get('/mentions-legales', [FrontendController::class, 'showMentionsPage'])->name('fo.legal');
+Route::get('/cgv', [FrontendController::class, 'showCGVPage'])->name('fo.legal.cgv');
+Route::get('/cgu', [FrontendController::class, 'showCGUPage'])->name('fo.legal.cgu');
+Route::get('/a-propos-de-nous', [FrontendController::class, 'showAboutPage'])->name('fo.legal.about');
 
-Route::get('/', [FrontController::class, 'showHome'])->name('front.home');
-Route::get('/connexion', [FrontController::class, 'showLogin'])->name('front.login');
-Route::post('/connexion', [FrontController::class, 'postLogin']);
-Route::get('/inscription', [FrontController::class, 'showRegister'])->name('front.register');
-Route::get('/deconnexion', [FrontController::class, 'logout'])->name('logout');
-Route::get('/mot-de-passe-oublie/{token}', [FrontController::class, 'forgotPassword'])->name('fo.forgotPassword');
-Route::post('/mot-de-passe-oublie/{token}', [FrontController::class, 'postForgotPassword']);
+Route::get('/',[FrontendController::class, 'showHomePage'])->name('fo.home');
+Route::get('/inscription', [FrontendController::class, 'showRegisterPage'])->name('fo.register');
 
-Route::get('/produit-{slug}', [ProductController::class, 'showProduct'])->name('front.product');
-Route::get('/produit', [ProductController::class, 'showProductListAll'])->name('front.product-all');
-Route::get('/liste-produit/categories-{slug}', [ProductController::class, 'showProductList'])->name('front.product.list');
-Route::get('/filtres/{id}', [FrontController::class, 'filtres'])->name('front.product.filtres');
+Route::get('/produit-{slug}', [FrontendController::class, 'showSingleProduct'])->name('fo.product.single');
+Route::get('/produits/moto-{id}', [FrontendController::class, 'showBikesByFilters'])->name('fo.product.list.bikes');
+Route::get('/produits/categorie-{slug}', [FrontendController::class, 'showProductByCategory'])->name('fo.product.list.category');
 
-Route::middleware(['App\Http\Middleware\RedirectIfMaintenanceModeActive'])->group(function () {
-    Route::get('/maintenance', [ErrorController::class, 'showErrorMaintenance'])->name('maintenance');
-    Route::post('/maintenance', [FrontController::class, 'postLogin']);
+Route::prefix('profil')->middleware('user')->group(function () {
+    Route::get('/', [FrontendController::class, 'showProfile'])->name('fo.profile');
+    Route::get('/favoris', [FrontendController::class, 'showProfileFavorite'])->name('fo.profile.favorite');
+    Route::get('/panier', [FrontendController::class, 'showCart'])->name('fo.cart');
+    Route::get('/commandes', [FrontendController::class, 'showProfileOrders'])->name('fo.profile.orders');
+    Route::get('/commandes/{id}', [FrontendController::class, 'showProfileOrderSingle'])->name('fo.profile.orders.single');
+    Route::get('/mes-informations', [FrontendController::class, 'showProfileEdit'])->name('fo.profile.edit');
 });
 
-// It's a user
-Route::group([
-    'middleware' => ['App\Http\Middleware\Customer', 'App\Http\Middleware\CheckMaintenanceMode']
-], function () {
-    Route::get('/profil', [FrontController::class, 'showProfile'])->name('front.profile');
-    Route::get('/profil/commandes-&-factures', [FrontController::class, 'showCommandsInvoices'])->name('front.commands');
-    Route::get('/profil/commandes/{order}', [FrontController::class, 'showSingleOrder'])->name('front.orders.single');
-    Route::get('/profil/suppression/adresse-{id}', [FrontController::class, 'deletedAddress'])->name('front.profile.delete.address');
-    Route::get('/profil/mes-motos', [FrontController::class, 'showProfileBikes'])->name('front.profile.bikes');
-    Route::get('/profil/mes-demande-sav', [FrontController::class, 'showProfileSav'])->name('front.profile.sav');
-    Route::get('/profil/mes-motos/suppression-{id}', [FrontController::class, 'deletedBike'])->name('front.profile.delete.bikes');
-    Route::get('/profil/mes-favoris', [FrontController::class, 'showFavorite'])->name('front.myFavorite');
-    Route::get('/favoris/{sort?}', [FrontController::class, 'showFavorite'])->name('front.favorite');
-    Route::get('/a-propos', [FrontController::class, 'showAbout'])->name('front.about');
-    Route::get('/politique-de-confidentialite', [FrontController::class, 'showConfidential'])->name('front.confidential');
-    Route::get('/informations-legals', [FrontController::class, 'showLegal'])->name('front.legal');
-    Route::get('/faq', [FrontController::class, 'showFaq'])->name('front.faq');
-    Route::get('/mon-panier', [CartController::class, 'showCart'])->name('front.cart');
-    Route::get('/sav-{id}', [BackController::class, 'showSingleSav'])->name('sav.single');
+Route::get('/back-login', [BackendController::class, 'showLoginBackend'])->name('bo.login');
+Route::post('/back-login', [BackendController::class, 'postLoginBackend']);
 
-    // Ne pas oublier de changer
-});
+// Routes pour le backend avec middleware (CMS Hivedrops)
+Route::prefix('admin')->middleware('team')->group(function () {
+    Route::get('/', [BackendController::class, 'showDashboard'])->name('bo.dashboard');
+    Route::get('/messages', [BackendController::class, 'showMessages'])->name('bo.messages');
 
-// It's a team member
-Route::group([
-    'middleware' => 'App\Http\Middleware\Team'
-], function () {
-    Route::prefix('/admin')->group(function () {
-        Route::get('/', [BackController::class, 'showDashboard'])->name('back.dashboard');
+    Route::prefix('/clients')->group(function () {
+        Route::get('/', [BoCustomersController::class, 'showCustomerList'])->name('bo.customers');
+        Route::get('/groupes', [BoCustomersController::class, 'showCustomerGroup'])->name('bo.customers.group');
+    });
 
-        Route::prefix('/produits')->group(function () {
-            Route::get('/liste', [BoProductController::class, 'showProductList'])->name('back.product.list');
-            Route::get('/creation', [BoProductController::class, 'createProduct'])->name('back.product.create');
-            Route::get('/produit/{product}', [BoProductController::class, 'showSingleProduct'])->name('back.product.single');
-            Route::get('/creer-un-produit-{id}', [BoProductController::class, 'showCreateProduct'])->name('back.product.show.create');
-            Route::get('/ajout-{id}-{product}', [BoProductController::class, 'showAddProduct'])->name('back.product.add');
-            Route::get('/categories', [BoProductController::class, 'showProductCategories'])->name('back.product.categories');
-            Route::get('/categories-{id}', [BoProductController::class, 'showSingleProductCategories'])->name('back.product.single.categories');
-            Route::get('/motos', [BoProductController::class, 'showProductBikes'])->name('back.product.bikes');
-            Route::get('/marques', [BoProductController::class, 'showProductBrands'])->name('back.product.brands');
-            Route::get('/options', [BoProductController::class, 'showProductOptions'])->name('back.product.options');
-            Route::get('/options/{id}', [BoProductController::class, 'showProductViewGroupTag'])->name('back.product.options-tag');
-            Route::get('/stocks', [BoProductController::class, 'showProductStocks'])->name('back.product.stocks');
-            Route::get('/promotions', [BoProductController::class, 'showPromotions'])->name('back.product.promotions');
-            Route::get('/promotions-create', [BoProductController::class, 'showCreatePromotions'])->name('back.product.promotions-create');
-            Route::get('/promotions-update/{id}', [BoProductController::class, 'showGroupPromotionsUpdate'])->name('back.product.promotions-update');
-            Route::get('/promotions-groupe/{id}', [BoProductController::class, 'showGroupPromotions'])->name('back.product.promotions-group');
-            Route::get('/team', [BackController::class, 'showTeam'])->name('back.team');
-            Route::get('/sav', [BackController::class, 'showSav'])->name('back.sav');
-            Route::get('/a-propos', [BackController::class, 'showAbout'])->name('back.about');
-        });
+    Route::prefix('/commandes')->group(function () {
+        Route::get('/', [BoOrdersController::class, 'showOrders'])->name('bo.orders');
+        Route::get('/commande-{id}', [BoOrdersController::class, 'showOrder'])->name('bo.orders.single');
+    });
 
-        Route::prefix('/mes-pages')->group(function () {
-            // Route::get('/', [LegalController::class, 'showTest'])->name('bouton.test');
-            Route::get('/a-propos', [LegalController::class, 'showAbout'])->name('about');
-            Route::post('/a-propos', [LegalController::class, 'postAbout'])->name('post.about');
-            Route::get('/informations-legales', [LegalController::class, 'showLegal'])->name('legal');
-            Route::post('/informations-legales', [LegalController::class, 'postLegal'])->name('post.legal');
-            Route::get('/politique-de-confidentialite', [LegalController::class, 'showConfidential'])->name('confidential');
-            Route::post('/politique-de-confidentialite', [LegalController::class, 'postConfidential'])->name('post.confidential');
-            Route::get('/faq', [LegalController::class, 'showFaq'])->name('faq');
-            Route::post('/faq', [LegalController::class, 'postFaq']);
-        });
+    Route::prefix('/produits')->group(function () {
+        Route::get('/', [BoProductController::class, 'showProductList'])->name('bo.products.list');
+        Route::get('/produit-{product_id}', [BoProductController::class, 'showSingleProduct'])->name('bo.products.single');
+        Route::get('/ajout-un-produit/{type}', [BoProductController::class, 'showProductAdd'])->name('bo.products.add');
+        Route::get('/categories', [BoProductController::class, 'showCategoriesList'])->name('bo.products.categories');
+        Route::get('/marques', [BoProductController::class, 'showBrandsList'])->name('bo.products.brands');
+        Route::get('/motos', [BoProductController::class, 'showBikesList'])->name('bo.products.bikes');
+        Route::get('/attributs', [BoProductController::class, 'showAttributeList'])->name('bo.products.attributes');
+        Route::get('/stock', [BoProductController::class, 'showStockList'])->name('bo.products.stock');
+    });
 
-        Route::prefix('/clients')->group(function () {
-            Route::get('/liste', [BoUserController::class, 'showUserList'])->name('back.user.list');
-            Route::get('/groupes-clients', [BoUserController::class, 'showUserGroup'])->name('back.user.userGroup');
-            Route::get('/{user}', [BoUserController::class, 'showUserSingle'])->name('back.user.single');
-            Route::post('/{user}', [BoUserController::class, 'moveUserToAnotherGroup'])->name('updateGroupUser');
-            Route::get('/{user}/verified', [BoUserController::class, 'validateProfessional'])->name('back.user.verified');
-        });
-
-        Route::prefix('/reglages')->group(function () {
-            Route::get('/', [BoSettingController::class, 'showSettingGeneral'])->name('back.setting');
-            Route::get('/paiement-et-taxes', [BoSettingController::class, 'showSettingPayment'])->name('back.setting.payment');
-            Route::get('/livraison', [BoSettingController::class, 'showSettingShipping'])->name('back.setting.shipping');
-            Route::get('/avance', [BoSettingController::class, 'showSettingAdvanced'])->name('back.setting.advanced');
-            Route::get('/performance', [BoSettingController::class, 'showSettingPerform'])->name('back.setting.perform');
-            Route::get('/information', [BoSettingController::class, 'showSettingInfo'])->name('back.setting.info');
-        });
-
-        Route::prefix('/commandes-factures')->group(function () {
-            Route::get('/commandes', [BoOrderController::class, 'showOrders'])->name('back.orders.orders');
-            Route::get('/commandes/{order}', [BoOrderController::class, 'showSingleOrder'])->name('back.orders.single');
-            Route::get('show-invoice', [BoOrderController::class, 'showInvoiceFile'])->name('back.orders.showInvoice');
-        });
-
-        Route::get('/a-propos', [BackController::class, 'showAboutSite'])->name('back.aboutSite');
+    Route::prefix('/reglages')->group(function () {
+        Route::get('/', [BoSettingController::class, 'showSetting'])->name('bo.setting');
+        Route::get('/paiement', [BoSettingController::class, 'showPaymentSetting'])->name('bo.setting.payment');
+        Route::get('/livraison', [BoSettingController::class, 'showShippingSetting'])->name('bo.setting.shipping');
+        Route::get('/equipe', [BoSettingController::class, 'showTeamSetting'])->name('bo.setting.team');
+        Route::get('/equipe/delete-{id}', [BoSettingController::class, 'deleteTeamUser'])->name('bo.setting.team.delete');
     });
 });
-
-// Routes pour le paiement
-Route::get('/returnURL', [CartController::class, 'showPaymentReturn']);

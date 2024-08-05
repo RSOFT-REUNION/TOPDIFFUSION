@@ -2,11 +2,7 @@
 
 namespace App\Providers;
 
-use App\Models\SettingGeneral;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,8 +11,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // $setting = DB::table('setting_generals')->where('id', 1)->first();
-        // View::share('settingGlobal', $setting);
+        //
     }
 
     /**
@@ -24,6 +19,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Paginator::useTailwind();
+        //
     }
 }

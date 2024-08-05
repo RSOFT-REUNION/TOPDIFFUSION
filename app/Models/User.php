@@ -6,11 +6,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -18,9 +17,15 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'lastname',
+        'firstname',
         'email',
         'password',
+        'phone',
+        'group_id',
+        'code',
+        'admin',
+        'type',
     ];
 
     /**
@@ -34,57 +39,61 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
+     * Get the attributes that should be cast.
      *
-     * @var array<string, string>
+     * @return array<string, string>
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-    ];
-
-    public function getCreatedAt()
+    protected function casts(): array
     {
-        return date('d/m/y', strtotime($this->created_at));
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
     }
 
-    public function getVerifiedAt()
+    // Avoir les informations sur le groupe
+    public function group()
     {
-        return date('d/m/y', strtotime($this->verified_at));
+        return UserGroup::where('id', $this->group_id)->first();
     }
 
-    public function getCustomerTypeText()
+    // Avoir l'adresse complète de l'utilisateur
+    public function getFullAddress()
     {
-        if ($this->professionnal) {
-            return 'Professionnel';
-        } else {
-            return 'Particulier';
-        }
+        // TODO: Ajouter l'adresse bis
+        $address = UserAddress::where('user_id', $this->id)->where('is_default', true)->first();
+        return $address->address . ', ' . $address->zip_code . ' - ' . $address->city;
     }
 
-    public function getCustomerType()
+    // Avoir les informations sur l'entreprise de l'utilisateur
+    public function company()
     {
-        if ($this->professionnal) {
-            return '<span class="px-2 py-1 bg-amber-100 text-amber-500 rounded-lg">Professionnel</span>';
-        } else {
-            return '<span class="px-2 py-1 bg-gray-100 rounded-lg">Particulier</span>';
-        }
+        return UserCompany::where('user_id', $this->id)->first();
     }
 
-//    public function customerGroups()
-//    {
-//        return $this->belongsToMany(CustomerGroup::class, 'customer_group_user', 'user_id', 'customer_group_id');
-//    }
-
-//    public function customerGroupId()
-//    {
-//        return $this->belongsTo(CustomerGroup::class, 'customer_group_id');
-//    }
-
-    public function getSignatureUser()
+    // Récuperer les réglages lié à l'utilisateur
+    public function settings()
     {
-        $firstname = strtoupper(substr(Auth()->user()->firstname, 0, 1));
-        $lastname = strtoupper(substr(Auth()->user()->lastname, 0, 1));
-        return $firstname.''.$lastname;
+        return UserSetting::where('user_id', $this->id)->first();
+    }
+
+    // Récupérer les informations sur la remise du client
+    public function getDiscount()
+    {
+        return UserGroup::where('id', $this->group_id)->first()->discount;
+    }
+
+    // Récuperer les informations sur le type de client
+    public function getTypeBadge()
+    {
+        $data = [
+            '0' => '',
+            '1' => '',
+            '2' => '<span class="text-yellow-500">Administrateur</span>',
+            '3' => '<span class="text-red-500">Support Rsoft</span>',
+            '4' => '<span class="text-orange-500">Support Hivedrops</span>',
+        ];
+
+        return isset($data[$this->type]) ? $data[$this->type] : '';
     }
 }

@@ -9,66 +9,68 @@ class UserOrder extends Model
 {
     use HasFactory;
 
-    // Récupération des informations du client
-    public function User()
+    // Avoir le nombre de produits dans la commande
+    public function getProductCount()
+    {
+        return UserOrderItem::where('user_order_id', $this->id)->sum('quantity');
+    }
+
+    // Récupérer le nom et prénom de l'utilisateur
+    public function getUserName()
+    {
+        $user = User::where('id', $this->user_id)->first();
+        return $user->lastname . ' ' . $user->firstname;
+    }
+
+    // Récupérer l'id de l'utilisateur
+    public function getUserId()
+    {
+        return User::where('id', $this->user_id)->first()->id;
+    }
+
+    // Récupérer les informations de l'utilisateur
+    public function getUser()
     {
         return User::where('id', $this->user_id)->first();
     }
 
-    // Récupération des informations sur l'adresse de livraison
-    public function Address()
-    {
-        return UserAddress::where('user_id', $this->user_id)->first();
-    }
-
-    // Changement de format pour la date de création
-    public function getCreatedDate()
-    {
-        return date('d/m/Y', strtotime($this->created_at));
-    }
-
-    // Liste des status pour la gestion dans le format complet
-    public function getStateBadgeGestion()
-    {
-        $state = [
-            '',
-            '<span class="bg-orange-200 text-orange-700 border border-orange-400 rounded-md px-2 py-0.5">En attente de paiement</span>'
-        ];
-
-        return isset($state[$this->state]) ? $state[$this->state] : null;
-    }
-
-    // Liste des modes de paiement
+    // Récupérer la liste des méthodes de paiement
     public function getPaymentMethod()
     {
-        $state = [
-            '',
-            'Paiement par carte',
-            'Paiement par chèque',
-            'Paiement par virement',
+        $data = [
+            'card' => 'Carte bancaire',
+            'virement' => 'Virement à la livraison',
+            'later' => 'Payer à la livraison'
         ];
 
-        return isset($state[$this->payment_type]) ? $state[$this->payment_type] : null;
+        return isset($data[$this->payment_method]) ? $data[$this->payment_method] : 'Non défini';
     }
 
-    // Liste des status pour les clients dans le format complet
-    public function getStateBadgeCustomer()
+    // Récupérer la liste des méthodes de paiement
+    public function getState()
     {
-        $state = [
-            '',
-            '<span class="bg-gray-200 text-gray-700 border border-gray-400 rounded-md px-2 py-0.5">En cours de traitement</span>'
+        $data = [
+            '0' => '<span class="text-sm bg-amber-100 border border-amber-200 text-amber-500 py-1 px-2 rounded-full">A payer</span>',
+            '1' => '<span class="text-sm bg-green-100 border border-green-200 text-green-500 py-1 px-2 rounded-full">Payée</span>',
+            '2' => '<span class="text-sm bg-green-100 border border-green-200 text-green-500 py-1 px-2 rounded-full">Annulé</span>',
+            '3' => '<span class="text-sm bg-purple-100 border border-purple-200 text-purple-500 py-1 px-2 rounded-full">Carte perdue</span>',
+            '4' => '<span class="text-sm bg-slate-100 border border-slate-200 text-slate-500 py-1 px-2 rounded-full">En attente</span>',
         ];
 
-        return isset($state[$this->state]) ? $state[$this->state] : null;
+        return isset($data[$this->state]) ? $data[$this->state] : 'Non défini';
     }
 
-    public function relaisPoint()
+    // Récupérer la liste des méthodes de paiement
+    public function getStateText()
     {
-        return $this->belongsTo(RelaisPoint::class, 'relais_point_id');
-    }
+        $data = [
+            '0' => '<span class="text-amber-500">A payer</span>',
+            '1' => '<span class="text-green-500">Payée</span>',
+            '2' => '<span class="text-green-500">Annulé</span>',
+            '3' => '<span class="text-purple-500">Carte perdue</span>',
+            '4' => '<span class="text-slate-500">En attente</span>',
+        ];
 
-    public function getRelaisPoint()
-    {
-        return RelaisPoint::find($this->relais_point_id);
+        return isset($data[$this->state]) ? $data[$this->state] : 'Non défini';
     }
 }

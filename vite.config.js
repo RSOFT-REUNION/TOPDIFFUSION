@@ -6,12 +6,10 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/css/app.css',
-                'resources/scss/template.scss',
-                'resources/scss/component.scss',
-                'resources/scss/responsive.scss',
+                'resources/css/theme.scss',
                 'resources/js/app.js',
-                'resources/js/clickable.js',
-                'resources/js/functions.js'
+                'resources/js/functions.js',
+                'resources/js/tinyMCE.js',
             ],
             refresh: true,
         }),

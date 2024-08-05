@@ -1,25 +1,18 @@
 @extends('layouts.app')
 
 @section('content-app')
-    <div id="frontend-page" class="flex flex-col h-screen">
-
-        <div class="flex-none">
-            @livewire('popups.front.maintenance.maintenance')
-            <!-- HEADER FRONT -->
-            @include('components.templates.front-header')
-        </div>
-        <div class="grow">
-            <!-- CONTENT FRONT -->
-            @yield('content-template')
-        </div>
-        <div class="flex-none">
-            <!-- FOOTER FRONT -->
-            @include('components.templates.front-footer')
-        </div>
+    @include('components.elements.popup-alerts')
+    <div class="flex flex-col min-h-screen">
+        <header class="flex-none">
+            {{-- HEADER --}}
+            @livewire('frontend.components.templates.header')
+        </header>
+        <main class="grow">
+            @yield('content')
+        </main>
+        <footer class="flex-none">
+            {{-- FOOTER --}}
+            @include('components.templates.frontend.footer')
+        </footer>
     </div>
-
-@endsection
-
-@section('meta-script')
-
 @endsection
